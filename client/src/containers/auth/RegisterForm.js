@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import AuthForm from "../../components/auth/AuthForm";
 import { changeField, initializeForm, register } from "../../modules/auth";
-import { useNavigate, withRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { check } from "../../modules/user";
 
 // import { Cookies } from "react-cookie";
@@ -48,7 +48,6 @@ const RegisterForm = () => {
       return;
     }
     dispatch(register({ id, password, email }));
-    // console.log("다음은 레지스터", id, password, email);
   };
   useEffect(() => {
     dispatch(initializeForm("register"));
@@ -75,7 +74,6 @@ const RegisterForm = () => {
       console.log("회원가입성공");
       console.log(auth);
       // setCookie(auth.accessToken);
-      // console.log("55555->", getCookie("accessToken"));
       dispatch(check());
     }
   }, [auth, authError, dispatch]);

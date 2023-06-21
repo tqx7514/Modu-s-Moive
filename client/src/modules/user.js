@@ -26,7 +26,6 @@ function checkFailureSaga() {
 function* logoutSaga() {
   try {
     yield call(authAPI.logout);
-    console.log("로ㅓ그아웃사가!!");
     localStorage.removeItem("user");
   } catch (error) {
     console.log(error);

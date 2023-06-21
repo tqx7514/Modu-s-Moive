@@ -32,7 +32,7 @@ exports.register = async (req, res, next) => {
         secure: false,
         httpOnly: true,
       });
-      res.status(200).json({ msg: "가입성공", accessToken });
+      res.status(200).json({ accessToken });
       return;
     }
   } catch (error) {
@@ -46,17 +46,12 @@ exports.login = async (req, res) => {
 
   try {
     const userInfo = await users.findOne({ where: { id } });
-    console.log("000000000000000000000000");
     const hash = await bcrypt.compare(password, userInfo.password);
-    console.log("000000000000000000000001");
 
-    // console.log("111111111111111111111111111111", hash);
     if (!userInfo) {
       res.status(401).json("NOT Authorized");
-      console.log("000000000000000000000002");
     } else if (!hash) {
       res.status(401).json("비번틀림");
-      console.log("000000000000000000000003");
     } else {
       const accessToken = jwt.sign(
         {
@@ -68,19 +63,14 @@ exports.login = async (req, res) => {
           expiresIn: "1d",
         }
       );
-      console.log("000000000000000000000004");
 
-      // console.log("accessToken =====>", accessToken);
       // token 쿠키로 전송
       res.cookie("accessToken", accessToken, {
         maxAge: 1000 * 60 * 60 * 24 * 7,
         secure: false,
         httpOnly: true,
       });
-      console.log("000000000000000000000005");
-
       res.status(200).json(accessToken);
-      console.log("000000000000000000000006");
     }
   } catch (error) {
     res.status(500).json(error);
@@ -97,16 +87,12 @@ exports.logout = (req, res) => {
 exports.check = (req, res) => {
   // const user = jwt.verify(req.cookies.accessToken, process.env.ACCESS_SECRET);
   const user = req.cookies.accessToken;
-  console.log("000000000000000000000007");
 
   // const user = 1;
   if (!user) {
     // 로그인 중이 아님
     res.status(401).json({ error: "Unauthorized" });
-    console.log("000000000000000000000008");
     return;
   }
-  console.log("000000000000000000000009");
-
   res.json(jwt.verify(user, process.env.ACCESS_SECRET));
 };

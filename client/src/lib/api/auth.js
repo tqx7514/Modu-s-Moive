@@ -1,10 +1,6 @@
 import client from "./client";
 
 export const login = async ({ id, password }) => {
-  console.log(
-    "9999999999999999999->",
-    await client.post("/auth/login", { id, password })
-  );
   return await client.post("/auth/login", { id, password });
 };
 

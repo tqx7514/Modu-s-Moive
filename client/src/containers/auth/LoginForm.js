@@ -45,9 +45,7 @@ const LoginForm = ({ history }) => {
       return;
     }
     if (auth) {
-      console.log("000000000000000000000011", auth);
       dispatch(check());
-      console.log("000000000000000000000012", auth);
     }
   }, [auth, authError, dispatch]);
 

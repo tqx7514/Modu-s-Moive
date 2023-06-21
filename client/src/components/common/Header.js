@@ -47,9 +47,15 @@ const Header = ({ user, onLogout }) => {
     <>
       <HeaderBlock>
         <Wrapper>
+          <Link to="/currentmovie">상영중인 영화</Link>
+          <Link to="/ticket">예매</Link>
+          <Link to="/cinema">영화관 위치</Link>
           <Link to="/" className="logo">
             REACTERS
           </Link>
+          <Link to="/event">EVENT</Link>
+          <Link to="/boardlist">게시판</Link>
+          <Link to="/movies">오늘 뭐볼까?</Link>
           {user ? (
             <div className="right">
               <UserInfo>{user.id}</UserInfo>

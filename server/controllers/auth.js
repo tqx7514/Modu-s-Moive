@@ -95,7 +95,8 @@ exports.logout = (req, res) => {
 };
 
 exports.check = (req, res) => {
-  const user = jwt.verify(req.cookies.accessToken, process.env.ACCESS_SECRET);
+  // const user = jwt.verify(req.cookies.accessToken, process.env.ACCESS_SECRET);
+  const user = req.cookies.accessToken;
   console.log("000000000000000000000007");
 
   // const user = 1;
@@ -107,5 +108,5 @@ exports.check = (req, res) => {
   }
   console.log("000000000000000000000009");
 
-  res.json(user);
+  res.json(jwt.verify(user, process.env.ACCESS_SECRET));
 };

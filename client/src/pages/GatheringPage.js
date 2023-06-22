@@ -5,7 +5,7 @@ const MoviesPage = () => {
     return (
         <div>
             <HeaderContainer/>
-            <div>영화 추천 목록</div>
+            <div>모임 list</div>
         </div>
     );
 };

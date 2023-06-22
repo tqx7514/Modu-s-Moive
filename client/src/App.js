@@ -9,7 +9,7 @@ import TicketPage from "./pages/TicketPage";
 import CinemaPage from "./pages/CinemaPage";
 import EventPage from "./pages/EventPage";
 import BoardListPage from "./pages/BoardListPage";
-import MoviesPage from "./pages/MoviesPage";
+import GatheringPage from "./pages/GatheringPage";
 import MainPage from "./pages/MainPage";
 
 const App = () => {
@@ -24,7 +24,7 @@ const App = () => {
       <Route path="/" element={<MainPage />} />
       <Route path="/event" element={<EventPage />} />
       <Route path="/boardlist" element={<BoardListPage />} />
-      <Route path="/movies" element={<MoviesPage />} />
+      <Route path="/gathering" element={<GatheringPage />} />
     </Routes>
   );
 };

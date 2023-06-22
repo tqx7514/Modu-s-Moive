@@ -55,7 +55,7 @@ const Header = ({ user, onLogout }) => {
           </Link>
           <Link to="/event">EVENT</Link>
           <Link to="/boardlist">게시판</Link>
-          <Link to="/movies">오늘 뭐볼까?</Link>
+          <Link to="/gathering">모임</Link>
           {user ? (
             <div className="right">
               <UserInfo>{user.id}</UserInfo>

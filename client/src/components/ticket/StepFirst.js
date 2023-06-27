@@ -79,7 +79,7 @@ const AreaItem = styled.li`
             position: absolute;
             right: 0;
             top: 0;
-            background: url('../../../public/check.png') no-repeat;
+            background: url('./check.png') no-repeat;
             width: 10px;
             height: 5px;
         }
@@ -92,13 +92,13 @@ const StepFirst = () => {
     const [cinemas, setCinemas] = useState([]);
     const [cine, setCine] = useState([]);
     const [Selected, setSelected] = useState(null);
-    
+    const [titleCinema, setTitleCinema] = useState('영화관');
     
     const handleCinemaBtnClick = () => {
         setClick((prevState) => !prevState)
     };
 
-    const handleListClick = async (e, grade) => {
+    const handleSelectRegion = async (e, grade) => {
         e.preventDefault();
         setSelected(grade);
         console.log('111111111111111111111111',Selected);
@@ -109,6 +109,10 @@ const StepFirst = () => {
             console.error(e);
         }
     };
+
+    const handleSelectCinema = (e, cinema) => {
+        setTitleCinema(cinema);
+    }
 
     useEffect(() => {
         const showRegion = async () => {
@@ -145,7 +149,7 @@ const StepFirst = () => {
     return (
             <FirstContents>
                 <StepArea>
-                    <Title>영화관</Title>
+                    <Title>{titleCinema}</Title>
                     <div style={{display: 'flex'}}>
                         <CinemaBtn active={!click} onClick={handleCinemaBtnClick}>전체</CinemaBtn>
                         <CinemaBtn active={click} onClick={handleCinemaBtnClick} style={{background: "white"}}>스페셜관</CinemaBtn>
@@ -157,7 +161,7 @@ const StepFirst = () => {
                                 <AreaItem 
                                     key={region.grade}
                                     href="#none" 
-                                    onClick={(e) => handleListClick(e, region.grade)}
+                                    onClick={(e) => handleSelectRegion(e, region.grade)}
                                     className={Selected === region.grade ? 'selected' : ''}
                                     >
                                         {region.region} <span>({cine.filter(cinema => cinema.grade === region.grade).length})</span>
@@ -168,7 +172,10 @@ const StepFirst = () => {
                         <AreaLi style={{background: 'white'}}>
                         <ul>
                             {cinemas.map((cinema) => (
-                                <AreaItem key={cinema.cinema_num}>
+                                <AreaItem 
+                                    key={cinema.cinema_num} 
+                                    onClick={(e) => handleSelectCinema(e, cinema.cinema)}
+                                >
                                     {cinema.cinema}
                                 </AreaItem>
                             ))}

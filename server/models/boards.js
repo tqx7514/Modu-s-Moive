@@ -1,48 +1,43 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('users', {
-    userNum: {
+  return sequelize.define('boards', {
+    boardNum: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    userName: {
+    title: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    id: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      unique: "users_UN"
-    },
-    password: {
+    content: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    email: {
+    img: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
-    tel: {
+    userId: {
       type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    age: {
-      type: DataTypes.BIGINT,
       allowNull: false
     },
     grade: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    point: {
-      type: DataTypes.BIGINT,
+    count: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    views: {
+      type: DataTypes.STRING(255),
       allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'users',
+    tableName: 'boards',
     timestamps: true,
     indexes: [
       {
@@ -50,15 +45,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "userNum" },
-        ]
-      },
-      {
-        name: "users_UN",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
+          { name: "boardNum" },
         ]
       },
     ]

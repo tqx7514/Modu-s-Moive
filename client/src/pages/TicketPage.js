@@ -1,11 +1,23 @@
 import React from "react";
 import HeaderContainer from "../containers/common/HeaderContainer";
+import TicketWrap from "../components/ticket/TicketWrap";
+import StepFirst from "../components/ticket/StepFirst";
+
+
 
 const TicketPage = () => {
     return (
         <div>
             <HeaderContainer/>
-            <div>예매하기</div>
+            <TicketWrap>
+                <StepFirst/>
+            </TicketWrap>
+            <div>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+            </div>
         </div>
     );
 };

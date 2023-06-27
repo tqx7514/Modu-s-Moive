@@ -11,6 +11,7 @@ import EventPage from "./pages/EventPage";
 import BoardListPage from "./pages/BoardListPage";
 import GatheringPage from "./pages/GatheringPage";
 import MainPage from "./pages/MainPage";
+import PersonSeat from "./pages/PersonSeat";
 
 const App = () => {
   return (
@@ -19,7 +20,9 @@ const App = () => {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/write" element={<WritePage />} />
       <Route path="/currentmovie" element={<CurrentMoviePage />} />
-      <Route path="/ticket" element={<TicketPage />} />
+      <Route path="/ticket" element={<TicketPage />}>
+        <Route path="/ticket/PersonSeat" element={<PersonSeat/>} />
+      </Route>
       <Route path="/cinema" element={<CinemaPage />} />
       <Route path="/" element={<MainPage />} />
       <Route path="/event" element={<EventPage />} />

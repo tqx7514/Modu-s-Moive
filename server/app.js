@@ -5,6 +5,7 @@ const logger = require("morgan");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const authRouter = require("./routes/auth");
+const ticketRouter = require("./routes/ticket");
 const { sequelize } = require("./models");
 
 const app = express();
@@ -34,6 +35,7 @@ sequelize
   });
 
 app.use("/auth", authRouter);
+app.use("/ticket", ticketRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

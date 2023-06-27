@@ -1,48 +1,51 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('users', {
-    userNum: {
+  return sequelize.define('events', {
+    eventNum: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    userName: {
+    eventTitle: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    id: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      unique: "users_UN"
-    },
-    password: {
+    eventContent: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    email: {
+    eventImg: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    tel: {
+    userId: {
       type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    age: {
-      type: DataTypes.BIGINT,
       allowNull: false
     },
     grade: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    point: {
-      type: DataTypes.BIGINT,
+    views: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    categoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    startEvent: {
+      type: DataTypes.DATEONLY,
+      allowNull: false
+    },
+    endEvent: {
+      type: DataTypes.DATEONLY,
       allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'users',
+    tableName: 'events',
     timestamps: true,
     indexes: [
       {
@@ -50,15 +53,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "userNum" },
-        ]
-      },
-      {
-        name: "users_UN",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
+          { name: "eventNum" },
         ]
       },
     ]

@@ -51,7 +51,7 @@ const Header = ({ user, onLogout }) => {
           <Link to="/ticket">예매</Link>
           <Link to="/cinema">영화관 위치</Link>
           <Link to="/" className="logo">
-            REACTERS
+              Modu's Movie
           </Link>
           <Link to="/event">EVENT</Link>
           <Link to="/boardlist">게시판</Link>

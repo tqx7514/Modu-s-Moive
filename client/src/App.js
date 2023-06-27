@@ -4,7 +4,6 @@ import { Route } from "../node_modules/react-router-dom/dist/index";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import WritePage from "./pages/WritePage";
-import CurrentMoviePage from "./pages/CurrentMoivePage";
 import TicketPage from "./pages/TicketPage";
 import CinemaPage from "./pages/CinemaPage";
 import EventPage from "./pages/EventPage";
@@ -13,6 +12,7 @@ import GatheringPage from "./pages/GatheringPage";
 import MainPage from "./pages/MainPage";
 import PersonSeat from "./pages/PersonSeat";
 import MoviedetailPage from "./pages/MoviedetailPage"
+import CurrentMoviePage from "./pages/CurrentMoviePage";
 
 const App = () => {
   return (

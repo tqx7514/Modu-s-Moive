@@ -3,13 +3,17 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('cinema', {
     cinema_num: {
       autoIncrement: true,
-      type: DataTypes.BIGINT,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
     grade: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'regions',
+        key: 'grade'
+      }
     },
     addr: {
       type: DataTypes.STRING(50),
@@ -30,6 +34,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "cinema_num" },
+        ]
+      },
+      {
+        name: "cinema_FK",
+        using: "BTREE",
+        fields: [
+          { name: "grade" },
         ]
       },
     ]

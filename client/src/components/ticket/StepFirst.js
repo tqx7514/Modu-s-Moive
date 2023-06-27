@@ -83,6 +83,7 @@ const StepFirst = () => {
             try{
                 const response = await axios.get('http://localhost:3005/ticket/cinema');
                 setCinemaArea(response.data);
+                console.log('asdfasdf');
             } catch(e){
                 console.error(e);
             }
@@ -103,33 +104,7 @@ const StepFirst = () => {
                     <AreaUl>
                         <AreaLi style={{overflow: 'inherit'}}>
                         <ul>
-                            <li>
-                                <a href="#" onClick={handleListClick}>MY 영화관<span>()</span></a>
-                            </li>
-                            <li>
-                                <a href="#" onClick={handleListClick}>서울<span>()</span></a>
-                            </li>
-                            <li>
-                                <a href="#" onClick={handleListClick}>경기/인천<span>()</span></a>
-                            </li>
-                            <li>
-                                <a href="#" onClick={handleListClick}>충청/대전<span>()</span></a>
-                            </li>
-                            <li>
-                                <a href="#" onClick={handleListClick}>전라/광주<span>()</span></a>
-                            </li>
-                            <li>
-                                <a href="#" onClick={handleListClick}>경북/대구<span>()</span></a>
-                            </li>
-                            <li>
-                                <a href="#" onClick={handleListClick}>경남/부산/울산<span>()</span></a>
-                            </li>
-                            <li>
-                                <a href="#" onClick={handleListClick}>강원<span>()</span></a>
-                            </li>
-                            <li>
-                                <a href="#" onClick={handleListClick}>제주<span>()</span></a>
-                            </li>
+                          
                         </ul>
                         </AreaLi>
                         <AreaLi style={{background: 'white'}}>

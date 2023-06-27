@@ -1,21 +1,38 @@
 const express = require('express');
 const router = express.Router();
-const {cinema, regions} = require('../models');
+const {cinemas, regions} = require('../models');
 
-router.get('/cinema', async (req, res) => {
+router.get('/region', async (req, res) => {
     try{
-        const cinemas = await cinema.findAll({
-            order: [['cinema', 'ASC']],
-            include: [{
+        const region = await regions.findAll({});
+        const cinema = await cinemas.findAll({
+            include:[{
                 model: regions,
-            }]
+                as: 'grade_region',
+            }],
         });
-        console.log(cinemas);
-
-        res.status(200).json(cinemas);
+        res.status(200).json({region,cinema});
     } catch(e){
         console.error(e);
     }
 });
+
+router.get('/cinema', async (req, res) => {
+    try{
+        const {grade} = req.query;
+        const cinema = await cinemas.findAll({
+            include:[{
+                model: regions,
+                as: 'grade_region',
+                where: {grade},
+            }],
+            order: [['cinema', 'ASC']],
+        });
+        res.status(200).json(cinema);
+    } catch(e){
+        console.error(e);
+    }
+})
+
 
   module.exports = router;

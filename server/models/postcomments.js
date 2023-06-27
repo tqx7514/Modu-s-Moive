@@ -1,13 +1,13 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('boardcomments', {
+  return sequelize.define('postcomments', {
     commentNum: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    boardNum: {
+    postNum: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -21,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'boardcomments',
+    tableName: 'postcomments',
     timestamps: false,
     indexes: [
       {

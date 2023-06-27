@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('cinema', {
+  return sequelize.define('cinemas', {
     cinema_num: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -25,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'cinema',
+    tableName: 'cinemas',
     timestamps: false,
     indexes: [
       {
@@ -37,7 +37,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "cinema_FK",
+        name: "cinemas_FK",
         using: "BTREE",
         fields: [
           { name: "grade" },

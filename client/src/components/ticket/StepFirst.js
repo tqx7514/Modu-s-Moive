@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled, {css} from 'styled-components';
 import axios from '../../../node_modules/axios/index';
+import {MdDone} from 'react-icons/md' ;
 
 const FirstContents = styled.div`
     display: flex;
@@ -23,6 +24,7 @@ const StepDateTime = styled.div`
     width: 40%;
     height: 100%;
     border: 1px solid;
+    background: #fff;
 `;
 
 const Title = styled.div`
@@ -66,36 +68,84 @@ const AreaLi = styled.li`
     overflow-y: scroll;
 `;
 
+const AreaItem = styled.li`
+    padding: 10px; 16px;
+    cursor: pointer;
+    &.selected{
+        position: relative;
+        background: #fff;
+        &:after{
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: url('./check.png') no-repeat;
+            width: 10px;
+            height: 5px;
+        }
+    }
+`
+
 const StepFirst = () => {
     const [click, setClick] = useState(false);
+    const [regions, setRegions] = useState([]);
+    const [cinemas, setCinemas] = useState([]);
+    const [cine, setCine] = useState([]);
+    const [Selected, setSelected] = useState(null);
+    
     
     const handleCinemaBtnClick = () => {
         setClick((prevState) => !prevState)
-    }
+    };
 
-    const handleListClick = (e) => {
+    const handleListClick = async (e, grade) => {
         e.preventDefault();
-    }
+        setSelected(grade);
+        console.log('111111111111111111111111',Selected);
+        try{
+            const response = await axios.get(`http://localhost:3005/ticket/cinema?grade=${grade}`);
+            setCinemas(response.data);
+        } catch(e){
+            console.error(e);
+        }
+    };
 
-    const [cinemaArea, setCinemaArea] = useState([]);
     useEffect(() => {
-        const fetchData = async () => {
+        const showRegion = async () => {
             try{
-                const response = await axios.get('http://localhost:3005/ticket/cinema');
-                setCinemaArea(response.data);
-                console.log('asdfasdf');
+                const response = await axios.get('http://localhost:3005/ticket/region');
+                setRegions(response.data.region);
+                setCine(response.data.cinema)
             } catch(e){
                 console.error(e);
             }
         };
-        fetchData();
+        showRegion();
+    }, []);
+    useEffect(() => {
+        const showCinema = async () => {
+            try{
+                const response = await axios.get('http://localhost:3005/ticket/cinema');
+                setCinemas(response.data);
+            } catch(e){
+                console.error(e);
+            }
+        };
+        showCinema();
     }, []);
 
-    // const areaGrade = cinemaArea.filter((grade) => )
-    
+    useEffect(()=>{
+        const firstSelect = async()=>{
+            const response = await axios.get(`http://localhost:3005/ticket/cinema?grade=1`);
+            setCinemas(response.data);
+            setSelected(1);
+        }
+        firstSelect();
+    },[])
     return (
             <FirstContents>
                 <StepArea>
+                    <img src="check.png"/>
                     <Title>영화관</Title>
                     <div style={{display: 'flex'}}>
                         <CinemaBtn active={!click} onClick={handleCinemaBtnClick}>전체</CinemaBtn>
@@ -104,21 +154,30 @@ const StepFirst = () => {
                     <AreaUl>
                         <AreaLi style={{overflow: 'inherit'}}>
                         <ul>
-                          
+                            {regions.map((region) => (
+                                <AreaItem 
+                                    key={region.grade}
+                                    href="#none" 
+                                    onClick={(e) => handleListClick(e, region.grade)}
+                                    className={Selected === region.grade ? 'selected' : ''}
+                                    >
+                                        {region.region} <span>({cine.filter(cinema => cinema.grade === region.grade).length})</span>
+                                </AreaItem>
+                            ))}
                         </ul>
                         </AreaLi>
                         <AreaLi style={{background: 'white'}}>
                         <ul>
-                            {cinemaArea.map((cinema) => (
-                                <li key={cinema.cinema_num}>
-                                    <a href="#">{cinema.cinema}</a>
-                                </li>
+                            {cinemas.map((cinema) => (
+                                <AreaItem key={cinema.cinema_num}>
+                                    {cinema.cinema}
+                                </AreaItem>
                             ))}
                         </ul>
                         </AreaLi>
                     </AreaUl>
                 </StepArea>
-                <StepCinema>
+                <StepCinema style={{background: '#f5f5f5'}}>
                     <Title>영화 선택</Title>
                 </StepCinema>
                 <StepDateTime>

@@ -91,6 +91,37 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
               onChange={onChange}
               value={form.email}
             />
+            <StyledInput
+              name="tel"
+              placeholder="전화번호"
+              type="tel"
+              onChange={onChange}
+              value={form.tel}
+            />
+            <StyledInput
+              name="age"
+              placeholder="나이"
+              type="number"
+              onChange={onChange}
+              value={form.age}
+            />
+            <input
+              type="radio"
+              name="gender"
+              onChange={onChange}
+              checked={form.gender === "남자"}
+              value="남자"
+            />
+            <label>남자</label>
+
+            <input
+              type="radio"
+              name="gender"
+              onChange={onChange}
+              checked={form.gender === "여자"}
+              value="여자"
+            />
+            <label>여자</label>
           </>
         )}
         {error && <ErrorMessage>{error}</ErrorMessage>}

@@ -1,10 +1,16 @@
 import React from "react";
+import Responsive from "../components/common/Responsive";
+import WriteActionButtons from "../components/write/WriteActionButtons";
+import EditorContainer from "../containers/write/EditorContainer";
+import TagBoxContainer from "../containers/write/TagBoxContainer";
 
 const WritePage = () => {
   return (
-    <div>
-      <div>글쓰기페이지</div>
-    </div>
+    <Responsive>
+      <EditorContainer/>
+      <TagBoxContainer/>
+      <WriteActionButtons/>
+    </Responsive>
   );
 };
 

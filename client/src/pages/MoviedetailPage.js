@@ -1,14 +1,14 @@
 import React from "react";
 import HeaderContainer from "../containers/common/HeaderContainer";
-import MovieContainer from "../containers/movie/MovieContainer"
+import Moviedetail from "../components/movie/Moviedetail";
 
-const CurrentMoviePage = () => {
+const MoviedetailPage = () => {
     return (
         <div>
             <HeaderContainer/>
-            <MovieContainer/>
+            <Moviedetail/>
         </div>
     );
 };
 
-export default CurrentMoviePage;
+export default MoviedetailPage;

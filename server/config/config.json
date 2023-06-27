@@ -2,21 +2,21 @@
   "development": {
     "username": "CarCarO2",
     "password": "edurootroot",
-    "database": "CarCarO2",
+    "database": "ModoosMovie",
     "host": "192.168.10.104",
     "dialect": "mysql"
   },
   "test": {
     "username": "CarCarO2",
     "password": "edurootroot",
-    "database": "CarCarO2",
+    "database": "ModoosMovie",
     "host": "192.168.10.104",
     "dialect": "mysql"
   },
   "production": {
     "username": "CarCarO2",
     "password": "edurootroot",
-    "database": "CarCarO2",
+    "database": "ModoosMovie",
     "host": "192.168.10.104",
     "dialect": "mysql"
   }

@@ -79,7 +79,7 @@ const AreaItem = styled.li`
             position: absolute;
             right: 0;
             top: 0;
-            background: url('./check.png') no-repeat;
+            background: url('../../../public/check.png') no-repeat;
             width: 10px;
             height: 5px;
         }
@@ -145,7 +145,6 @@ const StepFirst = () => {
     return (
             <FirstContents>
                 <StepArea>
-                    <img src="check.png"/>
                     <Title>영화관</Title>
                     <div style={{display: 'flex'}}>
                         <CinemaBtn active={!click} onClick={handleCinemaBtnClick}>전체</CinemaBtn>

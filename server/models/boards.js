@@ -34,6 +34,10 @@ module.exports = function(sequelize, DataTypes) {
     views: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    tag: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,

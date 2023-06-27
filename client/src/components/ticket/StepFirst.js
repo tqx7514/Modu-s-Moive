@@ -90,7 +90,7 @@ const StepFirst = () => {
         fetchData();
     }, []);
 
-    const areaGrade = cinemaArea.filter((grade) => )
+    // const areaGrade = cinemaArea.filter((grade) => )
     
     return (
             <FirstContents>

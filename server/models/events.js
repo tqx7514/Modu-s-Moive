@@ -28,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     views: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     categoryId: {

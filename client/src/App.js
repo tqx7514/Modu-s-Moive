@@ -12,6 +12,7 @@ import BoardListPage from "./pages/BoardListPage";
 import GatheringPage from "./pages/GatheringPage";
 import MainPage from "./pages/MainPage";
 import PersonSeat from "./pages/PersonSeat";
+import MoviedetailPage from "./pages/MoviedetailPage"
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
       <Route path="/ticket" element={<TicketPage />}>
         <Route path="/ticket/PersonSeat" element={<PersonSeat/>} />
       </Route>
+      <Route path="/detail/:id" element={<MoviedetailPage/>}/>
       <Route path="/cinema" element={<CinemaPage />} />
       <Route path="/" element={<MainPage />} />
       <Route path="/event" element={<EventPage />} />

@@ -1,15 +1,19 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('cinema', {
+  return sequelize.define('cinemas', {
     cinema_num: {
       autoIncrement: true,
-      type: DataTypes.BIGINT,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
     grade: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'regions',
+        key: 'grade'
+      }
     },
     addr: {
       type: DataTypes.STRING(50),
@@ -21,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'cinema',
+    tableName: 'cinemas',
     timestamps: false,
     indexes: [
       {
@@ -30,6 +34,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "cinema_num" },
+        ]
+      },
+      {
+        name: "cinemas_FK",
+        using: "BTREE",
+        fields: [
+          { name: "grade" },
         ]
       },
     ]

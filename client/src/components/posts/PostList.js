@@ -4,7 +4,7 @@ import palette from "../../lib/styles/palette";
 import Responsive from "../common/Responsive";
 import Button from "../../components/common/Button";
 
-const BoardItemBlock = styled.div`
+const PostItemBlock = styled.div`
     padding-top: 3rem;
     padding-bottom: 3rem;
     &:first-child{
@@ -26,29 +26,29 @@ const BoardItemBlock = styled.div`
     }
 `;
 
-const BoardListBlock = styled(Responsive)`
+const PostListBlock = styled(Responsive)`
     margin-top: 3rem;
 `;
 
-const BoardItem = () => {
+const PostItem = () => {
     return(
-        <BoardItemBlock>
-            <Link to='/BoardItem'>제목</Link>
-        </BoardItemBlock>
+        <PostItemBlock>
+            <Link to='/postItem'>제목</Link>
+        </PostItemBlock>
     );
 };
 
-const BoardList = () => {
+const PostList = () => {
     return(
-        <BoardListBlock>
+        <PostListBlock>
             <div>
                 <Button cyan to="/write">
                     새 글 작성하기
                 </Button>
             </div>
-            <BoardItem/>
-        </BoardListBlock>
+            <PostItem/>
+        </PostListBlock>
     );
 };
 
-export default BoardList;
+export default PostList;

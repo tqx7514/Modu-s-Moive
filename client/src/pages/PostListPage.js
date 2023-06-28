@@ -1,14 +1,14 @@
 import React from "react";
 import HeaderContainer from "../containers/common/HeaderContainer";
-import BoardList from "../components/boards/BoardList";
+import PostList from "../components/posts/PostList";
 
-const BoardListPage = () => {
+const PostListPage = () => {
     return (
         <div>
             <HeaderContainer/>
-            <BoardList/>
+            <PostList/>
         </div>
     );
 };
 
-export default BoardListPage;
+export default PostListPage;

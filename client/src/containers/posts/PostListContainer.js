@@ -1,10 +1,10 @@
 import { useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import BoardList from "../../components/boards/BoardList";
 import { useEffect } from "react";
-import { listBoards } from "../../lib/api/boards";
+import { listPosts } from "../../lib/api/posts";
+import PostList from "../../components/posts/PostList";
 
-const BoardListContainter = () => {
+const PostListContainter = () => {
     const { username } = useParams();
     const { searchParams } = useSearchParams();
     const dispatch = useDispatch();
@@ -19,11 +19,11 @@ const BoardListContainter = () => {
     useEffect(() => {
         const tag = searchParams.get('tag');
         const page = parseInt(searchParams.get('page'), 10) || 1;
-        dispatch(listBoards({ tag, username, page }));
+        dispatch(listPosts({ tag, username, page }));
     }, [dispatch, searchParams, username]);
 
     return (
-        <BoardList
+        <PostList
             loading={loading}
             error={error}
             posts={posts}
@@ -32,4 +32,4 @@ const BoardListContainter = () => {
     );
 };
 
-export default BoardListContainter
+export default PostListContainter

@@ -1,27 +1,18 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('boardcomments', {
-    commentNum: {
-      autoIncrement: true,
+  return sequelize.define('regions', {
+    grade: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    boardNum: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    userId: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    content: {
-      type: DataTypes.STRING(255),
+    region: {
+      type: DataTypes.STRING(100),
       allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'boardcomments',
+    tableName: 'regions',
     timestamps: false,
     indexes: [
       {
@@ -29,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "commentNum" },
+          { name: "grade" },
         ]
       },
     ]

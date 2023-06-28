@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
-import Responsive from "./Responsive";
-import Button from "./Button";
-import LogoImage from "../../public/Logo.png";
+import Responsive from "../Responsive";
+import Button from "../Button";
+import LogoImage from "../../../public/Logo.png";
 
 const HeaderBlock = styled.div`
   position: fixed;
   width: 100%;
-  background: white;
+  background: lightgray;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
 `;
 
@@ -73,7 +73,7 @@ const activeStyle = {
   fontWeight: "bold",
 };
 
-const Header = ({ user, onLogout }) => {
+const AdminHeader = ({ user, onLogout }) => {
   return (
     <>
       <HeaderBlock>
@@ -90,9 +90,7 @@ const Header = ({ user, onLogout }) => {
               <Spacing />
               <Button onClick={onLogout}>로그아웃</Button>
               <Spacing />
-              <Button to={`/mypage/${user.id}`}>마이페이지</Button>
-              <Spacing />
-              {user.grade > 1 && <Button to="/admin">관리자페이지</Button>}
+              <Button to="/">유저페이지</Button>
             </div>
           ) : (
             <div className="right">
@@ -146,4 +144,4 @@ const Header = ({ user, onLogout }) => {
   );
 };
 
-export default Header;
+export default AdminHeader;

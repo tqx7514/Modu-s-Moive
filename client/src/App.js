@@ -11,25 +11,29 @@ import BoardListPage from "./pages/BoardListPage";
 import GatheringPage from "./pages/GatheringPage";
 import MainPage from "./pages/MainPage";
 import PersonSeat from "./pages/PersonSeat";
-import MoviedetailPage from "./pages/MoviedetailPage"
+import MoviedetailPage from "./pages/MoviedetailPage";
 import CurrentMoviePage from "./pages/CurrentMoviePage";
+import MyPage from "./pages/MyPage";
+import AdminPage from "./pages/admin/AdminPage";
 
 const App = () => {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/mypage/:id" element={<MyPage />} />
       <Route path="/write" element={<WritePage />} />
       <Route path="/currentmovie" element={<CurrentMoviePage />} />
       <Route path="/ticket" element={<TicketPage />}>
-        <Route path="/ticket/PersonSeat" element={<PersonSeat/>} />
+        <Route path="/ticket/PersonSeat" element={<PersonSeat />} />
       </Route>
-      <Route path="/detail/:id" element={<MoviedetailPage/>}/>
+      <Route path="/detail/:id" element={<MoviedetailPage />} />
       <Route path="/cinema" element={<CinemaPage />} />
       <Route path="/" element={<MainPage />} />
       <Route path="/event" element={<EventPage />} />
       <Route path="/boardlist" element={<BoardListPage />} />
       <Route path="/gathering" element={<GatheringPage />} />
+      <Route path="/admin" element={<AdminPage />} />
     </Routes>
   );
 };

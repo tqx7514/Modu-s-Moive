@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Button from "../common/Button";
 import {MdStarRate} from 'react-icons/md';
 
 

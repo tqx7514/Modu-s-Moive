@@ -54,7 +54,7 @@ const Header = ({ user, onLogout }) => {
               Modu's Movie
           </Link>
           <Link to="/event">EVENT</Link>
-          <Link to="/boardlist">게시판</Link>
+          <Link to="/postlist">게시판</Link>
           <Link to="/gathering">모임</Link>
           {user ? (
             <div className="right">

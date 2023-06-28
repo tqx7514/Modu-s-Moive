@@ -7,12 +7,13 @@ import WritePage from "./pages/WritePage";
 import TicketPage from "./pages/TicketPage";
 import CinemaPage from "./pages/CinemaPage";
 import EventPage from "./pages/EventPage";
-import BoardListPage from "./pages/BoardListPage";
+import PostListPage from "./pages/PostListPage";
 import GatheringPage from "./pages/GatheringPage";
 import MainPage from "./pages/MainPage";
 import PersonSeat from "./pages/PersonSeat";
 import MoviedetailPage from "./pages/MoviedetailPage"
 import CurrentMoviePage from "./pages/CurrentMoviePage";
+import PostPage from "./pages/PostPage";
 
 const App = () => {
   return (
@@ -28,7 +29,10 @@ const App = () => {
       <Route path="/cinema" element={<CinemaPage />} />
       <Route path="/" element={<MainPage />} />
       <Route path="/event" element={<EventPage />} />
-      <Route path="/boardlist" element={<BoardListPage />} />
+      <Route path="/@:username">
+        <Route index element={<PostListPage/>} />
+        <Route path=":postId" element={<PostPage/>} />
+      </Route>
       <Route path="/gathering" element={<GatheringPage />} />
     </Routes>
   );

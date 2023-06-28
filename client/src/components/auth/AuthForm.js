@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import palette from "../../lib/styles/palette";
@@ -12,6 +12,7 @@ const AuthFormBlock = styled.div`
   }
 `;
 const StyledInput = styled.input`
+  flex: 1;
   font-size: 1rem;
   border: none;
   border-bottom: 1px solid ${palette.gray[5]};
@@ -26,6 +27,29 @@ const StyledInput = styled.input`
     margin-top: 1rem;
   }
 `;
+
+const IdArea = styled.div`
+  display: flex;
+  align-items: center;
+  & > ${StyledInput} {
+    flex: 1;
+    margin-right: 0.5rem;
+  }
+  & > button {
+    margin-left: 0.5rem;
+  }
+`;
+
+const ErrorArea = styled.div`
+  margin-bottom: 0.1rem;
+  color: red;
+`;
+
+const PassArea = styled.div`
+  margin-bottom: 0.1rem;
+  color: green;
+`;
+
 const Footer = styled.div`
   margin-top: 2rem;
   text-align: right;
@@ -53,19 +77,57 @@ const ErrorMessage = styled.div`
   margin-top: 1rem;
 `;
 
-const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
+const AuthForm = ({
+  type,
+  form,
+  onChange,
+  onSubmit,
+  error,
+  handleCheckDuplicate,
+  checkError,
+  isDuplicate,
+}) => {
+  // const [isDuplicated, setIsDuplicated] = useState(false);
   const text = textMap[type];
+  console.log("isDuplicate======================", isDuplicate);
+  console.log("checkError======================", checkError);
+
   return (
     <AuthFormBlock>
       <h3>{text}</h3>
       <form onSubmit={onSubmit}>
-        <StyledInput
-          autoComplete="id"
-          name="id"
-          placeholder="아이디"
-          onChange={onChange}
-          value={form.id}
-        />
+        <IdArea>
+          <StyledInput
+            autoComplete="id"
+            name="id"
+            placeholder="아이디"
+            onChange={onChange}
+            value={form.id}
+          />
+          {type === "register" && (
+            <Button type="button" onClick={handleCheckDuplicate}>
+              중복확인
+            </Button>
+          )}
+        </IdArea>
+        {!isDuplicate ? (
+          <ErrorArea>{checkError}</ErrorArea>
+        ) : (
+          <PassArea>{checkError}</PassArea>
+        )}
+
+        <br />
+        {type === "register" && (
+          <>
+            <StyledInput
+              autoComplete="name"
+              name="name"
+              placeholder="이름"
+              onChange={onChange}
+              value={form.name}
+            />
+          </>
+        )}
         <StyledInput
           autoComplete="new-password"
           name="password"
@@ -91,9 +153,41 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
               onChange={onChange}
               value={form.email}
             />
+            <StyledInput
+              name="tel"
+              placeholder="전화번호"
+              type="tel"
+              onChange={onChange}
+              value={form.tel}
+            />
+            <StyledInput
+              name="age"
+              placeholder="나이"
+              type="number"
+              onChange={onChange}
+              value={form.age}
+            />
+            <input
+              type="radio"
+              name="gender"
+              onChange={onChange}
+              checked={form.gender === "남자"}
+              value="남자"
+            />
+            <label>남자</label>
+
+            <input
+              type="radio"
+              name="gender"
+              onChange={onChange}
+              checked={form.gender === "여자"}
+              value="여자"
+            />
+            <label>여자</label>
+            <br />
           </>
         )}
-        {error && <ErrorMessage>{error}</ErrorMessage>}
+        {/* {error && <ErrorMessage>{error}</ErrorMessage>} */}
         <ButtonWithMarginTop
           cyan="true"
           fullwidth="true"

@@ -23,12 +23,20 @@ export const changeField = createAction(
     value, // 실제 바꾸려는 값
   })
 );
+
 export const initializeForm = createAction(INITIALIZE_FORM, (form) => form); // register / login
-export const register = createAction(REGISTER, ({ id, password, email }) => ({
-  id,
-  email,
-  password,
-}));
+export const register = createAction(
+  REGISTER,
+  ({ id, name, password, email, tel, age, gender }) => ({
+    id,
+    name,
+    email,
+    password,
+    tel,
+    age,
+    gender,
+  })
+);
 export const login = createAction(LOGIN, ({ id, password }) => ({
   id,
   password,
@@ -45,9 +53,13 @@ export function* authSaga() {
 const initialState = {
   register: {
     id: "",
+    name: "",
     password: "",
     passwordConfirm: "",
     email: "",
+    tel: "",
+    age: "",
+    gender: "",
   },
   login: {
     id: "",

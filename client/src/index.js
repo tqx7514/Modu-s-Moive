@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { applyMiddleware, createStore } from "redux";
+import { applyMiddleware, legacy_createStore as createStore } from "redux";
 import rootReducer, { rootSaga } from "./modules/index";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
@@ -22,8 +22,7 @@ function loadUser() {
     if (!user) return;
     store.dispatch(tempSetUser(JSON.parse(user)));
     store.dispatch(check());
-  } catch (e) {
-  }
+  } catch (e) {}
 }
 
 sagaMiddleware.run(rootSaga);

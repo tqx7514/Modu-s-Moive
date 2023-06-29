@@ -81,6 +81,7 @@ exports.login = async (req, res) => {
         httpOnly: true,
       });
       res.status(200).json(accessToken);
+      // console.log("dddddddddddddddddd", accessToken);
     }
   } catch (error) {
     res.status(500).json(error);

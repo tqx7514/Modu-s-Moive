@@ -1,6 +1,5 @@
 import React from "react";
-import { Routes } from "react-router-dom";
-import { Route } from "../node_modules/react-router-dom/dist/index";
+import { Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import WritePage from "./pages/WritePage";
@@ -8,7 +7,7 @@ import TicketPage from "./pages/TicketPage";
 import CinemaPage from "./pages/CinemaPage";
 import EventPage from "./pages/EventPage";
 import PostListPage from "./pages/PostListPage";
-import GatheringPage from "./pages/GatheringPage";
+import MeetListPage from "./pages/MeetListPage";
 import MainPage from "./pages/MainPage";
 import PersonSeat from "./pages/PersonSeat";
 import MoviedetailPage from "./pages/MoviedetailPage";
@@ -16,8 +15,8 @@ import CurrentMoviePage from "./pages/CurrentMoviePage";
 import PostPage from "./pages/PostPage";
 import MyPage from "./pages/MyPage";
 import AdminPage from "./pages/admin/AdminPage";
-
-
+import MeetWritePage from "./pages/MeetWritePage";
+import MeetPage from "./pages/MeetPage";
 const App = () => {
   return (
     <Routes>
@@ -34,10 +33,12 @@ const App = () => {
       <Route path="/" element={<MainPage />} />
       <Route path="/event" element={<EventPage />} />
       <Route path="/@:username">
-        <Route index element={<PostListPage/>} />
-        <Route path=":postId" element={<PostPage/>} />
+        <Route index element={<PostListPage />} />
+        <Route path=":postId" element={<PostPage />} />
       </Route>
-      <Route path="/gathering" element={<GatheringPage />} />
+      <Route path="/meet" element={<MeetListPage />} />
+      <Route path="/meet/:meetNum" element={<MeetPage />} />
+      <Route path="/meetwrite" element={<MeetWritePage />} />
       <Route path="/admin" element={<AdminPage />} />
     </Routes>
   );

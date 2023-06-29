@@ -22,7 +22,9 @@ function loadUser() {
     if (!user) return;
     store.dispatch(tempSetUser(JSON.parse(user)));
     store.dispatch(check());
-  } catch (e) {}
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 sagaMiddleware.run(rootSaga);

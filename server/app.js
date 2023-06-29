@@ -6,11 +6,11 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const { sequelize } = require("./models");
 
-
 const authRouter = require("./routes/auth");
 const ticketRouter = require("./routes/ticket");
 const movieRouter = require("./routes/movie");
-const postRouter = require("./routes/post")
+const postRouter = require("./routes/post");
+const meetRouter = require("./routes/meet");
 
 const app = express();
 dotenv.config();
@@ -41,8 +41,8 @@ app.use(
 app.use("/auth", authRouter);
 app.use("/ticket", ticketRouter);
 app.use("/movie", movieRouter);
-app.use("/post",postRouter)
-
+app.use("/post", postRouter);
+app.use("/meet", meetRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

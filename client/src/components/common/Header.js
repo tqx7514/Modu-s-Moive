@@ -55,7 +55,7 @@ const Spacing = styled.div`
 `;
 
 const Spacer = styled.div`
-  height: 9rem;
+  height: 9.5rem;
 `;
 
 const UserInfo = styled.div`
@@ -134,7 +134,7 @@ const Header = ({ user, onLogout }) => {
             게시판
           </NavLink>
           <NavLink
-            to="/gathering"
+            to="/meet"
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
             모임

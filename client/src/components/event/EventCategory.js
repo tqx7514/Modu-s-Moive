@@ -1,21 +1,26 @@
 import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 
 const categories = [
   {
-    name: "all",
+    name: "event",
     text: "전체",
+    path: "/event",
   },
   {
     name: "movie",
     text: "영화",
+    path: "/movieevent",
   },
   {
     name: "promotion",
     text: "제휴/할인",
+    path: "/promotionevent",
   },
   {
-    name: "twinkle",
-    text: "반짝반짝",
+    name: "etc",
+    text: "기타",
+    path: "/etcevent",
   },
 ];
 
@@ -31,7 +36,7 @@ const CategoriesBlock = styled.div`
   }
 `;
 
-const Category = styled.div`
+const Category = styled(Link)`
   font-size: 1.125rem;
   cursor: pointer;
   white-space: pre;
@@ -65,6 +70,7 @@ const EventCategory = ({ onSelect, category }) => {
       {categories.map((c) => (
         <Category
           key={c.name}
+          to={c.path}
           active={category === c.name ? "true" : "false"}
           onClick={() => onSelect(c.name)}
         >

@@ -21,7 +21,7 @@ const EventList = () => {
   }, []);
 
   return (
-    <div class="container">
+    <div className="container">
       {events && events.length > 0 && (
         <div>
           <h2>영화</h2>
@@ -69,15 +69,15 @@ const EventList = () => {
 
       {events && events.length > 0 && (
         <>
-          <h2>반짝반짝</h2>
-          <Link to="/twinkleevent">더보기</Link>
+          <h2>기타</h2>
+          <Link to="/etcevent">더보기</Link>
           <ul>
             {events
               .filter((event) => event.categoryId === 3)
               .slice(0, 3)
               .map((event) => (
                 <li key={event.eventNum}>
-                  <Link to={`/twinkleevent/${event.eventNum}`}>
+                  <Link to={`/etcevent/${event.eventNum}`}>
                     <img src={event.eventImg} alt={event.eventTitle} />
                     <p>{event.eventTitle}</p>
                     <p>

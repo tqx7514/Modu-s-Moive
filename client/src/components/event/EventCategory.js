@@ -44,7 +44,7 @@ const Category = styled.div`
   }
 
   ${(props) =>
-    props.active &&
+    props.active.toString() === "true" &&
     css`
       font-weight: 600;
       border-bottom: 2px solid #22b8cf;
@@ -65,7 +65,7 @@ const EventCategory = ({ onSelect, category }) => {
       {categories.map((c) => (
         <Category
           key={c.name}
-          active={category === c.name}
+          active={category === c.name ? "true" : "false"}
           onClick={() => onSelect(c.name)}
         >
           {c.text}

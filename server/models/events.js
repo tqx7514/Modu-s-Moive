@@ -13,15 +13,19 @@ module.exports = function(sequelize, DataTypes) {
     },
     eventContent: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     eventImg: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
-    userId: {
-      type: DataTypes.STRING(255),
-      allowNull: false
+    userNum: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'userNum'
+      }
     },
     grade: {
       type: DataTypes.INTEGER,
@@ -29,19 +33,23 @@ module.exports = function(sequelize, DataTypes) {
     },
     views: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     },
     categoryId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'eventcategory',
+        key: 'categoryId'
+      }
     },
-    startEvent: {
+    startEventDate: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: true
     },
-    endEvent: {
+    endEventDate: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: true
     }
   }, {
     sequelize,
@@ -54,6 +62,20 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "eventNum" },
+        ]
+      },
+      {
+        name: "categoryId",
+        using: "BTREE",
+        fields: [
+          { name: "categoryId" },
+        ]
+      },
+      {
+        name: "userNum",
+        using: "BTREE",
+        fields: [
+          { name: "userNum" },
         ]
       },
     ]

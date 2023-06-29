@@ -7,6 +7,7 @@ const dotenv = require("dotenv");
 const authRouter = require("./routes/auth");
 const ticketRouter = require("./routes/ticket");
 const movieRouter = require("./routes/movie");
+const eventRouter = require("./routes/event")
 const { sequelize } = require("./models");
 
 const app = express();
@@ -38,6 +39,7 @@ sequelize
 app.use("/auth", authRouter);
 app.use("/ticket", ticketRouter);
 app.use("/movie", movieRouter);
+app.use("/event", eventRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

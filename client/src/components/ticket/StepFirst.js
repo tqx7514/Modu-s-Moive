@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled, {css} from 'styled-components';
 import axios from '../../../node_modules/axios/index';
+import MovieList from '../../containers/movie/MovieContainer';
 
 const FirstContents = styled.div`
     display: flex;
@@ -144,7 +145,7 @@ const StepFirst = () => {
                     </AreaUl>
                 </StepArea>
                 <StepCinema>
-                    <Title>영화 선택</Title>
+                    <Title>영화 선택</Title>                  
                 </StepCinema>
                 <StepDateTime>
                     <Title style={{borderRight: 0}}>2023-06-26(오늘)</Title>

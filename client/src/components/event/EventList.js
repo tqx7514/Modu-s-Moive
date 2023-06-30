@@ -68,16 +68,16 @@ const EventList = () => {
       )}
 
       {events && events.length > 0 && (
-        <div className="etcEventList">
+        <div className="otherEventList">
           <h2>기타</h2>
-          <Link to="/event/etc">더보기</Link>
+          <Link to="/event/other">더보기</Link>
           <ul>
             {events
               .filter((event) => event.categoryId === 3)
               .slice(0, 3)
               .map((event) => (
                 <li key={event.eventNum}>
-                  <Link to={`/event/etc/${event.eventNum}`}>
+                  <Link to={`/event/other/${event.eventNum}`}>
                     <img src={event.eventImg} alt={event.eventTitle} />
                     <p>{event.eventTitle}</p>
                     <p>

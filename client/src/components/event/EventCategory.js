@@ -18,9 +18,9 @@ const categories = [
     path: "/event/promote",
   },
   {
-    name: "etc",
+    name: "other",
     text: "기타",
-    path: "/event/etc",
+    path: "/event/other",
   },
 ];
 

@@ -1,4 +1,5 @@
 const { meets } = require("../models");
+const { Op } = require("sequelize");
 
 exports.meetWrite = async (req, res, next) => {
   const { title, body, tags, userId } = req.body;
@@ -46,7 +47,9 @@ exports.meetlist = async (req, res) => {
   }
 
   if (tag) {
-    where.tags = tag;
+    where.tags = {
+      [Op.like]: `%${tag}%`, // 해당 태그가 JSON 문자열에 포함되어 있는지 검사
+    };
   }
 
   console.log("where입니다", where);
@@ -56,7 +59,7 @@ exports.meetlist = async (req, res) => {
     console.log("page입니다", page);
     const meet = await meets.findAll({
       nest: true,
-      where, // where 조건 추가
+      where,
       order: [["createdAt", "DESC"]],
       limit,
     });

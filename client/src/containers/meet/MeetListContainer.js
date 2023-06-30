@@ -1,6 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -9,8 +8,8 @@ import MeetList from "../../components/meet/MeetList";
 import { initialize } from "../../modules/meetwrite";
 
 const MeetListContainer = () => {
-  const { userId } = useParams();
-  const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const { meets, error, loading, user } = useSelector(
     ({ meetlist, loading, user }) => ({
@@ -22,11 +21,13 @@ const MeetListContainer = () => {
   );
   useEffect(() => {
     dispatch(initialize());
-    const tag = searchParams.get("tag");
     const page = parseInt(searchParams.get("page"), 10) || 1;
+    const tag = searchParams.get("tag");
+    const userId = searchParams.get("userId");
     console.log("tag==================", tag, "userId================", userId);
     dispatch(meetList({ tag, userId, page }));
-  }, [dispatch, searchParams, userId]);
+  }, [dispatch, searchParams]);
+
   return (
     <MeetList
       loading={loading}

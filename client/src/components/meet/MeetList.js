@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 import Button from "../common/Button";
-import Tags from "../common/Tags";
 import { Link } from "react-router-dom";
 import MeetSubInfo from "../common/MeetSubInfo";
+import MeetTags from "../common/MeetTags";
 
 const MeetListBlock = styled.div``;
 
@@ -19,7 +19,7 @@ const MeetItem = ({ meet }) => {
         <Link to={`/meet/detail/${meetNum}`}>{title}</Link>
       </h2>
       <MeetSubInfo username={userId} publishedDate={new Date(createdAt)} />
-      <Tags tags={tagsArray} />
+      <MeetTags tags={tagsArray} />
       <p>{body}</p>
     </MeetItemBlock>
   );

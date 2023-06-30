@@ -37,8 +37,8 @@ const App = () => {
         <Route path=":postId" element={<PostPage />} />
       </Route>
       <Route path="/meet" element={<MeetListPage />} />
-      <Route path="/meet/:meetNum" element={<MeetPage />} />
-      <Route path="/meetwrite" element={<MeetWritePage />} />
+      <Route path="/meet/detail/:meetNum" element={<MeetPage />} />
+      <Route path="/meet/write" element={<MeetWritePage />} />
       <Route path="/admin" element={<AdminPage />} />
     </Routes>
   );

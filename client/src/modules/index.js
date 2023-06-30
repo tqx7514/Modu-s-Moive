@@ -7,6 +7,7 @@ import write, { writeSaga } from "./write";
 import post, { postSaga } from "./post";
 import meetwrite, { meetWriteSaga } from "./meetwrite";
 import meet, { meetSaga } from "./meet";
+import meetlist, { meetsSaga } from "./meetlist";
 
 const rootReducer = combineReducers({
   auth,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   post,
   meetwrite,
   meet,
+  meetlist,
 });
 
 export function* rootSaga() {
@@ -26,6 +28,7 @@ export function* rootSaga() {
     postSaga(),
     meetWriteSaga(),
     meetSaga(),
+    meetsSaga(),
   ]);
 }
 

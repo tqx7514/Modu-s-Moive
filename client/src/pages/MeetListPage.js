@@ -1,11 +1,12 @@
 import React from "react";
 import HeaderContainer from "../containers/common/HeaderContainer";
+import MeetListContainer from "../containers/meet/MeetListContainer";
 
 const MeetListPage = () => {
   return (
     <div>
       <HeaderContainer />
-      <div>모임 list</div>
+      <MeetListContainer />
     </div>
   );
 };

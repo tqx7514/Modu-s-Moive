@@ -28,3 +28,41 @@ exports.meetRead = async (req, res, next) => {
   }
   res.json(meet);
 };
+
+exports.meetlist = async (req, res) => {
+  const page = parseInt(req.query.page || "1", 10);
+  if (page < 1) {
+    res.status(400);
+    return;
+  }
+
+  const { tag, userId } = req.query;
+  console.log("쿼리===================", req.query);
+  console.log("tag===", tag, "userId===", userId);
+  const where = {};
+
+  if (userId) {
+    where.userId = userId;
+  }
+
+  if (tag) {
+    where.tags = tag;
+  }
+
+  console.log("where입니다", where);
+
+  const limit = 10;
+  try {
+    console.log("page입니다", page);
+    const meet = await meets.findAll({
+      nest: true,
+      where, // where 조건 추가
+      order: [["createdAt", "DESC"]],
+      limit,
+    });
+    // console.log("meet입니다", meet);
+    res.json(meet);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};

@@ -1,13 +1,11 @@
 import { styled } from "styled-components";
 import Responsive from "../common/Responsive";
+import SubInfo from "../common/SubInfo";
+import Tags from "../common/Tags";
 
 const MeetViewerBlock = styled(Responsive)``;
 
 const MeetHead = styled.div``;
-
-const SubInfo = styled.div``;
-
-const Tags = styled.div``;
 
 const MeetContent = styled.div``;
 
@@ -23,22 +21,13 @@ const MeetViewer = ({ meet, error, loading }) => {
     return null;
   }
   const { title, body, userId, createdAt, tags } = meet;
-  console.log("tags입니다===================", tags);
+  const tagsArray = Array.isArray(tags) ? tags : JSON.parse(tags);
   return (
     <MeetViewerBlock>
       <MeetHead>
         <h1>{title}</h1>
-        <SubInfo>
-          <span>
-            <b>{userId}</b>
-          </span>
-          <span>{new Date(createdAt).toLocaleDateString()}</span>
-        </SubInfo>
-        <Tags>
-          {tags.map((tag) => (
-            <div className="tag">#{tag}</div>
-          ))}
-        </Tags>
+        <SubInfo username={userId} publishedDate={createdAt} hasMarginTop />
+        <Tags tags={tagsArray} />
       </MeetHead>
       <MeetContent dangerouslySetInnerHTML={{ __html: body }} />
     </MeetViewerBlock>

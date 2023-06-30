@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled, {css} from 'styled-components';
 import axios from '../../../node_modules/axios/index';
-import {MdDone} from 'react-icons/md' ;
-
+import {MdDensityMedium, MdWindow} from 'react-icons/md' ;
+import { useSelector } from 'react-redux';
 const FirstContents = styled.div`
     display: flex;
     width: calc(100% - 76px);
@@ -14,6 +14,9 @@ const StepArea = styled.div`
     width: 30%;
     height: 100%;
     border: 1px solid;
+    div{
+        display: flex;
+    }
 `;
 const StepCinema = styled.div`
     width: 30%;
@@ -51,6 +54,7 @@ const CinemaBtn = styled.button`
   border: none;
   border-bottom: ${({ active }) => (active ? '2px solid #000' : '1px solid #ddd')};
   transition: border .1s ease-in-out;
+  cursor: pointer;
 
   ${({ active }) => active && css`
     background: white;
@@ -60,7 +64,7 @@ const CinemaBtn = styled.button`
 const AreaUl = styled.ul`
     display: flex;
     height: calc(100% - 116px);
-`
+`;
 const AreaLi = styled.li`
     width: 50%;
     height: 100%;
@@ -69,122 +73,121 @@ const AreaLi = styled.li`
 `;
 
 const AreaItem = styled.li`
-    padding: 10px; 16px;
+    padding: 10px 16px;
     cursor: pointer;
+    font-size: 13px;
     &.selected{
         position: relative;
         background: #fff;
         &:after{
             content: '';
             position: absolute;
-            right: 0;
-            top: 0;
-            background: url('./check.png') no-repeat;
-            width: 10px;
-            height: 5px;
+            right: 5px;
+            top: 2px;
+            background: url('/check.png') no-repeat;
+            width: 18px;
+            height: 14px;
         }
     }
-`
+    span{
+        font-size: 11px;
+        color: #666;
+    }
+`;
 
-const StepFirst = () => {
-    const [click, setClick] = useState(false);
-    const [regions, setRegions] = useState([]);
-    const [cinemas, setCinemas] = useState([]);
-    const [cine, setCine] = useState([]);
-    const [Selected, setSelected] = useState(null);
+const FilterList = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 61px;
+    border-bottom: 1px solid #ddd;
+`;
+
+
+
+const StepFirst = ({region, selected,onSelectRegion}) => {
+    console.log("11111111->",region);
     const [titleCinema, setTitleCinema] = useState('영화관');
-    
-    const handleCinemaBtnClick = () => {
-        setClick((prevState) => !prevState)
-    };
+    const [movies, setMovies] = useState([]);
+    const [titleMovie, setTitleMovie] = useState('영화 선택');
+    const [SelectedMovie, setSelectedMovie] = useState(null);
 
-    const handleSelectRegion = async (e, grade) => {
-        e.preventDefault();
-        setSelected(grade);
-        console.log('111111111111111111111111',Selected);
-        try{
-            const response = await axios.get(`http://localhost:3005/ticket/cinema?grade=${grade}`);
-            setCinemas(response.data);
-        } catch(e){
-            console.error(e);
-        }
-    };
 
-    const handleSelectCinema = (e, cinema) => {
-        setTitleCinema(cinema);
+    const handleSelectMovie = (e, movie) => {
+        setTitleMovie(movie);
+        setSelectedMovie(movie);
     }
 
     useEffect(() => {
-        const showRegion = async () => {
-            try{
-                const response = await axios.get('http://localhost:3005/ticket/region');
-                setRegions(response.data.region);
-                setCine(response.data.cinema)
-            } catch(e){
-                console.error(e);
-            }
-        };
-        showRegion();
-    }, []);
-    useEffect(() => {
-        const showCinema = async () => {
-            try{
-                const response = await axios.get('http://localhost:3005/ticket/cinema');
-                setCinemas(response.data);
-            } catch(e){
-                console.error(e);
-            }
-        };
-        showCinema();
-    }, []);
-
-    useEffect(()=>{
-        const firstSelect = async()=>{
-            const response = await axios.get(`http://localhost:3005/ticket/cinema?grade=1`);
-            setCinemas(response.data);
-            setSelected(1);
+        const showMovie = async () => {
+            const response = await axios.get('http://localhost:3005/ticket/movie');
+            setMovies(response.data)
         }
-        firstSelect();
-    },[])
+        showMovie();
+    }, [])
+
+
     return (
             <FirstContents>
                 <StepArea>
                     <Title>{titleCinema}</Title>
-                    <div style={{display: 'flex'}}>
-                        <CinemaBtn active={!click} onClick={handleCinemaBtnClick}>전체</CinemaBtn>
-                        <CinemaBtn active={click} onClick={handleCinemaBtnClick} style={{background: "white"}}>스페셜관</CinemaBtn>
+                    <div>
+                        <CinemaBtn>전체</CinemaBtn>
+                        <CinemaBtn style={{background: "white"}}>스페셜관</CinemaBtn>
                     </div>
                     <AreaUl>
                         <AreaLi style={{overflow: 'inherit'}}>
                         <ul>
-                            {regions.map((region) => (
-                                <AreaItem 
-                                    key={region.grade}
-                                    href="#none" 
-                                    onClick={(e) => handleSelectRegion(e, region.grade)}
-                                    className={Selected === region.grade ? 'selected' : ''}
-                                    >
-                                        {region.region} <span>({cine.filter(cinema => cinema.grade === region.grade).length})</span>
-                                </AreaItem>
+                            {region && region.map((r) => (
+                            <AreaItem 
+                                key={r.grade}
+                                href="#none" 
+                                className={selected === r.grade ? 'selected' : ''}
+                                onClick={() => onSelectRegion(r.grade)}
+                            >
+                                {r.region}
+                            </AreaItem>
                             ))}
                         </ul>
                         </AreaLi>
                         <AreaLi style={{background: 'white'}}>
                         <ul>
-                            {cinemas.map((cinema) => (
+                            {/* {cinema && cinema.map((c) => (
                                 <AreaItem 
-                                    key={cinema.cinema_num} 
-                                    onClick={(e) => handleSelectCinema(e, cinema.cinema)}
+                                    key={c.cinema_num} 
                                 >
-                                    {cinema.cinema}
+                                    {c.cinema}
                                 </AreaItem>
-                            ))}
+                            ))} */}
                         </ul>
                         </AreaLi>
                     </AreaUl>
                 </StepArea>
                 <StepCinema style={{background: '#f5f5f5'}}>
-                    <Title>영화 선택</Title>
+                    <Title>{titleMovie}</Title>
+                    <FilterList>
+                        <select>
+                            <option value={'예매순'}>예매순</option>
+                            <option value={'관객순'}>관객순</option>
+                            <option value={'평점순'}>평점순</option>
+                            <option value={'예정작'}>예정작</option>
+                        </select>
+                        <div>
+                            <MdDensityMedium/>
+                            <MdWindow/>
+                        </div>
+                    </FilterList>
+                    <ul>
+                        {movies.map((movie) => (
+                            <AreaItem 
+                                key={movie.movie_num}
+                                onClick={(e) => handleSelectMovie(e, movie.movie_name)}
+                                className={SelectedMovie === movie.movie_name ? 'selected' : ''}
+                            >
+                                {movie.movie_name}
+                            </AreaItem>
+                        ))}
+                    </ul>
                 </StepCinema>
                 <StepDateTime>
                     <Title style={{borderRight: 0}}>2023-06-26(오늘)</Title>

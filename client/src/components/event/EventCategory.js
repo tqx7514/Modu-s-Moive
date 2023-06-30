@@ -10,17 +10,17 @@ const categories = [
   {
     name: "movie",
     text: "영화",
-    path: "/movieevent",
+    path: "/event/movie",
   },
   {
-    name: "promotion",
+    name: "promote",
     text: "제휴/할인",
-    path: "/promotionevent",
+    path: "/event/promote",
   },
   {
     name: "etc",
     text: "기타",
-    path: "/etcevent",
+    path: "/event/etc",
   },
 ];
 

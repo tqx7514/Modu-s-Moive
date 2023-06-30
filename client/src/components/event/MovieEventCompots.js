@@ -25,14 +25,14 @@ const MovieEventCompots = () => {
   return (
     <div className="container">
       {events && events.length > 0 && (
-        <div>
+        <div className="movieEventList">
           <h2>영화</h2>
           <ul>
             {events
               .filter((event) => event.categoryId === 1)
               .map((event) => (
                 <li key={event.eventNum}>
-                  <Link to={`/movieevent/${event.eventNum}`}>
+                  <Link to={`/event/movie/${event.eventNum}`}>
                     <img src={event.eventImg} alt={event.eventTitle} />
                     <p>{event.eventTitle}</p>
                     <p>

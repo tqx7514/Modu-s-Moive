@@ -23,16 +23,16 @@ const EventList = () => {
   return (
     <div className="container">
       {events && events.length > 0 && (
-        <div>
+        <div className="movieEventList">
           <h2>영화</h2>
-          <Link to="/movieevent">더보기</Link>
+          <Link to="/event/movie">더보기</Link>
           <ul>
             {events
               .filter((event) => event.categoryId === 1)
               .slice(0, 3)
               .map((event) => (
                 <li key={event.eventNum}>
-                  <Link to={`/movieevent/${event.eventNum}`}>
+                  <Link to={`/event/movie/${event.eventNum}`}>
                     <img src={event.eventImg} alt={event.eventTitle} />
                     <p>{event.eventTitle}</p>
                     <p>
@@ -46,15 +46,15 @@ const EventList = () => {
       )}
 
       {events && events.length > 0 && (
-        <>
+        <div className="promoteEventList">
           <h2>제휴/할인</h2>
-          <Link to="/promotionevent">더보기</Link>
+          <Link to="/event/promote">더보기</Link>
           <ul>
             {events
               .filter((event) => event.categoryId === 2)
               .map((event) => (
                 <li key={event.eventNum}>
-                  <Link to={`/promotionevent/${event.eventNum}`}>
+                  <Link to={`/event/promote/${event.eventNum}`}>
                     <img src={event.eventImg} alt={event.eventTitle} />
                     <p>{event.eventTitle}</p>
                     <p>
@@ -64,20 +64,20 @@ const EventList = () => {
                 </li>
               ))}
           </ul>
-        </>
+        </div>
       )}
 
       {events && events.length > 0 && (
-        <>
+        <div className="etcEventList">
           <h2>기타</h2>
-          <Link to="/etcevent">더보기</Link>
+          <Link to="/event/etc">더보기</Link>
           <ul>
             {events
               .filter((event) => event.categoryId === 3)
               .slice(0, 3)
               .map((event) => (
                 <li key={event.eventNum}>
-                  <Link to={`/etcevent/${event.eventNum}`}>
+                  <Link to={`/event/etc/${event.eventNum}`}>
                     <img src={event.eventImg} alt={event.eventTitle} />
                     <p>{event.eventTitle}</p>
                     <p>
@@ -87,7 +87,7 @@ const EventList = () => {
                 </li>
               ))}
           </ul>
-        </>
+        </div>
       )}
     </div>
   );

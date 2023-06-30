@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -9,7 +9,7 @@ const MovieEventCompots = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3005/event/event"
+          "http://localhost:3005/event/movie"
         );
         const sortedEvents = response.data.sort((a, b) => {
           return new Date(b.startEventDate) - new Date(a.startEventDate);
@@ -24,7 +24,7 @@ const MovieEventCompots = () => {
 
   return (
     <div className="container">
-      {events && events.length > 0 && (
+      {events !== null && events.length > 0 && (
         <div className="movieEventList">
           <h2>영화</h2>
           <ul>
@@ -32,7 +32,7 @@ const MovieEventCompots = () => {
               .filter((event) => event.categoryId === 1)
               .map((event) => (
                 <li key={event.eventNum}>
-                  <Link to={`/event/movie/${event.eventNum}`}>
+                  <Link to={`/event/${event.eventNum}`}>
                     <img src={event.eventImg} alt={event.eventTitle} />
                     <p>{event.eventTitle}</p>
                     <p>

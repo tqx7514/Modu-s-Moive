@@ -8,7 +8,7 @@ const EventList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3005/event/event");
+        const response = await axios.get("http://localhost:3005/event");
         const sortedEvents = response.data.sort((a, b) => {
           return new Date(b.startEventDate) - new Date(a.startEventDate);
         });

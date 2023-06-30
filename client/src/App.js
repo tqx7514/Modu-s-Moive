@@ -13,6 +13,7 @@ import MainPage from "./pages/MainPage";
 import PersonSeat from "./pages/PersonSeat";
 import MoviedetailPage from "./pages/MoviedetailPage"
 import CurrentMoviePage from "./pages/CurrentMoviePage";
+import MovieEventPage from "./pages/MovieEventPage";
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
       <Route path="/cinema" element={<CinemaPage />} />
       <Route path="/" element={<MainPage />} />
       <Route path="/event" element={<EventPage />} />
+      <Route path="/event/movie" element={<MovieEventPage/>}/>
       <Route path="/boardlist" element={<BoardListPage />} />
       <Route path="/gathering" element={<GatheringPage />} />
     </Routes>

@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "CarCarO2",
+    "username": "root",
     "password": "edurootroot",
     "database": "ModoosMovie",
-    "host": "192.168.10.104",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
-    "username": "CarCarO2",
+    "username": "root",
     "password": "edurootroot",
     "database": "ModoosMovie",
-    "host": "192.168.10.104",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
-    "username": "CarCarO2",
+    "username": "root",
     "password": "edurootroot",
     "database": "ModoosMovie",
-    "host": "192.168.10.104",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   }
 }

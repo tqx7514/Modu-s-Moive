@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import Responsive from "../common/Responsive";
-import SubInfo from "../common/SubInfo";
-import Tags from "../common/Tags";
+import MeetSubInfo from "../common/MeetSubInfo";
+import MeetTags from "../common/MeetTags";
 
 const MeetViewerBlock = styled(Responsive)``;
 
@@ -9,7 +9,7 @@ const MeetHead = styled.div``;
 
 const MeetContent = styled.div``;
 
-const MeetViewer = ({ meet, error, loading }) => {
+const MeetViewer = ({ meet, error, loading, actionButtons }) => {
   if (error) {
     if (error.response && error.response.status === 404) {
       return <MeetViewerBlock>존재하지 않는 모임입니다</MeetViewerBlock>;
@@ -26,9 +26,10 @@ const MeetViewer = ({ meet, error, loading }) => {
     <MeetViewerBlock>
       <MeetHead>
         <h1>{title}</h1>
-        <SubInfo username={userId} publishedDate={createdAt} hasMarginTop />
-        <Tags tags={tagsArray} />
+        <MeetSubInfo username={userId} publishedDate={createdAt} hasMarginTop />
+        <MeetTags tags={tagsArray} />
       </MeetHead>
+      {actionButtons}
       <MeetContent dangerouslySetInnerHTML={{ __html: body }} />
     </MeetViewerBlock>
   );

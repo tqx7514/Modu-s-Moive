@@ -9,7 +9,7 @@ const MeetHead = styled.div``;
 
 const MeetContent = styled.div``;
 
-const MeetViewer = ({ meet, error, loading, actionButtons }) => {
+const MeetViewer = ({ meet, error, loading, actionButtons, joinButton }) => {
   if (error) {
     if (error.response && error.response.status === 404) {
       return <MeetViewerBlock>존재하지 않는 모임입니다</MeetViewerBlock>;
@@ -31,6 +31,7 @@ const MeetViewer = ({ meet, error, loading, actionButtons }) => {
       </MeetHead>
       {actionButtons}
       <MeetContent dangerouslySetInnerHTML={{ __html: body }} />
+      {joinButton}
     </MeetViewerBlock>
   );
 };

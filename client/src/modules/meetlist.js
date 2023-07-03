@@ -23,13 +23,16 @@ export function* meetsSaga() {
 const initialState = {
   meets: null,
   error: null,
+  lastPage: 1,
 };
 
 const meetlist = handleActions(
   {
     [MEET_LIST_SUCCESS]: (state, { payload: meets }) => ({
       ...state,
-      meets,
+      meets: meets.meet,
+      // lastPage: parseInt(response.headers["last-page"], 10),
+      lastPage: meets.totalPages,
     }),
     [MEET_LIST_FAILURE]: (state, { payload: error }) => ({
       ...state,

@@ -15,6 +15,10 @@ export const Meetlist = ({ tag, userId, page }) => {
   });
 };
 
+export const joinMeet = ({ userId, meetNum }) => {
+  return client.post("/meet/join", { userId, meetNum });
+};
+
 export const updateMeet = ({ meetNum, title, body, tags }) =>
   client.patch(`/meet/detail/${meetNum}`, { meetNum, title, body, tags });
 

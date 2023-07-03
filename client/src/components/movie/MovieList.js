@@ -45,6 +45,12 @@ const MovieBlock = styled.div`
     border: 1px solid black;
     position: relative;
 
+    &:hover {
+      .movieImg{
+        display: block;
+      }
+    }
+
     Button {
         display: flex;
         text-align: center;
@@ -82,6 +88,7 @@ const Movieimg = styled.div`
     position: absolute;
     top: 0;
     left: 0;
+    display: none;
 
     div {
         margin-top: 60%;
@@ -126,7 +133,7 @@ const MovieList = () => {
               <img src={IMG_BASE_URL + item.poster_path} alt="영화포스터" />
               {/* {showButton && ( */}
               {true && (
-                <Movieimg>
+                <Movieimg className='movieImg'>
                   <div>
                     <Link to={'/ticket'}>
                       <Button>예매하기</Button>

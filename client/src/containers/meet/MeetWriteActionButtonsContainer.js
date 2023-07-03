@@ -2,23 +2,27 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { writeMeet } from "../../modules/meetwrite";
+import { writeMeet, updateMeet } from "../../modules/meetwrite";
 import WriteActionButtons from "../../components/meet/WriteActionButtons";
 
 const MeetWriteActionButtonsContainer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { title, body, tags, meet, meetError, userId } = useSelector(
-    ({ meetwrite, user }) => ({
+  const { title, body, tags, meet, meetError, userId, originalMeetNum } =
+    useSelector(({ meetwrite, user }) => ({
       title: meetwrite.title,
       body: meetwrite.body,
       tags: meetwrite.tags,
       meet: meetwrite.meet,
       meetError: meetwrite.meetError,
       userId: user.user && user.user.id,
-    })
-  );
+      originalMeetNum: meetwrite.originalMeetNum,
+    }));
   const onPublish = () => {
+    if (originalMeetNum) {
+      dispatch(updateMeet({ meetNum: originalMeetNum, title, body, tags }));
+      return;
+    }
     dispatch(
       writeMeet({
         title,
@@ -42,7 +46,13 @@ const MeetWriteActionButtonsContainer = () => {
     }
   }, [navigate, meet, meetError]);
 
-  return <WriteActionButtons onPublish={onPublish} onCancel={onCancel} />;
+  return (
+    <WriteActionButtons
+      onPublish={onPublish}
+      onCancel={onCancel}
+      isEdit={!!originalMeetNum}
+    />
+  );
 };
 
 export default MeetWriteActionButtonsContainer;

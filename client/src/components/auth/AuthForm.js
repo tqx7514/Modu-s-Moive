@@ -87,11 +87,7 @@ const AuthForm = ({
   checkError,
   isDuplicate,
 }) => {
-  // const [isDuplicated, setIsDuplicated] = useState(false);
   const text = textMap[type];
-  console.log("isDuplicate======================", isDuplicate);
-  console.log("checkError======================", checkError);
-
   return (
     <AuthFormBlock>
       <h3>{text}</h3>

@@ -1,5 +1,8 @@
 import { styled } from "styled-components";
 import palette from "../../lib/styles/palette";
+import { useState } from "react";
+import { useCallback } from "react";
+import MeetAskRemoveModal from "./MeetAskRemoveModal";
 
 const MeetActionButtonsBlock = styled.div`
   display: flex;
@@ -26,13 +29,31 @@ const ActionButton = styled.button`
   }
 `;
 
-const MeetActionButtons = ({ onEdit }) => {
-  console.log("ddddddddddddddddd");
+const MeetActionButtons = ({ onEdit, onRemove }) => {
+  const [modal, setModal] = useState(false);
+  const onRemoveClick = () => {
+    setModal(true);
+  };
+  const onCancel = () => {
+    setModal(false);
+  };
+  const onConfirm = () => {
+    setModal(false);
+    onRemove();
+  };
+
   return (
-    <MeetActionButtonsBlock>
-      <ActionButton onClick={onEdit}>수정</ActionButton>
-      <ActionButton>삭제</ActionButton>
-    </MeetActionButtonsBlock>
+    <>
+      <MeetActionButtonsBlock>
+        <ActionButton onClick={onEdit}>수정</ActionButton>
+        <ActionButton onClick={onRemoveClick}>삭제</ActionButton>
+      </MeetActionButtonsBlock>
+      <MeetAskRemoveModal
+        visible={modal}
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+      />
+    </>
   );
 };
 

@@ -69,3 +69,56 @@ exports.meetlist = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+exports.meetUpdate = async (req, res, next) => {
+  const { title, body, tags, meetNum } = req.body;
+  console.log("dddddddddddddd", req.body);
+  console.log("title", title, "body", body, "tags", tags, "meetNum", meetNum);
+  try {
+    const tagsString = JSON.stringify(tags); // 배열을 JSON 형식의 문자열로 변환
+    const [updatedRows] = await meets.update(
+      {
+        title,
+        body,
+        tags: tagsString, // 변환한 문자열을 데이터베이스에 저장
+      },
+      {
+        where: { meetNum },
+      }
+    );
+
+    if (updatedRows === 0) {
+      res.status(404).json({ message: "포스트가 존재하지 않습니다" });
+      return;
+    }
+
+    const updatedMeet = await meets.findOne({
+      where: { meetNum },
+    });
+
+    res.json(updatedMeet);
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+};
+
+exports.meetDelete = async (req, res, next) => {
+  const meetNum = req.params.meetNum;
+
+  try {
+    const deletedRows = await meets.destroy({
+      where: { meetNum },
+    });
+
+    if (deletedRows === 0) {
+      res.status(404).json({ message: "포스트가 존재하지 않습니다" });
+      return;
+    }
+
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+};

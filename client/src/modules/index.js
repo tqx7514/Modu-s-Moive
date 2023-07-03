@@ -8,6 +8,7 @@ import post, { postSaga } from "./post";
 import movielist, {movieSaga} from "./currentmovie";
 import moviedetail, {detailSaga} from "./moviedetail";
 import posts, { postsSaga } from "./posts";
+import stepfirst, { regionSaga, SelectedSaga } from "./stepfirst";
 
 
 const rootReducer = combineReducers({
@@ -19,10 +20,11 @@ const rootReducer = combineReducers({
   movielist,
   // moviedetail,
   posts,
+  stepfirst,
 });
 
 export function* rootSaga() {
-  yield all([authSaga(), userSaga(), writeSaga(), postSaga(), postsSaga(),movieSaga(),]);
+  yield all([authSaga(), userSaga(), writeSaga(), postSaga(), postsSaga(),movieSaga(), regionSaga(), SelectedSaga()]);
 }
 
 export default rootReducer;

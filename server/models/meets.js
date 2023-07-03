@@ -1,47 +1,36 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('boards', {
-    boardNum: {
+  return sequelize.define('meets', {
+    meetNum: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
     title: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(1000),
       allowNull: false
     },
-    content: {
-      type: DataTypes.STRING(255),
+    body: {
+      type: DataTypes.STRING(1000),
       allowNull: false
-    },
-    img: {
-      type: DataTypes.STRING(255),
-      allowNull: true
     },
     userId: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    grade: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     count: {
-      type: DataTypes.STRING(255),
-      allowNull: false
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
     },
-    views: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    tag: {
+    tags: {
       type: DataTypes.STRING(255),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'boards',
+    tableName: 'meets',
     timestamps: true,
     indexes: [
       {
@@ -49,7 +38,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "boardNum" },
+          { name: "meetNum" },
         ]
       },
     ]

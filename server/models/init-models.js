@@ -1,11 +1,9 @@
 var DataTypes = require("sequelize").DataTypes;
 var _NewTable = require("./NewTable");
-var _boardcomments = require("./boardcomments");
-var _boards = require("./boards");
-var _cinema = require("./cinema");
 var _cinemas = require("./cinemas");
 var _eventcategory = require("./eventcategory");
 var _events = require("./events");
+var _meets = require("./meets");
 var _moviereviews = require("./moviereviews");
 var _movies = require("./movies");
 var _postcomments = require("./postcomments");
@@ -16,12 +14,10 @@ var _users = require("./users");
 
 function initModels(sequelize) {
   var NewTable = _NewTable(sequelize, DataTypes);
-  var boardcomments = _boardcomments(sequelize, DataTypes);
-  var boards = _boards(sequelize, DataTypes);
-  var cinema = _cinema(sequelize, DataTypes);
   var cinemas = _cinemas(sequelize, DataTypes);
   var eventcategory = _eventcategory(sequelize, DataTypes);
   var events = _events(sequelize, DataTypes);
+  var meets = _meets(sequelize, DataTypes);
   var moviereviews = _moviereviews(sequelize, DataTypes);
   var movies = _movies(sequelize, DataTypes);
   var postcomments = _postcomments(sequelize, DataTypes);
@@ -39,12 +35,10 @@ function initModels(sequelize) {
 
   return {
     NewTable,
-    boardcomments,
-    boards,
-    cinema,
     cinemas,
     eventcategory,
     events,
+    meets,
     moviereviews,
     movies,
     postcomments,

@@ -16,6 +16,7 @@ import CurrentMoviePage from "./pages/CurrentMoviePage";
 import PostPage from "./pages/PostPage";
 import MyPage from "./pages/MyPage";
 import AdminPage from "./pages/admin/AdminPage";
+import MovieEventPage from "./pages/MovieEventPage";
 
 
 const App = () => {
@@ -37,7 +38,8 @@ const App = () => {
         <Route index element={<PostListPage/>} />
         <Route path=":postId" element={<PostPage/>} />
       </Route>
-      <Route path="/gathering" element={<GatheringPage />} />
+      <Route path="/event/movie" element={<MovieEventPage/>}/>
+      {/* <Route path="/boardlist" element={<BoardListPage />} /> */}
       <Route path="/admin" element={<AdminPage />} />
     </Routes>
   );

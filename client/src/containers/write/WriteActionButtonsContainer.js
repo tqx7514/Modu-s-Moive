@@ -14,9 +14,11 @@ const WriteActionButtonsContainer = () => {
       tags: write.tags,
       post: write.post,
       postError: write.postError,
+      user: user.user,
     })
   );
-  const userId = "aaa";
+  const userId = user.id;
+  console.log(userId);
   const onPublish = () => {
     dispatch(
       writePost({
@@ -32,15 +34,14 @@ const WriteActionButtonsContainer = () => {
     navigate(-1);
   };
 
-  // useEffect(() => {
-  //     if(post) {
-  //         const { _id, user } = post;
-  //         navigate(`/@${user.username}/${_id}`);
-  //     }
-  //     if(postError) {
-  //         console.log(postError);
-  //     }
-  // }, [navigate, post, postError]);
+  useEffect(() => {
+    if (post) {
+      navigate("/postlist");
+    }
+    if (postError) {
+      console.log(postError);
+    }
+  }, [navigate, post, postError]);
   return <WriteActionButtons onPublish={onPublish} onCancel={onCancel} />;
 };
 

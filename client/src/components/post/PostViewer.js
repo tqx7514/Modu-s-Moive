@@ -34,21 +34,17 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
     if(loading || !post) {
         return null;
     }
-    const { title, body, user, tags } = post;
+    const { title, body, user, publishedDate, tags } = post;
     return(
         <PostViewerBlock>
             <PostHead>
                 <h1>{title}</h1>
-                <SubInfo>
-                    <span>
-                        <b>{user.username}</b>
-                    </span>
-                </SubInfo>
-                <Tags>
-                    {tags.map(tag => (
-                        <div className="tag">#{tag}</div>
-                    ))}
-                </Tags>
+                <SubInfo
+                    username={user.username}
+                    publishedDate={publishedDate}
+                    hasMarginTop
+                />
+                <Tags tags={tags}/>
             </PostHead>
             {actionButtons}
             <PostContent dangerouslySetInnerHTML={{ __html: body}}/>

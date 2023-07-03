@@ -15,8 +15,10 @@ import CurrentMoviePage from "./pages/CurrentMoviePage";
 import PostPage from "./pages/PostPage";
 import MyPage from "./pages/MyPage";
 import AdminPage from "./pages/admin/AdminPage";
+import MovieEventPage from "./pages/MovieEventPage";
 import MeetWritePage from "./pages/MeetWritePage";
 import MeetPage from "./pages/MeetPage";
+
 const App = () => {
   return (
     <Routes>
@@ -32,10 +34,11 @@ const App = () => {
       <Route path="/cinema" element={<CinemaPage />} />
       <Route path="/" element={<MainPage />} />
       <Route path="/event" element={<EventPage />} />
-      <Route path="/@:username">
-        <Route index element={<PostListPage />} />
+
+      <Route path="/postlist" element={<PostListPage />}>
         <Route path=":postId" element={<PostPage />} />
       </Route>
+      <Route path="/event/movie" element={<MovieEventPage />} />
       <Route path="/meet" element={<MeetListPage />} />
       <Route path="/meet/detail/:meetNum" element={<MeetPage />} />
       <Route path="/meet/write" element={<MeetWritePage />} />

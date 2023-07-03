@@ -8,9 +8,13 @@ const { sequelize } = require("./models");
 
 const authRouter = require("./routes/auth");
 const ticketRouter = require("./routes/ticket");
-const movieRouter = require("./routes/movie");
-const postRouter = require("./routes/post");
 const meetRouter = require("./routes/meet");
+const postRouter = require("./routes/post");
+const eventRouter = require("./routes/event");
+const currentMovie = require("./routes/currentmovie");
+
+const axios = require("axios");
+const mysql = require("mysql2");
 
 const app = express();
 dotenv.config();
@@ -19,6 +23,13 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// const connection = mysql.createConnection({
+//   host: "192.168.10.104",
+//   user: "CarCarO2",
+//   password: "edurootroot",
+//   database: "ModoosMovie",
+// });
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -40,8 +51,10 @@ app.use(
 
 app.use("/auth", authRouter);
 app.use("/ticket", ticketRouter);
-app.use("/movie", movieRouter);
+
 app.use("/post", postRouter);
+app.use("/event", eventRouter);
+app.use("/currentmovie", currentMovie);
 app.use("/meet", meetRouter);
 
 // catch 404 and forward to error handler

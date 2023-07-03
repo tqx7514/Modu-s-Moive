@@ -18,12 +18,12 @@ const MeetSubInfoBlock = styled.div`
   }
 `;
 
-const MeetSubInfo = ({ username, publishedDate, hasMarginTop }) => {
+const MeetSubInfo = ({ userId, publishedDate, hasMarginTop }) => {
   return (
     <MeetSubInfoBlock hasMarginTop={hasMarginTop}>
       <span>
         <b>
-          <Link to={`/meet?userId=${username}`}>{username}</Link>
+          <Link to={`/meet?userId=${userId}`}>{userId}</Link>
         </b>
       </span>
       <span>{new Date(publishedDate).toLocaleDateString()}</span>

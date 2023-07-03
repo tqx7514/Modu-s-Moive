@@ -7,12 +7,14 @@ const StepFirstContainer = () => {
   // Selector -----------------------------------------------------------
 
   const { region } = useSelector(({stepfirst}) => stepfirst.region);
+  const { cinema } = useSelector(({stepfirst}) => stepfirst);
   const { selected } = useSelector(({stepfirst}) => stepfirst);
   // Dispatch -----------------------------------------------------------
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(readRegion());
+    dispatch(selectedRegion(1));
   }, [dispatch]);
 
   const onClick = (e)=>{
@@ -33,7 +35,6 @@ const StepFirstContainer = () => {
   // }, [dispatch, region]);
 
   console.log("222222222->", region);
-  console.log("333333333->", selected);
 
   // 컴포넌트 -------------------------------------------------------------
 
@@ -41,7 +42,7 @@ const StepFirstContainer = () => {
     <>
       <StepFirst 
               region={region}
-              selected={selected}
+              cinema={cinema}
               onClick={onClick}
               onSelectRegion={onSelectRegion}
               // cinema={cinema}

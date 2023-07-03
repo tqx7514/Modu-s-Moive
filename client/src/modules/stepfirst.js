@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 import createRequestSaga, { createRequestActionTypes } from '../lib/createRequestSaga';
 import * as regionAPI from '../lib/api/ticket';
-import {takeLatest} from 'redux-saga/effects';
+import {takeLatest, put} from 'redux-saga/effects';
 
 // 액션 타입--------------------------------------------------------
 
@@ -28,10 +28,17 @@ export const selectedRegion = createAction(SELECTED_REGION, (grade) => grade);
 export const readRegionSaga = createRequestSaga(READ_REGION, regionAPI.regions);
 export function* regionSaga(){
     yield takeLatest(READ_REGION, readRegionSaga);
+    yield put(selectedRegion(1));
 }
 
+// export const selectedRegionSaga = createRequestSaga(SELECTED_REGION, regionAPI.selectedRegion);
+// export function* RegionSelectedSaga(){
+//     yield takeLatest(SELECTED_REGION, selectedRegionSaga)
+// }
+
 export const selectedRegionSaga = createRequestSaga(SELECTED_REGION, regionAPI.selectedRegion);
-export function* RegionSelectedSaga(){
+export function* SelectedSaga(){
+    console.log("Saga------select-----------");
     yield takeLatest(SELECTED_REGION, selectedRegionSaga)
 }
 
@@ -39,7 +46,7 @@ export function* RegionSelectedSaga(){
 
 const initialState = {
     region: [],
-    selected: 1,
+    cinema: [],
     error: null,
 }
 
@@ -57,7 +64,7 @@ const stepfirst = handleActions({
 
     [SELECTED_REGION_SUCCESS]: (state, action) => ({
         ...state,
-        selected: action.payload,
+        cinema: action.payload,
     }),
     [SELECTED_REGION_FAILURE]: (state, error) => ({
         ...state,

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled, {css} from 'styled-components';
 import axios from '../../../node_modules/axios/index';
 import {MdDensityMedium, MdWindow} from 'react-icons/md' ;
-import { useSelector } from 'react-redux';
 const FirstContents = styled.div`
     display: flex;
     width: calc(100% - 76px);
@@ -105,8 +104,8 @@ const FilterList = styled.div`
 
 
 
-const StepFirst = ({region, selected,onSelectRegion}) => {
-    console.log("11111111->",region);
+const StepFirst = ({region, cinema, onSelectRegion}) => {
+    console.log("11111111->",cinema);
     const [titleCinema, setTitleCinema] = useState('영화관');
     const [movies, setMovies] = useState([]);
     const [titleMovie, setTitleMovie] = useState('영화 선택');
@@ -142,7 +141,7 @@ const StepFirst = ({region, selected,onSelectRegion}) => {
                             <AreaItem 
                                 key={r.grade}
                                 href="#none" 
-                                className={selected === r.grade ? 'selected' : ''}
+                                // className={selected === r.grade ? 'selected' : ''}
                                 onClick={() => onSelectRegion(r.grade)}
                             >
                                 {r.region}
@@ -152,13 +151,13 @@ const StepFirst = ({region, selected,onSelectRegion}) => {
                         </AreaLi>
                         <AreaLi style={{background: 'white'}}>
                         <ul>
-                            {/* {cinema && cinema.map((c) => (
+                            {cinema && cinema.map((c) => (
                                 <AreaItem 
                                     key={c.cinema_num} 
                                 >
                                     {c.cinema}
                                 </AreaItem>
-                            ))} */}
+                            ))}
                         </ul>
                         </AreaLi>
                     </AreaUl>

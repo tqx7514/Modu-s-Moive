@@ -11,12 +11,12 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    content: {
-      type: DataTypes.STRING(255),
+    body: {
+      type: DataTypes.STRING(9999),
       allowNull: false
     },
     img: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.BLOB,
       allowNull: true
     },
     userId: {
@@ -25,17 +25,20 @@ module.exports = function(sequelize, DataTypes) {
     },
     grade: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      defaultValue: 1
     },
     count: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: false,
+      defaultValue: "0"
     },
     views: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: false,
+      defaultValue: "0"
     },
-    tag: {
+    tags: {
       type: DataTypes.STRING(255),
       allowNull: true
     }

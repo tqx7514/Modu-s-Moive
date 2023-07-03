@@ -1,43 +1,44 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('movies', {
-    movie_num: {
+  return sequelize.define('meets', {
+    meetNum: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    movie_name: {
-      type: DataTypes.STRING(100),
+    title: {
+      type: DataTypes.STRING(1000),
       allowNull: false
     },
-    tiketing: {
-      type: DataTypes.STRING(100),
-      allowNull: true
+    body: {
+      type: DataTypes.STRING(1000),
+      allowNull: false
     },
-    star: {
-      type: DataTypes.INTEGER,
-      allowNull: true
+    userId: {
+      type: DataTypes.STRING(255),
+      allowNull: false
     },
-    popularity: {
+    count: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: false,
+      defaultValue: 0
     },
-    movie_id: {
-      type: DataTypes.INTEGER,
+    tags: {
+      type: DataTypes.STRING(255),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'movies',
-    timestamps: false,
+    tableName: 'meets',
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "movie_num" },
+          { name: "meetNum" },
         ]
       },
     ]

@@ -4,7 +4,7 @@ import loading from "./loading";
 import { all } from "redux-saga/effects";
 import user, { userSaga } from "./user";
 import write from "./write";
-import stepfirst, { regionSaga, selectedRegionSaga } from "./stepfirst";
+import stepfirst, { regionSaga, SelectedSaga } from "./stepfirst";
 
 const rootReducer = combineReducers({
   auth,
@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
 });
 
 export function* rootSaga() {
-  yield all([authSaga(), userSaga(), regionSaga(), selectedRegionSaga()]);
+  yield all([authSaga(), userSaga(), regionSaga(), SelectedSaga()]);
 }
 
 export default rootReducer;

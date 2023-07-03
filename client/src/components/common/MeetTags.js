@@ -2,7 +2,7 @@ import styled from "styled-components";
 import palette from "../../lib/styles/palette";
 import { Link } from "react-router-dom";
 
-const TagsBlock = styled.div`
+const MeetTagsBlock = styled.div`
   margin-top: 0.5rem;
   .tag {
     display: inline-block;
@@ -15,16 +15,16 @@ const TagsBlock = styled.div`
   }
 `;
 
-const Tags = ({ tags }) => {
+const MeetTags = ({ tags }) => {
   return (
-    <TagsBlock>
+    <MeetTagsBlock>
       {tags.map((tag) => (
-        <Link className="tag" to={`/?tag=${tag}`} key={tag}>
+        <Link className="tag" to={`/meet/?tag=${tag}`} key={tag}>
           #{tag}
         </Link>
       ))}
-    </TagsBlock>
+    </MeetTagsBlock>
   );
 };
 
-export default Tags;
+export default MeetTags;

@@ -7,7 +7,7 @@ const [
   LIST_POSTS,
   LIST_POSTS_SUCCESS,
   LIST_POSTS_FAILURE,
-] = createRequestActionTypes('posts/LIST_POSTS');
+] = createRequestActionTypes('movie/LIST_POSTS');
 
 export const listPosts = createAction(LIST_POSTS);
 

@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const {cinema} = require('../models');
+const {cinemas} = require('../models');
 
 router.get('/cinema', async (req, res) => {
+    console.log('sssssssssssssss');
     try{
-        const cinemas = await cinema.findAll({
+        const cinemas = await cinemas.findAll({
             order: [['cinema', 'ASC']],
         });
 

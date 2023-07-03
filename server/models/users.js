@@ -7,14 +7,14 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    userName: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
     id: {
       type: DataTypes.STRING(255),
       allowNull: false,
       unique: "users_UN"
+    },
+    name: {
+      type: DataTypes.STRING(255),
+      allowNull: false
     },
     password: {
       type: DataTypes.STRING(255),
@@ -32,13 +32,19 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.BIGINT,
       allowNull: false
     },
+    gender: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
     grade: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      defaultValue: 0
     },
     point: {
       type: DataTypes.BIGINT,
-      allowNull: false
+      allowNull: false,
+      defaultValue: 0
     }
   }, {
     sequelize,

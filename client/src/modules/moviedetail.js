@@ -8,6 +8,25 @@ const [
     DETAIL_POST_SUCCESS,
     DETAIL_POST_FAIURE,
 ] = createRequestActionTypes('moviedetail/DETAIL_POST');
+
+const [
+    DETAIL_IMAGE,
+    DETAIL_IMAGE_SUCCESS,
+    DETAIL_IMAGE_FAIURE,
+] = createRequestActionTypes('moviedetail/DETAIL_IMAGE');
+
+const [
+    DETAIL_VIDEO,
+    DETAIL_VIDEO_SUCCESS,
+    DETAIL_VIDEO_FAIURE,
+] = createRequestActionTypes('moviedetail/DETAIL_VIDEO');
+
+const [
+    DETAIL_CREDIT,
+    DETAIL_CREDIT_SUCCESS,
+    DETAIL_CREDIT_FAIURE,
+]
+
 const UNLOAD_DETAIL = 'moviedetail/UNLOAD_DETAIL';
 
 export const readDetail = createAction(DETAIL_POST, id => id);

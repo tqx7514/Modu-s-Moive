@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('boards', {
-    boardNum: {
+  return sequelize.define('posts', {
+    postNum: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -41,7 +41,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'boards',
+    tableName: 'posts',
     timestamps: true,
     indexes: [
       {
@@ -49,7 +49,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "boardNum" },
+          { name: "postNum" },
         ]
       },
     ]

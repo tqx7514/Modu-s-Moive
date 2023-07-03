@@ -16,6 +16,7 @@ const TagsBlock = styled.div`
 `;
 
 const Tags = ({ tags }) => {
+    
     return(
         <TagsBlock>
             {tags.map(tag => (

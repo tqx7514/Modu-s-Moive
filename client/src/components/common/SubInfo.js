@@ -18,12 +18,12 @@ const SubInfoBlock = styled.div`
         }
 `;
 
-const SubInfo = ({ username, publishedDate, hasMarginTop }) => {
+const SubInfo = ({ name, publishedDate, hasMarginTop }) => {
     return(
         <SubInfoBlock hasMarginTop={hasMarginTop}>
             <span>
                 <b>
-                    <Link to={`/@${username}`}>{username}</Link>
+                    <Link to={`/@${name}`}>{name}</Link>
                 </b>
             </span>
             <span>{new Date(publishedDate).toLocaleDateString()}</span>

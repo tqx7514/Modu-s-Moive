@@ -12,11 +12,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     body: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(9999),
       allowNull: false
     },
     img: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.BLOB,
       allowNull: true
     },
     userId: {

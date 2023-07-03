@@ -18,3 +18,16 @@ exports.write = async (req, res, next) => {
     next(error);
   }
 }
+
+exports.postlist = async (req, res, next) => {
+  console.log("126786434454");
+  try {
+    const postlists = await posts.findAll({});
+    console.log("아무거나", postlists);
+  res.status(200).json(postlists);
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+  
+}

@@ -8055,7 +8055,7 @@ redux-devtools-extension@^2.13.9:
 
 redux-saga@^1.2.3:
   version "1.2.3"
-  resolved "https://registry.npmjs.org/redux-saga/-/redux-saga-1.2.3.tgz"
+  resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-1.2.3.tgz#7362f78a0235868daf1210f8862a95906ac018a1"
   integrity sha512-HDe0wTR5nhd8Xr5xjGzoyTbdAw6rjy1GDplFt3JKtKN8/MnkQSRqK/n6aQQhpw5NI4ekDVOaW+w4sdxPBaCoTQ==
   dependencies:
     "@redux-saga/core" "^1.2.3"

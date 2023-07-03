@@ -6,8 +6,9 @@ export const writePost = ({ title, body, tags,userId }) =>
 
 export const readPost = id => client.get(`/post/${id}`);
 
-export const listPosts = ({ page, username, tag }) => {
-    return client.get(`/post`, {
-        params: { page, username, tag },
+export const listPosts = ({ page, name, tags }) => {
+    console.log("12456", page, name, tags);
+    return client.post('/post/postlist', {
+        params: { page, name, tags },
     });
 };

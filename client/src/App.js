@@ -33,8 +33,7 @@ const App = () => {
       <Route path="/cinema" element={<CinemaPage />} />
       <Route path="/" element={<MainPage />} />
       <Route path="/event" element={<EventPage />} />
-      <Route path="/@:username">
-        <Route index element={<PostListPage/>} />
+      <Route path="/postlist" element={<PostListPage/>}>
         <Route path=":postId" element={<PostPage/>} />
       </Route>
       <Route path="/gathering" element={<GatheringPage />} />

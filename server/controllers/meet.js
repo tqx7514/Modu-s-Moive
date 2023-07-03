@@ -1,4 +1,4 @@
-const { meets } = require("../models");
+const { meets, meetusers } = require("../models");
 const { Op } = require("sequelize");
 
 exports.meetWrite = async (req, res, next) => {
@@ -32,11 +32,11 @@ exports.meetRead = async (req, res, next) => {
 
 exports.meetlist = async (req, res) => {
   const page = parseInt(req.query.page || "1", 10);
+  console.log("page=====================", page);
   if (page < 1) {
     res.status(400);
     return;
   }
-
   const { tag, userId } = req.query;
   console.log("쿼리===================", req.query);
   console.log("tag===", tag, "userId===", userId);
@@ -48,13 +48,14 @@ exports.meetlist = async (req, res) => {
 
   if (tag) {
     where.tags = {
-      [Op.like]: `%${tag}%`, // 해당 태그가 JSON 문자열에 포함되어 있는지 검사
+      [Op.like]: `%${tag}%`,
     };
   }
 
   console.log("where입니다", where);
 
-  const limit = 10;
+  const limit = 15;
+  const offset = (page - 1) * limit;
   try {
     console.log("page입니다", page);
     const meet = await meets.findAll({
@@ -62,9 +63,16 @@ exports.meetlist = async (req, res) => {
       where,
       order: [["createdAt", "DESC"]],
       limit,
+      offset,
     });
-    // console.log("meet입니다", meet);
-    res.json(meet);
+
+    const totalCount = await meets.count({ where }); // 총 항목 수 계산
+    const totalPages = Math.ceil(totalCount / limit); // 총 페이지 수 계산
+
+    res.json({
+      meet,
+      totalPages, // 마지막 페이지 정보인 totalPages를 응답에 추가
+    });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -120,5 +128,24 @@ exports.meetDelete = async (req, res, next) => {
   } catch (error) {
     res.status(500).json(error);
     next(error);
+  }
+};
+
+exports.meetJoin = async (req, res) => {
+  console.log("백 meetJoin 왓음~~");
+  console.log("req.body===========", req.body);
+  const { userId, meetNum } = req.body;
+  console.log(userId, meetNum);
+  try {
+    const met = await meetusers.findAll({});
+    console.log("zzzzzzzzzzzzzzz", met);
+    const newJoin = await meetusers.create({
+      user_Id: userId,
+      meet_MeetNum: meetNum,
+    });
+    res.status(200).json(newJoin);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(error);
   }
 };

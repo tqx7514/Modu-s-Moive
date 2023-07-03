@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { users } = require("../models");
+const { users, meetusers } = require("../models");
 const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res, next) => {
@@ -53,6 +53,12 @@ exports.login = async (req, res) => {
   const { id, password } = req.body;
 
   try {
+    const newUserInfo = await meetusers.findAndCountAll({
+      where: { user_Id: id },
+      attiributes: ["meet_meetNum"],
+    });
+    console.log("데이ㅓㅌ", newUserInfo);
+    console.log("카운트", newUserInfo.count);
     const userInfo = await users.findOne({ where: { id } });
     const hash = await bcrypt.compare(password, userInfo.password);
 

@@ -104,9 +104,14 @@ const FilterList = styled.div`
 
 
 
-const StepFirst = ({region, cinema, onSelectRegion}) => {
-    console.log("11111111->",cinema);
-    const [titleCinema, setTitleCinema] = useState('영화관');
+const StepFirst = ({
+    region, 
+    cinema, 
+    titleCinema,
+    onSelectRegion
+}) => {
+    console.log("11111111->",titleCinema);
+    // const [titleCinema, setTitleCinema] = useState('영화관');
     const [movies, setMovies] = useState([]);
     const [titleMovie, setTitleMovie] = useState('영화 선택');
     const [SelectedMovie, setSelectedMovie] = useState(null);

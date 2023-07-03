@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 import createRequestSaga, { createRequestActionTypes } from '../lib/createRequestSaga';
 import * as regionAPI from '../lib/api/ticket';
-import {takeLatest, put} from 'redux-saga/effects';
+import {takeLatest, put, call} from 'redux-saga/effects';
 
 // 액션 타입--------------------------------------------------------
 
@@ -17,11 +17,19 @@ const [
     SELECTED_REGION_FAILURE,
 ] = createRequestActionTypes('stepfirst/SELECTED_REGION');
 
+const [
+    SET_TITLE_CINEMA,
+    SET_TITLE_CINEMA_SUCCESS,
+    SET_TITLE_CINEMA_FAILURE,
+] = createRequestActionTypes('stepfirst/TITLE_CINEMA');
+
 // 액션 생성--------------------------------------------------------
 
 export const readRegion = createAction(READ_REGION);
 
 export const selectedRegion = createAction(SELECTED_REGION, (grade) => grade);
+
+export const titleCinema = createAction(SET_TITLE_CINEMA);
 
 // 사가 함수--------------------------------------------------------
 
@@ -37,9 +45,26 @@ export function* regionSaga(){
 // }
 
 export const selectedRegionSaga = createRequestSaga(SELECTED_REGION, regionAPI.selectedRegion);
-export function* SelectedSaga(){
+export function* SelectedSaga(action){
     console.log("Saga------select-----------");
-    yield takeLatest(SELECTED_REGION, selectedRegionSaga)
+    yield takeLatest(SELECTED_REGION, selectedRegionSaga);
+    try {
+        const cinema = yield call(regionAPI.selectedRegion, action.payload);
+        yield put({
+          type: SELECTED_REGION_SUCCESS,
+          payload: cinema,
+        });
+        yield put({
+          type: SET_TITLE_CINEMA_SUCCESS,
+          payload: cinema.name, // 선택된 영화관의 이름을 payload로 전달
+        });
+      } catch (error) {
+        yield put({
+          type: SELECTED_REGION_FAILURE,
+          payload: error,
+          error: true,
+        });
+      }
 }
 
 // 초기 값--------------------------------------------------------
@@ -47,6 +72,7 @@ export function* SelectedSaga(){
 const initialState = {
     region: [],
     cinema: [],
+    titleCinema: '영화관',
     error: null,
 }
 
@@ -61,12 +87,19 @@ const stepfirst = handleActions({
         ...state,
         error,
     }),
-
     [SELECTED_REGION_SUCCESS]: (state, action) => ({
         ...state,
         cinema: action.payload,
     }),
     [SELECTED_REGION_FAILURE]: (state, error) => ({
+        ...state,
+        error,
+    }),
+    [SET_TITLE_CINEMA_SUCCESS]: (state, action) => ({
+        ...state,
+        titleCinema: action.payload,
+    }),
+    [SET_TITLE_CINEMA_FAILURE]: (state, error) => ({
         ...state,
         error,
     }),

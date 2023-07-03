@@ -7,8 +7,8 @@ const StepFirstContainer = () => {
   // Selector -----------------------------------------------------------
 
   const { region } = useSelector(({stepfirst}) => stepfirst.region);
-  const { cinema } = useSelector(({stepfirst}) => stepfirst);
-  const { selected } = useSelector(({stepfirst}) => stepfirst);
+  const { cinema, titleCinema } = useSelector(({stepfirst}) => stepfirst);
+  
   // Dispatch -----------------------------------------------------------
   const dispatch = useDispatch();
 
@@ -17,10 +17,7 @@ const StepFirstContainer = () => {
     dispatch(selectedRegion(1));
   }, [dispatch]);
 
-  const onClick = (e)=>{
-    console.log("1111sdfd1111",e.target.event);
 
-  }
 
   const onSelectRegion = useCallback((grade) => {
     dispatch(selectedRegion(grade));
@@ -43,7 +40,7 @@ const StepFirstContainer = () => {
       <StepFirst 
               region={region}
               cinema={cinema}
-              onClick={onClick}
+              titleCinema={titleCinema}
               onSelectRegion={onSelectRegion}
               // cinema={cinema}
       />;

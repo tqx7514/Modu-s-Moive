@@ -1,8 +1,4 @@
 var DataTypes = require("sequelize").DataTypes;
-var _NewTable = require("./NewTable");
-var _boardcomments = require("./boardcomments");
-var _boards = require("./boards");
-var _cinema = require("./cinema");
 var _cinemas = require("./cinemas");
 var _eventcategory = require("./eventcategory");
 var _events = require("./events");
@@ -16,10 +12,6 @@ var _tickets = require("./tickets");
 var _users = require("./users");
 
 function initModels(sequelize) {
-  var NewTable = _NewTable(sequelize, DataTypes);
-  var boardcomments = _boardcomments(sequelize, DataTypes);
-  var boards = _boards(sequelize, DataTypes);
-  var cinema = _cinema(sequelize, DataTypes);
   var cinemas = _cinemas(sequelize, DataTypes);
   var eventcategory = _eventcategory(sequelize, DataTypes);
   var events = _events(sequelize, DataTypes);
@@ -40,10 +32,6 @@ function initModels(sequelize) {
   users.hasMany(events, { as: "events", foreignKey: "userNum"});
 
   return {
-    NewTable,
-    boardcomments,
-    boards,
-    cinema,
     cinemas,
     eventcategory,
     events,

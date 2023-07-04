@@ -2,6 +2,7 @@ import React from "react";
 import HeaderContainer from "../containers/common/HeaderContainer";
 import TicketWrap from "../components/ticket/TicketWrap";
 import StepFirst from "../components/ticket/StepFirst";
+import StepFirstContainer from "../containers/ticket/StepFirstContainer";
 
 
 
@@ -10,7 +11,7 @@ const TicketPage = () => {
         <div>
             <HeaderContainer/>
             <TicketWrap>
-                <StepFirst/>
+                <StepFirstContainer/>
             </TicketWrap>
             <div>
                 <hr/>

@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Responsive from "./Responsive";
 import Button from "./Button";
+import LogoImage from "../../public/Logo.png";
 
 const HeaderBlock = styled.div`
   position: fixed;
@@ -11,14 +12,11 @@ const HeaderBlock = styled.div`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
 `;
 
-/**
- * Responsive 컴포넌트의 속성에 스타일을 추가해서 새로운 컴포넌트 생성
- */
 const Wrapper = styled(Responsive)`
-  height: 4rem;
+  height: 3rem;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* 자식 엘리먼트 사이에 여백을 최대로 설정 */
+  justify-content: space-between;
   .logo {
     font-size: 1.125rem;
     font-weight: 800;
@@ -30,11 +28,34 @@ const Wrapper = styled(Responsive)`
   }
 `;
 
-/**
- * 헤더가 fixed로 되어 있기 때문에 페이지의 컨텐츠가 4rem 아래 나타나도록 해주는 컴포넌트
- */
+const LogoWrapper = styled(Responsive)`
+  height: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .logo {
+    font-size: 1.125rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+  }
+  .right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+`;
+
+const Logo = styled.img`
+  height: 5rem;
+  margin-top: 0.6rem;
+`;
+
+const Spacing = styled.div`
+  margin-left: 0.5rem;
+`;
+
 const Spacer = styled.div`
-  height: 4rem;
+  height: 9.5rem;
 `;
 
 const UserInfo = styled.div`
@@ -42,30 +63,82 @@ const UserInfo = styled.div`
   margin-right: 1rem;
 `;
 
+const UserHi = styled.div`
+  font-weight: normal;
+`;
+
+const activeStyle = {
+  color: "green",
+  fontSize: 21,
+  fontWeight: "bold",
+};
+
 const Header = ({ user, onLogout }) => {
   return (
     <>
       <HeaderBlock>
-        <Wrapper>
-          <Link to="/currentmovie">상영중인 영화</Link>
-          <Link to="/ticket">예매</Link>
-          <Link to="/cinema">영화관 위치</Link>
+        <LogoWrapper>
           <Link to="/" className="logo">
-              Modu's Movie
+            <Logo src={LogoImage} alt="Logo" />
           </Link>
-          <Link to="/event">EVENT</Link>
-          <Link to="/boardlist">게시판</Link>
-          <Link to="/gathering">모임</Link>
           {user ? (
             <div className="right">
-              <UserInfo>{user.id}</UserInfo>
+              <UserInfo>
+                {user.name}
+                <UserHi>님 안녕하세요!</UserHi>
+              </UserInfo>
+              <Spacing />
               <Button onClick={onLogout}>로그아웃</Button>
+              <Spacing />
+              <Button to={`/mypage/${user.id}`}>마이페이지</Button>
+              <Spacing />
+              {user.grade > 1 && <Button to="/admin">관리자페이지</Button>}
             </div>
           ) : (
             <div className="right">
               <Button to="/login">로그인</Button>
+              <Spacing />
+              <Button to="/register">회원가입</Button>
             </div>
           )}
+        </LogoWrapper>
+        <Wrapper>
+          <NavLink
+            to="/currentmovie"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
+            상영중인 영화
+          </NavLink>
+          <NavLink
+            to="/ticket"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
+            예매
+          </NavLink>
+          <NavLink
+            to="/cinema"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
+            영화관 위치
+          </NavLink>
+          <NavLink
+            to="/event"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
+            EVENT
+          </NavLink>
+          <NavLink
+            to="/postlist"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
+            게시판
+          </NavLink>
+          <NavLink
+            to="/meet"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
+            모임
+          </NavLink>
         </Wrapper>
       </HeaderBlock>
       <Spacer />

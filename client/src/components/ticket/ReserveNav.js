@@ -20,7 +20,7 @@ const NavReserveLi = styled.li`
         border-bottom: none;
     }
     ${props =>
-        props.active && css`
+        props.active === 'true' && css`
             background: #FF243E;
             color: #fff;
         `
@@ -31,12 +31,12 @@ const ReserveNav = () => {
     const location = useLocation();
     return(
         <NavReserveUl>
-            <NavReserveLi active={location.pathname === "/ticket"}>
+            <NavReserveLi active={String(location.pathname === "/ticket")}>
                 01
                 <br/>
                 상영시간
             </NavReserveLi>
-            <NavReserveLi active={location.pathname === "/ticket/PersonSeat"}>
+            <NavReserveLi active={String(location.pathname === "/ticket/PersonSeat")}>
                 02
                 <br/>
                 인원/좌석

@@ -3,7 +3,8 @@ const { users } = require("../models");
 const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res, next) => {
-  const { id, email, password } = req.body;
+  const { id, name, email, password, tel, age, gender } = req.body;
+  console.log("req.body============================", req.body);
   try {
     const exUser = await users.findOne({ where: { id } });
     if (exUser) {
@@ -13,14 +14,21 @@ exports.register = async (req, res, next) => {
       const hash = await bcrypt.hash(password, 12);
       const newUser = await users.create({
         id,
+        name,
         password: hash,
         email,
+        tel,
+        age,
+        gender,
+        grade: 0,
       });
 
       const accessToken = jwt.sign(
         {
           id: newUser.id,
+          name: newUser.name,
           email: newUser.email,
+          grade: newUser.grade,
         },
         process.env.ACCESS_SECRET,
         {
@@ -56,7 +64,9 @@ exports.login = async (req, res) => {
       const accessToken = jwt.sign(
         {
           id: userInfo.id,
+          name: userInfo.name,
           email: userInfo.email,
+          grade: userInfo.grade,
         },
         process.env.ACCESS_SECRET,
         {
@@ -71,6 +81,7 @@ exports.login = async (req, res) => {
         httpOnly: true,
       });
       res.status(200).json(accessToken);
+      // console.log("dddddddddddddddddd", accessToken);
     }
   } catch (error) {
     res.status(500).json(error);
@@ -87,6 +98,7 @@ exports.logout = (req, res) => {
 exports.check = (req, res) => {
   // const user = jwt.verify(req.cookies.accessToken, process.env.ACCESS_SECRET);
   const user = req.cookies.accessToken;
+  // console.log(req.cookies.accessToken);
 
   // const user = 1;
   if (!user) {
@@ -95,4 +107,15 @@ exports.check = (req, res) => {
     return;
   }
   res.json(jwt.verify(user, process.env.ACCESS_SECRET));
+};
+
+exports.checkDuplicate = async (req, res, next) => {
+  const { id } = req.body;
+  console.log("ddddddddddddddddddd", id);
+  try {
+    const isDuplicate = await users.findOne({ where: { id } });
+    res.json(isDuplicate);
+  } catch (error) {
+    next(error);
+  }
 };

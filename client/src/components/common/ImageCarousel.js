@@ -10,7 +10,8 @@ const Imgcarousel = styled.div`
   }
 `
 
-const ImageCarousel = ({ images }) => {
+
+const ImageCarousel = ({images}) => {
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
 
   const settings = {
@@ -29,7 +30,7 @@ const ImageCarousel = ({ images }) => {
       <Slider {...settings}>
         {images.map((image) => (
           <div key={image.file_path}>
-            <img src={IMG_BASE_URL + image.file_path} />
+            <img src={IMG_BASE_URL + image.file_path} alt='영화 포스터'/>
           </div>
         ))}
       </Slider>

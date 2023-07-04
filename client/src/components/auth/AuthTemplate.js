@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import palette from "../../lib/styles/palette";
+import LogoImage from "../../public/Logo.png";
 
 const AuthTemplateBlock = styled.div`
   position: absolute;
@@ -27,7 +28,12 @@ const WhiteBox = styled.div`
   padding: 2rem;
   width: 360px;
   background: white;
-  border-radius: 2px;
+  border-radius: 20px;
+`;
+
+const Logo = styled.img`
+  max-width: 100%;
+  height: auto;
 `;
 
 const AuthTemplate = ({ children }) => {
@@ -35,7 +41,9 @@ const AuthTemplate = ({ children }) => {
     <AuthTemplateBlock>
       <WhiteBox>
         <div className="logo-area">
-          <Link to="/">Reacters</Link>
+          <Link to="/">
+            <Logo src={LogoImage} alt="Logo" />
+          </Link>
         </div>
         {children}
       </WhiteBox>

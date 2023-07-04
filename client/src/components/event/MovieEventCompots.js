@@ -21,7 +21,18 @@ const MovieEventCompots = () => {
       const response = await axios.get("http://localhost:3005/event/movie");
       const sortedEvents = response.data
       .filter((event) => event.categoryId === 1)
-      .sort((a, b) => new Date(b.startEventDate) - new Date(a.startEventDate));
+      .sort((a, b) => {
+        const startDateA = new Date(a.startEventDate).getTime();
+        const StartDateB = new Date(b.startEventDate).getTime();
+        const endDateA = new Date(a.endEventDate).getTime();
+        const endDateB = new Date(b.endEventDate).getTime();
+
+        if (startDateA === StartDateB) {
+          return endDateB - endDateA
+        } else {
+          return startDateB - startDateA;
+        }
+      });
       setEvents(sortedEvents);
     } catch (error) {
       console.error(error);

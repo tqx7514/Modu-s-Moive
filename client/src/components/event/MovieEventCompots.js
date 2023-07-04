@@ -20,19 +20,19 @@ const MovieEventCompots = () => {
     try {
       const response = await axios.get("http://localhost:3005/event/movie");
       const sortedEvents = response.data
-      .filter((event) => event.categoryId === 1)
-      .sort((a, b) => {
-        const startDateA = new Date(a.startEventDate).getTime();
-        const StartDateB = new Date(b.startEventDate).getTime();
-        const endDateA = new Date(a.endEventDate).getTime();
-        const endDateB = new Date(b.endEventDate).getTime();
+        .filter((event) => event.categoryId === 1)
+        .sort((a, b) => {
+          const startDateA = new Date(a.startEventDate).getTime();
+          const startDateB = new Date(b.startEventDate).getTime();
+          const endDateA = new Date(a.endEventDate).getTime();
+          const endDateB = new Date(b.endEventDate).getTime();
 
-        if (startDateA === StartDateB) {
-          return endDateB - endDateA
-        } else {
-          return startDateB - startDateA;
-        }
-      });
+          if (startDateA === startDateB) {
+            return endDateB - endDateA;
+          } else {
+            return startDateB - startDateA;
+          }
+        });
       setEvents(sortedEvents);
     } catch (error) {
       console.error(error);
@@ -57,13 +57,13 @@ const MovieEventCompots = () => {
                   <Link to={`/event/${event.eventNum}`}>
                     <img src={event.eventImg} alt={event.eventTitle} />
                     <p>{event.eventTitle}</p>
-                      <p>
-                        {event.startEventDate} ~ {event.endEventDate}
-                      </p>
+                    <p>
+                      {event.startEventDate} ~ {event.endEventDate}
+                    </p>
                   </Link>
                 </li>
               ))}
-              </MovieItems>
+            </MovieItems>
           </ul>
           {!showMore && events.length > 16 && (
             <button onClick={handleShowMore}>더보기</button>

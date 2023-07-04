@@ -26,6 +26,10 @@ module.exports = function(sequelize, DataTypes) {
     movie_id: {
       type: DataTypes.INTEGER,
       allowNull: true
+    },
+    age: {
+      type: DataTypes.STRING(100),
+      allowNull: false
     }
   }, {
     sequelize,

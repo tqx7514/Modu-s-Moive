@@ -1,12 +1,12 @@
 import React from "react";
 import HeaderContainer from "../containers/common/HeaderContainer";
-import MovieList from "../components/movie/MovieList";
+import MovieContainer from "../containers/movie/MovieContainer";
 
 const CurrentMoviePage = () => {
     return (
         <div>
             <HeaderContainer/>
-            <MovieList/>
+            <MovieContainer/>
         </div>
     );
 };

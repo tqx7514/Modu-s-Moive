@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -15,15 +15,12 @@ const VideoCarousel = ({ videos }) => {
     autoplay: false,
     autoplaySpeed: 30000,
   };
-   
-  
-    const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
 
     return (
       <div className="carousel">
         <Slider {...settings}>
           {videos.map((video) => (
-            <div key={video.key}>
+            <div key={videos.key}>
               <iframe
                 title={video.name}
                 width="300"

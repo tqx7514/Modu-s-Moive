@@ -7,7 +7,6 @@ export const regions = async () => await client.get('/ticket/region');
 //     return  await client.get(`/ticket/cinema?${grade}`);
 // }
 export const selectedRegion = async (grade) =>{
-    console.log("select-promise--->", grade);
 
     return  await client.get(`/ticket/cinema?grade=${grade}`);
 }

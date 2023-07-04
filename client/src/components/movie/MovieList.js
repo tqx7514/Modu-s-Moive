@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import Button from "../common/Button";
 import { MdStarRate } from 'react-icons/md';
 import { Link } from "react-router-dom";
-import { listPosts } from '../../modules/currentmovie';
+
 
 const AppContainer = styled.div`
   display: flex;
@@ -45,6 +44,12 @@ const MovieBlock = styled.div`
     border: 1px solid black;
     position: relative;
 
+    &:hover {
+      .movieImg{
+        display: block;
+      }
+    }
+
     Button {
         display: flex;
         text-align: center;
@@ -82,6 +87,7 @@ const Movieimg = styled.div`
     position: absolute;
     top: 0;
     left: 0;
+    display: none;
 
     div {
         margin-top: 60%;
@@ -91,47 +97,24 @@ const Movieimg = styled.div`
 
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
 
-const MovieList = () => {
-  const dispatch = useDispatch();
-  const movielist = useSelector(state => state.movielist.movielist);
-
-  useEffect(() => {
-    dispatch(listPosts());
-  }, [dispatch]);
-
-  const handleMouseEnter = () => {
-    // handle mouse enter logic
-  };
-
-  const handleMouseLeave = () => {
-    // handle mouse leave logic
-  };
-
+const MovieList = ({movielist}) => {
+  console.log("111111111", movielist);
   return (
     <div>
-      <CategoriesBlock>
-        {/* {categories.map(c => (
-          <Category
-            key={c.name}
-            active={c.name === activeCategory}
-          >
-            {c.text}
-          </Category>
-        ))} */}
-      </CategoriesBlock>
+      <button>현재 상영작</button>
+      <button>상영 예정작</button>
       <AppContainer>
         {movielist.map(item => (
-          <div className='movie-poster' key={item.id} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+          <div className='movie-poster' key={item.id} >
             <MovieBlock>
               <img src={IMG_BASE_URL + item.poster_path} alt="영화포스터" />
-              {/* {showButton && ( */}
               {true && (
-                <Movieimg>
+                <Movieimg className='movieImg'>
                   <div>
                     <Link to={'/ticket'}>
                       <Button>예매하기</Button>
                     </Link>
-                    <Link to={`/detail/${item.id}`}>
+                    <Link to={`/currentmovie/detail/${item.id}`}>
                       <Button>상세정보</Button>
                     </Link>
                   </div>

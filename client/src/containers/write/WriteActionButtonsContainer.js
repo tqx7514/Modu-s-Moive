@@ -18,7 +18,6 @@ const WriteActionButtonsContainer = () => {
     })
   );
   const userId = user.id;
-  console.log(userId);
   const onPublish = () => {
     dispatch(
       writePost({

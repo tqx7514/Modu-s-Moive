@@ -34,10 +34,8 @@ const App = () => {
       <Route path="/cinema" element={<CinemaPage />} />
       <Route path="/" element={<MainPage />} />
       <Route path="/event" element={<EventPage />} />
-
-      <Route path="/postlist" element={<PostListPage />}>
-        <Route path=":postId" element={<PostPage />} />
-      </Route>
+      <Route path="/postlist" element={<PostListPage />} />
+      <Route path="post/detail/:postNum" element={<PostPage />} />
       <Route path="/event/movie" element={<MovieEventPage />} />
       <Route path="/meet" element={<MeetListPage />} />
       <Route path="/meet/detail/:meetNum" element={<MeetPage />} />

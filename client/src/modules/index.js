@@ -5,7 +5,6 @@ import { all } from "redux-saga/effects";
 import user, { userSaga } from "./user";
 import write, { writeSaga } from "./write";
 import post, { postSaga } from "./post";
-
 import movielist, { movieSaga } from "./currentmovie";
 import moviedetail, { detailSaga } from "./moviedetail";
 import posts, { postsSaga } from "./posts";

@@ -54,10 +54,13 @@ exports.login = async (req, res) => {
 
   try {
     const newUserInfo = await meetusers.findAndCountAll({
+      nest: true,
       where: { user_Id: id },
       attiributes: ["meet_meetNum"],
     });
-    console.log("데이ㅓㅌ", newUserInfo);
+    const meetArray = newUserInfo.rows.map((row) => row.meet_MeetNum);
+    const meetNums = [...new Set(meetArray)];
+    console.log("데이터", meetNums);
     console.log("카운트", newUserInfo.count);
     const userInfo = await users.findOne({ where: { id } });
     const hash = await bcrypt.compare(password, userInfo.password);
@@ -73,6 +76,7 @@ exports.login = async (req, res) => {
           name: userInfo.name,
           email: userInfo.email,
           grade: userInfo.grade,
+          meet: meetNums,
         },
         process.env.ACCESS_SECRET,
         {

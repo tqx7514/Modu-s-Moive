@@ -9,6 +9,7 @@ import MeetActionButtons from "../../components/meet/MeetActionButtons";
 import { setOriginalMeet } from "../../modules/meetwrite";
 import { joinMeet, removePost } from "../../lib/api/meet";
 import Button from "../../components/common/Button";
+import { join } from "../../modules/user";
 
 const MeetViewerContainer = () => {
   const { meetNum } = useParams();
@@ -47,12 +48,13 @@ const MeetViewerContainer = () => {
   const onJoin = async () => {
     const userId = user.id;
     const meetNum = meet.meetNum;
-    try {
-      await joinMeet({ userId, meetNum });
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(join({ userId, meetNum }));
   };
+  const onWithdraw = async () => {
+    console.log("탈퇴하기");
+  };
+  console.log("user.meetNum===================", user && user.meet);
+  console.log("meet.meetNum====================", meet && meet.meetNum);
 
   const ownPost = (user && user.id) === (meet && meet.userId);
   const isLogined = user !== null;
@@ -65,11 +67,17 @@ const MeetViewerContainer = () => {
         ownPost && <MeetActionButtons onEdit={onEdit} onRemove={onRemove} />
       }
       joinButton={
-        isLogined && (
-          <Button cyan="true" onClick={onJoin}>
-            가입하기
-          </Button>
-        )
+        isLogined ? (
+          user.meet && user.meet.includes(meet && meet.meetNum) ? (
+            <Button cyan="true" onClick={onWithdraw}>
+              탈퇴하기
+            </Button>
+          ) : (
+            <Button cyan="true" onClick={onJoin}>
+              가입하기
+            </Button>
+          )
+        ) : null
       }
     />
   );

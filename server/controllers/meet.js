@@ -132,10 +132,8 @@ exports.meetDelete = async (req, res, next) => {
 };
 
 exports.meetJoin = async (req, res) => {
-  console.log("백 meetJoin 왓음~~");
-  console.log("req.body===========", req.body);
   const { userId, meetNum } = req.body;
-  console.log(userId, meetNum);
+  console.log(meetNum);
   try {
     const met = await meetusers.findAll({});
     console.log("zzzzzzzzzzzzzzz", met);
@@ -143,7 +141,7 @@ exports.meetJoin = async (req, res) => {
       user_Id: userId,
       meet_MeetNum: meetNum,
     });
-    res.status(200).json(newJoin);
+    res.status(200).json(meetNum);
   } catch (error) {
     console.error(error);
     res.status(500).json(error);

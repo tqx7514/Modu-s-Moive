@@ -7,6 +7,7 @@ import TagBox from "../../components/write/TagBox";
 const MeetTagBoxContainer = () => {
   const dispatch = useDispatch();
   const tags = useSelector((state) => state.meetwrite.tags);
+  const tagsArray = Array.isArray(tags) ? tags : JSON.parse(tags);
   const onChangeTags = (nextTags) => {
     dispatch(
       changeField({
@@ -15,7 +16,7 @@ const MeetTagBoxContainer = () => {
       })
     );
   };
-  return <TagBox onChangeTags={onChangeTags} tags={tags} />;
+  return <TagBox onChangeTags={onChangeTags} tags={tagsArray} />;
 };
 
 export default MeetTagBoxContainer;

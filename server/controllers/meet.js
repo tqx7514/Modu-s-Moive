@@ -1,4 +1,4 @@
-const { meets } = require("../models");
+const { meets, meetusers } = require("../models");
 const { Op } = require("sequelize");
 
 exports.meetWrite = async (req, res, next) => {
@@ -32,11 +32,11 @@ exports.meetRead = async (req, res, next) => {
 
 exports.meetlist = async (req, res) => {
   const page = parseInt(req.query.page || "1", 10);
+  console.log("page=====================", page);
   if (page < 1) {
     res.status(400);
     return;
   }
-
   const { tag, userId } = req.query;
   console.log("쿼리===================", req.query);
   console.log("tag===", tag, "userId===", userId);
@@ -48,13 +48,14 @@ exports.meetlist = async (req, res) => {
 
   if (tag) {
     where.tags = {
-      [Op.like]: `%${tag}%`, // 해당 태그가 JSON 문자열에 포함되어 있는지 검사
+      [Op.like]: `%${tag}%`,
     };
   }
 
   console.log("where입니다", where);
 
-  const limit = 10;
+  const limit = 15;
+  const offset = (page - 1) * limit;
   try {
     console.log("page입니다", page);
     const meet = await meets.findAll({
@@ -62,10 +63,87 @@ exports.meetlist = async (req, res) => {
       where,
       order: [["createdAt", "DESC"]],
       limit,
+      offset,
     });
-    // console.log("meet입니다", meet);
-    res.json(meet);
+
+    const totalCount = await meets.count({ where }); // 총 항목 수 계산
+    const totalPages = Math.ceil(totalCount / limit); // 총 페이지 수 계산
+
+    res.json({
+      meet,
+      totalPages, // 마지막 페이지 정보인 totalPages를 응답에 추가
+    });
   } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+exports.meetUpdate = async (req, res, next) => {
+  const { title, body, tags, meetNum } = req.body;
+  console.log("dddddddddddddd", req.body);
+  console.log("title", title, "body", body, "tags", tags, "meetNum", meetNum);
+  try {
+    const tagsString = JSON.stringify(tags); // 배열을 JSON 형식의 문자열로 변환
+    const [updatedRows] = await meets.update(
+      {
+        title,
+        body,
+        tags: tagsString, // 변환한 문자열을 데이터베이스에 저장
+      },
+      {
+        where: { meetNum },
+      }
+    );
+
+    if (updatedRows === 0) {
+      res.status(404).json({ message: "포스트가 존재하지 않습니다" });
+      return;
+    }
+
+    const updatedMeet = await meets.findOne({
+      where: { meetNum },
+    });
+
+    res.json(updatedMeet);
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+};
+
+exports.meetDelete = async (req, res, next) => {
+  const meetNum = req.params.meetNum;
+
+  try {
+    const deletedRows = await meets.destroy({
+      where: { meetNum },
+    });
+
+    if (deletedRows === 0) {
+      res.status(404).json({ message: "포스트가 존재하지 않습니다" });
+      return;
+    }
+
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+};
+
+exports.meetJoin = async (req, res) => {
+  const { userId, meetNum } = req.body;
+  console.log(meetNum);
+  try {
+    const met = await meetusers.findAll({});
+    console.log("zzzzzzzzzzzzzzz", met);
+    const newJoin = await meetusers.create({
+      user_Id: userId,
+      meet_MeetNum: meetNum,
+    });
+    res.status(200).json(meetNum);
+  } catch (error) {
+    console.error(error);
     res.status(500).json(error);
   }
 };

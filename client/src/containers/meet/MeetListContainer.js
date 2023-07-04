@@ -8,7 +8,7 @@ import MeetList from "../../components/meet/MeetList";
 import { initialize } from "../../modules/meetwrite";
 
 const MeetListContainer = () => {
-  const location = useLocation();
+  // const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const { meets, error, loading, user } = useSelector(
@@ -24,6 +24,7 @@ const MeetListContainer = () => {
     const page = parseInt(searchParams.get("page"), 10) || 1;
     const tag = searchParams.get("tag");
     const userId = searchParams.get("userId");
+    console.log("page", page);
     console.log("tag==================", tag, "userId================", userId);
     dispatch(meetList({ tag, userId, page }));
   }, [dispatch, searchParams]);

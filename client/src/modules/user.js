@@ -11,14 +11,17 @@ const [CHECK, CHECK_SUCCESS, CHECK_FAILURE] =
   createRequestActionTypes("user/CHECK");
 const LOGOUT = "user/LOGOUT";
 const JOIN_MEET = "user/JOIN_MEET";
+const WITHDRAW_MEET = "user/WITHDRAW_MEET";
 
 export const tempSetUser = createAction(TEMP_SET_USER, (user) => user);
 export const check = createAction(CHECK);
 export const logout = createAction(LOGOUT);
 export const join = createAction(JOIN_MEET);
+export const withdraw = createAction(WITHDRAW_MEET);
 
 const checkSaga = createRequestSaga(CHECK, authAPI.check);
 const joinSaga = createRequestSaga(JOIN_MEET, meetAPI.joinMeet);
+const withdrawSaga = createRequestSaga(WITHDRAW_MEET, meetAPI.withdrawMeet);
 
 function checkFailureSaga() {
   try {
@@ -41,6 +44,7 @@ export function* userSaga() {
   yield takeLatest(CHECK_FAILURE, checkFailureSaga);
   yield takeLatest(LOGOUT, logoutSaga);
   yield takeLatest(JOIN_MEET, joinSaga);
+  yield takeLatest(WITHDRAW_MEET, withdrawSaga);
 }
 
 const initialState = {
@@ -75,6 +79,13 @@ export default handleActions(
       user: {
         ...state.user,
         meet: [...state.user.meet, meet.meetNum],
+      },
+    }),
+    [WITHDRAW_MEET]: (state, { payload: meet }) => ({
+      ...state,
+      user: {
+        ...state.user,
+        meet: state.user.meet.filter((num) => num !== meet.meetNum),
       },
     }),
   },

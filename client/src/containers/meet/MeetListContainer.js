@@ -23,10 +23,10 @@ const MeetListContainer = () => {
     dispatch(initialize());
     const page = parseInt(searchParams.get("page"), 10) || 1;
     const tag = searchParams.get("tag");
-    const userId = searchParams.get("userId");
+    const region = searchParams.get("region");
     console.log("page", page);
-    console.log("tag==================", tag, "userId================", userId);
-    dispatch(meetList({ tag, userId, page }));
+    console.log("tag==================", tag, "region================", region);
+    dispatch(meetList({ tag, region, page }));
   }, [dispatch, searchParams]);
 
   return (

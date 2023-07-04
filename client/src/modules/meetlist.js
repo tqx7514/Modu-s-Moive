@@ -9,9 +9,9 @@ import { handleActions } from "redux-actions";
 const [MEET_LIST, MEET_LIST_SUCCESS, MEET_LIST_FAILURE] =
   createRequestActionTypes("meet/MEET_LIST");
 
-export const meetList = createAction(MEET_LIST, ({ tag, userId, page }) => ({
+export const meetList = createAction(MEET_LIST, ({ tag, region, page }) => ({
   tag,
-  userId,
+  region,
   page,
 }));
 

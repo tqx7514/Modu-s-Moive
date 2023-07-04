@@ -19,6 +19,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false
     },
+    region: {
+      type: DataTypes.STRING(100),
+      allowNull: true
+    },
     count: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -26,6 +30,10 @@ module.exports = function(sequelize, DataTypes) {
     },
     tags: {
       type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    likes: {
+      type: DataTypes.INTEGER,
       allowNull: true
     }
   }, {

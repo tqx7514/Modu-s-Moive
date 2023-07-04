@@ -8,9 +8,10 @@ import Editor from "../../components/write/MeetEditor";
 
 const MeetEditorContainer = () => {
   const dispatch = useDispatch();
-  const { title, body } = useSelector(({ meetwrite }) => ({
+  const { title, body, region } = useSelector(({ meetwrite }) => ({
     title: meetwrite.title,
     body: meetwrite.body,
+    region: meetwrite.region,
   }));
   const onChangeField = useCallback(
     (payload) => dispatch(changeField(payload)),
@@ -21,7 +22,14 @@ const MeetEditorContainer = () => {
       dispatch(initialize());
     };
   }, [dispatch]);
-  return <Editor onChangeField={onChangeField} title={title} body={body} />;
+  return (
+    <Editor
+      onChangeField={onChangeField}
+      title={title}
+      body={body}
+      selectedRegion={region}
+    />
+  );
 };
 
 export default MeetEditorContainer;

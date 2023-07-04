@@ -1,8 +1,8 @@
-const { meets, meetusers } = require("../models");
+const { meets, meetusers, users } = require("../models");
 const { Op } = require("sequelize");
 
 exports.meetWrite = async (req, res, next) => {
-  const { title, body, tags, userId } = req.body;
+  const { title, body, tags, userId, region } = req.body;
   try {
     const tagsString = JSON.stringify(tags); // 배열을 JSON 형식의 문자열로 변환
     const newMeet = await meets.create({
@@ -10,6 +10,7 @@ exports.meetWrite = async (req, res, next) => {
       body,
       tags: tagsString, // 변환한 문자열을 데이터베이스에 저장
       userId,
+      region,
     });
     res.status(200).json(newMeet); // 새로운 포스트를 클라이언트에 반환
   } catch (error) {
@@ -37,13 +38,13 @@ exports.meetlist = async (req, res) => {
     res.status(400);
     return;
   }
-  const { tag, userId } = req.query;
+  const { tag, region } = req.query;
   console.log("쿼리===================", req.query);
-  console.log("tag===", tag, "userId===", userId);
+  console.log("tag===", tag, "region===", region);
   const where = {};
 
-  if (userId) {
-    where.userId = userId;
+  if (region) {
+    where.region = region;
   }
 
   if (tag) {
@@ -54,7 +55,7 @@ exports.meetlist = async (req, res) => {
 
   console.log("where입니다", where);
 
-  const limit = 15;
+  const limit = 20;
   const offset = (page - 1) * limit;
   try {
     console.log("page입니다", page);
@@ -79,7 +80,7 @@ exports.meetlist = async (req, res) => {
 };
 
 exports.meetUpdate = async (req, res, next) => {
-  const { title, body, tags, meetNum } = req.body;
+  const { title, body, tags, meetNum, region } = req.body;
   console.log("dddddddddddddd", req.body);
   console.log("title", title, "body", body, "tags", tags, "meetNum", meetNum);
   try {
@@ -89,6 +90,7 @@ exports.meetUpdate = async (req, res, next) => {
         title,
         body,
         tags: tagsString, // 변환한 문자열을 데이터베이스에 저장
+        region,
       },
       {
         where: { meetNum },
@@ -133,10 +135,8 @@ exports.meetDelete = async (req, res, next) => {
 
 exports.meetJoin = async (req, res) => {
   const { userId, meetNum } = req.body;
-  console.log(meetNum);
   try {
     const met = await meetusers.findAll({});
-    console.log("zzzzzzzzzzzzzzz", met);
     const newJoin = await meetusers.create({
       user_Id: userId,
       meet_MeetNum: meetNum,
@@ -145,5 +145,24 @@ exports.meetJoin = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json(error);
+  }
+};
+
+exports.meetWithdraw = async (req, res) => {
+  const { userId, meetNum } = req.body;
+  try {
+    const withDraw = await meetusers.destroy({
+      where: { user_Id: userId, meet_MeetNum: meetNum },
+    });
+    // const meet = await meetusers.findAll({
+    //   nest: true,
+    //   where: { user_Id: userId },
+    //   attributes: ["meet_MeetNum"],
+    // });
+    // const meetArray = meet.map((row) => row.meet_MeetNum);
+    // const meetNums = [...new Set(meetArray)];
+    return;
+  } catch (error) {
+    console.error(error);
   }
 };

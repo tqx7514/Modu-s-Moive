@@ -17,14 +17,23 @@ const MeetSubInfoBlock = styled.div`
     content: "\\B7";
   }
 `;
+const RegionBlock = styled.div`
+  transition: background-color 0.3s ease;
+  /* padding: 0.5rem; */
 
-const MeetSubInfo = ({ userId, publishedDate, hasMarginTop }) => {
+  &:hover {
+    color: blue;
+    font-weight: bold;
+  }
+`;
+
+const MeetSubInfo = ({ region, publishedDate, hasMarginTop, likes }) => {
   return (
     <MeetSubInfoBlock hasMarginTop={hasMarginTop}>
       <span>
-        <b>
-          <Link to={`/meet?userId=${userId}`}>{userId}</Link>
-        </b>
+        <Link to={`/meet?region=${region}`}>
+          <RegionBlock>지역 : {region}</RegionBlock>
+        </Link>
       </span>
       <span>{new Date(publishedDate).toLocaleDateString()}</span>
     </MeetSubInfoBlock>

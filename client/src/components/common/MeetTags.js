@@ -14,13 +14,22 @@ const MeetTagsBlock = styled.div`
     }
   }
 `;
+const TagBlock = styled.div`
+  transition: background-color 0.3s ease;
+  padding: 0.3rem;
+
+  &:hover {
+    color: blue;
+    font-weight: bold;
+  }
+`;
 
 const MeetTags = ({ tags }) => {
   return (
     <MeetTagsBlock>
       {tags.map((tag) => (
         <Link className="tag" to={`/meet/?tag=${tag}`} key={tag}>
-          #{tag}
+          <TagBlock>#{tag}</TagBlock>
         </Link>
       ))}
     </MeetTagsBlock>

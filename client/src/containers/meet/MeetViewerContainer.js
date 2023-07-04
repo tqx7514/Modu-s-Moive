@@ -7,9 +7,9 @@ import { readMeet, unloadMeet } from "../../modules/meet";
 import MeetViewer from "../../components/meet/MeetViewer";
 import MeetActionButtons from "../../components/meet/MeetActionButtons";
 import { setOriginalMeet } from "../../modules/meetwrite";
-import { joinMeet, removePost } from "../../lib/api/meet";
+import { removeMeet } from "../../lib/api/meet";
 import Button from "../../components/common/Button";
-import { join } from "../../modules/user";
+import { join, withdraw } from "../../modules/user";
 
 const MeetViewerContainer = () => {
   const { meetNum } = useParams();
@@ -38,7 +38,7 @@ const MeetViewerContainer = () => {
 
   const onRemove = async () => {
     try {
-      await removePost(meetNum);
+      await removeMeet(meetNum);
       navigate("/meet");
     } catch (e) {
       console.log(e);
@@ -51,10 +51,10 @@ const MeetViewerContainer = () => {
     dispatch(join({ userId, meetNum }));
   };
   const onWithdraw = async () => {
-    console.log("탈퇴하기");
+    const userId = user.id;
+    const meetNum = meet.meetNum;
+    dispatch(withdraw({ userId, meetNum }));
   };
-  console.log("user.meetNum===================", user && user.meet);
-  console.log("meet.meetNum====================", meet && meet.meetNum);
 
   const ownPost = (user && user.id) === (meet && meet.userId);
   const isLogined = user !== null;

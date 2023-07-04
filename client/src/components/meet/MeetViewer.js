@@ -20,13 +20,13 @@ const MeetViewer = ({ meet, error, loading, actionButtons, joinButton }) => {
   if (loading || !meet) {
     return null;
   }
-  const { title, body, userId, createdAt, tags } = meet;
+  const { title, body, userId, createdAt, tags, region } = meet;
   const tagsArray = Array.isArray(tags) ? tags : JSON.parse(tags);
   return (
     <MeetViewerBlock>
       <MeetHead>
         <h1>{title}</h1>
-        <MeetSubInfo username={userId} publishedDate={createdAt} hasMarginTop />
+        <MeetSubInfo region={region} publishedDate={createdAt} hasMarginTop />
         <MeetTags tags={tagsArray} />
       </MeetHead>
       {actionButtons}

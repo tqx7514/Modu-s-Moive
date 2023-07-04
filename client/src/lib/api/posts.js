@@ -10,7 +10,13 @@ export const readPost = (postNum) => {
 };
 
 export const listPosts = ({ page, name, tags }) => {
-  return client.post("/post/postlist", {
+  return client.get("/post/postlist", {
     params: { page, name, tags },
   });
 };
+
+export const updatePost = ({ postNum, title, body, tags }) =>
+  client.patch(`/post/detail/${postNum}`, { postNum, title, body, tags });
+
+export const removePost = (postNum) =>
+  client.delete(`/post/${postNum}`, postNum);

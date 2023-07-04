@@ -41,3 +41,56 @@ exports.postRead = async (req, res, next) => {
   }
   res.json(post);
 };
+
+exports.postUpdate = async (req, res, next) => {
+  const { title, body, tags, postNum } = req.body;
+  try {
+    console.log(tags);
+    console.log(postNum);
+    const tagsString = JSON.stringify(tags);
+    console.log(tagsString);
+    const [updatedRows] = await posts.update(
+      {
+        title,
+        body,
+        tags: tagsString,
+      },
+      {
+        where: { postNum },
+      }
+    );
+    console.log("updatedRows입니다.", updatedRows);
+    if (updatedRows === 0) {
+      res.status(404).json({ message: "존재하지 않는 글입니다." });
+      return;
+    }
+    const updatedPost = await posts.findOne({
+      where: { postNum },
+    });
+    console.log("updatedPost입니다.", updatedPost);
+    res.json(updatedPost);
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+};
+
+exports.postDelete = async (req, res, next) => {
+  const postNum = req.params.postNum;
+  console.log("postNum 입니다", postNum);
+  try {
+    const deletedRows = await posts.destroy({
+      where: { postNum },
+    });
+
+    if (deletedRows === 0) {
+      res.status(404).json({ message: "존재하지 않는 글입니다." });
+      return;
+    }
+
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+};

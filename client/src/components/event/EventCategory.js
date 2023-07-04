@@ -49,7 +49,7 @@ const Category = styled(Link)`
   }
 
   ${(props) =>
-    props.active.toString() === "true" &&
+    props.active === "true" &&
     css`
       font-weight: 600;
       border-bottom: 2px solid #22b8cf;

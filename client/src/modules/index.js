@@ -8,7 +8,11 @@ import post, { postSaga } from "./post";
 import movielist, { movieSaga } from "./currentmovie";
 import moviedetail, { moviedetailSaga } from "./moviedetail";
 import posts, { postsSaga } from "./posts";
-import stepfirst, { regionSaga, SelectedSaga } from "./stepfirst";
+import stepfirst, {
+  regionSaga,
+  SelectedSaga,
+  movieReadSaga,
+} from "./stepfirst";
 import meetwrite, { meetWriteSaga } from "./meetwrite";
 import meet, { meetSaga } from "./meet";
 import meetlist, { meetsSaga } from "./meetlist";
@@ -42,6 +46,7 @@ export function* rootSaga() {
     meetSaga(),
     meetsSaga(),
     moviedetailSaga(),
+    movieReadSaga(),
   ]);
 }
 

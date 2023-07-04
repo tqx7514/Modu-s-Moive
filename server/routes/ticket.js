@@ -5,15 +5,13 @@ const { cinemas, regions, movies } = require("../models");
 
 router.get("/region", async (req, res) => {
   try {
-    const region = await regions.findAll({});
-    // const cinema = await cinemas.findAll({
-    //     include:[{
-    //         model: regions,
-    //         as: 'grade_region',
-    //     }],
-    //     order: [['cinema', 'ASC']],
-    // });
-    res.status(200).json({ region });
+    const region = await regions.findAll({
+      include: [{
+        model: cinemas,
+        as: 'cinemas',
+      }]
+    });
+    res.status(200).json(region);
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: "Internal Server Error" });
@@ -21,10 +19,8 @@ router.get("/region", async (req, res) => {
 });
 
 router.get("/cinema", async (req, res) => {
-  console.log("sssssssssssssss");
   try {
     const { grade } = req.query;
-    console.log("1111111111111111", grade);
     if (grade) {
       const cinema = await cinemas.findAll({
         include: [
@@ -43,7 +39,7 @@ router.get("/cinema", async (req, res) => {
   }
 });
 
-router.get("/movie", async (req, res) => {
+router.get("/movies", async (req, res) => {
   try {
     const movie = await movies.findAll({});
     res.status(200).json(movie);

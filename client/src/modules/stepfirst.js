@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 import createRequestSaga, { createRequestActionTypes } from '../lib/createRequestSaga';
 import * as regionAPI from '../lib/api/ticket';
-import {takeLatest, put, call} from 'redux-saga/effects';
+import {takeLatest, put} from 'redux-saga/effects';
 
 // 액션 타입--------------------------------------------------------
 
@@ -18,10 +18,10 @@ const [
 ] = createRequestActionTypes('stepfirst/SELECTED_REGION');
 
 const [
-    SET_TITLE_CINEMA,
-    SET_TITLE_CINEMA_SUCCESS,
-    SET_TITLE_CINEMA_FAILURE,
-] = createRequestActionTypes('stepfirst/TITLE_CINEMA');
+    READ_MOVIE,
+    READ_MOVIE_SUCCESS,
+    READ_MOVIE_FAILURE,
+] = createRequestActionTypes('stepfirst/READ_MOVIE');
 
 // 액션 생성--------------------------------------------------------
 
@@ -29,7 +29,8 @@ export const readRegion = createAction(READ_REGION);
 
 export const selectedRegion = createAction(SELECTED_REGION, (grade) => grade);
 
-export const titleCinema = createAction(SET_TITLE_CINEMA);
+export const readMovie = createAction(READ_MOVIE);
+
 
 // 사가 함수--------------------------------------------------------
 
@@ -39,32 +40,14 @@ export function* regionSaga(){
     yield put(selectedRegion(1));
 }
 
-// export const selectedRegionSaga = createRequestSaga(SELECTED_REGION, regionAPI.selectedRegion);
-// export function* RegionSelectedSaga(){
-//     yield takeLatest(SELECTED_REGION, selectedRegionSaga)
-// }
-
 export const selectedRegionSaga = createRequestSaga(SELECTED_REGION, regionAPI.selectedRegion);
-export function* SelectedSaga(action){
-    console.log("Saga------select-----------");
+export function* SelectedSaga(){
     yield takeLatest(SELECTED_REGION, selectedRegionSaga);
-    try {
-        const cinema = yield call(regionAPI.selectedRegion, action.payload);
-        yield put({
-          type: SELECTED_REGION_SUCCESS,
-          payload: cinema,
-        });
-        yield put({
-          type: SET_TITLE_CINEMA_SUCCESS,
-          payload: cinema.name, // 선택된 영화관의 이름을 payload로 전달
-        });
-      } catch (error) {
-        yield put({
-          type: SELECTED_REGION_FAILURE,
-          payload: error,
-          error: true,
-        });
-      }
+}
+
+export const readMovieSaga = createRequestSaga(READ_MOVIE, regionAPI.movies);
+export function* movieReadSaga(){
+    yield takeLatest(READ_MOVIE, readMovieSaga)
 }
 
 // 초기 값--------------------------------------------------------
@@ -72,7 +55,7 @@ export function* SelectedSaga(action){
 const initialState = {
     region: [],
     cinema: [],
-    titleCinema: '영화관',
+    movie: [],
     error: null,
 }
 
@@ -95,11 +78,11 @@ const stepfirst = handleActions({
         ...state,
         error,
     }),
-    [SET_TITLE_CINEMA_SUCCESS]: (state, action) => ({
+    [READ_MOVIE_SUCCESS]: (state, action) => ({
         ...state,
-        titleCinema: action.payload,
+        movie: action.payload,
     }),
-    [SET_TITLE_CINEMA_FAILURE]: (state, error) => ({
+    [READ_MOVIE_FAILURE]: (state, error) => ({
         ...state,
         error,
     }),

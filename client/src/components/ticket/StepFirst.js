@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import styled, {css} from 'styled-components';
 import axios from '../../../node_modules/axios/index';
-import MovieList from '../../containers/movie/MovieContainer';
 import {MdDensityMedium, MdWindow} from 'react-icons/md' ;
 
 const FirstContents = styled.div`
     display: flex;
     width: calc(100% - 76px);
     height: 100%;
-    background: aqua;
 `;
 
 const StepArea = styled.div`
     width: 30%;
     height: 100%;
-    border: 1px solid;
     div{
         display: flex;
     }
@@ -22,12 +19,10 @@ const StepArea = styled.div`
 const StepCinema = styled.div`
     width: 30%;
     height: 100%;
-    border: 1px solid;
 `;
 const StepDateTime = styled.div`
     width: 40%;
     height: 100%;
-    border: 1px solid;
     background: #fff;
 `;
 
@@ -42,7 +37,7 @@ const Title = styled.div`
     font-size: 18px;
     font-weight: 400;
     vertical-align: middle;
-    border-right: 1px solid #888;
+    border-right: 1px solid #222;
 `;
 
 const CinemaBtn = styled.button`
@@ -53,9 +48,13 @@ const CinemaBtn = styled.button`
   background: #f5f5f5;
   color: ${({ active }) => (active ? '#000' : '#7f7f7f')};
   border: none;
-  border-bottom: ${({ active }) => (active ? '2px solid #000' : '1px solid #ddd')};
+  border-bottom: ${({ active }) => (active ? '2px solid #000' : '1px solid #ccc')};
   transition: border .1s ease-in-out;
   cursor: pointer;
+  border-right: 1px solid #ddd;
+  &:first-child{
+    border-right: none;
+  }
 
   ${({ active }) => active && css`
     background: white;Invalid Date
@@ -65,18 +64,38 @@ const CinemaBtn = styled.button`
 const AreaUl = styled.ul`
     display: flex;
     height: calc(100% - 116px);
+    border-right: 1px solid #ddd;
 `;
 const AreaLi = styled.li`
     width: 50%;
     height: 100%;
     background: #f5f5f5;
     overflow-y: scroll;
+    &::-webkit-scrollbar{
+        width: 5px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background: none;
+        border-radius: 5px;
+    }
+    &:hover{
+        &::-webkit-scrollbar-thumb{
+            background: #888;
+            border-radius: 5px;
+        transition: all .3s ease;
+
+        }
+    }
 `;
 
 const AreaItem = styled.li`
     padding: 10px 16px;
     cursor: pointer;
     font-size: 13px;
+    &.movie_list{
+        display: flex;
+        align-items: center;
+    }
     &.selected{
         position: relative;
         background: #fff;
@@ -94,44 +113,75 @@ const AreaItem = styled.li`
         font-size: 11px;
         color: #666;
     }
+    span.age{
+        width: 22px;
+        height: 22px;
+        display: inline-block;
+        background: black;
+        &.age_all:{
+            background: url('/grade_all.png') no-repeat;
+        }
+    }
 `;
+
+const MovieUl = styled.ul`
+    height: calc(100% - 116px);
+    border-right: 1px solid #ddd;
+    overflow-y: scroll;
+    &::-webkit-scrollbar{
+        width: 5px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background: none;
+        border-radius: 5px;
+    }
+    &:hover{
+        &::-webkit-scrollbar-thumb{
+            background: #888;
+            border-radius: 5px;
+        transition: all .3s ease;
+
+        }
+    }
+`
 
 const FilterList = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 61px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ddd;
 `;
 
 
 
-const StepFirst = ({region, cinema, onSelectRegion}) => {
-    console.log("11111111->",cinema);
-    const [titleCinema, setTitleCinema] = useState('영화관');
-    const [movies, setMovies] = useState([]);
+const StepFirst = ({region, cinema, movie, onSelectRegion}) => {
+    const [selectedRegion, setSelectedRegion] = useState(null);
+    const [selectedCinema, setSelectedCinema] = useState('영화관');
     const [titleMovie, setTitleMovie] = useState('영화 선택');
     const [SelectedMovie, setSelectedMovie] = useState(null);
 
-
+    const handleSelectRegion = (grade) => {
+        setSelectedRegion(grade);
+        onSelectRegion(grade);
+    };
+    useEffect(() => {
+        setSelectedRegion(1);
+    }, []);
+    const handleSelectCinema = (e, cinema) => {
+        setSelectedCinema(cinema);
+    }
     const handleSelectMovie = (e, movie) => {
         setTitleMovie(movie);
         setSelectedMovie(movie);
     }
 
-    useEffect(() => {
-        const showMovie = async () => {
-            const response = await axios.get('http://localhost:3005/ticket/movie');
-            setMovies(response.data)
-        }
-        showMovie();
-    }, [])
-
 
     return (
             <FirstContents>
                 <StepArea>
-                    <Title>{titleCinema}</Title>
+                    <Title>{selectedCinema}</Title>
                     <div>
                         <CinemaBtn>전체</CinemaBtn>
                         <CinemaBtn style={{background: "white"}}>스페셜관</CinemaBtn>
@@ -143,10 +193,10 @@ const StepFirst = ({region, cinema, onSelectRegion}) => {
                             <AreaItem 
                                 key={r.grade}
                                 href="#none" 
-                                // className={selected === r.grade ? 'selected' : ''}
-                                onClick={() => onSelectRegion(r.grade)}
+                                className={selectedRegion === r.grade ? 'selected' : ''}
+                                onClick={() => handleSelectRegion(r.grade)}
                             >
-                                {r.region}
+                                {r.region}<span>({r.cinemas.length})</span>
                             </AreaItem>
                             ))}
                         </ul>
@@ -156,6 +206,8 @@ const StepFirst = ({region, cinema, onSelectRegion}) => {
                             {cinema && cinema.map((c) => (
                                 <AreaItem 
                                     key={c.cinema_num} 
+                                    onClick={(e) => handleSelectCinema(e, c.cinema)}  
+                                    className={selectedCinema === c.cinema ? 'selected' : ''}
                                 >
                                     {c.cinema}
                                 </AreaItem>
@@ -178,20 +230,21 @@ const StepFirst = ({region, cinema, onSelectRegion}) => {
                             <MdWindow/>
                         </div>
                     </FilterList>
-                    <ul>
-                        {movies.map((movie) => (
+                    <MovieUl style={{display:'block'}}>
+                        {movie.map((m) => (
                             <AreaItem 
-                                key={movie.movie_num}
-                                onClick={(e) => handleSelectMovie(e, movie.movie_name)}
-                                className={SelectedMovie === movie.movie_name ? 'selected' : ''}
+                                key={m.movie_num}
+                                onClick={(e) => handleSelectMovie(e, m.movie_name)}
+                                className={SelectedMovie === m.movie_name ? 'selected' : 'movie_list'}
                             >
-                                {movie.movie_name}
+                                <span className={m.age === 'all' ? 'age_all' : (m.age === 12 ? 'age_12' : (m.age === 15 ? 'age_15' : (m.age === 19 ? 'age_19' : 'age')))}></span>{m.movie_name}
+
                             </AreaItem>
                         ))}
-                    </ul>
+                    </MovieUl>
                 </StepCinema>
                 <StepDateTime>
-                    <Title style={{borderRight: 0}}>2023-06-26(오늘)</Title>
+                    <Title>2023-06-26(오늘)</Title>
                 </StepDateTime>
             </FirstContents>
     );

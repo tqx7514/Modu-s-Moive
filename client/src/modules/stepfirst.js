@@ -23,6 +23,12 @@ const [
     READ_MOVIE_FAILURE,
 ] = createRequestActionTypes('stepfirst/READ_MOVIE');
 
+const [
+    SET_TITLE_CINEMA,
+    SET_TITLE_CINEMA_SUCCESS,
+    SET_TITLE_CINEMA_FAILURE,
+] = createRequestActionTypes('stepfirst/SET_TITLE_CINEMA');
+
 // 액션 생성--------------------------------------------------------
 
 export const readRegion = createAction(READ_REGION);
@@ -30,6 +36,8 @@ export const readRegion = createAction(READ_REGION);
 export const selectedRegion = createAction(SELECTED_REGION, (grade) => grade);
 
 export const readMovie = createAction(READ_MOVIE);
+
+export const setTitleCinema = createAction(SET_TITLE_CINEMA);
 
 
 // 사가 함수--------------------------------------------------------
@@ -70,6 +78,7 @@ const stepfirst = handleActions({
         ...state,
         error,
     }),
+    // ----------------------------------------------------
     [SELECTED_REGION_SUCCESS]: (state, action) => ({
         ...state,
         cinema: action.payload,
@@ -78,11 +87,21 @@ const stepfirst = handleActions({
         ...state,
         error,
     }),
+    // ----------------------------------------------------
     [READ_MOVIE_SUCCESS]: (state, action) => ({
         ...state,
         movie: action.payload,
     }),
     [READ_MOVIE_FAILURE]: (state, error) => ({
+        ...state,
+        error,
+    }),
+    // ----------------------------------------------------
+    [SET_TITLE_CINEMA_SUCCESS]: (state, action) => ({
+        ...state,
+        cinema: action.payload,
+    }),
+    [SET_TITLE_CINEMA_FAILURE]: (state, error) => ({
         ...state,
         error,
     }),

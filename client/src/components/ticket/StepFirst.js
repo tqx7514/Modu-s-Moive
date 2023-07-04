@@ -112,14 +112,22 @@ const AreaItem = styled.li`
     span{
         font-size: 11px;
         color: #666;
-    }
-    span.age{
-        width: 22px;
-        height: 22px;
-        display: inline-block;
-        background: black;
-        &.age_all:{
-            background: url('/grade_all.png') no-repeat;
+        &.age{
+            width: 22px;
+            height: 22px;
+            display: inline-block;
+        }
+        &.age_all{
+            background: url('/age_all.png') no-repeat;
+        }
+        &.age_12{
+            background: url('/age_12.png') no-repeat;
+        }
+        &.age_15{
+            background: url('/age_15.png') no-repeat;
+        }
+        &.age_19{
+            background: url('/age_19.png') no-repeat;
         }
     }
 `;
@@ -235,9 +243,9 @@ const StepFirst = ({region, cinema, movie, onSelectRegion}) => {
                             <AreaItem 
                                 key={m.movie_num}
                                 onClick={(e) => handleSelectMovie(e, m.movie_name)}
-                                className={SelectedMovie === m.movie_name ? 'selected' : 'movie_list'}
+                                className={`${SelectedMovie === m.movie_name ? 'selected' : ''} movie_list`}
                             >
-                                <span className={m.age === 'all' ? 'age_all' : (m.age === 12 ? 'age_12' : (m.age === 15 ? 'age_15' : (m.age === 19 ? 'age_19' : 'age')))}></span>{m.movie_name}
+                                <span className={`${m.age === 'all' ? 'age_all' : (m.age === '12' ? 'age_12' : (m.age === '15' ? 'age_15' : (m.age === '19' ? 'age_19' : '')))} age`}></span>{m.movie_name}
 
                             </AreaItem>
                         ))}

@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const Imgcarousel = styled.div`
+  background-color: black;
   img{
     margin: 0 auto;
   }

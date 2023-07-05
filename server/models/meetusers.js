@@ -38,17 +38,17 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "meetusers_FK",
-        using: "BTREE",
-        fields: [
-          { name: "user_Id" },
-        ]
-      },
-      {
         name: "meetusers_FK_1",
         using: "BTREE",
         fields: [
           { name: "meet_MeetNum" },
+        ]
+      },
+      {
+        name: "meetusers_FK",
+        using: "BTREE",
+        fields: [
+          { name: "user_Id" },
         ]
       },
     ]

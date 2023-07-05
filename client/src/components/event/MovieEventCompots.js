@@ -72,7 +72,7 @@ const MovieEventCompots = () => {
     <MovieEventBlock>
       {visibleEvents.length > 0 && (
         <div className="container">
-          <h2>영화</h2>
+          <h1>영화</h1>
           <ul>
             <MovieItemBlock>
               {visibleEvents.map((event) => (

@@ -1,17 +1,17 @@
 import client from "./client";
 
-export const readEvent = () => {
+export const eventlist = () => {
   return client.get(`/event`);
 };
 
-export const readMovieEvent = (eventNum) => {
+export const eventmovielist = (eventNum) => {
   return client.get(`/event/movie/${eventNum}`);
 };
 
-export const readPromoteEvent = (eventNum) => {
+export const eventpromotelist = (eventNum) => {
   return client.get(`/event/promote/${eventNum}`);
 };
 
-export const readOtherEvent = (eventNum) => {
+export const eventotherlist = (eventNum) => {
   return client.get(`/event/promote/${eventNum}`);
 };

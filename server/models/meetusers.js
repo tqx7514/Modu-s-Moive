@@ -26,6 +26,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'meetusers',
+    hasTrigger: true,
     timestamps: true,
     indexes: [
       {

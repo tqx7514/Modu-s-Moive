@@ -7,24 +7,13 @@ import Tags from "../common/Tags";
 import { Link } from "react-router-dom";
 
 const PostItemBlock = styled.div`
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   &:first-child {
     padding-top: 0;
   }
   & + & {
     border-top: 1px solid ${palette.gray[2]};
-  }
-  h2 {
-    font-size: 2rem;
-    margin-bottom: 0;
-    margin-top: 0;
-    &:hover {
-      color: ${palette.gray[6]};
-    }
-  }
-  p {
-    margin-top: 2rem;
   }
 `;
 
@@ -38,15 +27,30 @@ const WritePostButtonWrapper = styled.div`
   margin-bottom: 3rem;
 `;
 
+const PostItemContent = styled.div`
+  display: flex;
+  align-items: center;
+  h2 {
+    flex: 1;
+    font-size: 2rem;
+    margin: 0;
+    &:hover {
+      color: ${palette.gray[6]};
+    }
+  }
+`;
+
 const PostItem = ({ post }) => {
   const { updatedAt, userId, tags, title, postNum } = post;
   const tagsArray = Array.isArray(tags) ? tags : JSON.parse(tags);
   return (
     <PostItemBlock>
-      <h2>
-        <Link to={`/post/detail/${postNum}`}>{title}</Link>
-      </h2>
-      <SubInfo username={userId} publishedDate={new Date(updatedAt)} />
+      <PostItemContent>
+        <h2>
+          <Link to={`/post/detail/${postNum}`}>{title}</Link>
+        </h2>
+        <SubInfo username={userId} publishedDate={new Date(updatedAt)} />
+      </PostItemContent>
       <Tags tags={tagsArray} />
     </PostItemBlock>
   );
@@ -59,13 +63,6 @@ const PostList = ({ posts, loading, error, showWriteButton }) => {
 
   return (
     <PostListBlock>
-      <WritePostButtonWrapper>
-        {showWriteButton && (
-          <Button cyan to="/write">
-            새 글 작성하기
-          </Button>
-        )}
-      </WritePostButtonWrapper>
       {!loading && posts && (
         <div>
           {posts.map((post) => (
@@ -73,6 +70,13 @@ const PostList = ({ posts, loading, error, showWriteButton }) => {
           ))}
         </div>
       )}
+      <WritePostButtonWrapper>
+        {showWriteButton && (
+          <Button cyan to="/write">
+            새 글 작성하기
+          </Button>
+        )}
+      </WritePostButtonWrapper>
     </PostListBlock>
   );
 };

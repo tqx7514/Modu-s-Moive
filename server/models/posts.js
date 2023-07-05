@@ -55,6 +55,13 @@ module.exports = function(sequelize, DataTypes) {
           { name: "postNum" },
         ]
       },
+      {
+        name: "posts_FK",
+        using: "BTREE",
+        fields: [
+          { name: "userId" },
+        ]
+      },
     ]
   });
 };

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import PostList from "../../components/posts/PostList";
 import { listPosts } from "../../modules/posts";
+import PostSearch from "../../components/common/PostSearch";
 
 const PostListContainer = () => {
   const { name } = useParams();
@@ -23,12 +24,15 @@ const PostListContainer = () => {
   }, [dispatch, searchParams, name]);
 
   return (
-    <PostList
-      loading={loading}
-      error={error}
-      posts={posts}
-      showWriteButton={user}
-    />
+    <>
+      <PostSearch />
+      <PostList
+        loading={loading}
+        error={error}
+        posts={posts}
+        showWriteButton={user}
+      />
+    </>
   );
 };
 

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import ReserveNav from "./ReserveNav";
 
 const TicketWrapBlock = styled.div`
     display: flex;
@@ -21,7 +20,6 @@ const TicketWrap = ({children}) => {
     return(
         <TicketWrapBlock>
             <ReserveWrap>
-                <ReserveNav/>
                 {children}
             </ReserveWrap>
         </TicketWrapBlock>

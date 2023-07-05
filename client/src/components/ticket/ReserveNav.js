@@ -7,7 +7,24 @@ const NavReserveUl = styled.ul`
     height: 100%;
 `
 
+const NavReserveCont = styled.div`
+    position: absolute;
+    left: 76px;
+    top: 0;
+    display: none;
+    width: 172px;
+    height: 100%;
+    padding-left: 40px;
+    background: #FF243E;
+    z-index: 999;
+    
+    ul > li{
+        list-style: initial;
+    }
+`;
+
 const NavReserveLi = styled.li`
+    position: relative;
     width: 100%;
     height: calc(100% / 4);
     padding-top: 80px;
@@ -23,11 +40,21 @@ const NavReserveLi = styled.li`
         props.active === 'true' && css`
             background: #FF243E;
             color: #fff;
+            cursor: pointer;
+            &:hover{
+                ${NavReserveCont}{
+                    display: flex;
+                    align-items: center;
+                }
+            }
         `
     }
+    
 `;
 
-const ReserveNav = () => {
+
+const ReserveNav = ({data}) => {
+    console.log('1265464984984654', data)
     const location = useLocation();
     return(
         <NavReserveUl>
@@ -35,15 +62,37 @@ const ReserveNav = () => {
                 01
                 <br/>
                 상영시간
+                <NavReserveCont>
+                    <ul>
+                        <li>{data.cinema}</li>
+                        <li>{data.movie}</li>
+                    </ul>
+                </NavReserveCont>
             </NavReserveLi>
             <NavReserveLi active={String(location.pathname === "/ticket/PersonSeat")}>
                 02
                 <br/>
                 인원/좌석
+                <NavReserveCont>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </NavReserveCont>
             </NavReserveLi>
             <NavReserveLi>
                 03
                 결제
+                <NavReserveCont>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </NavReserveCont>
             </NavReserveLi>
             <NavReserveLi>
                 04

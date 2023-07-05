@@ -8,7 +8,7 @@ import {takeLatest, put} from 'redux-saga/effects';
 const [
     READ_REGION, 
     READ_REGION_SUCCESS, 
-    READ_REGION_FAILURE
+    READ_REGION_FAILURE,
 ] = createRequestActionTypes('stepfirst/READ_REGION');
 
 const [
@@ -24,10 +24,12 @@ const [
 ] = createRequestActionTypes('stepfirst/READ_MOVIE');
 
 const [
-    SET_TITLE_CINEMA,
-    SET_TITLE_CINEMA_SUCCESS,
-    SET_TITLE_CINEMA_FAILURE,
-] = createRequestActionTypes('stepfirst/SET_TITLE_CINEMA');
+    SET_FIRST_DATA,
+] = createRequestActionTypes('stepfirst/SET_FIRST_DATA');
+
+const [
+    SET_SECOND_DATA,
+] = createRequestActionTypes('stepfirst/SET_SECOND_DATA');
 
 // 액션 생성--------------------------------------------------------
 
@@ -37,7 +39,13 @@ export const selectedRegion = createAction(SELECTED_REGION, (grade) => grade);
 
 export const readMovie = createAction(READ_MOVIE);
 
-export const setTitleCinema = createAction(SET_TITLE_CINEMA);
+export const setFirstData = createAction(SET_FIRST_DATA, (cinema) => ({
+    cinema,
+}));
+
+export const setSecondData = createAction(SET_SECOND_DATA, (movie) => ({
+    movie,
+}));
 
 
 // 사가 함수--------------------------------------------------------
@@ -55,8 +63,10 @@ export function* SelectedSaga(){
 
 export const readMovieSaga = createRequestSaga(READ_MOVIE, regionAPI.movies);
 export function* movieReadSaga(){
-    yield takeLatest(READ_MOVIE, readMovieSaga)
+    yield takeLatest(READ_MOVIE, readMovieSaga);
 }
+
+
 
 // 초기 값--------------------------------------------------------
 
@@ -64,6 +74,7 @@ const initialState = {
     region: [],
     cinema: [],
     movie: [],
+    data: {cinema: '', movie: ''},
     error: null,
 }
 
@@ -97,13 +108,18 @@ const stepfirst = handleActions({
         error,
     }),
     // ----------------------------------------------------
-    [SET_TITLE_CINEMA_SUCCESS]: (state, action) => ({
+    [SET_FIRST_DATA]: (state, action) => ({
         ...state,
-        cinema: action.payload,
+        data: {
+            cinema: action.payload.cinema,
+        }
     }),
-    [SET_TITLE_CINEMA_FAILURE]: (state, error) => ({
+    [SET_SECOND_DATA]: (state, action) => ({
         ...state,
-        error,
+        data: {
+            ...state.data,
+            movie: action.payload.movie,
+        }
     }),
 },
 initialState);

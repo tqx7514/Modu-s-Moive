@@ -6,6 +6,7 @@ const {
   meetUpdate,
   meetDelete,
   meetJoin,
+  meetWithdraw,
 } = require("../controllers/meet");
 const router = express.Router();
 
@@ -15,5 +16,6 @@ router.get("/list", meetlist);
 router.patch("/detail/:meetNum", meetUpdate);
 router.delete("/:meetNum", meetDelete);
 router.post("/join", meetJoin);
+router.post("/withdraw", meetWithdraw);
 
 module.exports = router;

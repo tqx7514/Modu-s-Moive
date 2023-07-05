@@ -14,13 +14,26 @@ const MeetTagsBlock = styled.div`
     }
   }
 `;
+const TagBlock = styled.div`
+  transition: background-color 0.3s ease;
+  padding: 0.2rem;
+  border: 2px solid lightgray;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  &:hover {
+    border: 2px solid black;
+    background: gray;
+    font-weight: bold;
+    color: lightblue;
+  }
+`;
 
 const MeetTags = ({ tags }) => {
   return (
     <MeetTagsBlock>
       {tags.map((tag) => (
         <Link className="tag" to={`/meet/?tag=${tag}`} key={tag}>
-          #{tag}
+          <TagBlock>#{tag}</TagBlock>
         </Link>
       ))}
     </MeetTagsBlock>

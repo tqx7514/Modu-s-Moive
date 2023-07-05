@@ -9,6 +9,10 @@ const MeetSubInfoBlock = styled.div`
       margin-top: 1rem;
     `}
   color: ${palette.gray[6]};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.5rem;
 
   span + span:before {
     color: ${palette.gray[4]};
@@ -18,14 +22,23 @@ const MeetSubInfoBlock = styled.div`
   }
 `;
 
-const MeetSubInfo = ({ userId, publishedDate, hasMarginTop }) => {
+const RegionBlock = styled.div`
+  transition: background-color 0.3s ease;
+  width: fit-content;
+  text-align: center;
+
+  &:hover {
+    color: blue;
+    font-weight: bold;
+  }
+`;
+
+const MeetSubInfo = ({ region, publishedDate, hasMarginTop, views }) => {
   return (
     <MeetSubInfoBlock hasMarginTop={hasMarginTop}>
-      <span>
-        <b>
-          <Link to={`/meet?userId=${userId}`}>{userId}</Link>
-        </b>
-      </span>
+      <Link to={`/meet?region=${region}`}>
+        <RegionBlock>{region}</RegionBlock>
+      </Link>
       <span>{new Date(publishedDate).toLocaleDateString()}</span>
     </MeetSubInfoBlock>
   );

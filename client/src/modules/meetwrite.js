@@ -20,21 +20,23 @@ export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
 }));
 export const writeMeet = createAction(
   WRITE_MEET,
-  ({ title, body, tags, userId }) => ({
+  ({ title, body, tags, userId, region }) => ({
     title,
     body,
     tags,
     userId,
+    region,
   })
 );
 export const setOriginalMeet = createAction(SET_ORIGINAL_MEET, (meet) => meet);
 export const updateMeet = createAction(
   UPDATE_MEET,
-  ({ meetNum, title, body, tags }) => ({
+  ({ meetNum, title, body, tags, region }) => ({
     meetNum,
     title,
     body,
     tags,
+    region,
   })
 );
 
@@ -51,6 +53,7 @@ const initialState = {
   body: "",
   tags: [],
   userId: "",
+  region: "",
   meet: null,
   meetError: null,
   originalMeetNum: null,
@@ -80,7 +83,8 @@ const meetwrite = handleActions(
       ...state,
       title: meet.title,
       body: meet.body,
-      tags: meet.tags,
+      tags: JSON.parse(meet.tags),
+      region: meet.region,
       originalMeetNum: meet.meetNum,
     }),
     [UPDATE_MEET_SUCCESS]: (state, { payload: meet }) => ({

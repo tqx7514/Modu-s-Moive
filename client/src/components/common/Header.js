@@ -68,7 +68,6 @@ const UserHi = styled.div`
 `;
 
 const activeStyle = {
-  color: "green",
   fontSize: 21,
   fontWeight: "bold",
 };

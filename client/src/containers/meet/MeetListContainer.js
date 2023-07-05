@@ -11,11 +11,12 @@ const MeetListContainer = () => {
   // const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
-  const { meets, error, loading, user } = useSelector(
+  const { meets, error, loading, user, regions } = useSelector(
     ({ meetlist, loading, user }) => ({
       meets: meetlist.meets,
       error: meetlist.error,
       loading: loading["meet/MEET_LIST"],
+      regions: meetlist.regions,
       user: user.user,
     })
   );
@@ -23,10 +24,10 @@ const MeetListContainer = () => {
     dispatch(initialize());
     const page = parseInt(searchParams.get("page"), 10) || 1;
     const tag = searchParams.get("tag");
-    const userId = searchParams.get("userId");
+    const region = searchParams.get("region");
     console.log("page", page);
-    console.log("tag==================", tag, "userId================", userId);
-    dispatch(meetList({ tag, userId, page }));
+    console.log("tag==================", tag, "region================", region);
+    dispatch(meetList({ tag, region, page }));
   }, [dispatch, searchParams]);
 
   return (
@@ -35,6 +36,7 @@ const MeetListContainer = () => {
       error={error}
       meets={meets}
       showWriteButton={user}
+      regions={regions}
     />
   );
 };

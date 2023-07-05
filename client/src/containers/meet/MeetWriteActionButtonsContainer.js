@@ -8,19 +8,30 @@ import WriteActionButtons from "../../components/meet/WriteActionButtons";
 const MeetWriteActionButtonsContainer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { title, body, tags, meet, meetError, userId, originalMeetNum } =
-    useSelector(({ meetwrite, user }) => ({
-      title: meetwrite.title,
-      body: meetwrite.body,
-      tags: meetwrite.tags,
-      meet: meetwrite.meet,
-      meetError: meetwrite.meetError,
-      userId: user.user && user.user.id,
-      originalMeetNum: meetwrite.originalMeetNum,
-    }));
+  const {
+    title,
+    body,
+    tags,
+    meet,
+    meetError,
+    userId,
+    region,
+    originalMeetNum,
+  } = useSelector(({ meetwrite, user }) => ({
+    title: meetwrite.title,
+    body: meetwrite.body,
+    tags: meetwrite.tags,
+    meet: meetwrite.meet,
+    userId: user.user && user.user.id,
+    region: meetwrite.region,
+    meetError: meetwrite.meetError,
+    originalMeetNum: meetwrite.originalMeetNum,
+  }));
   const onPublish = () => {
     if (originalMeetNum) {
-      dispatch(updateMeet({ meetNum: originalMeetNum, title, body, tags }));
+      dispatch(
+        updateMeet({ meetNum: originalMeetNum, title, body, tags, region })
+      );
       return;
     }
     dispatch(
@@ -29,6 +40,7 @@ const MeetWriteActionButtonsContainer = () => {
         body,
         tags,
         userId,
+        region,
       })
     );
   };

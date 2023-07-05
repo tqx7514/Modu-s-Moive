@@ -20,18 +20,20 @@ const MeetViewer = ({ meet, error, loading, actionButtons, joinButton }) => {
   if (loading || !meet) {
     return null;
   }
-  const { title, body, userId, createdAt, tags, region } = meet;
+  const { title, body, userId, createdAt, tags, region, count } = meet;
   const tagsArray = Array.isArray(tags) ? tags : JSON.parse(tags);
   return (
     <MeetViewerBlock>
       <MeetHead>
         <h1>{title}</h1>
-        <MeetSubInfo region={region} publishedDate={createdAt} hasMarginTop />
+        <h4>지역 : {region}</h4>
+        <h4>모임장 : {userId}</h4>
+        <h4>가입자 : {count}</h4>
         <MeetTags tags={tagsArray} />
       </MeetHead>
       {actionButtons}
-      <MeetContent dangerouslySetInnerHTML={{ __html: body }} />
       {joinButton}
+      <MeetContent dangerouslySetInnerHTML={{ __html: body }} />
     </MeetViewerBlock>
   );
 };

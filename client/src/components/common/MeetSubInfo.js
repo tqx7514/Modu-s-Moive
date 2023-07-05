@@ -9,6 +9,10 @@ const MeetSubInfoBlock = styled.div`
       margin-top: 1rem;
     `}
   color: ${palette.gray[6]};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.5rem;
 
   span + span:before {
     color: ${palette.gray[4]};
@@ -17,9 +21,11 @@ const MeetSubInfoBlock = styled.div`
     content: "\\B7";
   }
 `;
+
 const RegionBlock = styled.div`
   transition: background-color 0.3s ease;
-  /* padding: 0.5rem; */
+  width: fit-content;
+  text-align: center;
 
   &:hover {
     color: blue;
@@ -27,14 +33,12 @@ const RegionBlock = styled.div`
   }
 `;
 
-const MeetSubInfo = ({ region, publishedDate, hasMarginTop, likes }) => {
+const MeetSubInfo = ({ region, publishedDate, hasMarginTop, views }) => {
   return (
     <MeetSubInfoBlock hasMarginTop={hasMarginTop}>
-      <span>
-        <Link to={`/meet?region=${region}`}>
-          <RegionBlock>지역 : {region}</RegionBlock>
-        </Link>
-      </span>
+      <Link to={`/meet?region=${region}`}>
+        <RegionBlock>{region}</RegionBlock>
+      </Link>
       <span>{new Date(publishedDate).toLocaleDateString()}</span>
     </MeetSubInfoBlock>
   );

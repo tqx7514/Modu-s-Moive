@@ -21,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     region: {
       type: DataTypes.STRING(100),
-      allowNull: true
+      allowNull: false
     },
     count: {
       type: DataTypes.INTEGER,
@@ -32,9 +32,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    likes: {
+    views: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: false,
+      defaultValue: 0
     }
   }, {
     sequelize,

@@ -31,25 +31,7 @@ const QuillWrapper = styled.div`
     left: 0px;
   }
 `;
-const regionOptions = [
-  { value: "전국", label: "전국" },
-  { value: "서울", label: "서울" },
-  { value: "부산", label: "부산" },
-  { value: "인천", label: "인천" },
-  { value: "대구", label: "대구" },
-  { value: "대전", label: "대전" },
-  { value: "광주", label: "광주" },
-  { value: "울산", label: "울산" },
-  { value: "제주", label: "제주" },
-  { value: "경기도", label: "경기도" },
-  { value: "강원도", label: "강원도" },
-  { value: "경상북도", label: "경상북도" },
-  { value: "경상남도", label: "경상남도" },
-  { value: "충청북도", label: "충청북도" },
-  { value: "충청남도", label: "충청남도" },
-  { value: "전라북도", label: "전라북도" },
-  { value: "전라남도", label: "전라남도" },
-];
+
 const RegionSelect = styled.select`
   font-size: 1rem;
   outline: none;
@@ -59,7 +41,8 @@ const RegionSelect = styled.select`
   margin-bottom: 2rem;
 `;
 
-const Editor = ({ title, body, onChangeField, selectedRegion }) => {
+const Editor = ({ title, body, onChangeField, selectedRegion, regiondata }) => {
+  console.log("ssssssssssssss", regiondata[0]);
   const quillElement = useRef(null);
   const quillInstance = useRef(null);
   const [region, setRegion] = useState("");
@@ -97,7 +80,7 @@ const Editor = ({ title, body, onChangeField, selectedRegion }) => {
       onChangeField({ key: "region", value: selectedRegion });
       setRegion(selectedRegion);
     } else {
-      onChangeField({ key: "region", value: "전국" });
+      onChangeField({ key: "region", value: "서울" });
     }
   }, []);
 
@@ -106,7 +89,7 @@ const Editor = ({ title, body, onChangeField, selectedRegion }) => {
   };
 
   const onChangeRegion = (e) => {
-    const selectedRegion = e.target.value === "" ? "전국" : e.target.value;
+    const selectedRegion = e.target.value === "" ? "서울" : e.target.value;
     setRegion(selectedRegion);
     onChangeField({ key: "region", value: selectedRegion });
   };
@@ -119,9 +102,9 @@ const Editor = ({ title, body, onChangeField, selectedRegion }) => {
         value={title}
       />
       <RegionSelect value={region} onChange={onChangeRegion}>
-        {regionOptions.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
+        {regiondata.map((option) => (
+          <option key={option} value={option}>
+            {option}
           </option>
         ))}
       </RegionSelect>

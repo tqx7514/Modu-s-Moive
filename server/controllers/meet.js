@@ -1,4 +1,4 @@
-const { meets, meetusers, users } = require("../models");
+const { meets, meetusers, regions } = require("../models");
 const { Op } = require("sequelize");
 
 exports.meetWrite = async (req, res, next) => {
@@ -21,10 +21,11 @@ exports.meetWrite = async (req, res, next) => {
 
 exports.meetRead = async (req, res, next) => {
   const meetNum = req.params.meetNum;
-  console.log("meetNum 입니다", meetNum);
   const meet = await meets.findOne({
     where: { meetNum },
   });
+  meet.views += 1;
+  await meet.save();
   if (!meet) {
     res.status(404).json({ message: "포스트가 존재하지않습니다" });
   }
@@ -33,14 +34,11 @@ exports.meetRead = async (req, res, next) => {
 
 exports.meetlist = async (req, res) => {
   const page = parseInt(req.query.page || "1", 10);
-  console.log("page=====================", page);
   if (page < 1) {
     res.status(400);
     return;
   }
   const { tag, region } = req.query;
-  console.log("쿼리===================", req.query);
-  console.log("tag===", tag, "region===", region);
   const where = {};
 
   if (region) {
@@ -55,7 +53,7 @@ exports.meetlist = async (req, res) => {
 
   console.log("where입니다", where);
 
-  const limit = 20;
+  const limit = 12;
   const offset = (page - 1) * limit;
   try {
     console.log("page입니다", page);
@@ -68,11 +66,21 @@ exports.meetlist = async (req, res) => {
     });
 
     const totalCount = await meets.count({ where }); // 총 항목 수 계산
-    const totalPages = Math.ceil(totalCount / limit); // 총 페이지 수 계산
-
+    const totalPages = totalCount ? Math.ceil(totalCount / limit) : 1; // 총 페이지 수 계산
+    const region = await regions.findAll({
+      attributes: ["region"],
+      where: {
+        grade: {
+          [Op.gt]: 0,
+        },
+      },
+    });
+    const regionArray = ["전국", ...region.map((item) => item.region)];
+    // console.log("지역입니다", regionArray);
     res.json({
       meet,
-      totalPages, // 마지막 페이지 정보인 totalPages를 응답에 추가
+      totalPages,
+      regionArray,
     });
   } catch (error) {
     res.status(500).json(error);
@@ -81,15 +89,13 @@ exports.meetlist = async (req, res) => {
 
 exports.meetUpdate = async (req, res, next) => {
   const { title, body, tags, meetNum, region } = req.body;
-  console.log("dddddddddddddd", req.body);
-  console.log("title", title, "body", body, "tags", tags, "meetNum", meetNum);
   try {
     const tagsString = JSON.stringify(tags); // 배열을 JSON 형식의 문자열로 변환
     const [updatedRows] = await meets.update(
       {
         title,
         body,
-        tags: tagsString, // 변환한 문자열을 데이터베이스에 저장
+        tags: tagsString,
         region,
       },
       {

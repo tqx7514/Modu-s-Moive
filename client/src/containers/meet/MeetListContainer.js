@@ -11,11 +11,12 @@ const MeetListContainer = () => {
   // const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
-  const { meets, error, loading, user } = useSelector(
+  const { meets, error, loading, user, regions } = useSelector(
     ({ meetlist, loading, user }) => ({
       meets: meetlist.meets,
       error: meetlist.error,
       loading: loading["meet/MEET_LIST"],
+      regions: meetlist.regions,
       user: user.user,
     })
   );
@@ -35,6 +36,7 @@ const MeetListContainer = () => {
       error={error}
       meets={meets}
       showWriteButton={user}
+      regions={regions}
     />
   );
 };

@@ -27,9 +27,11 @@ const App = () => {
       <Route path="/mypage/:id" element={<MyPage />} />
       <Route path="/write" element={<WritePage />} />
       <Route path="/currentmovie" element={<CurrentMoviePage />} />
+      {/* 예매 페이지 */}
       <Route path="/ticket" element={<TicketPage />}>
         <Route path="/ticket/PersonSeat" element={<PersonSeat />} />
       </Route>
+      {/* -----------*/}
       <Route path="/currentmovie/detail/:id" element={<MoviedetailPage />} />
       <Route path="/cinema" element={<CinemaPage />} />
       <Route path="/" element={<MainPage />} />

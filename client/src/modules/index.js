@@ -16,6 +16,7 @@ import stepfirst, {
 import meetwrite, { meetWriteSaga } from "./meetwrite";
 import meet, { meetSaga } from "./meet";
 import meetlist, { meetsSaga } from "./meetlist";
+import eventlist, { eventSaga } from "./eventlist";
 
 const rootReducer = combineReducers({
   auth,
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   meetwrite,
   meet,
   meetlist,
+  eventlist,
 });
 
 export function* rootSaga() {
@@ -47,6 +49,7 @@ export function* rootSaga() {
     meetsSaga(),
     moviedetailSaga(),
     movieReadSaga(),
+    eventSaga(),
   ]);
 }
 

@@ -2,9 +2,7 @@ const {events} = require("../models");
 
 exports.getEvents = async ( req, res ) => {
     try {
-        const event = await events.findAll({
-            attributes: ["eventNum", "eventTitle", "eventImg", "startEventDate", "endEventDate", "categoryId"],
-        });
+        const event = await events.findAll({});
         res.status(200).json(event);
     } catch (error) {
         console.error(error);
@@ -12,10 +10,10 @@ exports.getEvents = async ( req, res ) => {
     }
 };
 
-exports.movieEvents = async (req, res) => {
+exports.eventMovies = async (req, res) => {
     try {
-        const movieEvent = await events.findAll({});
-        res.status(200).json(movieEvent);
+        const eventMovie = await events.findAll({});
+        res.status(200).json(eventMovie);
     } catch (error) {
         console.error(error);
         res.status(500).json({error: "Internal Server Error"});

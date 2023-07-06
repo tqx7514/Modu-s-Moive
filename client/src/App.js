@@ -15,7 +15,7 @@ import CurrentMoviePage from "./pages/CurrentMoviePage";
 import PostPage from "./pages/PostPage";
 import MyPage from "./pages/MyPage";
 import AdminPage from "./pages/admin/AdminPage";
-import MovieEventPage from "./pages/MovieEventPage";
+import EventMoviePage from "./pages/EventMoviePage";
 import MeetWritePage from "./pages/MeetWritePage";
 import MeetPage from "./pages/MeetPage";
 
@@ -38,7 +38,7 @@ const App = () => {
       <Route path="/event" element={<EventPage />} />
       <Route path="/postlist" element={<PostListPage />} />
       <Route path="post/detail/:postNum" element={<PostPage />} />
-      <Route path="/event/movie" element={<MovieEventPage />} />
+      <Route path="/event/movie" element={<EventMoviePage />} />
       <Route path="/meet" element={<MeetListPage />} />
       <Route path="/meet/detail/:meetNum" element={<MeetPage />} />
       <Route path="/meet/write" element={<MeetWritePage />} />

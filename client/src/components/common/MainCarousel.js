@@ -3,13 +3,19 @@ import styled from 'styled-components';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {MdKeyboardArrowLeft,MdKeyboardArrowRight } from 'react-icons/md'
 
 const Imgcarousel = styled.div`
   background-color: black;
+
   img{
+    width: 100%;
+    height: 420px;
     margin: 0 auto;
+    object-fit: contain;
+    
   }
-`;
+`
 const Pre = styled.div`
   width: 30px;
   height: 30px;
@@ -26,8 +32,16 @@ const NextTo = styled.div`
   z-index: 3;
 `;
 
+const Slidera = styled(Slider)`
+    position: relative;
+    .slick-dots{
+        bottom: 20px;
+    }
 
-const ImageCarousel = ({images}) => {
+`
+
+
+const ImageCarousel = ({movielist}) => {
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
 
   const settings = {
@@ -40,28 +54,27 @@ const ImageCarousel = ({images}) => {
     autoplay: true,
     autoplaySpeed: 30000,
     nextArrow: (
-      <NextTo>
-          <div>
-            a
-          </div>
-      </NextTo>
-  ),
-  prevArrow: (
-      <Pre>
-          a
-      </Pre>
-  ),
+        <NextTo>
+            <MdKeyboardArrowRight/>
+        </NextTo>
+    ),
+    prevArrow: (
+        <Pre>
+            <MdKeyboardArrowLeft/>
+        </Pre>
+    ),
   };
 
   return (
     <Imgcarousel>
-      <Slider {...settings}>
-        {images.map((image) => (
-          <div key={image.file_path}>
-            <img src={IMG_BASE_URL + image.file_path} alt='영화 포스터'/>
+    <h1>무비</h1>
+      <Slidera {...settings}>
+        {Array.isArray(movielist) && movielist?.map((image) => (
+          <div key={image.id}>
+            <img src={IMG_BASE_URL + image.poster_path} alt='영화 포스터'/>
           </div>
         ))}
-      </Slider>
+      </Slidera>
     </Imgcarousel>
   );
 };

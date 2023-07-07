@@ -8059,7 +8059,7 @@ react-is@^18.0.0:
 
 react-kakao-maps@^0.0.13:
   version "0.0.13"
-  resolved "https://registry.npmjs.org/react-kakao-maps/-/react-kakao-maps-0.0.13.tgz"
+  resolved "https://registry.yarnpkg.com/react-kakao-maps/-/react-kakao-maps-0.0.13.tgz#e04e9577a93b495baeed39215a4728e0ee277f19"
   integrity sha512-1ZHGbdvucFpq3rPSee1UB8cY/61QloQeH2Kh1SMSvIoL2kIUIo1lbF8FnwkHo3zrbpqcS4kIFPvvDB5xs27MdA==
   dependencies:
     "@babel/runtime-corejs3" "^7.6.2"

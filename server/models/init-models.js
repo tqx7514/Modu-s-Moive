@@ -1,6 +1,7 @@
 var DataTypes = require("sequelize").DataTypes;
 var _NewTable = require("./NewTable");
 var _cinemas = require("./cinemas");
+var _cinemas1 = require("./cinemas1");
 var _eventcategory = require("./eventcategory");
 var _events = require("./events");
 var _meets = require("./meets");
@@ -16,6 +17,7 @@ var _users = require("./users");
 function initModels(sequelize) {
   var NewTable = _NewTable(sequelize, DataTypes);
   var cinemas = _cinemas(sequelize, DataTypes);
+  var cinemas1 = _cinemas1(sequelize, DataTypes);
   var eventcategory = _eventcategory(sequelize, DataTypes);
   var events = _events(sequelize, DataTypes);
   var meets = _meets(sequelize, DataTypes);
@@ -42,6 +44,7 @@ function initModels(sequelize) {
   return {
     NewTable,
     cinemas,
+    cinemas1,
     eventcategory,
     events,
     meets,

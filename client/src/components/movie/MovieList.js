@@ -1,62 +1,71 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import Button from "../common/Button";
 import { MdStarRate } from "react-icons/md";
 import { Link } from "react-router-dom";
+import ImageCarousel from "../common/MainCarousel";
 
 const AppContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  width: 980px;
+  margin: 0 auto;
+  padding: 50px 0 0 0;
 `;
 
 const ChangePost = styled.div`
   display: flex;
-  justify-content: center; 
-`
-
+  color: #495057;
+  width: 980px;
+  margin: 0 auto;
+  justify-content: space-between;
+`;
 const Changebutton = styled.div`
-  
   button {
     background-color: white;
     cursor: pointer;
     margin: 10px;
     border: none;
-    font-size: 20px;
+    font-size: 18px;
     color: inherit;
-
-    &:hover {
-      color: #495057;
-    }
-
-    ${props =>
-      props.active && css`
-        font-weight: 600;
-        border-bottom: 2px solid black;
-      `
-    }
   }
 `;
+const activeStyle = {
+  color: "black",
+  fontWeight: "bold",
+  borderBottom: "2px solid black",
+  display: "inline-block",
+};
 
 const Sort = styled.div`
-display: flex;
+  display: flex;
+  margin-left: auto;
 
-  button{
+  button {
     background-color: white;
     cursor: pointer;
     border: none;
-    margin: 10px;
+    font-size: 13px;
   }
-`
+
+  button span {
+    color: #495057;
+    border-right: 1px solid black;
+    padding: 0 13px;
+  }
+
+  .span {
+    border: none;
+  }
+`;
 
 const MovieBlock = styled.div`
-  width: 250px;
-  margin: 16px;
+  width: 184px;
+  margin: 0 7.5px;
   background-color: white;
   color: black;
   border-radius: 5px;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
-  border: 1px solid black;
   position: relative;
 
   &:hover {
@@ -79,34 +88,34 @@ const MovieBlock = styled.div`
   }
 
   img {
-    max-width: 100%;
+    width: 100%;
+    height: 262px;
+    border-radius: 4px;
     position: relative;
   }
 `;
 
 const MovieInfo = styled.div`
   display: block;
-  padding: 20px;
   text-align: center;
   align-items: center;
-
-  h4 {
-    margin: 0;
-  }
+  font-size: 13px;
+  margin-bottom: 42px;
 `;
 
 const Movieimg = styled.div`
   background: rgba(0, 0, 0, 0.7);
-  width: 248px;
-  height: 100%;
+  width: 100%;
+  height: 262px;
+  border-radius: 4px;
   position: absolute;
   top: 0;
   left: 0;
   display: none;
 
   div {
-    margin-top: 60%;
-    margin-left: 30%;
+    margin-top: 45%;
+    margin-left: 26%;
   }
 `;
 
@@ -120,24 +129,53 @@ const MovieList = ({
   handleSortByStar,
   handleSortByCount,
 }) => {
-  console.log("111111111", movielist);
+  const [isActive, setIsActive] = useState(true); // 현재상영작 버튼을 초기에 활성화 상태로 설정
+
+  const handleClickCurrentMovies = () => {
+    handleCurrentMovies();
+    setIsActive(true);
+  };
+
+  const handleClickUpcomingMovies = () => {
+    handleUpcomingMovies();
+    setIsActive(false);
+  };
 
   return (
     <div>
+      <ImageCarousel movielist={movielist} />
       <ChangePost>
-      <Changebutton>
-        <button onClick={handleCurrentMovies}>현재 상영작</button>
-        <button onClick={handleUpcomingMovies}>상영 예정작</button>
-      </Changebutton>
-      <Sort>
-        <button onClick={handleSortByPopularity}>흥행도순</button>
-        <hr />
-        <button onClick={handleSortByStar}>평점순</button>
-        <hr />
-        <button onClick={handleSortByCount}>관람평 많은순</button>
-        <hr />
-        <button>보고싶어요순</button>
-      </Sort>
+        <Changebutton>
+          <button
+            onClick={handleClickCurrentMovies}
+            style={isActive === true ? activeStyle : undefined}
+          >
+            현재 상영작
+          </button>
+          <button
+            onClick={handleClickUpcomingMovies}
+            style={isActive === false ? activeStyle : undefined}
+          >
+            상영 예정작
+          </button>
+        </Changebutton>
+        <Sort>
+          <button onClick={handleSortByPopularity}>
+            <span>흥행도순</span>
+          </button>
+
+          <button onClick={handleSortByStar}>
+            <span>평점순</span>
+          </button>
+
+          <button onClick={handleSortByCount}>
+            <span>관람평 많은순</span>
+          </button>
+
+          <button>
+            <span className="span">보고싶어요순</span>
+          </button>
+        </Sort>
       </ChangePost>
       <AppContainer>
         {Array.isArray(movielist) &&

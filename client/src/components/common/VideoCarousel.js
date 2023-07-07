@@ -2,6 +2,26 @@ import React from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import styled from 'styled-components';
+const Pre = styled.div`
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 3%;
+  top: 3%;
+  z-index: 3;
+  background-color: #000;
+`;
+
+const NextTo = styled.div`
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 3%;
+  top: 40px;
+  z-index: 3;
+`;
+
 
 const VideoCarousel = ({ videos }) => {
 
@@ -14,6 +34,18 @@ const VideoCarousel = ({ videos }) => {
     speed: 500,
     autoplay: false,
     autoplaySpeed: 30000,
+    nextArrow: (
+      <NextTo>
+          <div>
+            a
+          </div>
+      </NextTo>
+  ),
+  prevArrow: (
+      <Pre>
+          a
+      </Pre>
+  ),
   };
 
     return (

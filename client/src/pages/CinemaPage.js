@@ -1,11 +1,12 @@
 import React from "react";
 import HeaderContainer from "../containers/common/HeaderContainer";
+import Cinema from "../components/cinema/Cinema";
 
 const CinemaPage = () => {
     return (
         <div>
             <HeaderContainer/>
-            <div>영화관 위치</div>
+            <Cinema />
         </div>
     );
 };

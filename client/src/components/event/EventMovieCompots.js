@@ -9,19 +9,46 @@ const EventMovieInfoBlock = styled.div`
 const EventMovieItemBlock = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1rem;
+  grid-gap: 2rem;
   justify-content: center;
   p {
     text-align: center;
   }
 `;
 
-const EventMovieContainerBlock = styled.div``;
+const EventMovieContainerBlock = styled.div`
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+
+  h2 {
+    margin-bottom: 10px;
+  }
+`;
+
+const EventMovieContentBlock = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 980px;
+  margin: 0 auto;
+  align-items: center;
+`;
 
 const ShowMoreButton = styled.div`
-  margin-top: 1rem;
-  align-self: center;
+  display: flex;
+  cursor: pointer;
   justify-content: center;
+  border: 1px solid gray;
+  margin: 0 auto;
+  height: 30px;
+`;
+
+const DownArrowImage = styled.img`
+  width: 10px;
+  height: 10px;
+  margin-left: 4px;
+  align-items: center;
 `;
 
 const EventMovieCompots = ({ events }) => {
@@ -48,7 +75,7 @@ const EventMovieCompots = ({ events }) => {
   const filteredEvents = sortedEvents.filter((e) => e.categoryId === 1);
 
   return (
-    <div>
+    <EventMovieContentBlock>
       <EventMovieContainerBlock className="eventmoviecontainer">
         <h2>영화</h2>
         {filteredEvents && filteredEvents.length > 0 && (
@@ -69,10 +96,13 @@ const EventMovieCompots = ({ events }) => {
           </EventMovieItemBlock>
         )}
         {visibleCount < filteredEvents.length && (
-          <ShowMoreButton onClick={handleShowMore}>더보기</ShowMoreButton>
+          <ShowMoreButton onClick={handleShowMore}>
+            더보기
+            <DownArrowImage src="../../arrow_down.png" />
+          </ShowMoreButton>
         )}
       </EventMovieContainerBlock>
-    </div>
+    </EventMovieContentBlock>
   );
 };
 

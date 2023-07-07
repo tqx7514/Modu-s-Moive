@@ -4,34 +4,54 @@ import styled from "styled-components";
 
 const EventInfoBlock = styled.div`
   text-align: center;
+  font-size: 12px;
 `;
 
 const EventItemBlock = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
   justify-content: center;
   p {
     text-align: center;
+    margin-bottom: 5px;
   }
 `;
 
 const EventContainerBlock = styled.div`
-  display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: left;
+  align-items: center;
+
+  h3 {
+    margin-bottom: 10px;
+  }
 `;
 
 const EventContentBlock = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
-  align-items: center;
+  width: 980px;
+  margin: 0 auto;
+
+  h2 {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 5px;
+  }
+`;
+
+const RightArrowImage = styled.img`
+  width: 10px;
+  height: 10px;
+  margin-left: 4px;
 `;
 
 const EventListCompots = ({ events }) => {
   if (!events || !events.eventlist) {
     return null;
-  } 
-  
+  }
+
   const eventlist = events.eventlist;
 
   const sortedEvents = eventlist.sort((a, b) => {
@@ -48,11 +68,15 @@ const EventListCompots = ({ events }) => {
   });
 
   return (
-    <div>
       <EventContentBlock className="eventcontent">
-        <h1>전체 이벤트</h1>
+        <h2>전체 이벤트</h2>
         <EventContainerBlock className="eventmoviecontainer">
-          <h2>영화</h2>
+          <Link to="/event/movie">
+            <h3>
+              영화
+              <RightArrowImage src="../../arrow_right.png" />
+            </h3>
+          </Link>
           {sortedEvents && sortedEvents.length > 0 && (
             <EventItemBlock className="eventmovieitem">
               {sortedEvents
@@ -76,7 +100,12 @@ const EventListCompots = ({ events }) => {
         </EventContainerBlock>
 
         <EventContainerBlock className="eventpromotecontainer">
-          <h2>제휴/할인</h2>
+          <Link to="/event/promote">
+            <h3>
+              제휴/할인
+              <RightArrowImage src="../../arrow_right.png" />
+            </h3>
+          </Link>
           {sortedEvents && sortedEvents.length > 0 && (
             <EventItemBlock className="eventpromoteitem">
               {sortedEvents
@@ -100,7 +129,12 @@ const EventListCompots = ({ events }) => {
         </EventContainerBlock>
 
         <EventContainerBlock className="eventothercontainer">
-          <h2>기타</h2>
+          <Link to="/event/other">
+            <h3>
+              기타
+              <RightArrowImage src="../../arrow_right.png" />
+            </h3>
+          </Link>
           {sortedEvents && sortedEvents.length > 0 && (
             <EventItemBlock className="eventotheritem">
               {sortedEvents
@@ -123,7 +157,6 @@ const EventListCompots = ({ events }) => {
           )}
         </EventContainerBlock>
       </EventContentBlock>
-    </div>
   );
 };
 

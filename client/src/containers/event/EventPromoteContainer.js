@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import EventMovieCompots from "../../components/event/EventMovieCompots";
+import EventPromoteCompots from "../../components/event/EventPromoteCompots";
 import { listEvents } from "../../modules/eventlist";
 
-const EventMovieContainer = () => {
+const EventPromoteContainer = () => {
     const dispatch = useDispatch();
     const events = useSelector((state) => ({
         eventlist: state.eventlist.event || [],
@@ -13,7 +13,7 @@ const EventMovieContainer = () => {
         dispatch(listEvents());
     }, [dispatch]);
 
-    return <EventMovieCompots events={events} />;
+    return <EventPromoteCompots events={events} />;
 };
 
-export default EventMovieContainer;
+export default EventPromoteContainer;

@@ -4,6 +4,7 @@ var _cinemas = require("./cinemas");
 var _cinemas1 = require("./cinemas1");
 var _eventcategory = require("./eventcategory");
 var _events = require("./events");
+var _meetboards = require("./meetboards");
 var _meets = require("./meets");
 var _meetusers = require("./meetusers");
 var _moviereviews = require("./moviereviews");
@@ -20,6 +21,7 @@ function initModels(sequelize) {
   var cinemas1 = _cinemas1(sequelize, DataTypes);
   var eventcategory = _eventcategory(sequelize, DataTypes);
   var events = _events(sequelize, DataTypes);
+  var meetboards = _meetboards(sequelize, DataTypes);
   var meets = _meets(sequelize, DataTypes);
   var meetusers = _meetusers(sequelize, DataTypes);
   var moviereviews = _moviereviews(sequelize, DataTypes);
@@ -32,12 +34,16 @@ function initModels(sequelize) {
 
   events.belongsTo(eventcategory, { as: "category", foreignKey: "categoryId"});
   eventcategory.hasMany(events, { as: "events", foreignKey: "categoryId"});
+  meetboards.belongsTo(meets, { as: "meet_Num_meet", foreignKey: "meet_Num"});
+  meets.hasMany(meetboards, { as: "meetboards", foreignKey: "meet_Num"});
   meetusers.belongsTo(meets, { as: "meet_MeetNum_meet", foreignKey: "meet_MeetNum"});
   meets.hasMany(meetusers, { as: "meetusers", foreignKey: "meet_MeetNum"});
   cinemas.belongsTo(regions, { as: "grade_region", foreignKey: "grade"});
   regions.hasMany(cinemas, { as: "cinemas", foreignKey: "grade"});
   events.belongsTo(users, { as: "userNum_user", foreignKey: "userNum"});
   users.hasMany(events, { as: "events", foreignKey: "userNum"});
+  meetboards.belongsTo(users, { as: "user", foreignKey: "user_Id"});
+  users.hasMany(meetboards, { as: "meetboards", foreignKey: "user_Id"});
   meetusers.belongsTo(users, { as: "user", foreignKey: "user_Id"});
   users.hasMany(meetusers, { as: "meetusers", foreignKey: "user_Id"});
 
@@ -47,6 +53,7 @@ function initModels(sequelize) {
     cinemas1,
     eventcategory,
     events,
+    meetboards,
     meets,
     meetusers,
     moviereviews,

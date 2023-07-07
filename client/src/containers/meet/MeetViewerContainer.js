@@ -46,17 +46,33 @@ const MeetViewerContainer = () => {
   };
 
   const onJoin = async () => {
-    const userId = user.id;
     const meetNum = meet.meetNum;
-    dispatch(join({ userId, meetNum }));
+    dispatch(join({ user, meetNum }));
+    dispatch(readMeet(meetNum));
+
+    // dispatch(updateToken({ userId, meetNum }));
   };
   const onWithdraw = async () => {
-    const userId = user.id;
     const meetNum = meet.meetNum;
-    dispatch(withdraw({ userId, meetNum }));
+    dispatch(withdraw({ user, meetNum }));
+    dispatch(readMeet(meetNum));
   };
+  // useEffect(() => {
+  //   const localUser = localStorage.getItem("user");
+  //   if (localUser) {
+  //     const a = JSON.parse(localUser).meet;
+  //     const b = user.meet;
+  //     console.log("aaaaaaaaaaaaaaaaaaaa", a);
+  //     console.log("bbbbbbbbbbbbbbbbbbbbbbbb", b);
+  //     if (a !== b) {
+  //       localStorage.setItem("user", JSON.stringify(user));
+  //     }
+  //     console.log("로칼스토리지의 후의 값", a);
+  //     // dispatch(check(localUser));
+  //   }
+  // }, [user.meet]);
 
-  const ownPost = (user && user.id) === (meet && meet.userId);
+  const ownMeet = (user && user.id) === (meet && meet.userId);
   const isLogined = user !== null;
   return (
     <MeetViewer
@@ -64,16 +80,28 @@ const MeetViewerContainer = () => {
       loading={loading}
       error={error}
       actionButtons={
-        ownPost && <MeetActionButtons onEdit={onEdit} onRemove={onRemove} />
+        ownMeet && <MeetActionButtons onEdit={onEdit} onRemove={onRemove} />
       }
       joinButton={
-        isLogined ? (
+        isLogined && !ownMeet ? (
           user.meet && user.meet.includes(meet && meet.meetNum) ? (
-            <Button cyan="true" onClick={onWithdraw}>
+            <Button
+              style={{
+                padding: "0.4rem 2rem 0.5rem 2rem",
+                fontWeight: "normal",
+              }}
+              onClick={onWithdraw}
+            >
               탈퇴하기
             </Button>
           ) : (
-            <Button cyan="true" onClick={onJoin}>
+            <Button
+              style={{
+                padding: "0.4rem 2rem 0.5rem 2rem",
+                fontWeight: "normal",
+              }}
+              onClick={onJoin}
+            >
               가입하기
             </Button>
           )

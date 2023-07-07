@@ -31,6 +31,10 @@ const [
     SET_SECOND_DATA,
 ] = createRequestActionTypes('stepfirst/SET_SECOND_DATA');
 
+const [
+    SET_DATE_DATA,
+] = createRequestActionTypes('stepfirst/SET_DATE_DATA');
+
 // 액션 생성--------------------------------------------------------
 
 export const readRegion = createAction(READ_REGION);
@@ -45,6 +49,10 @@ export const setFirstData = createAction(SET_FIRST_DATA, (cinema) => ({
 
 export const setSecondData = createAction(SET_SECOND_DATA, (movie) => ({
     movie,
+}));
+
+export const setDateData = createAction(SET_DATE_DATA, (date) => ({
+    date,
 }));
 
 
@@ -70,11 +78,18 @@ export function* movieReadSaga(){
 
 // 초기 값--------------------------------------------------------
 
+const today = new Date();
+const year = today.getFullYear();
+const month = today.getMonth()+1;
+const day = today.getDate();
+
+const format = year+"-"+(("00"+month.toString()).slice(-2))+"-"+(("00"+day.toString()).slice(-2));
 const initialState = {
     region: [],
     cinema: [],
     movie: [],
-    data: {cinema: '', movie: ''},
+    date: '',
+    data: {cinema: '', movie: '', date: format},
     error: null,
 }
 
@@ -119,6 +134,13 @@ const stepfirst = handleActions({
         data: {
             ...state.data,
             movie: action.payload.movie,
+        }
+    }),
+    [SET_DATE_DATA]: (state, action) => ({
+        ...state,
+        data: {
+            ...state.data,
+            date: action.payload.date,
         }
     }),
 },

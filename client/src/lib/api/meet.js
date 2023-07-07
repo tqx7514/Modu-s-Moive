@@ -33,8 +33,12 @@ export const removeMeet = (meetNum) =>
 //   return client.post("/meet/updateToken", user);
 // };
 
-export const writeMeetBoard = ({ body, userId, meetNum }) =>
-  client.post("/meet/writeMeetBoard", { body, userId, meetNum });
+export const writeMeetBoard = ({ body, userId, meetNum }) => {
+  console.log("프론트api meetboard글쓰기");
+  return client.post("/meet/writeMeetBoard", { body, userId, meetNum });
+};
 
-export const MeetBoardList = (meetNum) =>
-  client.get("/meet/meetBoardList", meetNum);
+export const MeetBoardList = (meetNum) => {
+  console.log("meetNum", meetNum);
+  return client.get("/meet/meetBoardList", { params: { meetNum } });
+};

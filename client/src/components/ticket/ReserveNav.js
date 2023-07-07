@@ -9,7 +9,7 @@ const NavReserveUl = styled.ul`
 
 const NavReserveCont = styled.div`
     position: absolute;
-    left: 76px;
+    left: 72px;
     top: 0;
     display: none;
     width: 172px;
@@ -49,7 +49,6 @@ const NavReserveLi = styled.li`
             }
         `
     }
-    
 `;
 
 
@@ -66,6 +65,7 @@ const ReserveNav = ({data}) => {
                     <ul>
                         <li>{data.cinema}</li>
                         <li>{data.movie}</li>
+                        <li>{data.date}</li>
                     </ul>
                 </NavReserveCont>
             </NavReserveLi>

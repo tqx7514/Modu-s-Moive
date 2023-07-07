@@ -3,9 +3,9 @@ import HeaderContainer from "../containers/common/HeaderContainer";
 import TicketWrap from "../components/ticket/TicketWrap";
 import StepFirstContainer from "../containers/ticket/StepFirstContainer";
 import ReserveNavContainer from "../containers/ticket/ReserveNavContainer";
-import SelectMovie from "../components/ticket/SelectMovie";
-import SelectDate from "../components/ticket/SelectDate";
+import SelectDate from "../components/ticket/step1/SelectDate";
 import SelectMovieContainer from "../containers/ticket/SelectMovieContainer";
+import SelectDateContainer from "../containers/ticket/SelectDateContainer";
 
 
 
@@ -17,7 +17,7 @@ const TicketPage = () => {
                 <ReserveNavContainer/>
                 <StepFirstContainer/>
                 <SelectMovieContainer/>
-                <SelectDate/>
+                <SelectDateContainer/>
             </TicketWrap>
             <div>
                 <hr/>

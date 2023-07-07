@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import StepFirst from '../../components/ticket/StepFirst';
+import StepFirst from '../../components/ticket/step1/StepFirst';
 import { readMovie, readRegion, selectedRegion, setFirstData, setSecondData } from '../../modules/stepfirst';
-import SelectMovie from '../../components/ticket/SelectMovie';
 
 const StepFirstContainer = () => {
   // Selector -----------------------------------------------------------
 
-  const { region, cinema, movie, data } = useSelector(({stepfirst}) => stepfirst);
+  const { region, cinema, data } = useSelector(({stepfirst}) => stepfirst);
   
   // Dispatch -----------------------------------------------------------
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
-import SelectMovie from '../../components/ticket/SelectMovie';
 import { useDispatch, useSelector } from 'react-redux';
+import SelectMovie from '../../components/ticket/step1/SelectMovie'
 import { setSecondData } from '../../modules/stepfirst';
 
 const SelectMovieContainer = () => {

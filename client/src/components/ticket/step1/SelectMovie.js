@@ -20,31 +20,6 @@ const Title = styled.div`
   vertical-align: middle;
   border-right: 1px solid #222;
 `;
-const AreaUl = styled.ul`
-  display: flex;
-  height: calc(100% - 116px);
-  border-right: 1px solid #ddd;
-`;
-const AreaLi = styled.li`
-  width: 50%;
-  height: 100%;
-  background: #f5f5f5;
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: none;
-    border-radius: 5px;
-  }
-  &:hover {
-    &::-webkit-scrollbar-thumb {
-      background: #888;
-      border-radius: 5px;
-      transition: all 0.3s ease;
-    }
-  }
-`;
 
 const AreaItem = styled.li`
   padding: 10px 16px;
@@ -126,7 +101,6 @@ const MovieSelect = ({
     onSecondData,
     data,
 }) => {
-    console.log('555555555555555555555',movie)
     const [selectedMovie, setSelectedMovie] = useState(null);
 
     const handleSelectMovie = (movie) => {

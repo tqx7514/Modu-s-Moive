@@ -52,6 +52,7 @@ exports.postlist = async (req, res, next) => {
     });
     const totalCount = await posts.count({ where });
     const totalPages = totalCount ? Math.ceil(totalCount / limit) : 1;
+    console.log("totalPages입니다.", totalPages);
     res.json({ postlists, totalPages });
   } catch (error) {
     res.status(500).json(error);
@@ -64,6 +65,8 @@ exports.postRead = async (req, res, next) => {
   const post = await posts.findOne({
     where: { postNum },
   });
+  post.views += 1;
+  await post.save();
   if (!post) {
     res.status(404).json({ message: "게시글이 존재하지않습니다" });
   }

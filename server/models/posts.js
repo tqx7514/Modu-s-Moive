@@ -28,15 +28,15 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 1
     },
-    count: {
-      type: DataTypes.STRING(255),
+    likes: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: "0"
+      defaultValue: 0
     },
     views: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: "0"
+      defaultValue: 0
     },
     tags: {
       type: DataTypes.STRING(255),

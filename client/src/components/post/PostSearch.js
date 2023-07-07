@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import palette from "../../lib/styles/palette";
-import Responsive from "./Responsive";
+import Responsive from "../common/Responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";

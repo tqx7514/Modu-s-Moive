@@ -14,7 +14,7 @@ const SubInfoBlock = styled.div`
   }
 `;
 
-const SubInfo = ({ username, publishedDate, hasMarginTop }) => {
+const SubInfo = ({ username, publishedDate, hasMarginTop, views }) => {
   const formattedDate = new Date(publishedDate).toLocaleDateString();
   const displayDate = formattedDate !== "Invalid Date" ? formattedDate : null;
 

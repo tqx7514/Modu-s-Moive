@@ -1,6 +1,7 @@
+import React from "react";
 import styled from "styled-components";
-import Responsive from "../common/Responsive";
 import palette from "../../lib/styles/palette";
+import Responsive from "../common/Responsive";
 import SubInfo from "../common/SubInfo";
 import Tags from "../common/Tags";
 
@@ -34,7 +35,7 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
   if (loading || !post) {
     return null;
   }
-  const { title, body, userId, updatedAt, tags } = post;
+  const { title, body, userId, updatedAt, tags, views } = post;
   const tagsArray = Array.isArray(tags) ? tags : JSON.parse(tags);
   return (
     <PostViewerBlock>
@@ -43,6 +44,7 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
         <h1>{title}</h1>
         <SubInfo username={userId} hasMarginTop />
         <Tags tags={tagsArray} />
+        <p>조회수: {views}</p> {/* Added the views count */}
       </PostHead>
       {actionButtons}
       <PostContent dangerouslySetInnerHTML={{ __html: body }} />

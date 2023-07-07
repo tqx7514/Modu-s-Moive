@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { check } from "../../modules/user";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
+// import axios from "axios";
 import * as authAPI from "../../lib/api/auth";
 
 // 프론트에서 쿠키 설정 ( 지금은 백에서 설정해서 안쓰지만 추후에 쓸수도있어 놔둠 )

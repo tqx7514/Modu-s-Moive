@@ -1,35 +1,27 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('cinemas', {
+  return sequelize.define('cinemas1', {
     cinema_num: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    addr: {
-      type: DataTypes.STRING(50),
+    grade: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
-    addr_detail: {
+    addr: {
       type: DataTypes.STRING(50),
       allowNull: false
     },
     cinema: {
       type: DataTypes.STRING(50),
       allowNull: false
-    },
-    grade: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'regions',
-        key: 'grade'
-      }
     }
   }, {
     sequelize,
-    tableName: 'cinemas',
+    tableName: 'cinemas1',
     timestamps: false,
     indexes: [
       {

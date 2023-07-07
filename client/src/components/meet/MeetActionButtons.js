@@ -1,14 +1,13 @@
 import { styled } from "styled-components";
 import palette from "../../lib/styles/palette";
 import { useState } from "react";
-import { useCallback } from "react";
 import MeetAskRemoveModal from "./MeetAskRemoveModal";
 
 const MeetActionButtonsBlock = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 2rem;
-  margin-top: -1.5rem;
+  /* margin-bottom: 2rem; */
+  /* margin-top: -1.5rem; */
 `;
 
 const ActionButton = styled.button`

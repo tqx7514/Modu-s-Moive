@@ -1,5 +1,6 @@
-const { meets, meetusers, regions } = require("../models");
+const { meets, meetusers, regions, users } = require("../models");
 const { Op } = require("sequelize");
+const jwt = require("jsonwebtoken");
 
 exports.meetWrite = async (req, res, next) => {
   const { title, body, tags, userId, region } = req.body;
@@ -24,6 +25,7 @@ exports.meetRead = async (req, res, next) => {
   const meet = await meets.findOne({
     where: { meetNum },
   });
+  console.log("meetread백입니다.", meet.dataValues);
   meet.views += 1;
   await meet.save();
   if (!meet) {
@@ -140,14 +142,39 @@ exports.meetDelete = async (req, res, next) => {
 };
 
 exports.meetJoin = async (req, res) => {
-  const { userId, meetNum } = req.body;
+  const { user, meetNum } = req.body;
+  // console.log("dddddddddddddddd", user);
   try {
-    const met = await meetusers.findAll({});
     const newJoin = await meetusers.create({
-      user_Id: userId,
+      user_Id: user.id,
       meet_MeetNum: meetNum,
     });
-    res.status(200).json(meetNum);
+    const userInfo = await users.findOne({ where: { id: user.id } });
+    if (!userInfo) {
+      res.status(401).json("Not Authorized");
+    } else {
+      const accessToken = jwt.sign(
+        {
+          id: userInfo.id,
+          name: userInfo.name,
+          email: userInfo.email,
+          grade: userInfo.grade,
+          meet: [...user.meet, meetNum],
+        },
+        process.env.ACCESS_SECRET,
+        {
+          expiresIn: "1d",
+        }
+      );
+      // res.clearCookie("accessToken");
+      res.cookie("accessToken", accessToken, {
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        secure: false,
+        httpOnly: true,
+      });
+
+      res.status(200).json(meetNum);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json(error);
@@ -155,20 +182,76 @@ exports.meetJoin = async (req, res) => {
 };
 
 exports.meetWithdraw = async (req, res) => {
-  const { userId, meetNum } = req.body;
+  const { user, meetNum } = req.body;
+  // console.log("백 user", user, "user.id", user.id);
   try {
     const withDraw = await meetusers.destroy({
-      where: { user_Id: userId, meet_MeetNum: meetNum },
+      where: { user_Id: user.id, meet_MeetNum: meetNum },
     });
-    // const meet = await meetusers.findAll({
-    //   nest: true,
-    //   where: { user_Id: userId },
-    //   attributes: ["meet_MeetNum"],
-    // });
-    // const meetArray = meet.map((row) => row.meet_MeetNum);
-    // const meetNums = [...new Set(meetArray)];
-    return;
+    const userInfo = await users.findOne({ where: { id: user.id } });
+    const accessToken = jwt.sign(
+      {
+        id: userInfo.id,
+        name: userInfo.name,
+        email: userInfo.email,
+        grade: userInfo.grade,
+        meet: user.meet.filter((num) => num !== meetNum),
+      },
+      process.env.ACCESS_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
+    res.cookie("accessToken", accessToken, {
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+      secure: false,
+      httpOnly: true,
+    });
+    // console.log("토큰입니다", accessToken);
+    res.json(meetNum);
   } catch (error) {
     console.error(error);
   }
 };
+
+// exports.updateToken = async (req, res) => {
+//   const { id } = req.body;
+
+//   console.log("왓다", req.body.user);
+//   console.log("id=========", id);
+
+//   try {
+//     const userInfo = await users.findOne({ where: { id } });
+//     console.log("유저인포", userInfo);
+//     if (!userInfo) {
+//       res.status(401).json("Not Authorized");
+//     } else {
+//       console.log("엘스다");
+//       const accessToken = jwt.sign(
+//         {
+//           id: userInfo.id,
+//           name: userInfo.name,
+//           email: userInfo.email,
+//           grade: userInfo.grade,
+//           meet: meetNums,
+//         },
+//         process.env.ACCESS_SECRET,
+//         {
+//           expiresIn: "1d",
+//         }
+//       );
+//       console.log("두번째");
+//       res.clearCookie("accessToken");
+//       res.cookie("accessToken", accessToken, {
+//         maxAge: 1000 * 60 * 60 * 24 * 7,
+//         secure: false,
+//         httpOnly: true,
+//       });
+
+//       console.log("토큰체인지완료");
+//       res.status(200);
+//     }
+//   } catch (error) {
+//     res.status(500);
+//   }
+// };

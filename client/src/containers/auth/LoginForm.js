@@ -4,11 +4,19 @@ import AuthForm from "../../components/auth/AuthForm";
 import { changeField, initializeForm, login } from "../../modules/auth";
 import { check } from "../../modules/user";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
-const LoginForm = ({ history }) => {
+const LoginForm = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8080,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
   const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
     form: auth.login,
     auth: auth.auth,
@@ -30,7 +38,14 @@ const LoginForm = ({ history }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     const { id, password } = form;
-    dispatch(login({ id, password }));
+    console.log("id", id);
+    if (id === "") {
+      toast.error("아이디를 입력해 주세요", toastOptions);
+    } else if (password === "") {
+      toast.error("비밀번호를 입력해 주세요", toastOptions);
+    } else {
+      dispatch(login({ id, password }));
+    }
   };
 
   useEffect(() => {
@@ -39,13 +54,12 @@ const LoginForm = ({ history }) => {
 
   useEffect(() => {
     if (authError) {
-      console.log("오류발생");
-      console.log(authError);
       setError("로그인 실패");
+      toast.error("아이디 또는 비밀번호를 잘못 입력하셨습니다.", toastOptions);
       return;
     }
     if (auth) {
-      dispatch(check());
+      dispatch(check({}));
     }
   }, [auth, authError, dispatch]);
 
@@ -69,6 +83,7 @@ const LoginForm = ({ history }) => {
         onSubmit={onSubmit}
         error={error}
       />
+      <ToastContainer />
     </div>
   );
 };

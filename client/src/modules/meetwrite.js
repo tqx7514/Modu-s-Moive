@@ -2,7 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import createRequestSaga, {
   createRequestActionTypes,
 } from "../lib/createRequestSaga";
-import * as postsAPI from "../lib/api/meet";
+import * as meetsAPI from "../lib/api/meet";
 import { takeLatest } from "redux-saga/effects";
 
 const INITIALIZE = "meet/INITIALIZE";
@@ -40,8 +40,8 @@ export const updateMeet = createAction(
   })
 );
 
-const writeMeetSaga = createRequestSaga(WRITE_MEET, postsAPI.writeMeet);
-const updateMeetSaga = createRequestSaga(UPDATE_MEET, postsAPI.updateMeet);
+const writeMeetSaga = createRequestSaga(WRITE_MEET, meetsAPI.writeMeet);
+const updateMeetSaga = createRequestSaga(UPDATE_MEET, meetsAPI.updateMeet);
 
 export function* meetWriteSaga() {
   yield takeLatest(WRITE_MEET, writeMeetSaga);

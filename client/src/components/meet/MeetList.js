@@ -13,7 +13,7 @@ const MeetListBlock = styled(Responsive)`
   > hr {
     margin-bottom: 1rem;
     border: none;
-    border-top: 1px solid lightgray; /* 연한 회색으로 변경 */
+    border-top: 1px solid lightslategray; /* 연한 회색으로 변경 */
   }
 `;
 
@@ -75,7 +75,7 @@ const DataBlock = styled.div`
   }
 `;
 
-const SelectRegionBlock = styled.div`
+const MeetHeaderBlock = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 2rem;
@@ -167,10 +167,10 @@ const MeetList = ({ meets, loading, error, showWriteButton, regions }) => {
   }
   return (
     <MeetListBlock>
-      <SelectRegionBlock>
+      <MeetHeaderBlock>
         <h2>모임</h2>
         {showWriteButton && <Button to="/meet/write">모임 만들기</Button>}
-      </SelectRegionBlock>
+      </MeetHeaderBlock>
       <hr />
       <RegionsBlock>
         {regions &&

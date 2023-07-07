@@ -59,8 +59,6 @@ exports.login = async (req, res) => {
     });
     const meetArray = newUserInfo.rows.map((row) => row.meet_MeetNum);
     const meetNums = [...new Set(meetArray)];
-    console.log("데이터", meetNums);
-    console.log("카운트", newUserInfo.count);
     const userInfo = await users.findOne({ where: { id } });
     const hash = await bcrypt.compare(password, userInfo.password);
 
@@ -105,7 +103,6 @@ exports.logout = (req, res) => {
 };
 
 exports.check = (req, res) => {
-  // const user = jwt.verify(req.cookies.accessToken, process.env.ACCESS_SECRET);
   const user = req.cookies.accessToken;
   // console.log(req.cookies.accessToken);
 

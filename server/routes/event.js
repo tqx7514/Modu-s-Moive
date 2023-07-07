@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { getEvents, movieEvents } = require("../controllers/event");
+const { getEvents, eventMovies } = require("../controllers/event");
 
 router.get("/", getEvents);
-router.get("/movie", movieEvents);
+router.get("/movie", eventMovies);
 
 module.exports = router;

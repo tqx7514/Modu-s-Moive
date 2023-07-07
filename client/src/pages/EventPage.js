@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import HeaderContainer from "../containers/common/HeaderContainer";
-import EventList from "../components/event/EventList";
 import EventCategory from "../components/event/EventCategory";
+import EventContainer from "../containers/event/EventContainer";
 
 const EventPage = () => {
     const [category, setCategory ] = useState('all');
@@ -11,7 +11,7 @@ const EventPage = () => {
         <div>
             <HeaderContainer/>
             <EventCategory category={category} onSelect={onSelect} />
-            <EventList category={category} />
+            <EventContainer category={category} />
         </div>
     );
 };

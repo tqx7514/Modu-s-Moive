@@ -1,7 +1,7 @@
 import client from "./client";
 
 export const eventlist = () => {
-  return client.get(`/event`);
+  return client.get("/event");
 };
 
 export const eventmovielist = (eventNum) => {

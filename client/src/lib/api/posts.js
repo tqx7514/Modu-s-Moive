@@ -9,9 +9,10 @@ export const readPost = (postNum) => {
   return client.get(`/post/detail/${postNum}`);
 };
 
-export const listPosts = ({ page, name, tags }) => {
+export const listPosts = ({ page, name, tags, searchResult }) => {
+  console.log("sssssssss", searchResult);
   return client.get("/post/postlist", {
-    params: { page, name, tags },
+    params: { page, name, tags, searchResult },
   });
 };
 

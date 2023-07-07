@@ -3,17 +3,24 @@ import palette from "../../lib/styles/palette";
 import Responsive from "../common/Responsive";
 import Button from "../common/Button";
 import SubInfo from "../common/SubInfo";
-import Tags from "../common/Tags";
 import { Link } from "react-router-dom";
+import PostSearch from "../common/PostSearch";
+import PostListInfo from "./PostListInfo";
 
 const PostItemBlock = styled.div`
   padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
   &:first-child {
     padding-top: 0;
+    border-bottom: 1px solid ${palette.gray[5]};
+  }
+  &:last-child {
+    margin-bottom: 2rem;
   }
   & + & {
-    border-top: 1px solid ${palette.gray[2]};
+    border-bottom: 1px solid ${palette.gray[5]};
   }
 `;
 
@@ -40,18 +47,25 @@ const PostItemContent = styled.div`
   }
 `;
 
+const PostSearchBlock = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0rem;
+`;
+
 const PostItem = ({ post }) => {
-  const { updatedAt, userId, tags, title, postNum } = post;
-  const tagsArray = Array.isArray(tags) ? tags : JSON.parse(tags);
+  const { createdAt, userId, title, postNum } = post;
   return (
     <PostItemBlock>
       <PostItemContent>
-        <h2>
-          <Link to={`/post/detail/${postNum}`}>{title}</Link>
-        </h2>
-        <SubInfo username={userId} publishedDate={new Date(updatedAt)} />
+        <SubInfo publishedDate={new Date(createdAt)} />
+        <div>
+          <h2>
+            <Link to={`/post/detail/${postNum}`}>{title}</Link>
+          </h2>
+        </div>
+        <SubInfo username={userId} />
       </PostItemContent>
-      <Tags tags={tagsArray} />
     </PostItemBlock>
   );
 };
@@ -62,22 +76,28 @@ const PostList = ({ posts, loading, error, showWriteButton }) => {
   }
 
   return (
-    <PostListBlock>
-      {!loading && posts && (
-        <div>
-          {posts.map((post) => (
-            <PostItem post={post} key={post.postNum} />
-          ))}
-        </div>
-      )}
-      <WritePostButtonWrapper>
-        {showWriteButton && (
-          <Button cyan to="/write">
-            새 글 작성하기
-          </Button>
+    <>
+      <PostListBlock>
+        <PostSearchBlock>
+          <PostSearch />
+        </PostSearchBlock>
+        <PostListInfo />
+        {!loading && posts && (
+          <div>
+            {posts.map((post) => (
+              <PostItem post={post} key={post.postNum} />
+            ))}
+          </div>
         )}
-      </WritePostButtonWrapper>
-    </PostListBlock>
+        <WritePostButtonWrapper>
+          {showWriteButton && (
+            <Button cyan to="/write">
+              새 글 작성하기
+            </Button>
+          )}
+        </WritePostButtonWrapper>
+      </PostListBlock>
+    </>
   );
 };
 

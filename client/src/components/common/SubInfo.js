@@ -1,5 +1,3 @@
-import palette from "../../lib/styles/palette";
-import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 const SubInfoBlock = styled.div`
@@ -8,10 +6,8 @@ const SubInfoBlock = styled.div`
     css`
       margin-top: 1rem;
     `}
-  color: ${palette.gray[6]};
 
   span + span:before {
-    color: ${palette.gray[4]};
     padding-left: 0.25rem;
     padding-right: 0.25rem;
     content: "\\B7";
@@ -19,14 +15,15 @@ const SubInfoBlock = styled.div`
 `;
 
 const SubInfo = ({ username, publishedDate, hasMarginTop }) => {
+  const formattedDate = new Date(publishedDate).toLocaleDateString();
+  const displayDate = formattedDate !== "Invalid Date" ? formattedDate : null;
+
   return (
     <SubInfoBlock hasMarginTop={hasMarginTop}>
       <span>
-        <b>
-          <Link to={`/postlist?userId=${username}`}>{username}</Link>
-        </b>
+        <h3>{username}</h3>
       </span>
-      <span>{new Date(publishedDate).toLocaleDateString()}</span>
+      <h3>{displayDate && <span>{displayDate}</span>}</h3>
     </SubInfoBlock>
   );
 };

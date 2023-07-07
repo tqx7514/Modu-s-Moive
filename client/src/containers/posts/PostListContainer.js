@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import PostList from "../../components/posts/PostList";
 import { listPosts } from "../../modules/posts";
-import PostSearch from "../../components/common/PostSearch";
 
 const PostListContainer = () => {
   const { name } = useParams();
@@ -19,13 +18,14 @@ const PostListContainer = () => {
   );
   useEffect(() => {
     const tags = searchParams.get("tags");
+    const searchResult = searchParams.get("search");
+    console.log("constaienr", searchResult);
     const page = parseInt(searchParams.get("page"), 10) || 1;
-    dispatch(listPosts({ tags, name, page })); // Actions must be plain objects. Use custom middleware for async actions.에러 의심부분
+    dispatch(listPosts({ tags, name, page, searchResult }));
   }, [dispatch, searchParams, name]);
 
   return (
     <>
-      <PostSearch />
       <PostList
         loading={loading}
         error={error}

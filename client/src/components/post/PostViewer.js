@@ -39,8 +39,9 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
   return (
     <PostViewerBlock>
       <PostHead>
+        <SubInfo publishedDate={updatedAt} hasMarginTop />
         <h1>{title}</h1>
-        <SubInfo username={userId} publishedDate={updatedAt} hasMarginTop />
+        <SubInfo username={userId} hasMarginTop />
         <Tags tags={tagsArray} />
       </PostHead>
       {actionButtons}

@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { MdDensityMedium, MdWindow } from "react-icons/md";
-
-// const FirstContents = styled.div`
-//   display: flex;
-//   width: calc(100% - 76px);
-//   height: 100%;
-// `;
 
 const StepArea = styled.div`
   width: 30%;
@@ -128,15 +121,13 @@ const AreaItem = styled.li`
 `;
 
 
-const StepFirst = ({ 
+const SelectCinema = ({ 
   region, 
   cinema,
   movie,
   onSelectRegion, 
   onSelectCinema, 
   onFirstData, 
-  onSecondData, 
-  data, 
 }) => {
 
   const [selectedRegion, setSelectedRegion] = useState(null);
@@ -200,4 +191,4 @@ const StepFirst = ({
   );
 };
 
-export default StepFirst;
+export default SelectCinema;

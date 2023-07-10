@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { applyMiddleware, legacy_createStore as createStore } from "redux";
 import rootReducer, { rootSaga } from "./modules/index";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import createSagaMiddleware from "redux-saga";
 import { check, tempSetUser } from "./modules/user";
 

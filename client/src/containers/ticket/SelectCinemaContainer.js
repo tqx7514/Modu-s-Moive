@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import StepFirst from '../../components/ticket/step1/StepFirst';
+import SelectCinema from '../../components/ticket/step1/SelectCinema';
 import { readMovie, readRegion, selectedRegion, setFirstData, setSecondData } from '../../modules/stepfirst';
 
-const StepFirstContainer = () => {
+const SelectCinemaContainer = () => {
   // Selector -----------------------------------------------------------
 
   const { region, cinema, data } = useSelector(({stepfirst}) => stepfirst);
@@ -23,21 +23,18 @@ const StepFirstContainer = () => {
 
   const onSelectCinema = useCallback(() => {
     dispatch(readMovie());
+    dispatch(setSecondData(null));
   },[dispatch]);
 
   const onFirstData = useCallback((cinema) => {
     dispatch(setFirstData(cinema));
   }, [dispatch]);
   
-  // const onSecondData = useCallback((movie) => {
-  //   dispatch(setSecondData(movie));
-  // }, [dispatch]);
-  
   // 컴포넌트 -------------------------------------------------------------
 
   return(
     <>
-      <StepFirst 
+      <SelectCinema 
         region={region}
         cinema={cinema}
         data={data}
@@ -53,4 +50,4 @@ const StepFirstContainer = () => {
   )
 };    
 
-export default StepFirstContainer;
+export default SelectCinemaContainer;

@@ -21,10 +21,11 @@ const Title = styled.div`
   border-right: 1px solid #222;
 `;
 
-const AreaItem = styled.li`
+export const AreaItem = styled.li`
   padding: 10px 16px;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 15px;
+  font-weight: 500;
   &.movie_list {
     display: flex;
     align-items: center;
@@ -52,6 +53,7 @@ const AreaItem = styled.li`
       width: 22px;
       height: 22px;
       display: inline-block;
+      margin-right: 10px;
     }
     &.age_all {
       background: url("/age_all.png") no-repeat;
@@ -109,7 +111,7 @@ const MovieSelect = ({
     };
   return (
     <StepCinema style={{ background: "#f5f5f5" }}>
-        <Title>{data.movie ? `${data.movie}` : '영화 선택'}</Title>
+        <Title>{data.movie ? `${data.movie.movie_name}` : '영화 선택'}</Title>
         <FilterList>
           <select>
             <option value={"예매순"}>예매순</option>
@@ -126,7 +128,7 @@ const MovieSelect = ({
           {movie.map((m) => (
             <AreaItem
               key={m.movie_num}
-              onClick={() => handleSelectMovie(m.movie_name)}
+              onClick={() => handleSelectMovie(m)}
               className={`movie_list ${
                 selectedMovie === m.movie_name &&
                 m.movie_name === data.movie

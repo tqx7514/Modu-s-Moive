@@ -1,11 +1,19 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
+import MultipleItems from './Slider';
+import SelectTime from './SelectTime';
 
 const StepDateTime = styled.div`
 width: 40%;
 height: 100%;
 background: #fff;
 `;
+
+const Calendar = styled.div`
+  position: relative;
+  padding: 0 46px;
+`;
+
 const Title = styled.div`
 display: flex;
 justify-content: center;
@@ -20,12 +28,13 @@ vertical-align: middle;
 border-right: 1px solid #222;
 `;
 
-const DayList = styled.div`
-  display: flex;
-  overflow-x: auto;
-`;
-
 const DayItem = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 52.5px;
+  margin-top: 15px;
   cursor: pointer;
   text-align: center;
   padding: 10px 0;
@@ -44,13 +53,29 @@ const DayItem = styled.div`
 `;
 
 const DayDate = styled.h4`
-  width: 52px;
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
+  padding-top: 5px;
   font-weight: 500;
+  border-radius: 100%;
+`;
+
+const FirstMonth = styled.span`
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 8px;
+  font-weight: 400;
+  color: #000;
 `;
 
 const DayWeek = styled.p`
   font-size: 12px;
-`
+`;
 
 const SelectDate = ({onDateData}) => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -76,8 +101,7 @@ const SelectDate = ({onDateData}) => {
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
-    onDateData(formatDate(date))
-    console.log(date);
+    // onDateData(formatDate(date))
   };
 
   const renderCalendar = () => {
@@ -97,11 +121,14 @@ const SelectDate = ({onDateData}) => {
 
       calendar.push(
         <DayItem 
-          key={`current-${i}`} 
+          key={date.getTime()} 
           className={`${dayClass}${i === today.getDate() && !selectedDate ? ' selected' : ''}`} 
           onClick={() => handleDateClick(date)}
         >
-          <DayDate className='date'>{i}</DayDate>
+          <FirstMonth>{i === todayDate ? month + 1 + '월' : ''}</FirstMonth>
+          <DayDate className='date'>
+            {i}
+          </DayDate>
           <DayWeek >
             {dayContent}
           </DayWeek>
@@ -119,11 +146,11 @@ const SelectDate = ({onDateData}) => {
             <Title>
               {selectedDate ? formatDate(selectedDate) : formatDate(today)}
             </Title>
-            <div className="calendar">
-              <DayList className="days">
-                {renderCalendar()}
-              </DayList>
-            </div>
+            <Calendar>
+              <MultipleItems Calendar={renderCalendar()}/>
+              {/* {renderCalendar()} */}
+            </Calendar>
+            <SelectTime/>
         </StepDateTime>
     </>
   )

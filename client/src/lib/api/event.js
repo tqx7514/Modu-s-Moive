@@ -13,5 +13,5 @@ export const eventpromotelist = (eventNum) => {
 };
 
 export const eventotherlist = (eventNum) => {
-  return client.get(`/event/promote/${eventNum}`);
+  return client.get(`/event/other/${eventNum}`);
 };

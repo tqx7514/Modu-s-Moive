@@ -1,6 +1,7 @@
 const {events} = require("../models");
 
 exports.getEvents = async ( req, res ) => {
+    eventNum = req.params.eventNum;
     try {
         const event = await events.findAll({});
         res.status(200).json(event);
@@ -10,12 +11,38 @@ exports.getEvents = async ( req, res ) => {
     }
 };
 
-exports.eventMovies = async (req, res) => {
-    try {
-        const eventMovie = await events.findAll({});
-        res.status(200).json(eventMovie);
+exports.GetMovieEvents = async (req, res) => {
+    eventNum = req.params.eventNum;
+    try{
+        const eventDetail = await events.findOne({
+            where: {eventNum}
+        });
+        res.status(200).json(eventDetail);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({error: "Internal Server Error"});
+        res.status(500).json({ error: "Internal Server Error"});
+    }
+};
+
+exports.GetPromoteEvents = async (req, res) => {
+    eventNum = req.params.eventNum;
+    try{
+        const eventDetail = await events.findOne({
+            where: {eventNum}
+        });
+        res.status(200).json(eventDetail);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error"});
+    }
+};
+
+exports.GetOtherEvents = async (req, res) => {
+    eventNum = req.params.eventNum;
+    try {
+        const eventDetail = await events.findOne({
+            where: {eventNum}
+        });
+        res.status(200).json(eventDetail);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error"});
     }
 };

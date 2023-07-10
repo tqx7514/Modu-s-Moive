@@ -5,8 +5,8 @@ import { listEvents } from "../../modules/eventlist";
 
 const EventMovieContainer = () => {
     const dispatch = useDispatch();
-    const events = useSelector((state) =>({
-        eventlist:  state.eventlist.event,
+    const events = useSelector((state) => ({
+        eventlist: state.eventlist.event || [],
     }))
 
     useEffect(() => {

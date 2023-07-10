@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from "react";
 import HeaderContainer from "../containers/common/HeaderContainer";
 import EventCategory from "../components/event/EventCategory";
-import EventContainer from "../containers/event/EventContainer";
+import EventOtherContainer from "../containers/event/EventOtherContainer";
 
-const EventPage = () => {
+const EventOtherPage = () => {
     const [category, setCategory] = useState('all');
     const onSelect = useCallback(category => setCategory(category), []);
 
@@ -11,9 +11,9 @@ const EventPage = () => {
         <div>
             <HeaderContainer />
             <EventCategory category={category} onSelect={onSelect} />
-            <EventContainer category={category} />
+            <EventOtherContainer category={category} />
         </div>
     );
 };
 
-export default EventPage;
+export default EventOtherPage;

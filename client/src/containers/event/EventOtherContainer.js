@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import EventList from "../../components/event/EventListCompots";
+import EventOtherCompots from "../../components/event/EventOtherCompots";
 import { listEvents } from "../../modules/eventlist";
 
-const EventContainer = () => {
+const EventOtherContainer = () => {
     const dispatch = useDispatch();
-    const events = useSelector((state) =>({
+    const events = useSelector((state) => ({
         eventlist: state.eventlist.event || [],
     }))
 
@@ -13,7 +13,7 @@ const EventContainer = () => {
         dispatch(listEvents());
     }, [dispatch]);
 
-    return <EventList events={events} />;
+    return <EventOtherCompots events={events} />;
 };
 
-export default EventContainer;
+export default EventOtherContainer;

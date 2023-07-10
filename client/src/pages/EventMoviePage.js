@@ -3,17 +3,17 @@ import HeaderContainer from "../containers/common/HeaderContainer";
 import EventCategory from "../components/event/EventCategory";
 import EventMovieContainer from "../containers/event/EventMovieContainer";
 
-const EventPage = () => {
-    const [category, setCategory ] = useState('all');
+const EventMoviePage = () => {
+    const [category, setCategory] = useState('all');
     const onSelect = useCallback(category => setCategory(category), []);
 
     return (
         <div>
-            <HeaderContainer/>
+            <HeaderContainer />
             <EventCategory category={category} onSelect={onSelect} />
             <EventMovieContainer category={category} />
         </div>
     );
 };
 
-export default EventPage;
+export default EventMoviePage;

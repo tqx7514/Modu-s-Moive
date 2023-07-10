@@ -1,4 +1,4 @@
-const { meets, meetusers, regions, users } = require("../models");
+const { meets, meetusers, regions, users, meetboards } = require("../models");
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
 
@@ -25,7 +25,6 @@ exports.meetRead = async (req, res, next) => {
   const meet = await meets.findOne({
     where: { meetNum },
   });
-  console.log("meetread백입니다.", meet.dataValues);
   meet.views += 1;
   await meet.save();
   if (!meet) {
@@ -255,3 +254,34 @@ exports.meetWithdraw = async (req, res) => {
 //     res.status(500);
 //   }
 // };
+
+exports.meetWriteBoard = async (req, res, next) => {
+  const { body, userId, meetNum } = req.body;
+  console.log("백백백", body, userId, meetNum);
+  try {
+    const newMeetBoard = await meetboards.create({
+      meet_Num: meetNum,
+      user_Id: userId,
+      body,
+    });
+    console.log("ssssssssss", newMeetBoard);
+    res.status(200).json(newMeetBoard);
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+};
+
+exports.meetListBoard = async (req, res) => {
+  console.log(req.query.meetNum);
+  const meetNum = req.query.meetNum;
+  try {
+    const list = await meetboards.findAll({
+      where: { meet_Num: meetNum },
+      order: [["createdAt", "DESC"]],
+    });
+    res.json(list);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};

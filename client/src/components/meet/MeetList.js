@@ -190,7 +190,7 @@ const MeetList = ({ meets, loading, error, showWriteButton, regions }) => {
             </div>
           ))}
       </RegionsBlock>
-      {selectedRegion}의 모임 : 총 {meets && meets.length}개 입니다.
+      {/* {selectedRegion}의 모임 : 총 {meets && meets.length}개 입니다. */}
       {!loading && meets && (
         <MeetListItem>
           {meets.map((meet) => (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import Button from "../common/Button";
-import { MdStarRate } from "react-icons/md";
+import { MdStarRate, BsStopwatch } from "react-icons/md";
 import { Link } from "react-router-dom";
 import ImageCarousel from "../common/MainCarousel";
 
@@ -140,6 +140,7 @@ const MovieList = ({
     handleUpcomingMovies();
     setIsActive(false);
   };
+  console.log("movilist=========+++>",movielist);
 
   return (
     <div>

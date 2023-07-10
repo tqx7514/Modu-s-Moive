@@ -5,25 +5,40 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const Imgcarousel = styled.div`
-  background-color: black;
-  img{
-    margin: 0 auto;
-  }
 `;
+const StyledSlider = styled(Slider)`
+  position: relative;
+  
+  .slick-prev::before,
+  .slick-next::before {
+    opacity: 0;
+    display: none;
+  }
+  .slick-slide div {
+    //슬라이더  컨텐츠
+    cursor: pointer;
+  }
+  .img1{
+    width: 980px;
+    height: 566px;
+    object-fit: contain;
+  }
+
+`;
+
 const Pre = styled.div`
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  left: 3%;
-  z-index: 3;
+   left: 94%;
+   top: -5px;
+   position: absolute;
+   margin-top: -20px;
 `;
 
 const NextTo = styled.div`
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  right: 3%;
-  z-index: 3;
+  right: 20px;
+   top: -5px;
+   margin-top: -20px;
+   position: absolute;
+   z-index: 3;
 `;
 
 
@@ -31,8 +46,7 @@ const ImageCarousel = ({images}) => {
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
 
   const settings = {
-    arrows: true,
-    dots: true,
+    dots: false,
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -41,27 +55,25 @@ const ImageCarousel = ({images}) => {
     autoplaySpeed: 30000,
     nextArrow: (
       <NextTo>
-          <div>
-            a
-          </div>
+          <img src="/arr_rg_11.png" alt="" />
       </NextTo>
   ),
   prevArrow: (
       <Pre>
-          a
+          <img src="/arr_lf_11.png" alt="" />
       </Pre>
   ),
   };
 
   return (
     <Imgcarousel>
-      <Slider {...settings}>
+      <StyledSlider {...settings}>
         {images.map((image) => (
           <div key={image.file_path}>
-            <img src={IMG_BASE_URL + image.file_path} alt='영화 포스터'/>
+            <img className = "img1" src={IMG_BASE_URL + image.file_path} alt='영화 포스터'/>
           </div>
         ))}
-      </Slider>
+      </StyledSlider>
     </Imgcarousel>
   );
 };

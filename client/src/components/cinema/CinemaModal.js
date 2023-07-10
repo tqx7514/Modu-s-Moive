@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, {useState, useEffect} from "react";
 
-const Modal = styled.div`
+export const Modal = styled.div`
     position: fixed;
     top: 0;
     left: 0;
@@ -13,14 +13,26 @@ const Modal = styled.div`
     justify-content: center;
 `;
 
-const ModalContent = styled.div`
+const Title = styled.div`
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    h1{
+        margin: 0;
+    }
+    button{
+        margin-left: auto;
+    }
+`;
+
+export const ModalContent = styled.div`
     background-color: white;
     padding: 20px;
 `;
 
 const { kakao } = window;
 
-const CinemaModal = ({oncloseModal}) => {
+const CinemaModal = ({oncloseModal, cinema}) => {
     console.log("1", oncloseModal);
 
     useEffect(() => {
@@ -34,7 +46,7 @@ const CinemaModal = ({oncloseModal}) => {
     const geocoder = new kakao.maps.services.Geocoder();
     
 
-    geocoder.addressSearch("대구광역시 동구 율하동 1117 번지", function(
+    geocoder.addressSearch(cinema, function(
         result,
         status
     ) {
@@ -47,7 +59,7 @@ const CinemaModal = ({oncloseModal}) => {
             });
 
             const infowindow = new kakao.maps.InfoWindow({
-                content: `<div style="width:150px;text-align:center;padding:6px 0;">대구광역시 동구 율하동 1117 번지</div>`,
+                content: `<div style="width:150px;text-align:center;padding:6px 0;">${cinema}</div>`,
             });
             infowindow.open(map, marker);
             map.setCenter(coords);
@@ -58,10 +70,12 @@ const CinemaModal = ({oncloseModal}) => {
     return (
         <Modal>
           <ModalContent>
-            <div>
+            <Title>
               <h1>지도</h1>
-              <button onClick={oncloseModal}>닫기</button>
-            </div>
+              <button onClick={oncloseModal}>
+                <img src="close_13_gry.png"/>
+              </button>
+            </Title>
             <div id="map" style={{ width: "500px", height: "500px" }}></div>
           </ModalContent>
         </Modal>

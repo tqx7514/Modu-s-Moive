@@ -1,33 +1,43 @@
-import React from 'react';
-import Slider from 'react-slick';
+import React from "react";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import styled from 'styled-components';
+import styled from "styled-components";
+
+const StyledSlider = styled(Slider)`
+  height: 260px;
+  width: 100%;
+  position: relative;
+  .slick-prev::before,
+  .slick-next::before {
+    opacity: 0;
+    display: none;
+  }
+  .slick-slide div {
+    //슬라이더  컨텐츠
+    cursor: pointer;
+  }
+`;
+
 const Pre = styled.div`
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  right: 3%;
-  top: 3%;
-  z-index: 3;
-  background-color: #000;
+   left: 94%;
+   top: -5px;
+   position: absolute;
+   margin-top: -20px;
 `;
 
 const NextTo = styled.div`
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  right: 3%;
-  top: 40px;
-  z-index: 3;
+  right: 20px;
+   top: -5px;
+   margin-top: -20px;
+   position: absolute;
+   z-index: 3;
 `;
-
 
 const VideoCarousel = ({ videos }) => {
 
   const settings = {
-    arrows: true,
-    dots: true,
+    dots: false,
     infinite: true,
     slidesToShow: Math.min(3, videos.length),
     slidesToScroll: 1,
@@ -36,36 +46,35 @@ const VideoCarousel = ({ videos }) => {
     autoplaySpeed: 30000,
     nextArrow: (
       <NextTo>
-          <div>
-            a
-          </div>
+        <img src="/arr_rg_11.png" alt="" />
       </NextTo>
-  ),
-  prevArrow: (
+    ),
+    prevArrow: (
       <Pre>
-          a
+        <img src="/arr_lf_11.png" alt="" />
       </Pre>
-  ),
+    ),
+    
   };
 
-    return (
-      <div className="carousel">
-        <Slider {...settings}>
-          {videos.map((video) => (
-            <div key={videos.key}>
-              <iframe
-                title={video.name}
-                width="300"
-                height="200"
-                src={`https://www.youtube.com/embed/${video.key}`}
-                frameBorder="0"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-              ></iframe>
-            </div>
-          ))}
-        </Slider>
-      </div>
-    );
-  };
+  return (
+    <div className="carousel">
+      <StyledSlider {...settings}>
+        {videos.map((video) => (
+          <div key={videos.key}>
+            <iframe
+              title={video.name}
+              width="300"
+              height="200"
+              src={`https://www.youtube.com/embed/${video.key}`}
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+            ></iframe>
+          </div>
+        ))}
+      </StyledSlider>
+    </div>
+  );
+};
 export default VideoCarousel;

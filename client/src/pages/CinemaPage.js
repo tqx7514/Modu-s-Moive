@@ -1,12 +1,12 @@
 import React from "react";
 import HeaderContainer from "../containers/common/HeaderContainer";
-import Cinema from "../components/cinema/Cinema";
+import CinemaContainer from "../containers/cinema/CinemaContainer";
 
 const CinemaPage = () => {
     return (
         <div>
             <HeaderContainer/>
-            <Cinema />
+            <CinemaContainer />
         </div>
     );
 };

@@ -124,7 +124,6 @@ const AreaItem = styled.li`
 const SelectCinema = ({ 
   region, 
   cinema,
-  movie,
   onSelectRegion, 
   onSelectCinema, 
   onFirstData, 

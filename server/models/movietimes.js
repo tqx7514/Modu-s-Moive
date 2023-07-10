@@ -1,15 +1,23 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('likes', {
-    likesNum: {
+  return sequelize.define('movietimes', {
+    movietimes_num: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
+    },
+    first_movies: {
+      type: DataTypes.TIME,
+      allowNull: true
+    },
+    end_movies: {
+      type: DataTypes.TIME,
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'likes',
+    tableName: 'movietimes',
     timestamps: false,
     indexes: [
       {
@@ -17,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "likesNum" },
+          { name: "movietimes_num" },
         ]
       },
     ]

@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const PostListInfoBlock = styled.div`
@@ -9,33 +8,34 @@ const PostListInfoBlock = styled.div`
   display: flex;
   flex-wrap: nowrap;
   gap: 5rem;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const TitleInfoWrapper = styled.div`
   display: flex;
+  align-items: center;
   gap: 16rem;
 `;
 
 const CountWrapper = styled.div`
   display: flex;
+  align-items: center;
   gap: 2rem;
 `;
 
 const PostListInfo = () => {
   return (
-    <>
-      <PostListInfoBlock>
-        <TitleInfoWrapper>
-          <b>등록일</b>
-          <b>제목</b>
-          <b>작성자</b>
-        </TitleInfoWrapper>
-        <CountWrapper>
-          <b>조회수</b>
-          <b>좋아요</b>
-        </CountWrapper>
-      </PostListInfoBlock>
-    </>
+    <PostListInfoBlock>
+      <TitleInfoWrapper>
+        <b>등록일</b>
+        <b>제목</b>
+      </TitleInfoWrapper>
+      <CountWrapper>
+        <b>작성자</b>
+        <b>조회수</b>
+      </CountWrapper>
+    </PostListInfoBlock>
   );
 };
 

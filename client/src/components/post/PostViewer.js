@@ -38,17 +38,19 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
   const { title, body, userId, updatedAt, tags, views } = post;
   const tagsArray = Array.isArray(tags) ? tags : JSON.parse(tags);
   return (
-    <PostViewerBlock>
-      <PostHead>
-        <SubInfo publishedDate={updatedAt} hasMarginTop />
-        <h1>{title}</h1>
-        <SubInfo username={userId} hasMarginTop />
-        <Tags tags={tagsArray} />
-        <p>조회수: {views}</p> {/* Added the views count */}
-      </PostHead>
-      {actionButtons}
-      <PostContent dangerouslySetInnerHTML={{ __html: body }} />
-    </PostViewerBlock>
+    <>
+      <PostViewerBlock>
+        <PostHead>
+          <SubInfo publishedDate={updatedAt} hasMarginTop />
+          <h1>{title}</h1>
+          <SubInfo username={userId} hasMarginTop />
+          <Tags tags={tagsArray} />
+          <p>조회수: {views}</p>
+        </PostHead>
+        {actionButtons}
+        <PostContent dangerouslySetInnerHTML={{ __html: body }} />
+      </PostViewerBlock>
+    </>
   );
 };
 

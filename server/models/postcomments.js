@@ -9,14 +9,22 @@ module.exports = function(sequelize, DataTypes) {
     },
     postNum: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'posts',
+        key: 'postNum'
+      }
     },
-    userId: {
-      type: DataTypes.STRING(255),
-      allowNull: false
+    userNum: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'userNum'
+      }
     },
     content: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(300),
       allowNull: false
     }
   }, {
@@ -30,6 +38,20 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "commentNum" },
+        ]
+      },
+      {
+        name: "postcomments_FK",
+        using: "BTREE",
+        fields: [
+          { name: "postNum" },
+        ]
+      },
+      {
+        name: "postcomments_FK_1",
+        using: "BTREE",
+        fields: [
+          { name: "userNum" },
         ]
       },
     ]

@@ -6,7 +6,6 @@ import SubInfo from "../common/SubInfo";
 import { Link } from "react-router-dom";
 import PostSearch from "../post/PostSearch";
 import PostListInfo from "./PostListInfo";
-import PostLike from "../post/PostLike";
 
 const PostItemBlock = styled.div`
   padding-top: 2rem;
@@ -39,6 +38,7 @@ const WritePostButtonWrapper = styled.div`
 const PostItemContent = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   h2 {
     flex: 1;
     font-size: 2rem;
@@ -60,57 +60,49 @@ const PostItem = ({ post }) => {
   return (
     <PostItemBlock>
       <PostItemContent>
-        <SubInfo publishedDate={new Date(createdAt)} />|
+        <div>
+          <SubInfo publishedDate={new Date(createdAt)} />
+        </div>
         <h2>
           <Link to={`/post/detail/${postNum}`}>{title}</Link>
         </h2>
-        |
-        <SubInfo username={userId} />|<b>{views}</b>
-        <PostLike />
+        <div>
+          <SubInfo username={userId} />
+        </div>
+        <div>
+          <b>{views}</b>
+        </div>
       </PostItemContent>
     </PostItemBlock>
   );
 };
-console.log("PostItem확인중입니다.", PostItem);
+
 const PostList = ({ posts, loading, error, showWriteButton }) => {
-  console.log(
-    "PostList확인중입니다.",
-    "posts:",
-    posts,
-    "loading:",
-    loading,
-    "error:",
-    error,
-    "showWriteButton:",
-    showWriteButton
-  );
   if (error) {
     return <PostListBlock>에러가 발생했습니다.</PostListBlock>;
   }
 
   return (
-    <>
-      <PostListBlock>
-        <PostSearchBlock>
-          <PostSearch />
-          <WritePostButtonWrapper>
-            {showWriteButton && (
-              <Button cyan to="/write">
-                새 글 작성하기
-              </Button>
-            )}
-          </WritePostButtonWrapper>
-        </PostSearchBlock>
-        <PostListInfo />
-        {!loading && posts && (
-          <div>
-            {posts.map((post) => (
-              <PostItem post={post} key={post.postNum} />
-            ))}
-          </div>
-        )}
-      </PostListBlock>
-    </>
+    <PostListBlock>
+      <PostSearchBlock>
+        <PostSearch />
+        <WritePostButtonWrapper>
+          {showWriteButton && (
+            <Button cyan to="/write">
+              새 글 작성하기
+            </Button>
+          )}
+        </WritePostButtonWrapper>
+      </PostSearchBlock>
+      <PostListInfo />
+      {!loading && posts && (
+        <div>
+          {posts.map((post) => (
+            <PostItem post={post} key={post.postNum} />
+          ))}
+        </div>
+      )}
+    </PostListBlock>
   );
 };
 

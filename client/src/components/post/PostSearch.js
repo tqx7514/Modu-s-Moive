@@ -69,5 +69,4 @@ const PostSearch = ({ title, tags, error, showWriteButton }) => {
     </PostSearchBlock>
   );
 };
-
 export default PostSearch;

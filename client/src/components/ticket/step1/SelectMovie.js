@@ -106,12 +106,12 @@ const MovieSelect = ({
     const [selectedMovie, setSelectedMovie] = useState(null);
 
     const handleSelectMovie = (movie) => {
-        setSelectedMovie(movie);
+        setSelectedMovie(movie.movie_name);
         onSecondData(movie);
     };
   return (
     <StepCinema style={{ background: "#f5f5f5" }}>
-        <Title>{data.movie ? `${data.movie.movie_name}` : '영화 선택'}</Title>
+        <Title>{data.movie ? `${data.movie}` : '영화 선택'}</Title>
         <FilterList>
           <select>
             <option value={"예매순"}>예매순</option>
@@ -131,7 +131,7 @@ const MovieSelect = ({
               onClick={() => handleSelectMovie(m)}
               className={`movie_list ${
                 selectedMovie === m.movie_name &&
-                m.movie_name === data.movie
+                m.movie_name === data.movie.movie_name
                   ? "selected"
                   : ""
               }`}

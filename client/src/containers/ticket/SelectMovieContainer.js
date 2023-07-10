@@ -23,4 +23,4 @@ const SelectMovieContainer = () => {
   )
 }
 
-export default SelectMovieContainer
+export default SelectMovieContainer;

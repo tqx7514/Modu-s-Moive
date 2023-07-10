@@ -126,6 +126,7 @@ const stepfirst = handleActions({
     [SET_FIRST_DATA]: (state, action) => ({
         ...state,
         data: {
+            ...state.data,
             cinema: action.payload.cinema,
         }
     }),

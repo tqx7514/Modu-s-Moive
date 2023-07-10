@@ -53,7 +53,7 @@ const NavReserveLi = styled.li`
 
 
 const ReserveNav = ({data}) => {
-    console.log('1265464984984654', data)
+    console.log(data.movie)
     const location = useLocation();
     return(
         <NavReserveUl>
@@ -63,9 +63,9 @@ const ReserveNav = ({data}) => {
                 상영시간
                 <NavReserveCont>
                     <ul>
-                        <li>{data.cinema}</li>
-                        <li>{data.movie}</li>
-                        <li>{data.date}</li>
+                        <li>{data && data.cinema}</li>
+                        <li>{data.movie ? data.movie.movie_name : ''}</li>
+                        <li>{data && data.date}</li>
                     </ul>
                 </NavReserveCont>
             </NavReserveLi>

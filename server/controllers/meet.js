@@ -257,12 +257,14 @@ exports.meetWithdraw = async (req, res) => {
 
 exports.meetWriteBoard = async (req, res, next) => {
   const { body, userId, meetNum } = req.body;
+  console.log("백백백", body, userId, meetNum);
   try {
     const newMeetBoard = await meetboards.create({
       meet_Num: meetNum,
       user_Id: userId,
       body,
     });
+    console.log("ssssssssss", newMeetBoard);
     res.status(200).json(newMeetBoard);
   } catch (error) {
     res.status(500).json(error);

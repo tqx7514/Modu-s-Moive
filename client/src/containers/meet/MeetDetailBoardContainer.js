@@ -33,8 +33,10 @@ const MeetDetailBoardContainer = () => {
 
   const onSubmit = async () => {
     await dispatch(writeMeetBoard({ body, userId, meetNum }));
-    dispatch(initializeForm("write"));
-    dispatch(meetBoardList(meetNum));
+    setTimeout(() => {
+      dispatch(initializeForm("write"));
+      dispatch(meetBoardList(meetNum));
+    }, 100);
   };
 
   useEffect(() => {

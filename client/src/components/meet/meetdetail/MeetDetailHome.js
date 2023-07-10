@@ -19,6 +19,22 @@ const MeetInfo = styled.div`
   width: 48%;
   background-color: yellow;
   height: 95%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem;
+  hr {
+    border: none;
+    border-top: 1px solid black;
+    margin: 0.5rem 0;
+    width: 80%;
+  }
+
+  > div {
+    margin: 0.5rem 0 0.5rem 0;
+  }
 `;
 const MeetContent = styled.div`
   padding: 2rem 2rem 0 2rem;3

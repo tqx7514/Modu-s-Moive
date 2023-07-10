@@ -38,17 +38,8 @@ const DetailContainer = () => {
 
   useEffect(() => {
     dispatch(readDetail(id));
-  }, [dispatch, id]);
-
-  useEffect(() => {
     dispatch(imageDetail(id));
-  }, [dispatch, id]);
-
-  useEffect(() => {
     dispatch(videoDetail(id));
-  }, [dispatch, id]);
-
-  useEffect(() => {
     dispatch(creditDetail(id));
   }, [dispatch, id]);
 

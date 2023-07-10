@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import MovieList from "../../components/movie/MovieList";
-import Modal from "../../components/cinema/Cinema";
 import { listPosts, upcomingPosts } from "../../modules/currentmovie";
 
 const MovieContainer = () => {
@@ -51,7 +50,7 @@ const MovieContainer = () => {
   }, [movielist.movielist]);
 
   return (
-    <div>
+    
       <MovieList
         movielist={currentList}
         handleCurrentMovies={handleCurrentMovies}
@@ -60,7 +59,7 @@ const MovieContainer = () => {
         handleSortByStar={handleSortByStar}
         handleSortByCount={handleSortByCount}
       />
-    </div>
+    
   );
 };
 

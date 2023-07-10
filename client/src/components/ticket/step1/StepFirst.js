@@ -131,12 +131,9 @@ const AreaItem = styled.li`
 const StepFirst = ({ 
   region, 
   cinema,
-  movie,
   onSelectRegion, 
   onSelectCinema, 
   onFirstData, 
-  onSecondData, 
-  data, 
 }) => {
 
   const [selectedRegion, setSelectedRegion] = useState(null);

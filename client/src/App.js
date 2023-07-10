@@ -20,6 +20,7 @@ import MeetWritePage from "./pages/MeetWritePage";
 import MeetPage from "./pages/MeetPage";
 import EventPromotePage from "./pages/EventPromotePage";
 import EventOtherPage from "./pages/EventOtherPage";
+import EventViewerMoviePage from "./pages/EventViewerMoviePage";
 
 const App = () => {
   return (
@@ -47,6 +48,7 @@ const App = () => {
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/event/promote" element={<EventPromotePage />} />
       <Route path="/event/other" element={<EventOtherPage />} />
+      <Route path="/event/movie/:eventNum" element={<EventViewerMoviePage />} />
     </Routes>
   );
 };

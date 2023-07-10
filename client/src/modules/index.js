@@ -8,6 +8,8 @@ import post, { postSaga } from "./post";
 import movielist, { movieSaga } from "./currentmovie";
 import moviedetail, { moviedetailSaga } from "./moviedetail";
 import posts, { postsSaga } from "./posts";
+import eventpost, {eventPostSaga} from "./eventpost";
+
 import stepfirst, {
   regionSaga,
   SelectedSaga,
@@ -32,6 +34,7 @@ const rootReducer = combineReducers({
   meet,
   meetlist,
   eventlist,
+  eventpost,
 });
 
 export function* rootSaga() {
@@ -50,6 +53,7 @@ export function* rootSaga() {
     moviedetailSaga(),
     movieReadSaga(),
     eventSaga(),
+    eventPostSaga(),
   ]);
 }
 

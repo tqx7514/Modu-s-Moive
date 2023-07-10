@@ -6,7 +6,7 @@ import { listEvents } from "../../modules/eventlist";
 const EventContainer = () => {
     const dispatch = useDispatch();
     const events = useSelector((state) =>({
-        eventlist:  state.eventlist.event,
+        eventlist: state.eventlist.event || [],
     }))
 
     useEffect(() => {

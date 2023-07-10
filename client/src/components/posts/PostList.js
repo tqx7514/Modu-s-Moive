@@ -32,17 +32,26 @@ const WritePostButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 3rem;
-  width: 160px;
+  padding-right: 80px;
+`;
+
+const WritePostButton = styled(Button)`
+  white-space: nowrap;
 `;
 
 const PostItemContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.5rem;
+  padding-right: 15px;
   h2 {
     flex: 1;
     font-size: 2rem;
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     &:hover {
       color: ${palette.gray[6]};
     }
@@ -55,23 +64,51 @@ const PostSearchBlock = styled.div`
   margin-bottom: 0rem;
 `;
 
+const Views = styled.b`
+  width: 4rem;
+  text-align: right;
+`;
+
+const UserId = styled(SubInfo)`
+  width: 8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+const PublishedDate = styled(SubInfo)`
+  width: 9rem;
+  text-align: right;
+  span {
+    font-size: 0.875rem;
+    color: ${palette.gray[6]};
+  }
+`;
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}.${month}.${day}.`;
+};
+
 const PostItem = ({ post }) => {
   const { createdAt, userId, title, postNum, views } = post;
+  const limitedTitle = title.length > 10 ? `${title.slice(0, 10)}...` : title;
+  const formattedViews = views > 999 ? "999+" : views;
+  const limitedUserId = userId.length > 6 ? `${userId.slice(0, 6)}..` : userId;
+  const formattedDate = formatDate(createdAt);
+
   return (
     <PostItemBlock>
       <PostItemContent>
-        <div>
-          <SubInfo publishedDate={new Date(createdAt)} />
-        </div>
+        <PublishedDate username={formattedDate} />
         <h2>
-          <Link to={`/post/detail/${postNum}`}>{title}</Link>
+          <Link to={`/post/detail/${postNum}`}>{limitedTitle}</Link>
         </h2>
-        <div>
-          <SubInfo username={userId} />
-        </div>
-        <div>
-          <b>{views}</b>
-        </div>
+        <UserId username={limitedUserId} />
+        <Views>{formattedViews}</Views>
       </PostItemContent>
     </PostItemBlock>
   );
@@ -88,9 +125,9 @@ const PostList = ({ posts, loading, error, showWriteButton }) => {
         <PostSearch />
         <WritePostButtonWrapper>
           {showWriteButton && (
-            <Button cyan to="/write">
-              새 글 작성하기
-            </Button>
+            <WritePostButton cyan to="/write">
+              글쓰기
+            </WritePostButton>
           )}
         </WritePostButtonWrapper>
       </PostSearchBlock>

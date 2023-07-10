@@ -10,5 +10,4 @@ const PostComment = () => {
     </PostCommentBlock>
   );
 };
-
 export default PostComment;

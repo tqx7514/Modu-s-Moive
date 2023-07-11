@@ -11,6 +11,8 @@ const {
   meetWriteBoard,
   meetListBoard,
   meetCommentRead,
+  meetWriteComment,
+  meetBoardDelete,
 } = require("../controllers/meet");
 const router = express.Router();
 
@@ -27,6 +29,8 @@ router.post("/withdraw", meetWithdraw);
 router.post("/writeMeetBoard", meetWriteBoard);
 router.get("/meetBoardList", meetListBoard);
 router.get("/meetBoardList/:meetboardNum", meetCommentRead);
+router.post("/writeMeetComment", meetWriteComment);
+router.delete("/detail/:meetboardNum", meetBoardDelete);
 
 // router.post("/updateToken", updateToken);
 

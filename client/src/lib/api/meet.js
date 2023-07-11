@@ -47,3 +47,13 @@ export const readComment = (meetboardNum) => {
   console.log("프론트 API readComment도착", meetboardNum);
   return client.get(`/meet/meetBoardList/${meetboardNum}`);
 };
+
+export const writeMeetComment = ({ userId, body, meetboard_Num }) => {
+  console.log("글쓰기 프론트API 도착", userId, body, meetboard_Num);
+  return client.post("/meet/writeMeetComment", { userId, body, meetboard_Num });
+};
+
+export const removeMeetBoard = (meetboardNum) => {
+  console.log("리무브밋보드 프론트", meetboardNum);
+  return client.delete(`/meet/detail/${meetboardNum}`, meetboardNum);
+};

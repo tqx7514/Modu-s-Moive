@@ -3,11 +3,16 @@ import { styled } from "styled-components";
 import Button from "../../common/Button";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDispatch } from "react-redux";
+import { changeCommentField } from "../../../modules/meetcomment";
+import MeetActionButtons from "../MeetActionButtons";
+import MeetDetailActionButtons from "./MeetDetailActionButtons";
 
 const MeetBoardBlock = styled.div`
   /* display: flex; */
   /* justify-content: center; */
 `;
+
 const ButtonBlock = styled.div`
   display: flex;
   justify-content: space-between;
@@ -25,7 +30,7 @@ const CustomInput = styled.textarea`
   border-radius: 4px;
   font-size: 16px;
   resize: none;
-  white-space: pre-wrap; /* 줄바꿈 적용 */
+  white-space: pre-wrap;
 `;
 
 const CustomButton = styled(Button)`
@@ -33,6 +38,7 @@ const CustomButton = styled(Button)`
   font-weight: normal;
   width: 15%;
 `;
+
 const CustomButton2 = styled(Button)`
   padding: 0.4rem;
   font-weight: normal;
@@ -47,8 +53,10 @@ const BoardListBlock = styled.div`
 const MeetBoardListItem = styled.div`
   /* margin: 0.5rem 1rem 0.5rem 1rem; */
 `;
+
 const MeetBoardItemBlock = styled.div`
   border: 1px solid black;
+
   > div {
     display: flex;
     margin: 1rem 1.5rem 1rem 1.5rem;
@@ -57,7 +65,7 @@ const MeetBoardItemBlock = styled.div`
   }
 
   &:hover {
-    background-color: lightgray;
+    background-color: mintcream;
   }
 `;
 
@@ -72,16 +80,15 @@ const BoardHeaderItem = styled.div`
   text-align: center;
   ${({ width }) => width && `flex-basis: ${width};`}
 `;
+
 const CustomCommentWrapper = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 4px;
   font-size: 16px;
   resize: none;
-  white-space: pre-wrap; /* 줄바꿈 적용 */
-  /* ${({ expanded }) =>
-    expanded &&
-    `pointer-events: none;`}expanded 상태일 때 pointer-events 비활성화 */
+  white-space: pre-wrap;
+  cursor: text;
 `;
 
 const CustomComment = styled.input`
@@ -90,11 +97,14 @@ const CustomComment = styled.input`
   border: 1px solid #ccc;
   padding: 0.5rem;
   outline: none;
+  cursor: text;
 `;
+
 const CommentButton = styled.button`
   width: 10%;
   padding: 0.3rem 0 0.35rem 0;
 `;
+
 const BoardHeaderItemIcon = styled(FontAwesomeIcon)`
   width: 100%;
   color: gray;
@@ -113,29 +123,56 @@ const CommentDetail = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
 const CommentDetaillist = styled.span`
-  margin: 0.2rem 1rem 0.2rem 1rem;
+  margin: 0 1rem 0 1rem;
+`;
+
+const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+`;
+
+const PageButton = styled.button`
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: ${({ active }) => (active ? "lightgray" : "white")};
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+`;
+
+const ModalBlock = styled.div`
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  height: 5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
 `;
 
 const MeetBoardItem = ({
   meetBoard,
   onClick,
   handleWrapperClick,
-  expanded,
+  expandedId,
   comments,
   commentError,
   userId,
+  onChangeComment,
+  onSubmitComment,
+  onRemoveBoard,
 }) => {
   const { meetboardNum, meet_Num, user_Id, body, grade, createdAt, updatedAt } =
     meetBoard;
-  const formattedBody = body.replace(/\n/g, "<br />"); // 줄바꿈을 <br> 태그로 변경
+  const formattedBody = body.replace(/\n/g, "<br />");
   const firstLine = body.split("\n")[0];
+  const dispatch = useDispatch();
   const ownPost = (id) => {
     if (userId === id) {
-      console.log("userId", userId, "id", id);
       return true;
     } else {
-      console.log("userId", userId, "id", id);
       return false;
     }
   };
@@ -161,9 +198,34 @@ const MeetBoardItem = ({
     return formattedCreatedAt;
   };
 
-  const handleCommentChange = (e) => {
-    console.log(e.target.value);
+  const handleCommentWrapperClick = (e) => {
+    e.stopPropagation(); // 클릭 이벤트 전파 방지
   };
+
+  const [commentValue, setCommentValue] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const commentsPerPage = 5;
+
+  const handleCommentChange = (e) => {
+    const meetboard_Num = meetboardNum;
+    const value = e.target.value;
+    setCommentValue(value);
+    dispatch(changeCommentField({ userId, body: value, meetboard_Num }));
+  };
+
+  const handleCommentSubmit = () => {
+    onSubmitComment();
+    setCommentValue("");
+  };
+
+  // 댓글 페이지 계산
+  const indexOfLastComment = currentPage * commentsPerPage;
+  const indexOfFirstComment = indexOfLastComment - commentsPerPage;
+  const currentComments =
+    comments && comments.slice(indexOfFirstComment, indexOfLastComment);
+
+  // 페이지 변경
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <MeetBoardItemBlock>
@@ -171,7 +233,7 @@ const MeetBoardItem = ({
         <BoardHeaderItem width="10%">{meetboardNum}</BoardHeaderItem>
         <BoardHeaderItem width="15%">{user_Id}</BoardHeaderItem>
         <BoardHeaderItem width="50%">
-          {expanded ? (
+          {expandedId === meetboardNum ? (
             <div dangerouslySetInnerHTML={{ __html: formattedBody }} />
           ) : (
             firstLine
@@ -185,26 +247,30 @@ const MeetBoardItem = ({
         </BoardHeaderItem>
       </div>
 
-      {expanded && (
+      {expandedId === meetboardNum && (
         <>
-          {ownPost(user_Id) && (
-            <>
-              <CustomButton2>수정</CustomButton2>
-              <CustomButton2>삭제</CustomButton2>
-            </>
-          )}
+          <ModalBlock>
+            {ownPost(user_Id) && (
+              <MeetDetailActionButtons onRemove={onRemoveBoard} type="글" />
+            )}
+          </ModalBlock>
           <div>
             <CustomCommentWrapper
-              expanded={expanded}
-              onClick={handleWrapperClick}
+              expanded={expandedId === meetboardNum}
+              onClick={handleCommentWrapperClick}
             >
-              <CustomComment onChange={handleCommentChange} />
-              <CommentButton>댓글작성</CommentButton>
+              <CustomComment
+                value={commentValue}
+                onChange={handleCommentChange}
+              />
+              <CommentButton onClick={handleCommentSubmit}>
+                댓글작성
+              </CommentButton>
             </CustomCommentWrapper>
           </div>
           <>
-            {comments &&
-              comments.map((comment) => {
+            {currentComments &&
+              currentComments.map((comment) => {
                 const formattedCommentCreatedAt = formatCreatedAt(
                   comment.createdAt
                 );
@@ -227,6 +293,22 @@ const MeetBoardItem = ({
                 );
               })}
           </>
+
+          <Pagination>
+            {comments &&
+              Array.from(
+                Array(Math.ceil(comments.length / commentsPerPage)),
+                (_, index) => (
+                  <PageButton
+                    key={index}
+                    active={index + 1 === currentPage}
+                    onClick={() => paginate(index + 1)}
+                  >
+                    {index + 1}
+                  </PageButton>
+                )
+              )}
+          </Pagination>
         </>
       )}
     </MeetBoardItemBlock>
@@ -238,12 +320,15 @@ const MeetDetailBoard = ({
   form,
   onSubmit,
   meetBoards,
+  onRemoveBoard,
   onClick,
   handleWrapperClick,
-  expanded,
+  expandedId,
   comments,
   commentError,
   userId,
+  onChangeComment,
+  onSubmitComment,
 }) => {
   return (
     <MeetBoardBlock>
@@ -252,7 +337,7 @@ const MeetDetailBoard = ({
           name="body"
           value={form.body}
           onChange={onChange}
-          rows={5} // 표시할 줄 수 조정
+          rows={5}
         />
         <CustomButton onClick={onSubmit}>글쓰기</CustomButton>
       </ButtonBlock>
@@ -272,10 +357,13 @@ const MeetDetailBoard = ({
                 key={meetBoard.meetboardNum}
                 onClick={onClick}
                 handleWrapperClick={handleWrapperClick}
-                expanded={expanded}
+                expandedId={expandedId}
                 comments={comments}
                 commentError={commentError}
                 userId={userId}
+                onChangeComment={onChangeComment}
+                onSubmitComment={onSubmitComment}
+                onRemoveBoard={onRemoveBoard}
               />
             ))}
           </MeetBoardListItem>

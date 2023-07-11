@@ -294,27 +294,75 @@ exports.meetListBoard = async (req, res) => {
 };
 
 exports.meetCommentRead = async (req, res) => {
-  // const meetNum = req.params.meetNum;
-  // const meet = await meets.findOne({
-  //   where: { meetNum },
-  // });
-  // meet.views += 1;
-  // await meet.save();
-  // if (!meet) {
-  //   res.status(404).json({ message: "포스트가 존재하지않습니다" });
-  // }
-  // res.json(meet);
   const meetboard_Num = req.params.meetboardNum;
-  console.log("백도착", meetboard_Num);
-
   try {
     const comment = await meetcomments.findAll({
       where: { meetboard_Num },
-      order: [["createdAt", "DESC"]],
+      order: [["createdAt", "ASC"]],
     });
-    console.log("코멘트리스트", comment);
-    res.json(comment);
+    // console.log("코멘트리스트", comment);
+    res.json({ comment, meetboard_Num });
   } catch (error) {
     res.json(error);
+  }
+};
+
+exports.meetWriteComment = async (req, res) => {
+  const { userId, body, meetboard_Num } = req.body;
+  console.log(
+    "userId==",
+    userId,
+    "body==",
+    body,
+    "meetboard_Num==",
+    meetboard_Num
+  );
+  try {
+    const newMeetComment = await meetcomments.create({
+      meetboard_Num,
+      user_Id: userId,
+      body,
+    });
+    // console.log("글작성확인", newMeetComment);
+    res.status(200).json(newMeetComment);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+exports.meetWriteBoard = async (req, res, next) => {
+  const { body, userId, meetNum } = req.body;
+  // console.log("백백백", body, userId, meetNum);
+  try {
+    const newMeetBoard = await meetboards.create({
+      meet_Num: meetNum,
+      user_Id: userId,
+      body,
+    });
+    console.log("ssssssssss", newMeetBoard);
+    res.status(200).json(newMeetBoard);
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+};
+
+exports.meetBoardDelete = async (req, res, next) => {
+  const meetboardNum = req.params.meetboardNum;
+  console.log("아아아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ", meetboardNum);
+  try {
+    const deletedRows = await meetboards.destroy({
+      where: { meetboardNum },
+    });
+
+    if (deletedRows === 0) {
+      res.status(404).json({ message: "포스트가 존재하지 않습니다" });
+      return;
+    }
+
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
   }
 };

@@ -3,7 +3,6 @@ var _cinemas = require("./cinemas");
 var _cinemas1 = require("./cinemas1");
 var _eventcategory = require("./eventcategory");
 var _events = require("./events");
-var _likes = require("./likes");
 var _meetboards = require("./meetboards");
 var _meets = require("./meets");
 var _meetusers = require("./meetusers");
@@ -21,7 +20,6 @@ function initModels(sequelize) {
   var cinemas1 = _cinemas1(sequelize, DataTypes);
   var eventcategory = _eventcategory(sequelize, DataTypes);
   var events = _events(sequelize, DataTypes);
-  var likes = _likes(sequelize, DataTypes);
   var meetboards = _meetboards(sequelize, DataTypes);
   var meets = _meets(sequelize, DataTypes);
   var meetusers = _meetusers(sequelize, DataTypes);
@@ -58,7 +56,6 @@ function initModels(sequelize) {
     cinemas1,
     eventcategory,
     events,
-    likes,
     meetboards,
     meets,
     meetusers,

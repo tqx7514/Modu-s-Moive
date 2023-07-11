@@ -4,8 +4,8 @@ import styled from "styled-components";
 import {
   eventlist,
   eventmovielist,
-  eventpromotelist,
   eventotherlist,
+  eventpromotelist,
 } from "../../lib/api/event";
 
 const EventViewerBlock = styled.div`
@@ -26,9 +26,9 @@ const EventDate = styled.p`
   margin-bottom: 20px;
 `;
 
-const EventContent = styled.p`
-  margin-bottom: 20px;
-`;
+// const EventContent = styled.p`
+//   margin-bottom: 20px;
+// `;
 
 const EventShareButton = styled.button`
   padding: 10px 20px;
@@ -45,9 +45,36 @@ const EventBackButton = styled.button`
   cursor: pointer;
 `;
 
-const EventViewerCompots = ({eventpost}) => {
+const EventViewerCompots = ({ eventpost }) => {
+  const eventDetail = eventpost.eventDetail;
+  const { eventNum } = useParams();
   const [eventData, setEventData] = useState(null);
-  console.log("123531413423", eventpost);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchEventData = async () => {
+      try {
+        let response = null;
+        if (eventNum.startsWith("event")) {
+          response = await eventlist(eventNum);
+        } else if (eventNum.startsWith("movie")) {
+          response = await eventmovielist(eventNum);
+        } else if (eventNum.startsWith("promote")) {
+          response = await eventpromotelist(eventNum);
+        } else if (eventNum.startsWith("other")) {
+          response = await eventotherlist(eventNum);
+        }
+        setEventData(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchEventData();
+  }, [eventNum]);
+
+  const handleGoback = () => {
+    navigate(-1);
+  };
 
   const handleShare = () => {
     const url = window.location.href;
@@ -55,21 +82,22 @@ const EventViewerCompots = ({eventpost}) => {
     alert("링크가 복사되었습니다");
   };
 
-  if (!eventData) {
+  if (!eventDetail) {
     return <div>Loading...</div>;
   }
 
-
   return (
     <EventViewerBlock>
-      {/* <EventImage src={eventImg} alt="이벤트 이미지" />
-      <EventTitle>{eventTitle}</EventTitle>
+      
+      <EventTitle>{eventDetail.eventTitle}</EventTitle>
       <EventDate>
-        {startEventDate} ~ {endEventDate}
+        {eventDetail.startEventDate} ~ {eventDetail.endEventDate}
       </EventDate>
-      <EventContent>{eventContent}</EventContent>
+      {/* <EventImage src={eventDetail.eventImg} alt="이벤트 이미지" /> */}
+      {/* <EventContent>{eventDetail.eventContent}</EventContent> */}
+      <img src={eventDetail.eventContent} alt="이벤트 이미지" />
       <EventShareButton onClick={handleShare}>공유하기</EventShareButton>
-      <EventBackButton onClick={handleGoback}>목록보기</EventBackButton> */}
+      <EventBackButton onClick={handleGoback}>목록보기</EventBackButton>
     </EventViewerBlock>
   );
 };

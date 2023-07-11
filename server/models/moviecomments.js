@@ -1,57 +1,54 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('postcomments', {
-    commentNum: {
+  return sequelize.define('moviecomments', {
+    mc_num: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    postNum: {
+    userNum: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'posts',
-        key: 'postNum'
-      }
-    },
-    userId: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      references: {
         model: 'users',
-        key: 'id'
+        key: 'userNum'
       }
     },
     content: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(100),
       allowNull: false
+    },
+    createAt: {
+      type: DataTypes.TIME,
+      allowNull: true
+    },
+    id: {
+      type: DataTypes.STRING(100),
+      allowNull: true
+    },
+    star: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'postcomments',
-    timestamps: true,
+    tableName: 'moviecomments',
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "commentNum" },
+          { name: "mc_num" },
         ]
       },
       {
-        name: "postcomments_FK",
+        name: "moviecomments_FK",
         using: "BTREE",
         fields: [
-          { name: "postNum" },
-        ]
-      },
-      {
-        name: "postcomments_FK_1",
-        using: "BTREE",
-        fields: [
-          { name: "userId" },
+          { name: "userNum" },
         ]
       },
     ]

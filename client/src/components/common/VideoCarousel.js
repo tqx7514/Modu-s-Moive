@@ -61,7 +61,7 @@ const VideoCarousel = ({ videos }) => {
     <div className="carousel">
       <StyledSlider {...settings}>
         {videos.map((video) => (
-          <div key={videos.key}>
+          <div key={video.key}>
             <iframe
               title={video.name}
               width="300"

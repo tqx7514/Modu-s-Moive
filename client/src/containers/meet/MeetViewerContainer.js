@@ -27,6 +27,7 @@ const MeetViewerContainer = () => {
   useEffect(() => {
     dispatch(readMeet(meetNum));
     return () => {
+      // 클린업함수!!
       dispatch(unloadMeet());
     };
   }, [dispatch, meetNum]);

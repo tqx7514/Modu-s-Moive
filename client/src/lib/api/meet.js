@@ -42,3 +42,8 @@ export const MeetBoardList = (meetNum) => {
   console.log("meetNum", meetNum);
   return client.get("/meet/meetBoardList", { params: { meetNum } });
 };
+
+export const readComment = (meetboardNum) => {
+  console.log("프론트 API readComment도착", meetboardNum);
+  return client.get(`/meet/meetBoardList/${meetboardNum}`);
+};

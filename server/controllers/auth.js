@@ -104,9 +104,6 @@ exports.logout = (req, res) => {
 
 exports.check = (req, res) => {
   const user = req.cookies.accessToken;
-  // console.log(req.cookies.accessToken);
-
-  // const user = 1;
   if (!user) {
     // 로그인 중이 아님
     res.status(401).json({ error: "Unauthorized" });

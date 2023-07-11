@@ -33,6 +33,12 @@ const CustomButton = styled(Button)`
   font-weight: normal;
   width: 15%;
 `;
+const CustomButton2 = styled(Button)`
+  padding: 0.4rem;
+  font-weight: normal;
+  width: 3rem;
+  margin: 0 0.3rem 0 0.3rem;
+`;
 
 const BoardListBlock = styled.div`
   margin-bottom: 3rem;
@@ -103,41 +109,56 @@ const BoardHeaderItemIcon = styled(FontAwesomeIcon)`
   }
 `;
 
-const MeetBoardItem = ({ meetBoard }) => {
+const CommentDetail = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const CommentDetaillist = styled.span`
+  margin: 0.2rem 1rem 0.2rem 1rem;
+`;
+
+const MeetBoardItem = ({
+  meetBoard,
+  onClick,
+  handleWrapperClick,
+  expanded,
+  comments,
+  commentError,
+  userId,
+}) => {
   const { meetboardNum, meet_Num, user_Id, body, grade, createdAt, updatedAt } =
     meetBoard;
   const formattedBody = body.replace(/\n/g, "<br />"); // 줄바꿈을 <br> 태그로 변경
   const firstLine = body.split("\n")[0];
-
-  const createdAtDate = new Date(createdAt);
-  const today = new Date();
-  let formattedCreatedAt = "";
-  if (
-    createdAtDate.getFullYear() === today.getFullYear() &&
-    createdAtDate.getMonth() === today.getMonth() &&
-    createdAtDate.getDate() === today.getDate()
-  ) {
-    // 오늘 날짜인 경우 시간만 표시
-    formattedCreatedAt = createdAtDate.toLocaleTimeString();
-  } else {
-    // 오늘 날짜가 아닌 경우 날짜 표시 (예시: 2023.07.07)
-    const year = createdAtDate.getFullYear();
-    const month = String(createdAtDate.getMonth() + 1).padStart(2, "0");
-    const date = String(createdAtDate.getDate()).padStart(2, "0");
-    formattedCreatedAt = `${year}.${month}.${date}`;
-  }
-
-  const [expanded, setExpanded] = useState(false);
-
-  const toggleExpand = () => {
-    setExpanded(!expanded);
+  const ownPost = (id) => {
+    if (userId === id) {
+      console.log("userId", userId, "id", id);
+      return true;
+    } else {
+      console.log("userId", userId, "id", id);
+      return false;
+    }
   };
 
-  const handleWrapperClick = (e) => {
-    e.stopPropagation(); // 클릭 이벤트 전파 방지
-    if (!expanded) {
-      setExpanded(true);
+  const formatCreatedAt = (date) => {
+    const formattedDate = new Date(date);
+    const today = new Date();
+    let formattedCreatedAt = "";
+    if (
+      formattedDate.getFullYear() === today.getFullYear() &&
+      formattedDate.getMonth() === today.getMonth() &&
+      formattedDate.getDate() === today.getDate()
+    ) {
+      // 오늘 날짜인 경우 시간만 표시
+      formattedCreatedAt = formattedDate.toLocaleTimeString();
+    } else {
+      // 오늘 날짜가 아닌 경우 날짜 표시
+      const year = formattedDate.getFullYear();
+      const month = String(formattedDate.getMonth() + 1).padStart(2, "0");
+      const day = String(formattedDate.getDate()).padStart(2, "0");
+      formattedCreatedAt = `${year}.${month}.${day}`;
     }
+    return formattedCreatedAt;
   };
 
   const handleCommentChange = (e) => {
@@ -156,28 +177,74 @@ const MeetBoardItem = ({ meetBoard }) => {
             firstLine
           )}
         </BoardHeaderItem>
-        <BoardHeaderItem width="15%">{formattedCreatedAt}</BoardHeaderItem>
-        <BoardHeaderItem width="5%" onClick={toggleExpand}>
+        <BoardHeaderItem width="15%">
+          {formatCreatedAt(createdAt)}
+        </BoardHeaderItem>
+        <BoardHeaderItem width="5%" onClick={() => onClick(meetboardNum)}>
           <BoardHeaderItemIcon icon={faChevronDown} className="detail" />
         </BoardHeaderItem>
       </div>
 
-      {expanded ? (
-        <div>
-          <CustomCommentWrapper
-            expanded={expanded}
-            onClick={handleWrapperClick}
-          >
-            <CustomComment onChange={handleCommentChange} />
-            <CommentButton>댓글작성</CommentButton>
-          </CustomCommentWrapper>
-        </div>
-      ) : null}
+      {expanded && (
+        <>
+          {ownPost(user_Id) && (
+            <>
+              <CustomButton2>수정</CustomButton2>
+              <CustomButton2>삭제</CustomButton2>
+            </>
+          )}
+          <div>
+            <CustomCommentWrapper
+              expanded={expanded}
+              onClick={handleWrapperClick}
+            >
+              <CustomComment onChange={handleCommentChange} />
+              <CommentButton>댓글작성</CommentButton>
+            </CustomCommentWrapper>
+          </div>
+          <>
+            {comments &&
+              comments.map((comment) => {
+                const formattedCommentCreatedAt = formatCreatedAt(
+                  comment.createdAt
+                );
+                return (
+                  <CommentDetail key={comment.meetcommentNum}>
+                    <CommentDetaillist>{comment.user_Id}</CommentDetaillist>
+                    <CommentDetaillist>{comment.body}</CommentDetaillist>
+                    <CommentDetaillist>
+                      {formattedCommentCreatedAt}
+                    </CommentDetaillist>
+                    <CommentDetaillist>
+                      {ownPost(comment.user_Id) && (
+                        <>
+                          <CustomButton2>수정</CustomButton2>
+                          <CustomButton2>삭제</CustomButton2>
+                        </>
+                      )}
+                    </CommentDetaillist>
+                  </CommentDetail>
+                );
+              })}
+          </>
+        </>
+      )}
     </MeetBoardItemBlock>
   );
 };
 
-const MeetDetailBoard = ({ onChange, form, onSubmit, meetBoards }) => {
+const MeetDetailBoard = ({
+  onChange,
+  form,
+  onSubmit,
+  meetBoards,
+  onClick,
+  handleWrapperClick,
+  expanded,
+  comments,
+  commentError,
+  userId,
+}) => {
   return (
     <MeetBoardBlock>
       <ButtonBlock>
@@ -203,6 +270,12 @@ const MeetDetailBoard = ({ onChange, form, onSubmit, meetBoards }) => {
               <MeetBoardItem
                 meetBoard={meetBoard}
                 key={meetBoard.meetboardNum}
+                onClick={onClick}
+                handleWrapperClick={handleWrapperClick}
+                expanded={expanded}
+                comments={comments}
+                commentError={commentError}
+                userId={userId}
               />
             ))}
           </MeetBoardListItem>

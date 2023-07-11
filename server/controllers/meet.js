@@ -1,4 +1,11 @@
-const { meets, meetusers, regions, users, meetboards } = require("../models");
+const {
+  meets,
+  meetusers,
+  regions,
+  users,
+  meetboards,
+  meetcomments,
+} = require("../models");
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
 
@@ -283,5 +290,31 @@ exports.meetListBoard = async (req, res) => {
     res.json(list);
   } catch (error) {
     res.status(500).json(error);
+  }
+};
+
+exports.meetCommentRead = async (req, res) => {
+  // const meetNum = req.params.meetNum;
+  // const meet = await meets.findOne({
+  //   where: { meetNum },
+  // });
+  // meet.views += 1;
+  // await meet.save();
+  // if (!meet) {
+  //   res.status(404).json({ message: "포스트가 존재하지않습니다" });
+  // }
+  // res.json(meet);
+  const meetboard_Num = req.params.meetboardNum;
+  console.log("백도착", meetboard_Num);
+
+  try {
+    const comment = await meetcomments.findAll({
+      where: { meetboard_Num },
+      order: [["createdAt", "DESC"]],
+    });
+    console.log("코멘트리스트", comment);
+    res.json(comment);
+  } catch (error) {
+    res.json(error);
   }
 };

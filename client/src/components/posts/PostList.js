@@ -1,9 +1,10 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import palette from "../../lib/styles/palette";
 import Responsive from "../common/Responsive";
 import Button from "../common/Button";
 import SubInfo from "../common/SubInfo";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PostSearch from "../post/PostSearch";
 import PostListInfo from "./PostListInfo";
 
@@ -115,6 +116,18 @@ const PostItem = ({ post }) => {
 };
 
 const PostList = ({ posts, loading, error, showWriteButton }) => {
+  const [searchTitle, setSearchTitle] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (title) => {
+    setSearchTitle(title);
+    if (title === "") {
+      navigate("/postlist");
+    } else {
+      navigate(`/postlist?title=${title}`);
+    }
+  };
+
   if (error) {
     return <PostListBlock>에러가 발생했습니다.</PostListBlock>;
   }
@@ -122,7 +135,7 @@ const PostList = ({ posts, loading, error, showWriteButton }) => {
   return (
     <PostListBlock>
       <PostSearchBlock>
-        <PostSearch />
+        <PostSearch onSearch={handleSearch} />
         <WritePostButtonWrapper>
           {showWriteButton && (
             <WritePostButton cyan to="/write">

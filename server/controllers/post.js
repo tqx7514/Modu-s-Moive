@@ -32,12 +32,12 @@ exports.postlist = async (req, res, next) => {
     return;
   }
 
-  const { searchResult } = req.body;
+  const { title } = req.query;
   const where = {};
 
-  if (searchResult) {
-    where.result = {
-      [Op.like]: `%${searchResult}%`,
+  if (title) {
+    where.title = {
+      [Op.like]: `%${title}%`,
     };
   }
 
@@ -52,7 +52,7 @@ exports.postlist = async (req, res, next) => {
     });
     const totalCount = await posts.count({ where });
     const totalPages = totalCount ? Math.ceil(totalCount / limit) : 1;
-    console.log("totalPages입니다.", totalPages);
+    console.log("totalPages:", totalPages);
     res.json({ postlists, totalPages });
   } catch (error) {
     res.status(500).json(error);

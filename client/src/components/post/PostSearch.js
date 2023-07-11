@@ -40,7 +40,7 @@ const PostSearchBox = styled.div`
   }
 `;
 
-const PostSearch = ({ title, tags, error, showWriteButton }) => {
+const PostSearch = ({ onSearch }) => {
   const [searchResult, setSearchResult] = useState("");
   const navigate = useNavigate();
 
@@ -49,7 +49,7 @@ const PostSearch = ({ title, tags, error, showWriteButton }) => {
   };
 
   const handleSearch = () => {
-    console.log("검색어:", searchResult);
+    onSearch(searchResult);
     navigate(`/postlist?title=${searchResult}`);
   };
 
@@ -58,7 +58,7 @@ const PostSearch = ({ title, tags, error, showWriteButton }) => {
       <PostSearchBox>
         <input
           type="text"
-          placeholder="게시물 검색"
+          placeholder="제목 검색"
           value={searchResult}
           onChange={handleInputChange}
         />
@@ -69,4 +69,5 @@ const PostSearch = ({ title, tags, error, showWriteButton }) => {
     </PostSearchBlock>
   );
 };
+
 export default PostSearch;

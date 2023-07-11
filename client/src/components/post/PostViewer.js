@@ -4,6 +4,7 @@ import palette from "../../lib/styles/palette";
 import Responsive from "../common/Responsive";
 import SubInfo from "../common/SubInfo";
 import Tags from "../common/Tags";
+import PostComment from "./PostComment";
 
 const PostViewerBlock = styled(Responsive)`
   margin-top: 4rem;
@@ -17,13 +18,39 @@ const PostHead = styled.div`
     font-size: 3rem;
     line-height: 1.5;
     margin: 0;
+    margin-bottom: 1rem;
   }
+`;
+
+const InfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+`;
+
+const InfoItem = styled.div`
+  font-size: 1.125rem;
+  color: ${palette.gray[8]};
+  margin-right: 2rem;
 `;
 
 const PostContent = styled.div`
   font-size: 1.3125rem;
   color: ${palette.gray[8]};
+  margin-bottom: 5rem;
 `;
+
+const PostCommentBlock = styled.div`
+  margin-top: 3rem;
+`;
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}.${month}.${day}`;
+};
 
 const PostViewer = ({ post, error, loading, actionButtons }) => {
   if (error) {
@@ -37,18 +64,25 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
   }
   const { title, body, userId, updatedAt, tags, views } = post;
   const tagsArray = Array.isArray(tags) ? tags : JSON.parse(tags);
+  const formattedDate = formatDate(updatedAt);
   return (
     <>
       <PostViewerBlock>
         <PostHead>
-          <SubInfo publishedDate={updatedAt} hasMarginTop />
           <h1>{title}</h1>
           <SubInfo username={userId} hasMarginTop />
+          <InfoWrapper>
+            <InfoItem>{formattedDate}</InfoItem>
+            <InfoItem>조회수: {views}</InfoItem>
+          </InfoWrapper>
+          {actionButtons}
           <Tags tags={tagsArray} />
-          <p>조회수: {views}</p>
         </PostHead>
-        {actionButtons}
         <PostContent dangerouslySetInnerHTML={{ __html: body }} />
+        <hr />
+        <PostCommentBlock>
+          <PostComment />
+        </PostCommentBlock>
       </PostViewerBlock>
     </>
   );

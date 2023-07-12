@@ -9,6 +9,7 @@ import movielist, { movieSaga } from "./currentmovie";
 import moviedetail, { moviedetailSaga } from "./moviedetail";
 import posts, { postsSaga } from "./posts";
 import eventpost, { eventPostSaga } from "./eventpost";
+import meetcomment, { meetCommentSaga } from "./meetcomment";
 
 import stepfirst, {
   regionSaga,
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   meet,
   meetlist,
   meetboard,
+  meetcomment,
   eventlist,
   cinema,
   eventpost,
@@ -56,6 +58,7 @@ export function* rootSaga() {
     meetSaga(),
     meetsSaga(),
     meetBoardSaga(),
+    meetCommentSaga(),
     moviedetailSaga(),
     movieReadSaga(),
     eventSaga(),

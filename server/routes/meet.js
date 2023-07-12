@@ -10,6 +10,10 @@ const {
   updateToken,
   meetWriteBoard,
   meetListBoard,
+  meetCommentRead,
+  meetWriteComment,
+  meetBoardDelete,
+  meetCommentDelete,
 } = require("../controllers/meet");
 const router = express.Router();
 
@@ -25,6 +29,10 @@ router.post("/withdraw", meetWithdraw);
 //모임 안 게시판
 router.post("/writeMeetBoard", meetWriteBoard);
 router.get("/meetBoardList", meetListBoard);
+router.get("/meetBoardList/:meetboardNum", meetCommentRead);
+router.post("/writeMeetComment", meetWriteComment);
+router.delete("/detail/:meetboardNum", meetBoardDelete);
+router.delete("/detail/comment/:meetcommentNum", meetCommentDelete);
 
 // router.post("/updateToken", updateToken);
 

@@ -24,7 +24,7 @@ const MeetTitle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: lavender;
+  background-color: lavenderblush;
   height: 5rem;
   font-size: 1.5rem;
   font-weight: bold;
@@ -59,7 +59,7 @@ const Category = styled.div`
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 1px;
+      height: 2px;
       background-color: black;
       visibility: hidden;
       transition: all 0.2s ease-in-out;

@@ -1,4 +1,11 @@
-const { meets, meetusers, regions, users, meetboards } = require("../models");
+const {
+  meets,
+  meetusers,
+  regions,
+  users,
+  meetboards,
+  meetcomments,
+} = require("../models");
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
 
@@ -283,5 +290,106 @@ exports.meetListBoard = async (req, res) => {
     res.json(list);
   } catch (error) {
     res.status(500).json(error);
+  }
+};
+
+exports.meetCommentRead = async (req, res) => {
+  const meetboard_Num = req.params.meetboardNum;
+  try {
+    const comment = await meetcomments.findAll({
+      where: { meetboard_Num },
+      order: [["createdAt", "ASC"]],
+    });
+    // console.log("코멘트리스트", comment);
+    res.json({ comment, meetboard_Num });
+  } catch (error) {
+    res.json(error);
+  }
+};
+
+exports.meetWriteComment = async (req, res) => {
+  const { userId, body, meetboard_Num } = req.body;
+  console.log(
+    "userId==",
+    userId,
+    "body==",
+    body,
+    "meetboard_Num==",
+    meetboard_Num
+  );
+  try {
+    const newMeetComment = await meetcomments.create({
+      meetboard_Num,
+      user_Id: userId,
+      body,
+    });
+    // console.log("글작성확인", newMeetComment);
+    res.status(200).json(newMeetComment);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+exports.meetWriteBoard = async (req, res, next) => {
+  const { body, userId, meetNum } = req.body;
+  // console.log("백백백", body, userId, meetNum);
+  try {
+    const newMeetBoard = await meetboards.create({
+      meet_Num: meetNum,
+      user_Id: userId,
+      body,
+    });
+    console.log("ssssssssss", newMeetBoard);
+    res.status(200).json(newMeetBoard);
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+};
+
+exports.meetBoardDelete = async (req, res, next) => {
+  const { meetboardNum, meetNum } = req.query;
+  try {
+    const deletedRows = await meetboards.destroy({
+      where: { meetboardNum },
+    });
+    const list = await meetboards.findAll({
+      where: { meet_Num: meetNum },
+      order: [["createdAt", "DESC"]],
+    });
+
+    if (deletedRows === 0) {
+      res.status(404).json({ message: "포스트가 존재하지 않습니다" });
+      return;
+    }
+
+    res.status(200).json(list);
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+};
+
+exports.meetCommentDelete = async (req, res, next) => {
+  const { meetcommentNum, meetboardNum } = req.query;
+  const meetboard_Num = meetboardNum;
+  // console.log("meetCommentNum============", req.query);
+  try {
+    const deletedRows = await meetcomments.destroy({
+      where: { meetcommentNum },
+    });
+    const comment = await meetcomments.findAll({
+      where: { meetboard_Num },
+      order: [["createdAt", "ASC"]],
+    });
+    if (deletedRows === 0) {
+      res.status(404).json({ message: "댓글이 존재하지 않습니다" });
+      return;
+    }
+
+    res.status(200).json({ comment, meetboardNum });
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
   }
 };

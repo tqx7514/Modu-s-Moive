@@ -10,6 +10,7 @@ import { setOriginalMeet } from "../../modules/meetwrite";
 import { removeMeet } from "../../lib/api/meet";
 import Button from "../../components/common/Button";
 import { join, withdraw } from "../../modules/user";
+import MeetDetailActionButtons from "../../components/meet/meetdetail/MeetDetailActionButtons";
 
 const MeetViewerContainer = () => {
   const { meetNum } = useParams();
@@ -27,6 +28,7 @@ const MeetViewerContainer = () => {
   useEffect(() => {
     dispatch(readMeet(meetNum));
     return () => {
+      // 클린업함수!!
       dispatch(unloadMeet());
     };
   }, [dispatch, meetNum]);
@@ -80,7 +82,13 @@ const MeetViewerContainer = () => {
       loading={loading}
       error={error}
       actionButtons={
-        ownMeet && <MeetActionButtons onEdit={onEdit} onRemove={onRemove} />
+        ownMeet && (
+          <MeetDetailActionButtons
+            type="모임"
+            onEdit={onEdit}
+            onRemove={onRemove}
+          />
+        )
       }
       joinButton={
         isLogined && !ownMeet ? (

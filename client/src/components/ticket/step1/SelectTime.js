@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { AreaItem, MovieList } from "./SelectMovie";
-import { readTime } from "../../../modules/stepfirst";
+import { readTime, setTimeData } from "../../../modules/stepfirst";
 
 const BtnWrap = styled.div`
   display: flex;
@@ -35,10 +35,14 @@ const TimeWrap = styled.ul`
 `;
 
 const ScheduleBtn = styled.div`
+  position: relative;
   display: inline-block;
   width: 23%;
   margin-left: 2%;
   margin-bottom: 10px;
+  &.selected{
+    border: 1px solid;
+  }
   &:nth-child(4n + 1) {
     margin-left: 0;
   }
@@ -62,15 +66,30 @@ const ScheduleBtn = styled.div`
 
 const SelectTime = () => {
   const [selectedFilter, setSelectedFilter] = useState("전체");
+  const [selectedTime, setSelectedTime] = useState("");
 
-  const handleFilter = (e) => {
-    setSelectedFilter(e.target.textContent);
+  const handleFilter = (start) => {
+    setSelectedFilter(start);
   };
 
   const { data, time } = useSelector(({ stepfirst }) => stepfirst);
-  console.log(time);
+  console.log(data);
 
   const dispatch = useDispatch();
+
+  const onSelctedTime = useCallback(
+    (time) => {
+      dispatch(setTimeData(time));
+    },
+    [dispatch]
+  );
+
+  const handleSelectTime = (e, start, end) => {
+    setSelectedTime(e.target.start);
+    onSelctedTime(start, end);
+    console.log(selectedTime);
+  };
+  
   useEffect(() => {
     dispatch(readTime());
   }, []);
@@ -78,7 +97,7 @@ const SelectTime = () => {
   const groupedData = {};
 
   time.forEach((item) => {
-    const { cinema, movie_name, age, disp, language, start } = item;
+    const { cinema, movie_name, age, disp, language, start, end, seat } = item;
     const key = `${movie_name}-${disp}-${language}`;
     if (!groupedData[key]) {
       groupedData[key] = {
@@ -88,12 +107,54 @@ const SelectTime = () => {
         disp,
         language,
         start: [],
+        end,
+        seat,
       };
     }
     groupedData[key].start.push(start);
   });
 
   const uniqueTimes = Object.values(groupedData);
+
+  const filteredTimes = uniqueTimes
+    .filter((item) => {
+      if (selectedFilter === "전체") {
+        return true;
+      } else if (selectedFilter === "스페셜관") {
+        return item.disp === "스페셜관";
+      } else if (selectedFilter === "Atmos") {
+        return item.disp === "Atmos";
+      } else if (selectedFilter === "13시 이후") {
+        return item.start.some(
+          (start) => parseInt(start.split(":")[0], 10) >= 13
+        );
+      } else if (selectedFilter === "19시 이후") {
+        return item.start.some(
+          (start) => parseInt(start.split(":")[0], 10) >= 19
+        );
+      } else if (selectedFilter === "심야") {
+        return item.start.some((start) => {
+          const hour = parseInt(start.split(":")[0], 10);
+          return (hour >= 0 && hour < 6) || hour === 23;
+        });
+      }
+      return true;
+    })
+    .map((item) => {
+      const { start } = item;
+      const filteredStart = start.filter((time) => {
+        if (selectedFilter === "13시 이후") {
+          return parseInt(time.split(":")[0], 10) >= 13;
+        } else if (selectedFilter === "19시 이후") {
+          return parseInt(time.split(":")[0], 10) >= 19;
+        } else if (selectedFilter === "심야") {
+          const hour = parseInt(time.split(":")[0], 10);
+          return (hour >= 0 && hour < 6) || hour === 23;
+        }
+        return true;
+      });
+      return { ...item, start: filteredStart };
+    });
 
   return (
     <>
@@ -136,44 +197,61 @@ const SelectTime = () => {
         </FilterBtn>
       </BtnWrap>
       <TimeWrap>
-        {data.cinema && data.date && !data.movie && (
+        {data.cinema && data.date && (
           <>
-            {uniqueTimes.map((item) => (
-              <AreaItem
-                key={`${item.cinema}-${item.movie_name}-${item.age}-${item.disp}-${item.language}`}
-                className="movie_list time"
-              >
-                <MovieList>
-                  <span
-                    className={`${
-                      item.age === "all"
-                        ? "age_all"
-                        : item.age === "12"
-                        ? "age_12"
-                        : item.age === "15"
-                        ? "age_15"
-                        : item.age === "19"
-                        ? "age_19"
-                        : ""
-                    } age`}
-                  ></span>
-                  {item.movie_name}
-                </MovieList>
-                <div>
+            {filteredTimes
+              .filter((item) => {
+                if (data.movie) {
+                  return (
+                    item.cinema === data.cinema &&
+                    item.movie_name === data.movie.movie_name
+                  );
+                } else {
+                  return item.cinema === data.cinema;
+                }
+              })
+              .map((item) => (
+                <AreaItem
+                  key={`${item.cinema}-${item.movie_name}-${item.age}-${item.disp}-${item.language}`}
+                  className="movie_list time"
+                >
+                  <MovieList>
+                    <span
+                      className={`${
+                        item.age === "all"
+                          ? "age_all"
+                          : item.age === "12"
+                          ? "age_12"
+                          : item.age === "15"
+                          ? "age_15"
+                          : item.age === "19"
+                          ? "age_19"
+                          : ""
+                      } age`}
+                    ></span>
+                    {item.movie_name}
+                  </MovieList>
                   <div>
-                    <p>{item.disp}</p>
-                    <p>{item.language}</p>
+                    <div>
+                      <p>{item.disp}</p>
+                      <p>{item.language}</p>
+                    </div>
+                    <div>
+                      {item.start.map((start, index) => (
+                        <ScheduleBtn
+                          key={index}
+                          onClick={(e) => handleSelectTime(e, start, item.end)}
+                          className={selectedTime ? 'selected' : ''}
+                        >
+                          <strong>{start}</strong>
+                          <span>{item.seat}</span>
+                          <span>{item.end}</span>
+                        </ScheduleBtn>
+                      ))}
+                    </div>
                   </div>
-                  <div>
-                    {item.start.map((start, index) => (
-                      <ScheduleBtn key={index}>
-                        {start}
-                      </ScheduleBtn>
-                    ))}
-                  </div>
-                </div>
-              </AreaItem>
-            ))}
+                </AreaItem>
+              ))}
           </>
         )}
       </TimeWrap>

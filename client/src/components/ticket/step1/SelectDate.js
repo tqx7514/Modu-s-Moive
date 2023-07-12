@@ -79,6 +79,7 @@ const DayWeek = styled.p`
 
 const SelectDate = ({onDateData}) => {
   const [selectedDate, setSelectedDate] = useState(null);
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   const today = new Date();
   const currentMonth = today.getMonth();
@@ -93,7 +94,9 @@ const SelectDate = ({onDateData}) => {
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
     const day = ('0' + date.getDate()).slice(-2);
     const dayOfWeek = week[date.getDay()];
-    return `${year}-${month}-${day} (${dayOfWeek})`;
+    return isInitialRender && date.getTime() === today.getTime()
+      ? `${year}-${month}-${day} (오늘)`
+      : `${year}-${month}-${day} (${dayOfWeek})`;
   };
   
   const daysInMonth = new Date(year, month + 1, 0).getDate();

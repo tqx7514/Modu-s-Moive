@@ -14,6 +14,7 @@ const {
   meetWriteComment,
   meetBoardDelete,
   meetCommentDelete,
+  meetBoardUpdate,
 } = require("../controllers/meet");
 const router = express.Router();
 
@@ -33,6 +34,7 @@ router.get("/meetBoardList/:meetboardNum", meetCommentRead);
 router.post("/writeMeetComment", meetWriteComment);
 router.delete("/detail/:meetboardNum", meetBoardDelete);
 router.delete("/detail/comment/:meetcommentNum", meetCommentDelete);
+router.post(`/updateMeetBoard/:meetboardNum`, meetBoardUpdate);
 
 // router.post("/updateToken", updateToken);
 

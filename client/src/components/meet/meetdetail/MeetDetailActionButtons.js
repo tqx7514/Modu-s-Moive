@@ -30,8 +30,14 @@ const ActionButton = styled.button`
   }
 `;
 
-const MeetDetailActionButtons = ({ onEdit, onRemove, type, num, num2 }) => {
-  // console.log("아아아아아아아", num, num2);
+const MeetDetailActionButtons = ({
+  onEdit,
+  onRemove,
+  type,
+  num,
+  num2,
+  meetBoard,
+}) => {
   const [modal, setModal] = useState(false);
   const onRemoveClick = () => {
     setModal(true);
@@ -51,7 +57,14 @@ const MeetDetailActionButtons = ({ onEdit, onRemove, type, num, num2 }) => {
   return (
     <>
       <MeetActionButtonsBlock>
-        <ActionButton onClick={onEdit}>{type} 수정</ActionButton>
+        <ActionButton
+          onClick={onEdit}
+          data-body={meetBoard && meetBoard.body}
+          data-userid={meetBoard && meetBoard.user_Id}
+          data-meetboardnum={meetBoard && meetBoard.meetboardNum}
+        >
+          {type} 수정
+        </ActionButton>
         <ActionButton onClick={onRemoveClick}>{type} 삭제</ActionButton>
       </MeetActionButtonsBlock>
       <MeetAskRemoveModal

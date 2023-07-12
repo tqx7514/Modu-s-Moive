@@ -130,10 +130,11 @@ const MeetViewer = ({ meet, error, loading, actionButtons, joinButton }) => {
         </div>
       </Category>
       <hr />
-      {category === "Home" && <MeetDetailHome meet={meet} />}
+      {category === "Home" && (
+        <MeetDetailHome meet={meet} joinButton={joinButton} />
+      )}
       {category === "Board" && <MeetDetailBoardPage />}
       {category === "Chat" && <MeetDetailChat />}
-      <ButtonAreaBlock>{joinButton}</ButtonAreaBlock>
     </MeetViewerBlock>
   );
 };

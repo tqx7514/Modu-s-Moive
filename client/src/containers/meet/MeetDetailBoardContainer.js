@@ -6,6 +6,7 @@ import {
   initializeForm,
   meetBoardList,
   removeMeetBoard,
+  updateMeetBoard,
   writeMeetBoard,
 } from "../../modules/meetboard";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +18,7 @@ import {
   initializeComment,
   removeMeetComment,
 } from "../../modules/meetcomment";
+import Swal from "sweetalert2";
 
 const MeetDetailBoardContainer = () => {
   const dispatch = useDispatch();
@@ -31,13 +33,15 @@ const MeetDetailBoardContainer = () => {
     comments,
     commentError,
     commentWrite,
+    meetBoard,
   } = useSelector(({ meetboard, user, meet, meetcomment }) => ({
     form: meetboard.write,
     body: meetboard.write.body,
     userId: user.user && user.user.id,
     meetNum: meet.meet.meetNum,
     meetBoards: meetboard.list.meetBoards,
-    meetboardNum: meetcomment.meetboardNum,
+    meetBoard: meetcomment.meetboard,
+    meetboardNum: meetcomment.meetboard.meetboard_Num,
     comments: meetcomment.comments,
     commentError: meetcomment.error,
     commentWrite: meetcomment.write,
@@ -58,7 +62,6 @@ const MeetDetailBoardContainer = () => {
   const onChangeComment = (e) => {
     const body = e.target.value;
     const meetboard_Num = meetboardNum;
-    console.log("sssssssssssssssssssssss", meetboardNum);
     dispatch(changeCommentField({ userId, body, meetboard_Num }));
   };
 
@@ -115,6 +118,41 @@ const MeetDetailBoardContainer = () => {
     }
   };
 
+  const onEditBoard = (e) => {
+    const body = e.target.dataset.body;
+    const userId = e.target.dataset.userid;
+    const meetboardNum = e.target.dataset.meetboardnum;
+    // const body = meetBoard && meetBoard.body;
+    // const userId2 = meetBoard && meetBoard.userId;
+    // const meetboardNum = meetBoard && meetBoard.meetboard_Num;
+    // console.log("body222222222222222", body2, userId2, meetboardNum2);
+    Swal.fire({
+      title: "글 수정",
+      input: "textarea",
+      inputValue: `${body}`,
+      showCancelButton: true,
+      cancelButtonText: "취소",
+      confirmButtonText: "수정",
+      showLoaderOnConfirm: true,
+      preConfirm: (input) => {
+        dispatch(
+          updateMeetBoard({
+            meetboardNum,
+            MeetNum: meetNum,
+            body: input.replace(/\n/g, "\n"),
+          })
+        );
+      },
+    }).then((res) => {
+      if (res.isConfirmed) {
+        Swal.fire({
+          icon: "success",
+          text: "수정 성공",
+        });
+      }
+    });
+  };
+
   useEffect(() => {
     dispatch(initializeForm("list"));
     dispatch(initializeForm("write"));
@@ -141,6 +179,7 @@ const MeetDetailBoardContainer = () => {
         onSubmitComment={onSubmitComment}
         onRemoveBoard={onRemoveBoard}
         onRemoveComment={onRemoveComment}
+        onEditBoard={onEditBoard}
       />
     </div>
   );

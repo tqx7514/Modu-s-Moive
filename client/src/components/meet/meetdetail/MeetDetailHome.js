@@ -40,7 +40,11 @@ const MeetContent = styled.div`
   padding: 2rem 2rem 0 2rem;3
   text-align: center;
 `;
-const MeetDetailHome = ({ meet }) => {
+const ButtonAreaBlock = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+const MeetDetailHome = ({ meet, joinButton }) => {
   const { title, body, userId, createdAt, tags, region, count, meetNum } = meet;
   const date = new Date(createdAt);
   const year = date.getFullYear();
@@ -63,6 +67,7 @@ const MeetDetailHome = ({ meet }) => {
           <hr />
           <div>Since {formattedDate}</div>
           <MeetTags tags={tagsArray} />
+          <ButtonAreaBlock>{joinButton}</ButtonAreaBlock>
         </MeetInfo>
       </MeetInfoBlock>
       <MeetContent dangerouslySetInnerHTML={{ __html: body }} />

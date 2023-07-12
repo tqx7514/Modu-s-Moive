@@ -68,7 +68,11 @@ export function* meetCommentSaga() {
 }
 
 const initialState = {
-  meetboardNum: null,
+  meetboard: {
+    userId: "",
+    body: "",
+    meetboard_Num: "",
+  },
   comments: null,
   error: null,
   write: {
@@ -89,7 +93,11 @@ const meetcomment = handleActions(
     }),
     [READ_MEETCOMMENT_SUCCESS]: (state, { payload: comments }) => ({
       ...state,
-      meetboardNum: comments.meetboard_Num,
+      meetboard: {
+        userId: comments.board.user_Id,
+        body: comments.board.body,
+        meetboard_Num: comments.board.meetboardNum,
+      },
       comments: comments.comment,
     }),
     [READ_MEETCOMMENT_FAILURE]: (state, { payload: error }) => ({
@@ -125,7 +133,10 @@ const meetcomment = handleActions(
     }),
     [REMOVE_MEETCOMMENT_SUCCESS]: (state, { payload: comments }) => ({
       ...state,
-      meetboardNum: comments.meetboardNum,
+      meetboard: {
+        ...state.meetboard,
+        meetboard_Num: comments.meetboardNum,
+      },
       comments: comments.comment,
     }),
     [REMOVE_MEETCOMMENT_FAILURE]: (state, { payload: error }) => ({

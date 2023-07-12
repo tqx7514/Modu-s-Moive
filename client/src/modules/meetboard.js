@@ -14,6 +14,9 @@ const [MEETBOARD_LIST, MEETBOARD_LIST_SUCCESS, MEETBOARD_LIST_FAILURE] =
   createRequestActionTypes("meetboard/MEETBOARD_LIST");
 const [REMOVE_MEETBOARD, REMOVE_MEETBOARD_SUCCESS, REMOVE_MEETBOARD_FAILURE] =
   createRequestActionTypes("meetboard/REMOVE_MEETBOARD");
+// const SET_ORIGINAL_MEETBOARD = "meetboard/SET_ORIGINAL_MEETBOARD";
+const [UPDATE_MEETBOARD, UPDATE_MEETBOARD_SUCCESS, UPDATE_MEETBOARD_FAILURE] =
+  createRequestActionTypes("meetboard/UPDATE_MEETBOARD");
 
 export const initializeForm = createAction(INITIALIZE_FORM, (form) => form);
 export const changeField = createAction(
@@ -33,6 +36,14 @@ export const removeMeetBoard = createAction(
   REMOVE_MEETBOARD,
   ({ meetboardNum, meetNum }) => ({ meetboardNum, meetNum })
 );
+// export const setOriginalMeetBoard = createAction(
+//   SET_ORIGINAL_MEETBOARD,
+//   (meetboard) => meetboard
+// );
+export const updateMeetBoard = createAction(
+  UPDATE_MEETBOARD,
+  ({ meetboardNum, MeetNum, body }) => ({ meetboardNum, MeetNum, body })
+);
 
 const writeMeetBoardSaga = createRequestSaga(
   WRITE_MEETBOARD,
@@ -46,11 +57,16 @@ const removeMeetBoardSaga = createRequestSaga(
   REMOVE_MEETBOARD,
   meetsAPI.removeMeetBoard
 );
+const updateMeetBoardSaga = createRequestSaga(
+  UPDATE_MEETBOARD,
+  meetsAPI.updateMeetBoard
+);
 
 export function* meetBoardSaga() {
   yield takeLatest(WRITE_MEETBOARD, writeMeetBoardSaga);
   yield takeLatest(MEETBOARD_LIST, meetBoardListSaga);
   yield takeLatest(REMOVE_MEETBOARD, removeMeetBoardSaga);
+  yield takeLatest(UPDATE_MEETBOARD, updateMeetBoardSaga);
 }
 
 const initialState = {
@@ -116,6 +132,13 @@ const meetboard = handleActions(
       list: {
         ...state.list,
         meetBoardError,
+      },
+    }),
+    [UPDATE_MEETBOARD_SUCCESS]: (state, { payload: meetBoards }) => ({
+      ...state,
+      list: {
+        ...state.list,
+        meetBoards,
       },
     }),
   },

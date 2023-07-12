@@ -164,6 +164,7 @@ const MeetBoardItem = ({
   onSubmitComment,
   onRemoveBoard,
   onRemoveComment,
+  onEditBoard,
 }) => {
   const { meetboardNum, meet_Num, user_Id, body, grade, createdAt, updatedAt } =
     meetBoard;
@@ -255,7 +256,12 @@ const MeetBoardItem = ({
         <>
           <ModalBlock>
             {ownPost(user_Id) && (
-              <MeetDetailActionButtons onRemove={onRemoveBoard} type="글" />
+              <MeetDetailActionButtons
+                onEdit={onEditBoard}
+                onRemove={onRemoveBoard}
+                type="글"
+                meetBoard={meetBoard}
+              />
             )}
           </ModalBlock>
           <div>
@@ -336,6 +342,7 @@ const MeetDetailBoard = ({
   userId,
   onChangeComment,
   onSubmitComment,
+  onEditBoard,
 }) => {
   return (
     <MeetBoardBlock>
@@ -372,6 +379,7 @@ const MeetDetailBoard = ({
                 onSubmitComment={onSubmitComment}
                 onRemoveBoard={onRemoveBoard}
                 onRemoveComment={onRemoveComment}
+                onEditBoard={onEditBoard}
               />
             ))}
           </MeetBoardListItem>

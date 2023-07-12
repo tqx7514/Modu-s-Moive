@@ -16,10 +16,10 @@ const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
+const user = localStorage.getItem("user");
 
 function loadUser() {
   try {
-    const user = localStorage.getItem("user");
     if (!user) return;
     store.dispatch(tempSetUser(user));
     store.dispatch(check());

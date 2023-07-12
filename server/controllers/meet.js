@@ -300,8 +300,11 @@ exports.meetCommentRead = async (req, res) => {
       where: { meetboard_Num },
       order: [["createdAt", "ASC"]],
     });
+    const board = await meetboards.findOne({
+      where: { meetboardNum: meetboard_Num },
+    });
     // console.log("코멘트리스트", comment);
-    res.json({ comment, meetboard_Num });
+    res.json({ comment, board });
   } catch (error) {
     res.json(error);
   }
@@ -392,4 +395,30 @@ exports.meetCommentDelete = async (req, res, next) => {
     res.status(500).json(error);
     next(error);
   }
+};
+
+exports.meetBoardUpdate = async (req, res, next) => {
+  const { meetboardNum, MeetNum, body } = req.body;
+  console.log("업데이트 백도착", meetboardNum, MeetNum, body);
+
+  try {
+    const [updateRows] = await meetboards.update(
+      {
+        body,
+      },
+      {
+        where: { meetboardNum },
+      }
+    );
+    console.log("확인", updateRows === 0);
+    if (updateRows === 0) {
+      res.status(404).json({ msg: "글이 존재하지않습니다" });
+      return;
+    }
+    const updatedMeetBoard = await meetboards.findAll({
+      where: { meet_Num: MeetNum },
+      order: [["createdAt", "DESC"]],
+    });
+    res.json(updatedMeetBoard);
+  } catch (error) {}
 };

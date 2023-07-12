@@ -66,3 +66,12 @@ export const removeMeetComment = ({ meetcommentNum, meetboardNum }) => {
     params: { meetcommentNum, meetboardNum },
   });
 };
+
+export const updateMeetBoard = ({ meetboardNum, MeetNum, body }) => {
+  console.log("수정하기 프론트도착", meetboardNum, MeetNum, body);
+  return client.post(`/meet/updateMeetBoard/${meetboardNum}`, {
+    meetboardNum,
+    MeetNum,
+    body,
+  });
+};

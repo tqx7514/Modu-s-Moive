@@ -20,25 +20,34 @@ const [DETAIL_CREDIT, DETAIL_CREDIT_SUCCESS, DETAIL_CREDIT_FAIURE] =
 const [COMMENT_WRITE, COMMENT_WRITE_SUCCESS, COMMENT_WRITE_FAIURE] =
   createRequestActionTypes("moviedetail/COMMENT_WRITE");
 
+// const [READ_COMMENT, READ_COMMENT_SUCCESS, READ_COMMENT_FAIURE] =
+//   createRequestActionTypes("moviedetail/READ_COMMENT");
+
 export const readDetail = createAction(DETAIL_POST, (id) => id);
 export const imageDetail = createAction(DETAIL_IMAGE, (id) => id);
 export const videoDetail = createAction(DETAIL_VIDEO, (id) => id);
 export const creditDetail = createAction(DETAIL_CREDIT, (id) => id);
-export const commentWrite = createAction(COMMENT_WRITE, ({content}) => 
+export const commentWrite = createAction(COMMENT_WRITE, (content) => ({
   content,
-);
+}));
+// export const readComment = createAction(READ_COMMENT, (id) => id);
 
 const readDetailSaga = createRequestSaga(DETAIL_POST, movieAPI.moviedetail);
 const imageDetailSaga = createRequestSaga(DETAIL_IMAGE, movieAPI.moviedetail);
 const videoDetailSaga = createRequestSaga(DETAIL_VIDEO, movieAPI.moviedetail);
 const creditDetailSaga = createRequestSaga(DETAIL_CREDIT, movieAPI.moviedetail);
-const commentWriteSaga = createRequestSaga(COMMENT_WRITE, movieAPI.commentwrite);
+// const readCommentSaga = createRequestSaga(READ_COMMENT, movieAPI.moviedetail);
+const commentWriteSaga = createRequestSaga(
+  COMMENT_WRITE,
+  movieAPI.commentwrite
+);
 export function* moviedetailSaga() {
   yield takeLatest(DETAIL_POST, readDetailSaga);
   yield takeLatest(DETAIL_IMAGE, imageDetailSaga);
   yield takeLatest(DETAIL_VIDEO, videoDetailSaga);
   yield takeLatest(DETAIL_CREDIT, creditDetailSaga);
   yield takeLatest(COMMENT_WRITE, commentWriteSaga);
+  // yield takeLatest(READ_COMMENT, readCommentSaga);
 }
 
 const initialState = {
@@ -46,9 +55,7 @@ const initialState = {
   images: [],
   videos: [],
   credits: [],
-  comment: {
-    content: null,
-  },
+  content: null,
   error: null,
 };
 
@@ -56,7 +63,7 @@ const moviedetail = handleActions(
   {
     [DETAIL_POST_SUCCESS]: (state, { payload: moviedetail }) => ({
       ...state,
-      moviedetail:moviedetail.moviedetail,
+      moviedetail: moviedetail.moviedetail,
     }),
     [DETAIL_POST_FAIURE]: (state, { payload: error }) => ({
       ...state,
@@ -64,7 +71,7 @@ const moviedetail = handleActions(
     }),
     [DETAIL_IMAGE_SUCCESS]: (state, { payload: images }) => ({
       ...state,
-      images:images.movieimage,
+      images: images.movieimage,
     }),
     [DETAIL_IMAGE_FAIURE]: (state, { payload: error }) => ({
       ...state,
@@ -87,11 +94,11 @@ const moviedetail = handleActions(
       ...state,
       error,
     }),
-    [COMMENT_WRITE_SUCCESS]: (state, {payload: comment}) => ({
+    [COMMENT_WRITE_SUCCESS]: (state, { payload: content }) => ({
       ...state,
-      comment,
+      content
     }),
-    [COMMENT_WRITE_FAIURE]: (state, {payload: error}) => ({
+    [COMMENT_WRITE_FAIURE]: (state, { payload: error }) => ({
       ...state,
       error,
     }),

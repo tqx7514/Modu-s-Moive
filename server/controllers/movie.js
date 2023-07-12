@@ -29,7 +29,7 @@ exports.Movie = async (req, res) => {
         const Creditresponse = await axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=c4e59022826dc465ea5620d6adaa6813&language=ko&page=1&region=KR`);
         const moviecredit = Creditresponse.data.crew;
         const moviecredits = Creditresponse.data.cast;
-        res.status(200).json({moviedetail, movieimage, movievideo, moviecredit, moviecredits});
+        res.status(200).json({moviedetail, movieimage, movievideo, moviecredit, moviecredits,});
     } catch (error) {
         console.error(error);
         res.status(500).json({error: "Internal Server Error"});
@@ -37,12 +37,14 @@ exports.Movie = async (req, res) => {
 }
 
 exports.Comment = async (req, res) => {
+    console.log("Comment->", req.body);
     try{
-        const id = req.params.id;
+        const { content } = req.body;
         const comment = await moviecomments.create({
             content,
-            where:{id}
+            
         });
+        
         res.status(200).json(comment);
     } catch (error) {
         res.status(500).json(error);

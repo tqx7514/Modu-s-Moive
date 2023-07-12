@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Moviedetail from "../../components/movie/Moviedetail";
@@ -25,10 +25,11 @@ const DetailContainer = () => {
       content: state. moviedetail.content,
     })
   );
-  console.log("moviedetail================>",);
+  console.log("moviedetail================>", content);
 
   const [showInfo, setShowInfo] = useState(true);
   const [showReviews, setShowReviews] = useState(false);
+  const [textarea, setTextarea] = useState('');
 
   const handleShowInfo = () => {
     setShowInfo(true);
@@ -40,18 +41,28 @@ const DetailContainer = () => {
     setShowReviews(true);
   };
 
-  const onPublish = () => {
-    dispatch(commentWrite({content}),
+  const onPublish = useCallback(() => {
+    console.log("=========================3", textarea);
+    dispatch(commentWrite({textarea}),
     );
-  };
+  },[textarea]);
 
   useEffect(() => {
     dispatch(readDetail(id));
     dispatch(imageDetail(id));
     dispatch(videoDetail(id));
     dispatch(creditDetail(id));
-    dispatch(commentWrite(id));
   }, [dispatch, id]);
+
+  const onChange = useCallback( (e) =>{
+    e.preventDefault();
+
+    console.log("=========================1", e.target.value);
+    setTextarea(e.target.value)
+  },[])
+
+  console.log("=========================2", textarea);
+
 
   return (
     <Moviedetail
@@ -66,6 +77,9 @@ const DetailContainer = () => {
       handleShowInfo={handleShowInfo}
       handleShowReviews={handleShowReviews}
       onPublish={onPublish}
+      comment={comment}
+      content={content}
+      onChange={onChange}
     />
   );
 };

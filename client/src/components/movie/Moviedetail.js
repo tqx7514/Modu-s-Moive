@@ -75,7 +75,8 @@ const Button1 = styled.button`
 `;
 
 const Clickevent = styled.div`
-  text-align: center;
+  justify-content: center;
+  display: flex;
   button {
     width: 490px;
     background-color: white;
@@ -200,6 +201,7 @@ const InputBox = styled.div`
     padding: 0;
     color: #fff;
     font-size: 15px;
+    cursor: pointer;
   }
 `;
 
@@ -294,6 +296,10 @@ const MovieDetail = ({
   showReviews,
   handleShowInfo,
   handleShowReviews,
+  onPublish,
+  comment,
+  content,
+  onChange
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   if (!moviedetail) {
@@ -422,12 +428,12 @@ const MovieDetail = ({
                 </div>
                 <InputBox>
                   <div className="review-write-box">
-                    <textarea placeholder="평점 및 영화 관람평을 작성해 주세요. (최소 10글자 이상)"></textarea>
+                    <textarea onChange={onChange} value={content} placeholder="평점 및 영화 관람평을 작성해 주세요. (최소 10글자 이상)"></textarea>
                     <span>
                       <strong>0</strong>/<em>220</em>
                     </span>
                   </div>
-                  <button>관람평 작성</button>
+                  <button onClick={onPublish} >관람평 작성</button>
                 </InputBox>
               </Title>
             </div>

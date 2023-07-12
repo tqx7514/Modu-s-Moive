@@ -7,10 +7,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
     content: {
       type: DataTypes.STRING(100),
       allowNull: false
@@ -26,6 +22,14 @@ module.exports = function(sequelize, DataTypes) {
     star: {
       type: DataTypes.INTEGER,
       allowNull: true
+    },
+    movie_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'movies',
+        key: 'movie_id'
+      }
     }
   }, {
     sequelize,
@@ -44,7 +48,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "moviecomments_FK",
         using: "BTREE",
         fields: [
-          { name: "userId" },
+          { name: "movie_id" },
         ]
       },
     ]

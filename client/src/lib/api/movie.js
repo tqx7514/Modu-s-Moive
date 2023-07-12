@@ -9,6 +9,8 @@ export const moviedetail = (id) => {
   return client.get(`/currentmovie/detail/${id}`);
 };
 
-export const commentwrite = (id, {content}) => {
-  return client.post(`/currentmovie/detail/${id}`, {content});
+export const commentwrite = ({content}) => {
+
+  console.log("commentwrite-->", content)
+  return client.post(`/currentmovie/moviecomment`, {content});
 }

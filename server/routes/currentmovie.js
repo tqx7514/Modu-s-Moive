@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/", List);
 router.get("/detail/:id", Movie);
-router.post("/detail/:id", Comment);
+router.post("/moviecomment", Comment);
 
 
 module.exports = router;

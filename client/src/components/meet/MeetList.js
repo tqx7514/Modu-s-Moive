@@ -167,6 +167,9 @@ const MeetList = ({ meets, loading, error, showWriteButton, regions }) => {
   }
   return (
     <MeetListBlock>
+    {loading &&(
+      <img src="/preloader_icon.gif" alt="" />
+    )}
       <MeetHeaderBlock>
         <h2>모임</h2>
         {showWriteButton && <Button to="/meet/write">모임 만들기</Button>}

@@ -5,9 +5,10 @@ import { listPosts, upcomingPosts } from "../../modules/currentmovie";
 
 const MovieContainer = () => {
   const dispatch = useDispatch();
-  const { movielist } = useSelector((state) => ({
+  const { movielist,loading } = useSelector((state) => ({
     movielist: state.movielist.movielist,
     upcominglist: state.movielist.upcominglist,
+    loading:state.loading["currentmovie/LIST_POSTS"]
   }));
 
   const [currentList, setCurrentList] = useState(movielist);
@@ -58,6 +59,7 @@ const MovieContainer = () => {
         handleSortByPopularity={handleSortByPopularity}
         handleSortByStar={handleSortByStar}
         handleSortByCount={handleSortByCount}
+        loading={loading}
       />
     
   );

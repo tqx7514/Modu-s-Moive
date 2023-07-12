@@ -128,6 +128,7 @@ const MovieList = ({
   handleSortByPopularity,
   handleSortByStar,
   handleSortByCount,
+  loading,
 }) => {
   const [isActive, setIsActive] = useState(true); // 현재상영작 버튼을 초기에 활성화 상태로 설정
 
@@ -144,6 +145,11 @@ const MovieList = ({
 
   return (
     <div>
+      {loading&&(
+        <img src="/preloader_icon.gif" alt="" />
+      )}
+      {!loading&&(
+        <>
       <ImageCarousel movielist={movielist} />
       <ChangePost>
         <Changebutton>
@@ -205,6 +211,8 @@ const MovieList = ({
             </div>
           ))}
       </AppContainer>
+      </>
+      )}      
     </div>
   );
 };

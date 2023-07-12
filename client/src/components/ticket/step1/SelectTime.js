@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { AreaItem, MovieList } from "./SelectMovie";
+import { AreaItem, Areat, MovieList } from "./SelectMovie";
 import { readTime, setTimeData } from "../../../modules/stepfirst";
 
 const BtnWrap = styled.div`
@@ -74,87 +74,27 @@ const SelectTime = () => {
 
   const { data, time } = useSelector(({ stepfirst }) => stepfirst);
   console.log(data);
+  console.log('ssssssssssssssssss',time);
 
   const dispatch = useDispatch();
 
   const onSelctedTime = useCallback(
-    (time) => {
-      dispatch(setTimeData(time));
+    (time,time2) => {
+      console.log('2222222222222222222222222',time);
+      dispatch(setTimeData(time,time2));
     },
     [dispatch]
   );
 
-  const handleSelectTime = (e, start, end) => {
-    setSelectedTime(e.target.start);
+  const handleSelectTime = (start, end) => {
+    // setSelectedTime(e.targestart);
     onSelctedTime(start, end);
-    console.log(selectedTime);
+    console.log(start, end);
   };
   
   useEffect(() => {
     dispatch(readTime());
   }, []);
-
-  const groupedData = {};
-
-  time.forEach((item) => {
-    const { cinema, movie_name, age, disp, language, start, end, seat } = item;
-    const key = `${movie_name}-${disp}-${language}`;
-    if (!groupedData[key]) {
-      groupedData[key] = {
-        cinema,
-        movie_name,
-        age,
-        disp,
-        language,
-        start: [],
-        end,
-        seat,
-      };
-    }
-    groupedData[key].start.push(start);
-  });
-
-  const uniqueTimes = Object.values(groupedData);
-
-  const filteredTimes = uniqueTimes
-    .filter((item) => {
-      if (selectedFilter === "전체") {
-        return true;
-      } else if (selectedFilter === "스페셜관") {
-        return item.disp === "스페셜관";
-      } else if (selectedFilter === "Atmos") {
-        return item.disp === "Atmos";
-      } else if (selectedFilter === "13시 이후") {
-        return item.start.some(
-          (start) => parseInt(start.split(":")[0], 10) >= 13
-        );
-      } else if (selectedFilter === "19시 이후") {
-        return item.start.some(
-          (start) => parseInt(start.split(":")[0], 10) >= 19
-        );
-      } else if (selectedFilter === "심야") {
-        return item.start.some((start) => {
-          const hour = parseInt(start.split(":")[0], 10);
-          return (hour >= 0 && hour < 6) || hour === 23;
-        });
-      }
-      return true;
-    })
-    .map((item) => {
-      const { start } = item;
-      const filteredStart = start.filter((time) => {
-        if (selectedFilter === "13시 이후") {
-          return parseInt(time.split(":")[0], 10) >= 13;
-        } else if (selectedFilter === "19시 이후") {
-          return parseInt(time.split(":")[0], 10) >= 19;
-        } else if (selectedFilter === "심야") {
-          const hour = parseInt(time.split(":")[0], 10);
-          return (hour >= 0 && hour < 6) || hour === 23;
-        }
-        return true;
-      });
-      return { ...item, start: filteredStart };
-    });
 
   return (
     <>
@@ -199,55 +139,32 @@ const SelectTime = () => {
       <TimeWrap>
         {data.cinema && data.date && (
           <>
-            {filteredTimes
-              .filter((item) => {
-                if (data.movie) {
-                  return (
-                    item.cinema === data.cinema &&
-                    item.movie_name === data.movie.movie_name
-                  );
-                } else {
-                  return item.cinema === data.cinema;
-                }
-              })
-              .map((item) => (
+            
+              {time.map((t) => (
                 <AreaItem
-                  key={`${item.cinema}-${item.movie_name}-${item.age}-${item.disp}-${item.language}`}
+                  key={t.movietimes_num}
                   className="movie_list time"
                 >
                   <MovieList>
-                    <span
-                      className={`${
-                        item.age === "all"
-                          ? "age_all"
-                          : item.age === "12"
-                          ? "age_12"
-                          : item.age === "15"
-                          ? "age_15"
-                          : item.age === "19"
-                          ? "age_19"
-                          : ""
-                      } age`}
-                    ></span>
-                    {item.movie_name}
+                      
+                    {t.movie_name}
                   </MovieList>
                   <div>
                     <div>
-                      <p>{item.disp}</p>
-                      <p>{item.language}</p>
+                      <p>{t.disp}</p>
+                      <p>{t.language}</p>
                     </div>
                     <div>
-                      {item.start.map((start, index) => (
+                    
                         <ScheduleBtn
-                          key={index}
-                          onClick={(e) => handleSelectTime(e, start, item.end)}
+                          onClick={(e) => handleSelectTime(t.start, t.end)}
                           className={selectedTime ? 'selected' : ''}
                         >
-                          <strong>{start}</strong>
-                          <span>{item.seat}</span>
-                          <span>{item.end}</span>
+                          <strong>{t.start}</strong>
+                          <span>{t.seat}</span>
+                          <span>{t.end}</span>
                         </ScheduleBtn>
-                      ))}
+    
                     </div>
                   </div>
                 </AreaItem>

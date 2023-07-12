@@ -14,6 +14,7 @@ import stepfirst, {
   regionSaga,
   SelectedSaga,
   movieReadSaga,
+  timeSaga,
 } from "./stepfirst";
 import meetwrite, { meetWriteSaga } from "./meetwrite";
 import meet, { meetSaga } from "./meet";
@@ -60,6 +61,7 @@ export function* rootSaga() {
     eventSaga(),
     cinemaSaga(),
     eventPostSaga(),
+    timeSaga(),
   ]);
 }
 

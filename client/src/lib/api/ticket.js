@@ -7,3 +7,5 @@ export const selectedRegion = async (grade) => {
 };
 
 export const movies = async () => await client.get("/ticket/movies");
+
+export const times = async () => await client.get("/ticket/times");

@@ -53,7 +53,6 @@ const NavReserveLi = styled.li`
 
 
 const ReserveNav = ({data}) => {
-    console.log(data.movie)
     const location = useLocation();
     return(
         <NavReserveUl>

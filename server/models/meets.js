@@ -26,7 +26,7 @@ module.exports = function(sequelize, DataTypes) {
     count: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0
+      defaultValue: 1
     },
     tags: {
       type: DataTypes.STRING(255),

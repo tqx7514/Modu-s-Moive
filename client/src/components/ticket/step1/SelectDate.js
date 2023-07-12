@@ -101,7 +101,7 @@ const SelectDate = ({onDateData}) => {
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
-    // onDateData(formatDate(date))
+    onDateData(formatDate(date))
   };
 
   const renderCalendar = () => {

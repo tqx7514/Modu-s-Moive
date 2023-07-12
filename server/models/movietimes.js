@@ -5,15 +5,43 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      references: {
+        model: 'cinemas',
+        key: 'cinema_num'
+      }
     },
-    first_movies: {
-      type: DataTypes.TIME,
+    cinema: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    movie_name: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    age: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    disp: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    language: {
+      type: DataTypes.STRING(100),
       allowNull: true
     },
-    end_movies: {
-      type: DataTypes.TIME,
-      allowNull: true
+    start: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    end: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    seat: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {
     sequelize,

@@ -163,6 +163,7 @@ const MeetBoardItem = ({
   onChangeComment,
   onSubmitComment,
   onRemoveBoard,
+  onRemoveComment,
 }) => {
   const { meetboardNum, meet_Num, user_Id, body, grade, createdAt, updatedAt } =
     meetBoard;
@@ -181,20 +182,23 @@ const MeetBoardItem = ({
     const formattedDate = new Date(date);
     const today = new Date();
     let formattedCreatedAt = "";
+
+    // 오늘 날짜인 경우
     if (
       formattedDate.getFullYear() === today.getFullYear() &&
       formattedDate.getMonth() === today.getMonth() &&
       formattedDate.getDate() === today.getDate()
     ) {
-      // 오늘 날짜인 경우 시간만 표시
-      formattedCreatedAt = formattedDate.toLocaleTimeString();
+      const hours = formattedDate.getHours();
+      const minutes = String(formattedDate.getMinutes()).padStart(2, "0");
+      formattedCreatedAt = `${hours}:${minutes}`;
     } else {
-      // 오늘 날짜가 아닌 경우 날짜 표시
-      const year = formattedDate.getFullYear();
+      const year = String(formattedDate.getFullYear()).slice(-2);
       const month = String(formattedDate.getMonth() + 1).padStart(2, "0");
       const day = String(formattedDate.getDate()).padStart(2, "0");
       formattedCreatedAt = `${year}.${month}.${day}`;
     }
+
     return formattedCreatedAt;
   };
 
@@ -283,10 +287,12 @@ const MeetBoardItem = ({
                     </CommentDetaillist>
                     <CommentDetaillist>
                       {ownPost(comment.user_Id) && (
-                        <>
-                          <CustomButton2>수정</CustomButton2>
-                          <CustomButton2>삭제</CustomButton2>
-                        </>
+                        <MeetDetailActionButtons
+                          onRemove={onRemoveComment}
+                          type="댓글"
+                          num={comment.meetcommentNum}
+                          num2={meetboardNum}
+                        />
                       )}
                     </CommentDetaillist>
                   </CommentDetail>
@@ -326,6 +332,7 @@ const MeetDetailBoard = ({
   expandedId,
   comments,
   commentError,
+  onRemoveComment,
   userId,
   onChangeComment,
   onSubmitComment,
@@ -364,6 +371,7 @@ const MeetDetailBoard = ({
                 onChangeComment={onChangeComment}
                 onSubmitComment={onSubmitComment}
                 onRemoveBoard={onRemoveBoard}
+                onRemoveComment={onRemoveComment}
               />
             ))}
           </MeetBoardListItem>

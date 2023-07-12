@@ -13,6 +13,7 @@ const {
   meetCommentRead,
   meetWriteComment,
   meetBoardDelete,
+  meetCommentDelete,
 } = require("../controllers/meet");
 const router = express.Router();
 
@@ -31,6 +32,7 @@ router.get("/meetBoardList", meetListBoard);
 router.get("/meetBoardList/:meetboardNum", meetCommentRead);
 router.post("/writeMeetComment", meetWriteComment);
 router.delete("/detail/:meetboardNum", meetBoardDelete);
+router.delete("/detail/comment/:meetcommentNum", meetCommentDelete);
 
 // router.post("/updateToken", updateToken);
 

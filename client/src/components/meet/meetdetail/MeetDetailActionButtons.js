@@ -30,7 +30,8 @@ const ActionButton = styled.button`
   }
 `;
 
-const MeetDetailActionButtons = ({ onEdit, onRemove, type }) => {
+const MeetDetailActionButtons = ({ onEdit, onRemove, type, num, num2 }) => {
+  // console.log("아아아아아아아", num, num2);
   const [modal, setModal] = useState(false);
   const onRemoveClick = () => {
     setModal(true);
@@ -40,7 +41,11 @@ const MeetDetailActionButtons = ({ onEdit, onRemove, type }) => {
   };
   const onConfirm = () => {
     setModal(false);
-    onRemove();
+    if (num && num2) {
+      onRemove({ meetcommentNum: num, meetboardNum: num2 });
+    } else {
+      onRemove();
+    }
   };
 
   return (
@@ -53,6 +58,8 @@ const MeetDetailActionButtons = ({ onEdit, onRemove, type }) => {
         visible={modal}
         onConfirm={onConfirm}
         onCancel={onCancel}
+        title={`${type} 삭제`}
+        description={`${type}을(를) 정말 삭제하시겠습니까?`}
       />
     </>
   );

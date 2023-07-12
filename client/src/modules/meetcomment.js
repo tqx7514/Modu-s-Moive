@@ -15,6 +15,11 @@ const [
   WRITE_MEETCOMMENT_SUCCESS,
   WRITE_MEETCOMMENT_FAILURE,
 ] = createRequestActionTypes("meetcomment/WRITE_MEETCOMMENT");
+const [
+  REMOVE_MEETCOMMENT,
+  REMOVE_MEETCOMMENT_SUCCESS,
+  REMOVE_MEETCOMMENT_FAILURE,
+] = createRequestActionTypes("meetcomment/REMOVE_MEETCOMMENT");
 
 export const initializeComment = createAction(INITIALIZE_COMMENT);
 export const readMeetComment = createAction(
@@ -38,6 +43,10 @@ export const writeMeetComment = createAction(
     body,
   })
 );
+export const removeMeetComment = createAction(
+  REMOVE_MEETCOMMENT,
+  ({ meetcommentNum, meetboardNum }) => ({ meetcommentNum, meetboardNum })
+);
 
 const readMeetCommentSaga = createRequestSaga(
   READ_MEETCOMMENT,
@@ -47,10 +56,15 @@ const writeMeetCommentSaga = createRequestSaga(
   WRITE_MEETCOMMENT,
   meetsAPI.writeMeetComment
 );
+const removeMeetCommentSaga = createRequestSaga(
+  REMOVE_MEETCOMMENT,
+  meetsAPI.removeMeetComment
+);
 
 export function* meetCommentSaga() {
   yield takeLatest(READ_MEETCOMMENT, readMeetCommentSaga);
   yield takeLatest(WRITE_MEETCOMMENT, writeMeetCommentSaga);
+  yield takeLatest(REMOVE_MEETCOMMENT, removeMeetCommentSaga);
 }
 
 const initialState = {
@@ -108,6 +122,15 @@ const meetcomment = handleActions(
         ...state.write,
         commentError,
       },
+    }),
+    [REMOVE_MEETCOMMENT_SUCCESS]: (state, { payload: comments }) => ({
+      ...state,
+      meetboardNum: comments.meetboardNum,
+      comments: comments.comment,
+    }),
+    [REMOVE_MEETCOMMENT_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      error,
     }),
   },
   initialState

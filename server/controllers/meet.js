@@ -348,11 +348,14 @@ exports.meetWriteBoard = async (req, res, next) => {
 };
 
 exports.meetBoardDelete = async (req, res, next) => {
-  const meetboardNum = req.params.meetboardNum;
-  console.log("아아아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ", meetboardNum);
+  const { meetboardNum, meetNum } = req.query;
   try {
     const deletedRows = await meetboards.destroy({
       where: { meetboardNum },
+    });
+    const list = await meetboards.findAll({
+      where: { meet_Num: meetNum },
+      order: [["createdAt", "DESC"]],
     });
 
     if (deletedRows === 0) {
@@ -360,7 +363,31 @@ exports.meetBoardDelete = async (req, res, next) => {
       return;
     }
 
-    res.status(204).end();
+    res.status(200).json(list);
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+};
+
+exports.meetCommentDelete = async (req, res, next) => {
+  const { meetcommentNum, meetboardNum } = req.query;
+  const meetboard_Num = meetboardNum;
+  // console.log("meetCommentNum============", req.query);
+  try {
+    const deletedRows = await meetcomments.destroy({
+      where: { meetcommentNum },
+    });
+    const comment = await meetcomments.findAll({
+      where: { meetboard_Num },
+      order: [["createdAt", "ASC"]],
+    });
+    if (deletedRows === 0) {
+      res.status(404).json({ message: "댓글이 존재하지 않습니다" });
+      return;
+    }
+
+    res.status(200).json({ comment, meetboardNum });
   } catch (error) {
     res.status(500).json(error);
     next(error);

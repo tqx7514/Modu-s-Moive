@@ -53,7 +53,16 @@ export const writeMeetComment = ({ userId, body, meetboard_Num }) => {
   return client.post("/meet/writeMeetComment", { userId, body, meetboard_Num });
 };
 
-export const removeMeetBoard = (meetboardNum) => {
-  console.log("리무브밋보드 프론트", meetboardNum);
-  return client.delete(`/meet/detail/${meetboardNum}`, meetboardNum);
+export const removeMeetBoard = ({ meetboardNum, meetNum }) => {
+  console.log("리무브밋보드 프론트", meetboardNum, meetNum);
+  return client.delete(`/meet/detail/${meetboardNum}`, {
+    params: { meetboardNum, meetNum },
+  });
+};
+
+export const removeMeetComment = ({ meetcommentNum, meetboardNum }) => {
+  console.log("댓글삭제 프론트", meetcommentNum, meetboardNum);
+  return client.delete(`/meet/detail/comment/${meetcommentNum}`, {
+    params: { meetcommentNum, meetboardNum },
+  });
 };

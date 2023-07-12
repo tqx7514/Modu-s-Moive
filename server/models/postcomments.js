@@ -15,12 +15,12 @@ module.exports = function(sequelize, DataTypes) {
         key: 'postNum'
       }
     },
-    userNum: {
-      type: DataTypes.INTEGER,
+    userId: {
+      type: DataTypes.STRING(255),
       allowNull: false,
       references: {
         model: 'users',
-        key: 'userNum'
+        key: 'id'
       }
     },
     content: {
@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'postcomments',
-    timestamps: false,
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
@@ -51,7 +51,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "postcomments_FK_1",
         using: "BTREE",
         fields: [
-          { name: "userNum" },
+          { name: "userId" },
         ]
       },
     ]

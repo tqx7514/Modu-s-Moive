@@ -5,9 +5,9 @@ import {
   changeField,
   initializeForm,
   meetBoardList,
+  removeMeetBoard,
   writeMeetBoard,
 } from "../../modules/meetboard";
-import { removeMeetBoard } from "../../lib/api/meet";
 import { useNavigate } from "react-router-dom";
 import {
   readMeetComment,
@@ -15,6 +15,7 @@ import {
   changeCommentField,
   writeMeetComment,
   initializeComment,
+  removeMeetComment,
 } from "../../modules/meetcomment";
 
 const MeetDetailBoardContainer = () => {
@@ -97,10 +98,18 @@ const MeetDetailBoardContainer = () => {
     setExpandedId(meetboardNum);
   };
 
-  const onRemoveBoard = async () => {
+  const onRemoveBoard = () => {
     try {
-      await dispatch(removeMeetBoard(meetboardNum));
-      // navigate(`/meet/detail/${meetNum}`);
+      dispatch(removeMeetBoard({ meetboardNum, meetNum }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onRemoveComment = async (a) => {
+    console.log("ㅋㅋㅋㅋㅋㅋㅋㅋㅋ", a);
+    try {
+      await dispatch(removeMeetComment(a));
     } catch (error) {
       console.log(error);
     }
@@ -131,6 +140,7 @@ const MeetDetailBoardContainer = () => {
         onChangeComment={onChangeComment}
         onSubmitComment={onSubmitComment}
         onRemoveBoard={onRemoveBoard}
+        onRemoveComment={onRemoveComment}
       />
     </div>
   );

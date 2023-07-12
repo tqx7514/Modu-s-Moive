@@ -6,10 +6,12 @@ const { cinemas, regions, movies } = require("../models");
 router.get("/region", async (req, res) => {
   try {
     const region = await regions.findAll({
-      include: [{
-        model: cinemas,
-        as: 'cinemas',
-      }]
+      include: [
+        {
+          model: cinemas,
+          as: "cinemas",
+        },
+      ],
     });
     res.status(200).json(region);
   } catch (e) {

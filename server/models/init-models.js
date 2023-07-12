@@ -7,6 +7,7 @@ var _meetboards = require("./meetboards");
 var _meetcomments = require("./meetcomments");
 var _meets = require("./meets");
 var _meetusers = require("./meetusers");
+var _moviecomments = require("./moviecomments");
 var _moviereviews = require("./moviereviews");
 var _movies = require("./movies");
 var _movietimes = require("./movietimes");
@@ -25,6 +26,7 @@ function initModels(sequelize) {
   var meetcomments = _meetcomments(sequelize, DataTypes);
   var meets = _meets(sequelize, DataTypes);
   var meetusers = _meetusers(sequelize, DataTypes);
+  var moviecomments = _moviecomments(sequelize, DataTypes);
   var moviereviews = _moviereviews(sequelize, DataTypes);
   var movies = _movies(sequelize, DataTypes);
   var movietimes = _movietimes(sequelize, DataTypes);
@@ -34,6 +36,8 @@ function initModels(sequelize) {
   var tickets = _tickets(sequelize, DataTypes);
   var users = _users(sequelize, DataTypes);
 
+  movietimes.belongsTo(cinemas, { as: "movietimes_num_cinema", foreignKey: "movietimes_num"});
+  cinemas.hasOne(movietimes, { as: "movietime", foreignKey: "movietimes_num"});
   events.belongsTo(eventcategory, { as: "category", foreignKey: "categoryId"});
   eventcategory.hasMany(events, { as: "events", foreignKey: "categoryId"});
   meetcomments.belongsTo(meetboards, { as: "meetboard_Num_meetboard", foreignKey: "meetboard_Num"});
@@ -54,8 +58,10 @@ function initModels(sequelize) {
   users.hasMany(meetcomments, { as: "meetcomments", foreignKey: "user_Id"});
   meetusers.belongsTo(users, { as: "user", foreignKey: "user_Id"});
   users.hasMany(meetusers, { as: "meetusers", foreignKey: "user_Id"});
-  postcomments.belongsTo(users, { as: "userNum_user", foreignKey: "userNum"});
-  users.hasMany(postcomments, { as: "postcomments", foreignKey: "userNum"});
+  moviecomments.belongsTo(users, { as: "userNum_user", foreignKey: "userNum"});
+  users.hasMany(moviecomments, { as: "moviecomments", foreignKey: "userNum"});
+  postcomments.belongsTo(users, { as: "user", foreignKey: "userId"});
+  users.hasMany(postcomments, { as: "postcomments", foreignKey: "userId"});
 
   return {
     cinemas,
@@ -66,6 +72,7 @@ function initModels(sequelize) {
     meetcomments,
     meets,
     meetusers,
+    moviecomments,
     moviereviews,
     movies,
     movietimes,

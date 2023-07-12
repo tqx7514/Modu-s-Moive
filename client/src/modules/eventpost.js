@@ -5,17 +5,24 @@ import createRequestSaga, {
 } from "../lib/createRequestSaga";
 import * as eventAPI from "../lib/api/event";
 
-const [EVENT_POST_MOVIE, EVENT_POST_MOVIE_SUCCESS, EVENT_POST_MOVIE_FAILURE] =
-  createRequestActionTypes("event/EVENT_POST_MOVIE");
+const [
+  EVENT_POST_MOVIE, 
+  EVENT_POST_MOVIE_SUCCESS, 
+  EVENT_POST_MOVIE_FAILURE
+] =
+  createRequestActionTypes("movie/EVENT_POST_MOVIE");
 
 const [
   EVENT_POST_PROMOTE,
   EVENT_POST_PROMOTE_SUCCESS,
   EVENT_POST_PROMOTE_FAILURE,
-] = createRequestActionTypes("event/EVENT_POST_PROMOTE");
+] = createRequestActionTypes("promote/EVENT_POST_PROMOTE");
 
-const [EVENT_POST_OTHER, EVENT_POST_OTHER_SUCCESS, EVENT_POST_OTHER_FAILURE] =
-  createRequestActionTypes("event/EVENT_POST_OTHER");
+const [
+  EVENT_POST_OTHER, 
+  EVENT_POST_OTHER_SUCCESS, 
+  EVENT_POST_OTHER_FAILURE
+] = createRequestActionTypes("other/EVENT_POST_OTHER");
 
 export const eventPostMovie = createAction(
   EVENT_POST_MOVIE,

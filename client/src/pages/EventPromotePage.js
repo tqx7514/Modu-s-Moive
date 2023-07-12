@@ -3,7 +3,6 @@ import HeaderContainer from "../containers/common/HeaderContainer";
 import EventCategory from "../components/event/EventCategory";
 import EventPromoteContainer from "../containers/event/EventPromoteContainer";
 
-
 const EventPromotePage = () => {
     const [category, setCategory] = useState('all');
     const onSelect = useCallback(category => setCategory(category), []);

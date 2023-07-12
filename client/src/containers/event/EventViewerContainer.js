@@ -7,16 +7,15 @@ import { eventPostMovie } from "../../modules/eventpost";
 const EventViewerContainer = () => {
   const { eventNum } = useParams();
   const dispatch = useDispatch();
-  const eventpost = useSelector(({ eventDetail }) => ({
-    eventDetail
-  }));
-  console.log("asdfafsasdf", eventpost);
+  const eventpost = useSelector(({ eventpost }) => 
+    eventpost);
 
   useEffect(() => {
-    dispatch(eventPostMovie());
-  }, [dispatch], eventNum);
+    dispatch(eventPostMovie(eventNum));
+  }, [dispatch, eventNum]);
 
   return <EventViewerCompots eventpost={eventpost} />;
+  
 };
 
 export default EventViewerContainer;

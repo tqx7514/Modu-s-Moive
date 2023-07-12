@@ -12,7 +12,7 @@ exports.getEvents = async ( req, res ) => {
 };
 
 exports.GetMovieEvents = async (req, res) => {
-    eventNum = req.params.eventNum;
+    const eventNum = req.params.eventNum;
     try{
         const eventDetail = await events.findOne({
             where: {eventNum}

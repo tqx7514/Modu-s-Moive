@@ -64,8 +64,10 @@ const EventOtherCompots = ({ events }) => {
 
     if (startDateA !== startDateB) {
       return startDateB - startDateA;
-    } else {
+    } else if (endDateA !== endDateB) {
       return endDateB - endDateA;
+    } else {
+      return b.eventNum - a.eventNum;
     }
   });
 

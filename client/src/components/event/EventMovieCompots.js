@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { eventmovielist } from "../../lib/api/event";
 
 const EventMovieInfoBlock = styled.div`
   text-align: center;
@@ -38,11 +37,8 @@ const EventMovieContentBlock = styled.div`
 
 const ShowMoreButton = styled.div`
   display: flex;
-  cursor: pointer;
   justify-content: center;
   border: 1px solid gray;
-  margin: 0 auto;
-  height: 30px;
 `;
 
 const DownArrowImage = styled.img`
@@ -55,25 +51,9 @@ const DownArrowImage = styled.img`
 const EventMovieCompots = ({ events }) => {
   const eventlist = events.eventlist;
   const [visibleCount, setVisibleCount] = useState(9);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchInitialData = async () => {
-      try {
-        await eventmovielist();
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchInitialData();
-  }, []);
 
   const handleShowMore = () => {
     setVisibleCount(visibleCount + 9);
-  };
-
-  const handleEventClick = (eventNum) => {
-    navigate(`/event/movie/${eventNum}`);
   };
 
   const sortedEvents = eventlist.sort((a, b) => {
@@ -100,10 +80,7 @@ const EventMovieCompots = ({ events }) => {
         {filteredEvents && filteredEvents.length > 0 && (
           <EventMovieItemBlock className="eventmovieitem">
             {filteredEvents.slice(0, visibleCount).map((e) => (
-              <div
-                key={e.eventNum}
-                onClick={() => handleEventClick(e.eventNum)}
-              >
+              <div key={e.eventNum}>
                 <Link to={`/event/movie/${e.eventNum}`}>
                   <EventMovieInfoBlock>
                     <img src={e.eventImg} alt="영화 이벤트" />

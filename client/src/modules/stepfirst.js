@@ -27,6 +27,7 @@ const [SET_DATE_DATA] = createRequestActionTypes("stepfirst/SET_DATE_DATA");
 
 const [SET_TIME_DATA] = createRequestActionTypes("stepfirst/SET_TIME_DATA");
 
+const [SET_DATA] = createRequestActionTypes("stepfirst/SET_DATA");
 // 액션 생성--------------------------------------------------------
 
 export const readRegion = createAction(READ_REGION);
@@ -34,6 +35,8 @@ export const readRegion = createAction(READ_REGION);
 export const selectedRegion = createAction(SELECTED_REGION, (grade) => grade);
 
 export const readMovie = createAction(READ_MOVIE);
+
+export const setData = createAction(SET_DATA, (key) => key);
 
 export const setFirstData = createAction(SET_FIRST_DATA, (cinema) => ({
   cinema,
@@ -93,7 +96,7 @@ const format =
   ("00" + month.toString()).slice(-2) +
   "-" +
   ("00" + day.toString()).slice(-2);
-  
+
 const initialState = {
   region: [],
   cinema: [],
@@ -135,6 +138,14 @@ const stepfirst = handleActions(
       error,
     }),
     // ----------------------------------------------------
+    [SET_DATA]: (state, { payload: { key, value } }) => ({
+      ...state,
+      data: {
+        ...state.data,
+        [key]: value,
+      },
+    }),
+
     [SET_FIRST_DATA]: (state, action) => ({
       ...state,
       data: {

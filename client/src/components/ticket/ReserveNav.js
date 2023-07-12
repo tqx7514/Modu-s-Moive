@@ -65,6 +65,7 @@ const ReserveNav = ({data}) => {
                         <li>{data && data.cinema}</li>
                         <li>{data.movie ? data.movie.movie_name : ''}</li>
                         <li>{data && data.date}</li>
+                        <li>{data && data.time}</li>
                     </ul>
                 </NavReserveCont>
             </NavReserveLi>

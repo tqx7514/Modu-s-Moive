@@ -1,4 +1,5 @@
 const axios = require("axios");
+const {moviecomments} = require("../models");
 
 exports.List = async (req, res) => {
     try {
@@ -32,5 +33,18 @@ exports.Movie = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({error: "Internal Server Error"});
+    }
+}
+
+exports.Comment = async (req, res) => {
+    try{
+        const id = req.params.id;
+        const comment = await moviecomments.create({
+            content,
+            where:{id}
+        });
+        res.status(200).json(comment);
+    } catch (error) {
+        res.status(500).json(error);
     }
 }

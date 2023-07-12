@@ -17,20 +17,28 @@ const [DETAIL_VIDEO, DETAIL_VIDEO_SUCCESS, DETAIL_VIDEO_FAIURE] =
 const [DETAIL_CREDIT, DETAIL_CREDIT_SUCCESS, DETAIL_CREDIT_FAIURE] =
   createRequestActionTypes("moviedetail/DETAIL_CREDIT");
 
+const [COMMENT_WRITE, COMMENT_WRITE_SUCCESS, COMMENT_WRITE_FAIURE] =
+  createRequestActionTypes("moviedetail/COMMENT_WRITE");
+
 export const readDetail = createAction(DETAIL_POST, (id) => id);
 export const imageDetail = createAction(DETAIL_IMAGE, (id) => id);
 export const videoDetail = createAction(DETAIL_VIDEO, (id) => id);
 export const creditDetail = createAction(DETAIL_CREDIT, (id) => id);
+export const commentWrite = createAction(COMMENT_WRITE, ({content}) => 
+  content,
+);
 
 const readDetailSaga = createRequestSaga(DETAIL_POST, movieAPI.moviedetail);
 const imageDetailSaga = createRequestSaga(DETAIL_IMAGE, movieAPI.moviedetail);
 const videoDetailSaga = createRequestSaga(DETAIL_VIDEO, movieAPI.moviedetail);
 const creditDetailSaga = createRequestSaga(DETAIL_CREDIT, movieAPI.moviedetail);
+const commentWriteSaga = createRequestSaga(COMMENT_WRITE, movieAPI.commentwrite);
 export function* moviedetailSaga() {
   yield takeLatest(DETAIL_POST, readDetailSaga);
   yield takeLatest(DETAIL_IMAGE, imageDetailSaga);
   yield takeLatest(DETAIL_VIDEO, videoDetailSaga);
   yield takeLatest(DETAIL_CREDIT, creditDetailSaga);
+  yield takeLatest(COMMENT_WRITE, commentWriteSaga);
 }
 
 const initialState = {
@@ -38,6 +46,9 @@ const initialState = {
   images: [],
   videos: [],
   credits: [],
+  comment: {
+    content: null,
+  },
   error: null,
 };
 
@@ -73,6 +84,14 @@ const moviedetail = handleActions(
       credit: credits.moviecredit,
     }),
     [DETAIL_CREDIT_FAIURE]: (state, { payload: error }) => ({
+      ...state,
+      error,
+    }),
+    [COMMENT_WRITE_SUCCESS]: (state, {payload: comment}) => ({
+      ...state,
+      comment,
+    }),
+    [COMMENT_WRITE_FAIURE]: (state, {payload: error}) => ({
       ...state,
       error,
     }),

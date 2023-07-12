@@ -4,6 +4,7 @@ import ImageCarousel from "../common/ImageCarousel";
 import VideoCarousel from "../common/VideoCarousel";
 import MovieVideoModal from "./MovieVideoModal";
 import { MdOutlineWatchLater, MdOutlineArrowRight } from "react-icons/md";
+import StarRating from "./StarRating";
 
 const DetailContainer = styled.div`
   display: block;
@@ -128,29 +129,159 @@ const Video = styled.div`
 const Image = styled.div``;
 
 const Reviews = styled.div`
-  background: #f8f8f8;
+  .comment {
+    background: #f8f8f8;
+  }
   input {
     width: 800px;
     height: 100px;
-  }
-  button {
-    background-color: #666;
-    color: white;
-    height: 100px;
-    border: none;
   }
 `;
 const Title = styled.div`
   width: 980px;
   margin: 0 auto;
-  div {
-    padding: 30px;
-    margin-top: -30px;
-    background: #f8f8f8;
+  text-align: center;
+  padding: 30px;
+  .starInfo {
+    position: relative;
+    margin-top: 30px;
+    padding-top: 70px;
+  }
+  .starInfo1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
 const Star = styled.div``;
+
+const InputBox = styled.div`
+  height: 119px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  .review-write-box {
+    width: 799px;
+    background: #fff;
+    float: left;
+  }
+  textarea {
+    height: 100px;
+    border: none;
+    width: 100%;
+    line-height: 1.5;
+    box-sizing: border-box;
+    padding: 13px 18px;
+    resize: none;
+    font-size: 14px;
+  }
+  span {
+    margin: 0 10px 5px 0;
+    margin-top: -3px;
+    background: #fff;
+    display: block;
+    text-align: right;
+    font-size: 10px;
+    color: #666;
+  }
+  strong {
+    color: #000;
+    font-weight: bold;
+  }
+  button {
+    float: left;
+    height: 119px;
+    margin-bottom: 20px;
+    background-color: #414141;
+    width: 119px;
+    border: none;
+    margin: -1px -1px 0 0;
+    padding: 0;
+    color: #fff;
+    font-size: 15px;
+  }
+`;
+
+const Comment = styled.div`
+  width: 980px;
+  margin: 0 auto;
+  .Comment1 {
+    padding-top: 30px;
+    display: block;
+    align-items: center;
+    margin-bottom: 8px;
+    /* width: 100%; */
+  }
+  .CommentHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    width: 100%;
+  }
+  .sortright {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+  .sortList{
+    display: flex;
+    position: relative;
+    margin-left: 5px;
+    float: right;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li{
+      margin-left: 15px;
+    }
+  }
+`;
+
+const ReviewComent = styled.ul`
+    margin: 0;
+    padding: 0;
+    li{
+      border-color: #ccc;
+      position: relative;
+      padding: 20px 0 15px 68px;
+      border-top: 1px solid #eee;
+    }
+    .img{
+    display: block;
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    width: 42px;
+    height: 42px;
+  }
+  img{
+    width: 42px;
+    height: 42px;
+  }
+`;
+const ReviewTopInfo = styled.div`
+  display: block;
+  position: relative;
+  margin-bottom: 6px;
+  span{
+    display: block;
+    font-size: 14px;
+    padding-bottom: 8px;
+  }
+  .btn_good{
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 12px;
+    line-height: 24px;
+    padding: 5px;
+    cursor: pointer;
+  }
+`;
+const ReviewInfo = styled.div`
+
+`
 
 const MovieDetail = ({
   moviedetail,
@@ -170,8 +301,6 @@ const MovieDetail = ({
   }
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
 
-  
-
   const openModal = () => {
     setIsOpen(true);
   };
@@ -179,7 +308,11 @@ const MovieDetail = ({
     setIsOpen(false);
   };
 
-  
+  const handleRate = (rating) => {
+    console.log("별점:", rating);
+    // 여기에 별점을 처리하는 로직을 추가하세요.
+  };
+
 
   return (
     <DetailContainer>
@@ -276,43 +409,60 @@ const MovieDetail = ({
         )}
         {showReviews && (
           <Reviews>
-            <Title>
-              <div>
-                <div>평점 & 관람평 작성</div>
-
-                <Star></Star>
-
-                <div>영화 관람 후 관람평 작성 시 L.POINT 50P 적립</div>
-                <input></input>
-                <button>관람평 작성</button>
-              </div>
-            </Title>
-            <div>
-              <p>관람객 관람평</p>
-              <div>
-                <p>총1,200건</p>
-                <p>최신순</p>
-                <p>공감순</p>
-              </div>
-            </div>
-            <hr />
-            <div>
-              <h1>이모티콘</h1>
-              <div>
-                <div>
-                  <p>이준영</p>
-                  <p>2023.07.04</p>
+            <div className="comment">
+              <Title>
+                <div className="starInfo">
+                  <div className="starInfo1">
+                    <Star>
+                      <StarRating onRate={handleRate} />
+                    </Star>
+                    <img src="/temp_reviewcharacterbig_01.png" />
+                  </div>
+                  <div>영화 관람 후 관람평 작성 시 L.POINT 50P 적립</div>
                 </div>
-                <p>별10점</p>
-                <p>역사를써 온 해리슨 포드님 존경!</p>
-              </div>
+                <InputBox>
+                  <div className="review-write-box">
+                    <textarea placeholder="평점 및 영화 관람평을 작성해 주세요. (최소 10글자 이상)"></textarea>
+                    <span>
+                      <strong>0</strong>/<em>220</em>
+                    </span>
+                  </div>
+                  <button>관람평 작성</button>
+                </InputBox>
+              </Title>
             </div>
+            <Comment>
+              <div className="Comment1">
+                <div className="CommentHeader">
+                  <div className="sortright">
+                    <ul className="sortList">
+                      <li>최신순</li>
+                      <li>공감순</li>
+                    </ul>
+                  </div>
+                </div>
+                <ReviewComent>
+                    <li>
+                      <span className="img">
+                        <img src="/temp_reviewcharacterbig_01.png" alt="" />
+                      </span>
+                      <ReviewTopInfo>
+                        <span>이준영</span>
+                        <span>2023.07.11 01:53</span>
+                        <button className="btn_good">좋아요</button>
+                      </ReviewTopInfo>
+                      <div>asdfjlksdfj!</div>
+                    </li>
+                  
+                </ReviewComent>
+              </div>
+            </Comment>
           </Reviews>
         )}
       </div>
-      {isOpen && 
+      {isOpen && (
         <MovieVideoModal oncloseModal={oncloseModal} videos={videos} />
-      }
+      )}
     </DetailContainer>
   );
 };

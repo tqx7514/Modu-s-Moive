@@ -8,12 +8,13 @@ import {
   videoDetail,
   creditDetail,
   commentWrite,
+  changeField
 } from "../../modules/moviedetail";
 
 const DetailContainer = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { moviedetail, images, videos, credits, credit, genres, comment, content } = useSelector(
+  const { moviedetail, images, videos, credits, credit, genres, content, comment } = useSelector(
     (state) => ({
       moviedetail: state.moviedetail.moviedetail,
       genres: state.moviedetail.moviedetail.genres,
@@ -21,11 +22,14 @@ const DetailContainer = () => {
       videos: state.moviedetail.videos,
       credit: state.moviedetail.credit,
       credits: state.moviedetail.credits,
+      content: state.moviedetail.content,
       comment: state.moviedetail.comment,
-      content: state. moviedetail.content,
     })
   );
   console.log("moviedetail================>", content);
+
+  const onChangeField = useCallback(payload => dispatch(changeField(payload))
+  , [dispatch,]);
 
   const [showInfo, setShowInfo] = useState(true);
   const [showReviews, setShowReviews] = useState(false);
@@ -42,10 +46,9 @@ const DetailContainer = () => {
   };
 
   const onPublish = useCallback(() => {
-    console.log("=========================3", textarea);
-    dispatch(commentWrite({textarea}),
+    dispatch(commentWrite({content}),
     );
-  },[textarea]);
+  });
 
   useEffect(() => {
     dispatch(readDetail(id));
@@ -54,15 +57,14 @@ const DetailContainer = () => {
     dispatch(creditDetail(id));
   }, [dispatch, id]);
 
+  // const onChange = useCallback( (e) =>{
+  //   e.preventDefault();
+  //   setTextarea(e.target.value)
+  // },[]);
+
   const onChange = useCallback( (e) =>{
-    e.preventDefault();
-
-    console.log("=========================1", e.target.value);
-    setTextarea(e.target.value)
-  },[])
-
-  console.log("=========================2", textarea);
-
+    onChangeField({key: 'content', value: e.target.value});
+  },[]);
 
   return (
     <Moviedetail
@@ -77,7 +79,6 @@ const DetailContainer = () => {
       handleShowInfo={handleShowInfo}
       handleShowReviews={handleShowReviews}
       onPublish={onPublish}
-      comment={comment}
       content={content}
       onChange={onChange}
     />

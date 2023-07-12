@@ -297,9 +297,8 @@ const MovieDetail = ({
   handleShowInfo,
   handleShowReviews,
   onPublish,
-  comment,
   content,
-  onChange
+  onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   if (!moviedetail) {

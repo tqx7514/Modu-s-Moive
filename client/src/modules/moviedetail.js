@@ -17,6 +17,8 @@ const [DETAIL_VIDEO, DETAIL_VIDEO_SUCCESS, DETAIL_VIDEO_FAIURE] =
 const [DETAIL_CREDIT, DETAIL_CREDIT_SUCCESS, DETAIL_CREDIT_FAIURE] =
   createRequestActionTypes("moviedetail/DETAIL_CREDIT");
 
+const [CHANGE_FIELD] = createRequestActionTypes("moviedetail/CHANGE_FIELD");
+
 const [COMMENT_WRITE, COMMENT_WRITE_SUCCESS, COMMENT_WRITE_FAIURE] =
   createRequestActionTypes("moviedetail/COMMENT_WRITE");
 
@@ -27,6 +29,10 @@ export const readDetail = createAction(DETAIL_POST, (id) => id);
 export const imageDetail = createAction(DETAIL_IMAGE, (id) => id);
 export const videoDetail = createAction(DETAIL_VIDEO, (id) => id);
 export const creditDetail = createAction(DETAIL_CREDIT, (id) => id);
+export const changeField = createAction(CHANGE_FIELD, ({key, value}) => ({
+  key,
+  value,
+}))
 export const commentWrite = createAction(COMMENT_WRITE, (content) => ({
   content,
 }));
@@ -55,7 +61,9 @@ const initialState = {
   images: [],
   videos: [],
   credits: [],
-  content: null,
+  content: '',
+  comment: null,
+  commentError: null,
   error: null,
 };
 
@@ -94,13 +102,17 @@ const moviedetail = handleActions(
       ...state,
       error,
     }),
-    [COMMENT_WRITE_SUCCESS]: (state, { payload: content }) => ({
+    [CHANGE_FIELD]: (state, {payload: {key, value}}) => ({
       ...state,
-      content
+      [key]: value,
     }),
-    [COMMENT_WRITE_FAIURE]: (state, { payload: error }) => ({
+    [COMMENT_WRITE_SUCCESS]: (state, { payload: comment }) => ({
       ...state,
-      error,
+      comment
+    }),
+    [COMMENT_WRITE_FAIURE]: (state, { payload: commentError }) => ({
+      ...state,
+      commentError,
     }),
   },
   initialState

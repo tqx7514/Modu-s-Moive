@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { cinemas, regions, movies } = require("../models");
+const { cinemas, regions, movies, movietimes } = require("../models");
 
 router.get("/region", async (req, res) => {
   try {
@@ -47,5 +47,16 @@ router.get("/movies", async (req, res) => {
     console.error(e);
   }
 });
+
+router.get("/times", async (req, res) => {
+  try{
+    const time = await movietimes.findAll({});
+    res.status(200).json(time);
+  } catch(e){
+    console.error(e);
+  }
+});
+
+
 
 module.exports = router;

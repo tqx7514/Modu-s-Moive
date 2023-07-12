@@ -23,7 +23,7 @@ const SelectCinemaContainer = () => {
 
   const onSelectCinema = useCallback(() => {
     dispatch(readMovie());
-    dispatch(setSecondData(null));
+    dispatch(setSecondData(''));
   },[dispatch]);
 
   const onFirstData = useCallback((cinema) => {

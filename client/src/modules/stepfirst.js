@@ -35,6 +35,12 @@ const [
     SET_DATE_DATA,
 ] = createRequestActionTypes('stepfirst/SET_DATE_DATA');
 
+const [
+    READ_TIME,
+    READ_TIME_SUCCESS,
+    READ_TIME_FAILURE,
+] = createRequestActionTypes('stepfirst/READ_TIME');
+
 // 액션 생성--------------------------------------------------------
 
 export const readRegion = createAction(READ_REGION);
@@ -55,6 +61,8 @@ export const setDateData = createAction(SET_DATE_DATA, (date) => ({
     date,
 }));
 
+export const readTime = createAction(READ_TIME);
+
 
 // 사가 함수--------------------------------------------------------
 
@@ -74,6 +82,10 @@ export function* movieReadSaga(){
     yield takeLatest(READ_MOVIE, readMovieSaga);
 }
 
+export const readTimeSaga = createRequestSaga(READ_TIME, regionAPI.times);
+export function* timeSaga(){
+    yield takeLatest(READ_TIME, readTimeSaga);
+}
 
 
 // 초기 값--------------------------------------------------------
@@ -89,6 +101,7 @@ const initialState = {
     cinema: [],
     movie: [],
     date: '',
+    time: [],
     data: {cinema: '', movie: '', date: format},
     error: null,
 }
@@ -137,12 +150,22 @@ const stepfirst = handleActions({
             movie: action.payload.movie,
         }
     }),
+    // ----------------------------------------------------
     [SET_DATE_DATA]: (state, action) => ({
         ...state,
         data: {
             ...state.data,
             date: action.payload.date,
         }
+    }),
+    // ----------------------------------------------------
+    [READ_TIME_SUCCESS]: (state, action) => ({
+        ...state,
+        time: action.payload,
+    }),
+    [READ_TIME_FAILURE]: (state, error) => ({
+        ...state,
+        error,
     }),
 },
 initialState);

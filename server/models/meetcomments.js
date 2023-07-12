@@ -1,21 +1,21 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('postcomments', {
-    commentNum: {
+  return sequelize.define('meetcomments', {
+    meetcommentNum: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    postNum: {
+    meetboard_Num: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'posts',
-        key: 'postNum'
+        model: 'meetboards',
+        key: 'meetboardNum'
       }
     },
-    userId: {
+    user_Id: {
       type: DataTypes.STRING(255),
       allowNull: false,
       references: {
@@ -23,13 +23,13 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
-    content: {
-      type: DataTypes.STRING(300),
+    body: {
+      type: DataTypes.STRING(1000),
       allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'postcomments',
+    tableName: 'meetcomments',
     timestamps: true,
     indexes: [
       {
@@ -37,21 +37,21 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "commentNum" },
+          { name: "meetcommentNum" },
         ]
       },
       {
-        name: "postcomments_FK",
+        name: "meetcomments_FK",
         using: "BTREE",
         fields: [
-          { name: "postNum" },
+          { name: "user_Id" },
         ]
       },
       {
-        name: "postcomments_FK_1",
+        name: "meetcomments_FK_1",
         using: "BTREE",
         fields: [
-          { name: "userId" },
+          { name: "meetboard_Num" },
         ]
       },
     ]

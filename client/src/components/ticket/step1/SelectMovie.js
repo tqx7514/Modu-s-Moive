@@ -26,16 +26,10 @@ export const AreaItem = styled.li`
   cursor: pointer;
   font-size: 15px;
   font-weight: 500;
-  &.movie_list {
-    display: flex;
-    align-items: center;
-    &.selected {
-      border: 2px solid;
-    }
-  }
   &.selected {
     position: relative;
     background: #fff;
+    border: 2px solid;
     &:after {
       content: "";
       position: absolute;
@@ -45,6 +39,10 @@ export const AreaItem = styled.li`
       width: 18px;
       height: 14px;
     }
+  }
+  &.time{
+    cursor: default;
+    padding: 10px 0;
   }
   span {
     font-size: 11px;
@@ -67,6 +65,14 @@ export const AreaItem = styled.li`
     &.age_19 {
       background: url("/age_19.png") no-repeat;
     }
+  }
+`;
+
+export const MovieList = styled.div` 
+  display: flex;
+  align-items: center;
+  &.selected {
+    border: 2px solid;
   }
 `;
 
@@ -106,12 +112,17 @@ const MovieSelect = ({
     const [selectedMovie, setSelectedMovie] = useState(null);
 
     const handleSelectMovie = (movie) => {
+      if (selectedMovie === movie.movie_name) {
+        setSelectedMovie(null);
+        onSecondData(null); // 선택된 영화 해제 시, 부모 컴포넌트로 선택 해제를 전달
+      } else {
         setSelectedMovie(movie.movie_name);
         onSecondData(movie);
+      }
     };
   return (
     <StepCinema style={{ background: "#f5f5f5" }}>
-        <Title>{data.movie ? `${data.movie}` : '영화 선택'}</Title>
+        <Title>{data.movie ? `${data.movie.movie_name}` : '영화 선택'}</Title>
         <FilterList>
           <select>
             <option value={"예매순"}>예매순</option>
@@ -136,20 +147,22 @@ const MovieSelect = ({
                   : ""
               }`}
             >
-              <span
-                className={`${
-                  m.age === "all"
-                    ? "age_all"
-                    : m.age === "12"
-                    ? "age_12"
-                    : m.age === "15"
-                    ? "age_15"
-                    : m.age === "19"
-                    ? "age_19"
-                    : ""
-                } age`}
-              ></span>
+              <MovieList>
+                <span
+                  className={`${
+                    m.age === "all"
+                      ? "age_all"
+                      : m.age === "12"
+                      ? "age_12"
+                      : m.age === "15"
+                      ? "age_15"
+                      : m.age === "19"
+                      ? "age_19"
+                      : ""
+                  } age`}
+                ></span>
               {m.movie_name}
+              </MovieList>
             </AreaItem>
           ))}
         </MovieUl>

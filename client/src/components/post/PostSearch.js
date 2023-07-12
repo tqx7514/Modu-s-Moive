@@ -50,7 +50,7 @@ const PostSearch = ({ onSearch }) => {
 
   const handleSearch = () => {
     onSearch(searchResult);
-    navigate(`/postlist?title=${searchResult}`);
+    navigate(`/postlist?title=${encodeURIComponent(searchResult)}`);
   };
 
   return (

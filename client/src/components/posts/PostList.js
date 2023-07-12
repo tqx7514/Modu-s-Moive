@@ -124,7 +124,7 @@ const PostList = ({ posts, loading, error, showWriteButton }) => {
     if (title === "") {
       navigate("/postlist");
     } else {
-      navigate(`/postlist?title=${title}`);
+      navigate(`/postlist?title=${encodeURIComponent(title)}`);
     }
   };
 

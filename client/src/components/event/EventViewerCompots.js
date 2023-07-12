@@ -25,8 +25,8 @@ const EventDate = styled.p`
 
 const EventButtonBlock = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin: 1rem 0rem 1rem 0rem;
+  justify-content: center;
+  margin: 20px 0px 20px 0px;
   width: 100%;
   max-width: 400px;
 
@@ -39,7 +39,8 @@ const EventButtonBlock = styled.div`
 
 const EventShareButton = styled.button`
   display: flex;
-  margin-left: 0 auto;
+  width: 100px;
+  margin-left: 10px;
   align-items: center;
   justify-content: center;
 `;
@@ -48,7 +49,7 @@ const BtnShareImage = styled.img`
   margin-right: 4px;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 
 const EventViewerCompots = ({ eventpost }) => {
@@ -88,24 +89,24 @@ const EventViewerCompots = ({ eventpost }) => {
     alert("링크가 복사되었습니다");
   };
 
-  if (!eventDetail) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <EventViewerBlock>
       <EventTitle>{eventDetail.eventTitle}</EventTitle>
       <EventDate>
         {eventDetail.startEventDate} ~ {eventDetail.endEventDate}
       </EventDate>
-      <img src={eventDetail.eventContent} alt="이벤트 이미지" />
+      <img src={eventDetail.eventContent} alt={eventDetail.eventTitle} />
       <EventButtonBlock>
         <Button className="gobackBtn" onClick={handleGoback}>
           목록보기
         </Button>
-        <EventShareButton onClick={handleShare}>
-          <BtnShareImage src="../../btn_icon_share.svg" /> 공유하기 
-        </EventShareButton>
+        {!eventData ? (
+          <EventShareButton onClick={handleShare}>
+            <BtnShareImage src="../../btn_icon_share.svg" /> 공유하기
+          </EventShareButton>
+        ) : (
+          <Button onClick={() => navigate("/")}>홈페이지로 이동</Button>
+        )}
       </EventButtonBlock>
     </EventViewerBlock>
   );

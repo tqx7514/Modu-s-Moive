@@ -4,12 +4,16 @@ import styled from "styled-components";
 
 const EventMovieInfoBlock = styled.div`
   text-align: center;
+  font-size: 12px;
+  .textdate {
+    margin-bottom: 10px;
+  }
 `;
 
 const EventMovieItemBlock = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 2rem;
+  grid-gap: 1rem;
   justify-content: center;
   p {
     text-align: center;
@@ -19,8 +23,8 @@ const EventMovieItemBlock = styled.div`
 const EventMovieContainerBlock = styled.div`
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
   font-size: 12px;
-
   h2 {
     margin-bottom: 10px;
   }
@@ -33,12 +37,16 @@ const EventMovieContentBlock = styled.div`
   width: 980px;
   margin: 0 auto;
   align-items: center;
+  box-sizing: border-box;
 `;
 
 const ShowMoreButton = styled.div`
+  font-size: 16px;
   display: flex;
+  align-items: center;
   justify-content: center;
   border: 1px solid gray;
+  margin: 10px 0px 10px 0px;
 `;
 
 const DownArrowImage = styled.img`
@@ -82,10 +90,10 @@ const EventMovieCompots = ({ events }) => {
             {filteredEvents.slice(0, visibleCount).map((e) => (
               <div key={e.eventNum}>
                 <Link to={`/event/movie/${e.eventNum}`}>
+                  <img src={e.eventImg} alt="영화 이벤트" />
                   <EventMovieInfoBlock>
-                    <img src={e.eventImg} alt="영화 이벤트" />
                     <p>{e.eventTitle}</p>
-                    <p>
+                    <p className="textdate">
                       {e.startEventDate} ~ {e.endEventDate}
                     </p>
                   </EventMovieInfoBlock>

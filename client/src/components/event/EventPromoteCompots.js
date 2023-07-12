@@ -4,23 +4,25 @@ import styled from "styled-components";
 
 const EventPromoteInfoBlock = styled.div`
   text-align: center;
+  font-size: 12px;
+  .textdate {
+    margin-bottom: 10px;
+  }
 `;
 
 const EventPromoteItemBlock = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 2rem;
+  grid-gap: 1rem;
   justify-content: center;
-  p {
-    text-align: center;
-  }
 `;
 
 const EventPromoteContainerBlock = styled.div`
+  width: 980px;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
   font-size: 12px;
-
   h2 {
     margin-bottom: 10px;
   }
@@ -33,12 +35,16 @@ const EventPromoteContentBlock = styled.div`
   width: 980px;
   margin: 0 auto;
   align-items: center;
+  box-sizing: border-box;
 `;
 
 const ShowMoreButton = styled.div`
+  font-size: 16px;
   display: flex;
+  align-items: center;
   justify-content: center;
   border: 1px solid gray;
+  margin: 10px 0px 10px 0px;
 `;
 
 const DownArrowImage = styled.img`
@@ -82,10 +88,10 @@ const EventPromoteCompots = ({ events }) => {
             {filteredEvents.slice(0, visibleCount).map((e) => (
               <div key={e.eventNum}>
                 <Link to={`/event/promote/${e.eventNum}`}>
+                  <img src={e.eventImg} alt="제휴/할인 이벤트" />
                   <EventPromoteInfoBlock>
-                    <img src={e.eventImg} alt="제휴/할인 이벤트" />
                     <p>{e.eventTitle}</p>
-                    <p>
+                    <p className="textdate">
                       {e.startEventDate} ~ {e.endEventDate}
                     </p>
                   </EventPromoteInfoBlock>

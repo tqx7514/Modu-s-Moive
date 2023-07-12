@@ -7,5 +7,4 @@ router.get("/", List);
 router.get("/detail/:id", Movie);
 router.post("/moviecomment", Comment);
 
-
 module.exports = router;

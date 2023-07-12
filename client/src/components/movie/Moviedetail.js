@@ -313,6 +313,7 @@ const MovieDetail = ({
     // 여기에 별점을 처리하는 로직을 추가하세요.
   };
 
+
   return (
     <DetailContainer>
       <div>

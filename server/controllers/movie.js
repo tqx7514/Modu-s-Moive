@@ -39,9 +39,9 @@ exports.Movie = async (req, res) => {
 exports.Comment = async (req, res) => {
     try{
         const id = req.params.id;
-
         const comment = await moviecomments.create({
             content,
+            where:{id}
         });
         res.status(200).json(comment);
     } catch (error) {

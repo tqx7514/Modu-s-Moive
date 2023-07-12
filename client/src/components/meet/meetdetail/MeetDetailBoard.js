@@ -165,6 +165,7 @@ const MeetBoardItem = ({
   onRemoveBoard,
   onRemoveComment,
   onEditBoard,
+  onEditComment,
 }) => {
   const { meetboardNum, meet_Num, user_Id, body, grade, createdAt, updatedAt } =
     meetBoard;
@@ -298,6 +299,8 @@ const MeetBoardItem = ({
                           type="댓글"
                           num={comment.meetcommentNum}
                           num2={meetboardNum}
+                          comments={comment}
+                          onEdit={onEditComment}
                         />
                       )}
                     </CommentDetaillist>
@@ -343,6 +346,7 @@ const MeetDetailBoard = ({
   onChangeComment,
   onSubmitComment,
   onEditBoard,
+  onEditComment,
 }) => {
   return (
     <MeetBoardBlock>
@@ -380,6 +384,7 @@ const MeetDetailBoard = ({
                 onRemoveBoard={onRemoveBoard}
                 onRemoveComment={onRemoveComment}
                 onEditBoard={onEditBoard}
+                onEditComment={onEditComment}
               />
             ))}
           </MeetBoardListItem>

@@ -4,7 +4,7 @@ import palette from "../../lib/styles/palette";
 import Responsive from "../common/Responsive";
 import SubInfo from "../common/SubInfo";
 import Tags from "../common/Tags";
-import PostComment from "./PostComment";
+import PostCommentList from "./PostCommentList";
 
 const PostViewerBlock = styled(Responsive)`
   margin-top: 4rem;
@@ -81,7 +81,7 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
         <PostContent dangerouslySetInnerHTML={{ __html: body }} />
         <hr />
         <PostCommentBlock>
-          <PostComment />
+          <PostCommentList />
         </PostCommentBlock>
       </PostViewerBlock>
     </>

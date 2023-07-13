@@ -21,3 +21,14 @@ export const updatePost = ({ postNum, title, body, tags }) =>
 
 export const removePost = (postNum) =>
   client.delete(`/post/${postNum}`, postNum);
+
+// comment부분들
+export const writePostComment = ({ userId, content, postNum }) => {
+  console.log(
+    "client>src>lib>api>posts>writePostComment",
+    userId,
+    content,
+    postNum
+  );
+  return client.post("/post/writePostComment", { userId, content, postNum });
+};

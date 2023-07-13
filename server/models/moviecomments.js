@@ -11,13 +11,13 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(100),
       allowNull: false
     },
-    createAt: {
-      type: DataTypes.TIME,
-      allowNull: true
-    },
     id: {
-      type: DataTypes.STRING(100),
-      allowNull: true
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
     },
     star: {
       type: DataTypes.INTEGER,
@@ -34,7 +34,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'moviecomments',
-    timestamps: false,
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
@@ -49,6 +49,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "movie_id" },
+        ]
+      },
+      {
+        name: "moviecomments_FK_1",
+        using: "BTREE",
+        fields: [
+          { name: "id" },
         ]
       },
     ]

@@ -5,6 +5,8 @@ import createRequestSaga, {
 import * as movieAPI from "../lib/api/movie";
 import { takeLatest } from "redux-saga/effects";
 
+const [INITIALIZE] = createRequestActionTypes("moviedetail/INITIALIZE");
+
 const [DETAIL_POST, DETAIL_POST_SUCCESS, DETAIL_POST_FAIURE] =
   createRequestActionTypes("moviedetail/DETAIL_POST");
 
@@ -22,27 +24,29 @@ const [CHANGE_FIELD] = createRequestActionTypes("moviedetail/CHANGE_FIELD");
 const [COMMENT_WRITE, COMMENT_WRITE_SUCCESS, COMMENT_WRITE_FAIURE] =
   createRequestActionTypes("moviedetail/COMMENT_WRITE");
 
-// const [READ_COMMENT, READ_COMMENT_SUCCESS, READ_COMMENT_FAIURE] =
-//   createRequestActionTypes("moviedetail/READ_COMMENT");
+const [READ_COMMENT, READ_COMMENT_SUCCESS, READ_COMMENT_FAIURE] =
+  createRequestActionTypes("moviedetail/READ_COMMENT");
 
+export const initialize = createAction(INITIALIZE);
 export const readDetail = createAction(DETAIL_POST, (id) => id);
 export const imageDetail = createAction(DETAIL_IMAGE, (id) => id);
 export const videoDetail = createAction(DETAIL_VIDEO, (id) => id);
 export const creditDetail = createAction(DETAIL_CREDIT, (id) => id);
-export const changeField = createAction(CHANGE_FIELD, ({key, value}) => ({
+export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
-}))
-export const commentWrite = createAction(COMMENT_WRITE, (content) => ({
-  content,
 }));
-// export const readComment = createAction(READ_COMMENT, (id) => id);
+export const commentWrite = createAction(
+  COMMENT_WRITE,
+  ({ content, userId, movie_id, star }) => ({ content, userId, movie_id, star })
+);
+export const readComment = createAction(READ_COMMENT, (id) => id);
 
 const readDetailSaga = createRequestSaga(DETAIL_POST, movieAPI.moviedetail);
 const imageDetailSaga = createRequestSaga(DETAIL_IMAGE, movieAPI.moviedetail);
 const videoDetailSaga = createRequestSaga(DETAIL_VIDEO, movieAPI.moviedetail);
 const creditDetailSaga = createRequestSaga(DETAIL_CREDIT, movieAPI.moviedetail);
-// const readCommentSaga = createRequestSaga(READ_COMMENT, movieAPI.moviedetail);
+const readCommentSaga = createRequestSaga(READ_COMMENT, movieAPI.moviedetail);
 const commentWriteSaga = createRequestSaga(
   COMMENT_WRITE,
   movieAPI.commentwrite
@@ -53,7 +57,7 @@ export function* moviedetailSaga() {
   yield takeLatest(DETAIL_VIDEO, videoDetailSaga);
   yield takeLatest(DETAIL_CREDIT, creditDetailSaga);
   yield takeLatest(COMMENT_WRITE, commentWriteSaga);
-  // yield takeLatest(READ_COMMENT, readCommentSaga);
+  yield takeLatest(READ_COMMENT, readCommentSaga);
 }
 
 const initialState = {
@@ -61,14 +65,20 @@ const initialState = {
   images: [],
   videos: [],
   credits: [],
-  content: '',
-  comment: null,
+  content: "",
+  star: "",
+  comment: "",
+  commentlist: "",
   commentError: null,
   error: null,
 };
 
 const moviedetail = handleActions(
   {
+    [INITIALIZE]: (state) => ({
+      ...state,
+      initialState,
+    }),
     [DETAIL_POST_SUCCESS]: (state, { payload: moviedetail }) => ({
       ...state,
       moviedetail: moviedetail.moviedetail,
@@ -102,17 +112,30 @@ const moviedetail = handleActions(
       ...state,
       error,
     }),
-    [CHANGE_FIELD]: (state, {payload: {key, value}}) => ({
+    [CHANGE_FIELD]: (state, { payload: { key, value } }) => ({
       ...state,
       [key]: value,
     }),
+    [COMMENT_WRITE]: state => ({
+      ...state,
+      comment: null,
+      commentError: null,
+    }),
     [COMMENT_WRITE_SUCCESS]: (state, { payload: comment }) => ({
       ...state,
-      comment
+      comment,
     }),
     [COMMENT_WRITE_FAIURE]: (state, { payload: commentError }) => ({
       ...state,
       commentError,
+    }),
+    [READ_COMMENT_SUCCESS]: (state, {payload: commentlist}) => ({
+      ...state,
+      commentlist: commentlist.commentlist,
+    }),
+    [READ_COMMENT_FAIURE]: (state, {payload: error}) => ({
+      ...state,
+      error,
     }),
   },
   initialState

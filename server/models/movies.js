@@ -25,7 +25,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     movie_id: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      unique: "movies_UN"
     },
     age: {
       type: DataTypes.STRING(100),
@@ -42,6 +43,14 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "movie_num" },
+        ]
+      },
+      {
+        name: "movies_UN",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "movie_id" },
         ]
       },
     ]

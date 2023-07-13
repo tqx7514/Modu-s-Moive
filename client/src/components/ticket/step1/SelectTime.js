@@ -40,7 +40,7 @@ const ScheduleBtn = styled.div`
   width: 23%;
   margin-left: 2%;
   margin-bottom: 10px;
-  &.selected{
+  &.selected {
     border: 1px solid;
   }
   &:nth-child(4n + 1) {
@@ -66,41 +66,55 @@ const ScheduleBtn = styled.div`
 
 const SelectTime = () => {
   const [selectedFilter, setSelectedFilter] = useState("전체");
-  const [selectedTime, setSelectedTime] = useState("");
+  const [selectedTime, setSelectedTime] = useState(null);
+  console.log('selectedTimeBtn?????????', selectedTime);
 
   const handleFilter = (start) => {
     setSelectedFilter(start);
   };
 
   const { data, time } = useSelector(({ stepfirst }) => stepfirst);
-  console.log(data);
+  console.log("321321321", data.time);
 
   const dispatch = useDispatch();
 
-  const onSelctedTime = useCallback(
-    (time) => {
-      dispatch(setTimeData(time));
+  const onSelectedTime = useCallback(
+    (cinema, movie_name, start, end) => {
+      dispatch(setTimeData({ cinema, movie_name, start, end }));
     },
     [dispatch]
   );
 
-  const handleSelectTime = (e, start, end) => {
-    setSelectedTime(e.target.start);
-    onSelctedTime(start, end);
-    console.log(selectedTime);
+  const handleSelectTime = (item, start) => {
+    setSelectedTime(
+      item.movietimes_num
+    );
+
+    onSelectedTime(item.cinema, item.movie_name, start, item.end);
   };
-  
+
   useEffect(() => {
     dispatch(readTime());
-  }, []);
+  }, [dispatch]);
 
   const groupedData = {};
 
   time.forEach((item) => {
-    const { cinema, movie_name, age, disp, language, start, end, seat } = item;
+    const {
+      movietimes_num,
+      cinema,
+      movie_name,
+      age,
+      disp,
+      language,
+      start,
+      end,
+      seat,
+    } = item;
     const key = `${movie_name}-${disp}-${language}`;
     if (!groupedData[key]) {
       groupedData[key] = {
+        movietimes_num,
         cinema,
         movie_name,
         age,
@@ -118,99 +132,101 @@ const SelectTime = () => {
 
   const filteredTimes = uniqueTimes
     .filter((item) => {
-      if (selectedFilter === "전체") {
-        return true;
-      } else if (selectedFilter === "스페셜관") {
-        return item.disp === "스페셜관";
-      } else if (selectedFilter === "Atmos") {
-        return item.disp === "Atmos";
-      } else if (selectedFilter === "13시 이후") {
-        return item.start.some(
-          (start) => parseInt(start.split(":")[0], 10) >= 13
+      if (data.movie) {
+        return (
+          item.cinema === data.cinema &&
+          item.movie_name === data.movie.movie_name
         );
-      } else if (selectedFilter === "19시 이후") {
-        return item.start.some(
-          (start) => parseInt(start.split(":")[0], 10) >= 19
-        );
-      } else if (selectedFilter === "심야") {
-        return item.start.some((start) => {
-          const hour = parseInt(start.split(":")[0], 10);
-          return (hour >= 0 && hour < 6) || hour === 23;
-        });
+      } else {
+        return item.cinema === data.cinema;
       }
-      return true;
     })
-    .map((item) => {
-      const { start } = item;
-      const filteredStart = start.filter((time) => {
-        if (selectedFilter === "13시 이후") {
-          return parseInt(time.split(":")[0], 10) >= 13;
-        } else if (selectedFilter === "19시 이후") {
-          return parseInt(time.split(":")[0], 10) >= 19;
-        } else if (selectedFilter === "심야") {
-          const hour = parseInt(time.split(":")[0], 10);
-          return (hour >= 0 && hour < 6) || hour === 23;
-        }
-        return true;
-      });
-      return { ...item, start: filteredStart };
+    .filter((item) => {
+      switch (selectedFilter) {
+        case "전체":
+          return true;
+        case "스페셜관":
+          return item.disp === "스페셜관";
+        case "Atmos":
+          return item.disp === "Atmos";
+        case "13시 이후":
+          return item.start.some((start) => {
+            const hour = parseInt(start.split(":")[0]);
+            return hour >= 13;
+          });
+        case "19시 이후":
+          return item.start.some((start) => {
+            const hour = parseInt(start.split(":")[0]);
+            return hour >= 19;
+          });
+        case "심야":
+          return item.start.some((start) => {
+            const hour = parseInt(start.split(":")[0]);
+            return hour >= 0 && hour < 5;
+          });
+        default:
+          return true;
+      }
     });
 
   return (
     <>
       <BtnWrap>
         <FilterBtn
-          onClick={handleFilter}
+          onClick={() => handleFilter("전체")}
           className={selectedFilter === "전체" ? "selected" : ""}
         >
           전체
         </FilterBtn>
         <FilterBtn
-          onClick={handleFilter}
+          onClick={() => handleFilter("스페셜관")}
           className={selectedFilter === "스페셜관" ? "selected" : ""}
         >
           스페셜관
         </FilterBtn>
         <FilterBtn
-          onClick={handleFilter}
+          onClick={() => handleFilter("Atmos")}
           className={selectedFilter === "Atmos" ? "selected" : ""}
         >
           Atmos
         </FilterBtn>
         <FilterBtn
-          onClick={handleFilter}
+          onClick={() => handleFilter("13시 이후")}
           className={selectedFilter === "13시 이후" ? "selected" : ""}
         >
           13시 이후
         </FilterBtn>
         <FilterBtn
-          onClick={handleFilter}
+          onClick={() => handleFilter("19시 이후")}
           className={selectedFilter === "19시 이후" ? "selected" : ""}
         >
           19시 이후
         </FilterBtn>
         <FilterBtn
-          onClick={handleFilter}
+          onClick={() => handleFilter("심야")}
           className={selectedFilter === "심야" ? "selected" : ""}
         >
           심야
         </FilterBtn>
       </BtnWrap>
       <TimeWrap>
-        {data.cinema && data.date && (
+      {data.cinema && data.date && (
           <>
-            {filteredTimes
-              .filter((item) => {
-                if (data.movie) {
-                  return (
-                    item.cinema === data.cinema &&
-                    item.movie_name === data.movie.movie_name
-                  );
-                } else {
-                  return item.cinema === data.cinema;
+            {filteredTimes.map((item) => {
+              const { start } = item;
+              const filteredStart = start.filter((time) => {
+                if (selectedFilter === "13시 이후") {
+                  return parseInt(time.split(":")[0], 10) >= 13;
+                } else if (selectedFilter === "19시 이후") {
+                  return parseInt(time.split(":")[0], 10) >= 19;
+                } else if (selectedFilter === "심야") {
+                  const hour = parseInt(time.split(":")[0], 10);
+                  return (hour >= 0 && hour < 6) || hour === 23;
                 }
-              })
-              .map((item) => (
+                return true;
+              });
+              return { ...item, start: filteredStart };
+            }).map((item) => (
                 <AreaItem
                   key={`${item.cinema}-${item.movie_name}-${item.age}-${item.disp}-${item.language}`}
                   className="movie_list time"
@@ -240,8 +256,8 @@ const SelectTime = () => {
                       {item.start.map((start, index) => (
                         <ScheduleBtn
                           key={index}
-                          onClick={(e) => handleSelectTime(e, start, item.end)}
-                          className={selectedTime ? 'selected' : ''}
+                          onClick={() => handleSelectTime(item, start)}
+                          className={selectedTime === start ? "selected" : ""}
                         >
                           <strong>{start}</strong>
                           <span>{item.seat}</span>

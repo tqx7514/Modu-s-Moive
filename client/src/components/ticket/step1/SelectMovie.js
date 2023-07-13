@@ -43,6 +43,9 @@ export const AreaItem = styled.li`
   &.time{
     cursor: default;
     padding: 10px 0;
+    p{
+      display: inline-block;
+    }
   }
   span {
     font-size: 11px;

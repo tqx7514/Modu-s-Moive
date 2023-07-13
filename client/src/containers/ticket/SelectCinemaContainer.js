@@ -6,8 +6,7 @@ import {
   readRegion,
   selectedRegion,
   setData,
-  setFirstData,
-  setSecondData,
+  setTimeData,
 } from "../../modules/stepfirst";
 
 const SelectCinemaContainer = () => {
@@ -33,13 +32,12 @@ const SelectCinemaContainer = () => {
 
   const onSelectCinema = useCallback(() => {
     dispatch(readMovie());
-    dispatch(setSecondData(""));
+    dispatch(setData(""));
+    dispatch(setTimeData({}));
   }, [dispatch]);
 
   const onFirstData = useCallback(
     (cinemaData) => {
-      console.log("cinemaData=========", cinemaData);
-      // dispatch(setFirstData(cinema));
       dispatch(setData({ key: "cinema", value: cinemaData }));
     },
     [dispatch]

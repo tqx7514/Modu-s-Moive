@@ -19,12 +19,6 @@ const [READ_MOVIE, READ_MOVIE_SUCCESS, READ_MOVIE_FAILURE] =
 const [READ_TIME, READ_TIME_SUCCESS, READ_TIME_FAILURE] =
   createRequestActionTypes("stepfirst/READ_TIME");
 
-const [SET_FIRST_DATA] = createRequestActionTypes("stepfirst/SET_FIRST_DATA");
-
-const [SET_SECOND_DATA] = createRequestActionTypes("stepfirst/SET_SECOND_DATA");
-
-const [SET_DATE_DATA] = createRequestActionTypes("stepfirst/SET_DATE_DATA");
-
 const [SET_TIME_DATA] = createRequestActionTypes("stepfirst/SET_TIME_DATA");
 
 const [SET_DATA] = createRequestActionTypes("stepfirst/SET_DATA");
@@ -36,21 +30,11 @@ export const selectedRegion = createAction(SELECTED_REGION, (grade) => grade);
 
 export const readMovie = createAction(READ_MOVIE);
 
-export const setData = createAction(SET_DATA, (key) => key);
+export const setData = createAction(SET_DATA, ({key,value}) => ({key,value}));
 
-export const setFirstData = createAction(SET_FIRST_DATA, (cinema) => ({
+export const setTimeData = createAction(SET_TIME_DATA, ({cinema, movie_name, start, end}) => ({
   cinema,
-}));
-
-export const setSecondData = createAction(SET_SECOND_DATA, (movie) => ({
-  movie,
-}));
-
-export const setDateData = createAction(SET_DATE_DATA, (date) => ({
-  date,
-}));
-
-export const setTimeData = createAction(SET_TIME_DATA, (start, end) => ({
+  movie_name,
   start,
   end,
 }));
@@ -90,12 +74,7 @@ const year = today.getFullYear();
 const month = today.getMonth() + 1;
 const day = today.getDate();
 
-const format =
-  year +
-  "-" +
-  ("00" + month.toString()).slice(-2) +
-  "-" +
-  ("00" + day.toString()).slice(-2);
+const format = year + "-" + ("00" + month.toString()).slice(-2) + "-" + ("00" + day.toString()).slice(-2);
 
 const initialState = {
   region: [],
@@ -103,7 +82,7 @@ const initialState = {
   movie: [],
   date: "",
   time: [],
-  data: { cinema: "", movie: "", date: `${format}(오늘)`, time: "" },
+  data: { cinema: "", movie: "", date: `${format}(오늘)`, time: {} },
   error: null,
 };
 
@@ -145,36 +124,13 @@ const stepfirst = handleActions(
         [key]: value,
       },
     }),
-
-    [SET_FIRST_DATA]: (state, action) => ({
-      ...state,
-      data: {
-        ...state.data,
-        cinema: action.payload.cinema,
-      },
-    }),
-    [SET_SECOND_DATA]: (state, action) => ({
-      ...state,
-      data: {
-        ...state.data,
-        movie: action.payload.movie,
-      },
-    }),
     // ----------------------------------------------------
-    [SET_DATE_DATA]: (state, action) => ({
+    [SET_TIME_DATA]: (state, {payload: {cinema, movie_name, start, end}}) => ({
       ...state,
       data: {
         ...state.data,
-        date: action.payload.date,
-      },
-    }),
-    // ----------------------------------------------------
-    [SET_TIME_DATA]: (state, action) => ({
-      ...state,
-      data: {
-        ...state.data,
-        time: `${action.payload.start} ~ ${action.payload.end}`,
-      },
+        time: {cinema, movie_name, start, end}
+      }
     }),
     // ----------------------------------------------------
     [READ_TIME_SUCCESS]: (state, action) => ({

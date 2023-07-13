@@ -7,30 +7,34 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
     content: {
       type: DataTypes.STRING(100),
       allowNull: false
     },
-    createAt: {
-      type: DataTypes.TIME,
-      allowNull: true
-    },
     id: {
-      type: DataTypes.STRING(100),
-      allowNull: true
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
     },
     star: {
       type: DataTypes.INTEGER,
       allowNull: true
+    },
+    movie_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'movies',
+        key: 'movie_id'
+      }
     }
   }, {
     sequelize,
     tableName: 'moviecomments',
-    timestamps: false,
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
@@ -44,7 +48,14 @@ module.exports = function(sequelize, DataTypes) {
         name: "moviecomments_FK",
         using: "BTREE",
         fields: [
-          { name: "userId" },
+          { name: "movie_id" },
+        ]
+      },
+      {
+        name: "moviecomments_FK_1",
+        using: "BTREE",
+        fields: [
+          { name: "id" },
         ]
       },
     ]

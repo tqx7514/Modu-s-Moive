@@ -46,6 +46,8 @@ function initModels(sequelize) {
   meets.hasMany(meetboards, { as: "meetboards", foreignKey: "meet_Num"});
   meetusers.belongsTo(meets, { as: "meet_MeetNum_meet", foreignKey: "meet_MeetNum"});
   meets.hasMany(meetusers, { as: "meetusers", foreignKey: "meet_MeetNum"});
+  moviecomments.belongsTo(movies, { as: "movie", foreignKey: "movie_id"});
+  movies.hasMany(moviecomments, { as: "moviecomments", foreignKey: "movie_id"});
   postcomments.belongsTo(posts, { as: "postNum_post", foreignKey: "postNum"});
   posts.hasMany(postcomments, { as: "postcomments", foreignKey: "postNum"});
   cinemas.belongsTo(regions, { as: "grade_region", foreignKey: "grade"});
@@ -58,6 +60,8 @@ function initModels(sequelize) {
   users.hasMany(meetcomments, { as: "meetcomments", foreignKey: "user_Id"});
   meetusers.belongsTo(users, { as: "user", foreignKey: "user_Id"});
   users.hasMany(meetusers, { as: "meetusers", foreignKey: "user_Id"});
+  moviecomments.belongsTo(users, { as: "id_user", foreignKey: "id"});
+  users.hasMany(moviecomments, { as: "moviecomments", foreignKey: "id"});
   postcomments.belongsTo(users, { as: "user", foreignKey: "userId"});
   users.hasMany(postcomments, { as: "postcomments", foreignKey: "userId"});
 

@@ -17,6 +17,7 @@ import {
   writeMeetComment,
   initializeComment,
   removeMeetComment,
+  updateMeetComment,
 } from "../../modules/meetcomment";
 import Swal from "sweetalert2";
 
@@ -152,6 +153,41 @@ const MeetDetailBoardContainer = () => {
       }
     });
   };
+  const onEditComment = (e) => {
+    const body = e.target.dataset.commentbody;
+    // const userId = e.target.dataset.userid;
+    // const meetboardNum = e.target.dataset.meetboardnum;
+    const meetcommentNum = e.target.dataset.meetcommentnum;
+    // const body = meetBoard && meetBoard.body;
+    // const userId2 = meetBoard && meetBoard.userId;
+    // const meetboardNum = meetBoard && meetBoard.meetboard_Num;
+    // console.log("body222222222222222", body2, userId2, meetboardNum2);
+    Swal.fire({
+      title: "댓글 수정",
+      input: "text",
+      inputValue: `${body}`,
+      showCancelButton: true,
+      cancelButtonText: "취소",
+      confirmButtonText: "수정",
+      showLoaderOnConfirm: true,
+      preConfirm: (input) => {
+        dispatch(
+          updateMeetComment({
+            meetcommentNum,
+            MeetBoardNum: meetboardNum,
+            body: input,
+          })
+        );
+      },
+    }).then((res) => {
+      if (res.isConfirmed) {
+        Swal.fire({
+          icon: "success",
+          text: "수정 성공",
+        });
+      }
+    });
+  };
 
   useEffect(() => {
     dispatch(initializeForm("list"));
@@ -180,6 +216,7 @@ const MeetDetailBoardContainer = () => {
         onRemoveBoard={onRemoveBoard}
         onRemoveComment={onRemoveComment}
         onEditBoard={onEditBoard}
+        onEditComment={onEditComment}
       />
     </div>
   );

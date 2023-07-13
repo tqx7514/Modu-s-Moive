@@ -75,3 +75,12 @@ export const updateMeetBoard = ({ meetboardNum, MeetNum, body }) => {
     body,
   });
 };
+
+export const updateMeetComment = ({ meetcommentNum, MeetBoardNum, body }) => {
+  console.log("댓글 수정하기 프론트도착", meetcommentNum, MeetBoardNum, body);
+  return client.post(`/meet/updateMeetComment/${meetcommentNum}`, {
+    meetcommentNum,
+    MeetBoardNum,
+    body,
+  });
+};

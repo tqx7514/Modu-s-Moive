@@ -37,6 +37,7 @@ const MeetDetailActionButtons = ({
   num,
   num2,
   meetBoard,
+  comments,
 }) => {
   const [modal, setModal] = useState(false);
   const onRemoveClick = () => {
@@ -62,6 +63,8 @@ const MeetDetailActionButtons = ({
           data-body={meetBoard && meetBoard.body}
           data-userid={meetBoard && meetBoard.user_Id}
           data-meetboardnum={meetBoard && meetBoard.meetboardNum}
+          data-commentbody={comments && comments.body}
+          data-meetcommentnum={comments && comments.meetcommentNum}
         >
           {type} 수정
         </ActionButton>

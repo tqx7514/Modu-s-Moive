@@ -121,6 +121,20 @@ const activeStyle = {
   borderBottom: "2px solid black",
   display: "inline-block",
 };
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
+  background-color: white;
+  height: 100vh;
+  width: 100vw;
+
+  .loader {
+    max-inline-size: 100%;
+  }
+`;
 
 // const NavLinkStyled = styled.div`
 //   display: inline-block;
@@ -166,39 +180,47 @@ const MeetList = ({ meets, loading, error, showWriteButton, regions }) => {
     return <MeetListBlock>에러 발생했습니다</MeetListBlock>;
   }
   return (
-    <MeetListBlock>
-      <MeetHeaderBlock>
-        <h2>모임</h2>
-        {showWriteButton && <Button to="/meet/write">모임 만들기</Button>}
-      </MeetHeaderBlock>
-      <hr />
-      <RegionsBlock>
-        {regions &&
-          regions.map((region) => (
-            <div
-              style={region === selectedRegion ? activeStyle : undefined}
-              onClick={() => {
-                if (region === "전국") {
-                  navigate("/meet");
-                } else {
-                  navigate(`/meet?region=${region}`);
-                }
-                setSelectedRegion(region);
-              }}
-            >
-              {region}
-            </div>
-          ))}
-      </RegionsBlock>
-      {/* {selectedRegion}의 모임 : 총 {meets && meets.length}개 입니다. */}
-      {!loading && meets && (
-        <MeetListItem>
-          {meets.map((meet) => (
-            <MeetItem meet={meet} key={meet.meetNum} />
-          ))}
-        </MeetListItem>
+    <>
+      {loading ? (
+        <Container>
+          <img src="loader.gif" alt="" className="loader" />
+        </Container>
+      ) : (
+        <MeetListBlock>
+          <MeetHeaderBlock>
+            <h2>모임</h2>
+            {showWriteButton && <Button to="/meet/write">모임 만들기</Button>}
+          </MeetHeaderBlock>
+          <hr />
+          <RegionsBlock>
+            {regions &&
+              regions.map((region) => (
+                <div
+                  style={region === selectedRegion ? activeStyle : undefined}
+                  onClick={() => {
+                    if (region === "전국") {
+                      navigate("/meet");
+                    } else {
+                      navigate(`/meet?region=${region}`);
+                    }
+                    setSelectedRegion(region);
+                  }}
+                >
+                  {region}
+                </div>
+              ))}
+          </RegionsBlock>
+          {/* {selectedRegion}의 모임 : 총 {meets && meets.length}개 입니다. */}
+          {!loading && meets && (
+            <MeetListItem>
+              {meets.map((meet) => (
+                <MeetItem meet={meet} key={meet.meetNum} />
+              ))}
+            </MeetListItem>
+          )}
+        </MeetListBlock>
       )}
-    </MeetListBlock>
+    </>
   );
 };
 

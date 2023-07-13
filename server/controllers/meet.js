@@ -422,3 +422,30 @@ exports.meetBoardUpdate = async (req, res, next) => {
     res.json(updatedMeetBoard);
   } catch (error) {}
 };
+
+exports.meetCommentUpdate = async (req, res) => {
+  const { meetcommentNum, MeetBoardNum, body } = req.body;
+  console.log("ssssssssssss", meetcommentNum, MeetBoardNum, body);
+  try {
+    const [updateRows] = await meetcomments.update(
+      {
+        body,
+      },
+      {
+        where: { meetcommentNum },
+      }
+    );
+    if (updateRows === 0) {
+      res.status(404).json({ msg: "댓글이 존재하지않습니다" });
+      return;
+    }
+    const comment = await meetcomments.findAll({
+      where: { meetboard_Num: MeetBoardNum },
+      order: [["createdAt", "ASC"]],
+    });
+    console.log("코멘트입니다", comment);
+    res.status(200).json({ comment, MeetBoardNum });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};

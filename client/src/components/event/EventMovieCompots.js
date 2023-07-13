@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import EventCategory from "./EventCategory";
 
 const EventMovieInfoBlock = styled.div`
   text-align: center;
@@ -13,7 +14,7 @@ const EventMovieInfoBlock = styled.div`
 const EventMovieItemBlock = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1rem;
+  grid-gap: 1.2rem;
   justify-content: center;
   p {
     text-align: center;
@@ -21,6 +22,7 @@ const EventMovieItemBlock = styled.div`
 `;
 
 const EventMovieContainerBlock = styled.div`
+  width: 980px;
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
@@ -83,6 +85,7 @@ const EventMovieCompots = ({ events }) => {
 
   return (
     <EventMovieContentBlock>
+      <EventCategory />
       <EventMovieContainerBlock className="eventmoviecontainer">
         <h2>영화</h2>
         {filteredEvents && filteredEvents.length > 0 && (

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import EventCategory from "./EventCategory";
 
 const EventPromoteInfoBlock = styled.div`
   text-align: center;
@@ -13,7 +14,7 @@ const EventPromoteInfoBlock = styled.div`
 const EventPromoteItemBlock = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1rem;
+  grid-gap: 1.2rem;
   justify-content: center;
 `;
 
@@ -44,7 +45,7 @@ const ShowMoreButton = styled.div`
   align-items: center;
   justify-content: center;
   border: 1px solid gray;
-  margin: 10px 0px 10px 0px;
+  margin: 10px 0 10px 0;
 `;
 
 const DownArrowImage = styled.img`
@@ -81,6 +82,7 @@ const EventPromoteCompots = ({ events }) => {
 
   return (
     <EventPromoteContentBlock>
+      <EventCategory />
       <EventPromoteContainerBlock className="eventpromotecontainer">
         <h2>제휴/할인</h2>
         {filteredEvents && filteredEvents.length > 0 && (

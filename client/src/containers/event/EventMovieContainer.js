@@ -4,16 +4,20 @@ import EventMovieCompots from "../../components/event/EventMovieCompots";
 import { listEvents } from "../../modules/eventlist";
 
 const EventMovieContainer = () => {
-    const dispatch = useDispatch();
-    const events = useSelector((state) => ({
-        eventlist: state.eventlist.event || [],
-    }))
+  const dispatch = useDispatch();
+  const events = useSelector((state) => ({
+    eventlist: state.eventlist.event || [],
+  }));
 
-    useEffect(() => {
-        dispatch(listEvents());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(listEvents());
+  }, [dispatch]);
 
-    return <EventMovieCompots events={events} />;
+  return (
+    <div>
+      <EventMovieCompots events={events} />
+    </div>
+  );
 };
 
 export default EventMovieContainer;

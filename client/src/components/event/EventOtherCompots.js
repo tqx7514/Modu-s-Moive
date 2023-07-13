@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import EventCategory from "./EventCategory";
 
 const EventOtherInfoBlock = styled.div`
   text-align: center;
@@ -13,7 +14,7 @@ const EventOtherInfoBlock = styled.div`
 const EventOtherItemBlock = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1rem;
+  grid-gap: 1.2rem;
   justify-content: center;
   p {
     text-align: center;
@@ -84,6 +85,7 @@ const EventOtherCompots = ({ events }) => {
 
   return (
     <EventOtherContentBlock>
+      <EventCategory />
       <EventOtherContainerBlock className="eventothercontainer">
         <h2>기타</h2>
         {filteredEvents && filteredEvents.length > 0 && (

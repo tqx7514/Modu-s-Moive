@@ -8,32 +8,41 @@ import {
   eventpromotelist,
 } from "../../lib/api/event";
 import Button from "../common/Button";
+import EventCategory from "./EventCategory";
 
 const EventViewerBlock = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 30px;
 `;
 
 const EventTitle = styled.h2`
-  margin-bottom: 5px;
+  display: flex;
+  margin: 10px 0px 10px 0px;
+  width: 980px;
+  justify-content: center;
 `;
 
 const EventDate = styled.p`
+  display: flex;
   margin-bottom: 10px;
+  width: 980px;
+  justify-content: center;
 `;
 
 const EventButtonBlock = styled.div`
   display: flex;
   justify-content: center;
-  margin: 20px 0px 20px 0px;
+  margin: 10px 0px 10px 0px;
   width: 100%;
-  max-width: 400px;
+  max-width: 980px;
 
   .gobackBtn {
     font-weight: normal;
     width: 100px;
     height: 40px;
+    margin-right: 10px;
   }
 `;
 
@@ -91,6 +100,7 @@ const EventViewerCompots = ({ eventpost }) => {
 
   return (
     <EventViewerBlock>
+      <EventCategory />
       <EventTitle>{eventDetail.eventTitle}</EventTitle>
       <EventDate>
         {eventDetail.startEventDate} ~ {eventDetail.endEventDate}

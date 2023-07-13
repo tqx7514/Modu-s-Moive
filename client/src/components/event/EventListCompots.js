@@ -1,29 +1,44 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import EventCategory from "./EventCategory";
 
 const EventInfoBlock = styled.div`
   text-align: center;
   font-size: 12px;
   .textdate {
-    margin-bottom: 10px;
+    margin-bottom: 30px;
   }
 `;
 
 const EventItemBlock = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1rem;
+  grid-gap: 1.2rem;
   justify-content: center;
+  p {
+    text-align: center;
+  }
+`;
+
+const EventTitle = styled.div`
+  display: block;
+  width: 980px;
+  height: 60px;
+  margin: 10px 0 10px 0;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid;
 `;
 
 const EventContainerBlock = styled.div`
+  width: 980px;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
   font-size: 12px;
-
   h2 {
-    margin-bottom: 10px;
+    margin: 10px 0 10px 0;
   }
 `;
 
@@ -33,19 +48,16 @@ const EventContentBlock = styled.div`
   flex-direction: column;
   width: 980px;
   margin: 0 auto;
-  font-size: 14px;
-  h1 {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 5px;
-  }
+  align-items: center;
+  box-sizing: border-box;
 `;
 
 const RightArrowImage = styled.img`
   width: 10px;
   height: 10px;
   margin-left: 4px;
+  align-items: center;
+  justify-content: center;
 `;
 
 const EventListCompots = ({ events }) => {
@@ -72,7 +84,10 @@ const EventListCompots = ({ events }) => {
 
   return (
     <EventContentBlock className="eventcontent">
-      <h1>전체 이벤트</h1>
+      <EventCategory />
+      <EventTitle>
+        <h1>전체 이벤트</h1>
+      </EventTitle>
       <EventContainerBlock className="eventmoviecontainer">
         <Link to="/event/movie">
           <h2>
@@ -91,7 +106,7 @@ const EventListCompots = ({ events }) => {
                     <img src={e.eventImg} alt="영화 이벤트" />
                     <EventInfoBlock>
                       <p>{e.eventTitle}</p>
-                      <p className="textdate">
+                      <p>
                         {e.startEventDate} ~ {e.endEventDate}
                       </p>
                     </EventInfoBlock>
@@ -120,7 +135,7 @@ const EventListCompots = ({ events }) => {
                     <img src={e.eventImg} alt="제휴/할인 이벤트" />
                     <EventInfoBlock>
                       <p>{e.eventTitle}</p>
-                      <p className="textdate">
+                      <p>
                         {e.startEventDate} ~ {e.endEventDate}
                       </p>
                     </EventInfoBlock>

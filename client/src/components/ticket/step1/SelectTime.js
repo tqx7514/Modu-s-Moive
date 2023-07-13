@@ -85,7 +85,8 @@ const SelectTime = () => {
     [dispatch]
   );
 
-  const handleSelectTime = (item, start) => {
+  const handleSelectTime = (index, item, start) => {
+    console.log("handleSelectTime->", index);
     setSelectedTime(
       item.movietimes_num
     );
@@ -98,6 +99,7 @@ const SelectTime = () => {
   }, [dispatch]);
 
   const groupedData = {};
+  console.log("SelectTime->", time)
 
   time.forEach((item) => {
     const {
@@ -121,17 +123,20 @@ const SelectTime = () => {
         disp,
         language,
         start: [],
-        end,
+        end: [],
         seat,
       };
     }
     groupedData[key].start.push(start);
+    groupedData[key].end.push(end);
   });
 
   const uniqueTimes = Object.values(groupedData);
 
   const filteredTimes = uniqueTimes
     .filter((item) => {
+
+      console.log("SelectTime filter  0>", item)
       if (data.movie) {
         return (
           item.cinema === data.cinema &&
@@ -142,6 +147,8 @@ const SelectTime = () => {
       }
     })
     .filter((item) => {
+      console.log("SelectTime filter  1>", item)
+
       switch (selectedFilter) {
         case "전체":
           return true;
@@ -168,6 +175,8 @@ const SelectTime = () => {
           return true;
       }
     });
+
+    console.log("SelectTime filteredTimes  1>", filteredTimes)
 
   return (
     <>
@@ -213,6 +222,7 @@ const SelectTime = () => {
       {data.cinema && data.date && (
           <>
             {filteredTimes.map((item) => {
+              console.log("SelectTime fileTime 0->", item);
               const { start } = item;
               const filteredStart = start.filter((time) => {
                 if (selectedFilter === "13시 이후") {
@@ -253,17 +263,15 @@ const SelectTime = () => {
                       <p>{item.language}</p>
                     </div>
                     <div>
-                      {item.start.map((start, index) => (
-                        <ScheduleBtn
-                          key={index}
-                          onClick={() => handleSelectTime(item, start)}
-                          className={selectedTime === start ? "selected" : ""}
-                        >
-                          <strong>{start}</strong>
-                          <span>{item.seat}</span>
-                          <span>{item.end}</span>
-                        </ScheduleBtn>
-                      ))}
+                      { Object.entries(item).map((it, i) =>(
+
+                        <div>{it.map((it2, i)=>( 
+                          it2[5]
+                          ))}  
+                        </div>
+
+                        ))}
+                      
                     </div>
                   </div>
                 </AreaItem>

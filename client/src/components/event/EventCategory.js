@@ -1,83 +1,56 @@
-import styled, { css } from "styled-components";
-import { Link } from "react-router-dom";
+import React from "react";
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
-const categories = [
-  {
-    name: "event",
-    text: "전체",
-    path: "/event",
-  },
-  {
-    name: "movie",
-    text: "영화",
-    path: "/event/movie",
-  },
-  {
-    name: "promote",
-    text: "제휴/할인",
-    path: "/event/promote",
-  },
-  {
-    name: "other",
-    text: "기타",
-    path: "/event/other",
-  },
-];
-
-const CategoriesBlock = styled.div`
+const CategoryBlock = styled.div`
   display: flex;
+  width: 980px;
+  height: 30px;
   justify-content: center;
-  padding: 1rem;
-  width: 768px;
-  margin: 0 auto;
-  @media screen and (max-width: 768px) {
-    width: 100%;
-    overflow-x: auto;
-  }
+  align-items: center;
+  margin: 20px 0 20px 0;
 `;
 
-const Category = styled(Link)`
-  font-size: 1.125rem;
-  cursor: pointer;
-  white-space: pre;
-  text-decoration: none;
+const Category = styled(NavLink)`
+  font-size: 16px;
   color: inherit;
-  padding-bottom: 0.25rem;
+  margin: 10px 10px 10px 10px;
+  display: inline-block;
 
-  &:hover {
-    color: #495057;
+  &:not(:last-child)::after {
+    content: "|";
+    display: inline-block;
+    width: 1px;
+    height: 100%;
+    background-color: #fff;
+    margin-left: 10px;
   }
 
-  ${(props) =>
-    props.active === "true" &&
-    css`
-      font-weight: 600;
-      border-bottom: 2px solid #22b8cf;
-      color: #22b8cf;
-      &:hover {
-        color: #3bc9db;
-      }
-    `}
-
-  & + & {
-    margin-left: 1rem;
+  &.active {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0 10px;
   }
 `;
 
-const EventCategory = ({ onSelect, category }) => {
+const EventCategory = () => {
   return (
-    <CategoriesBlock>
-      {categories.map((c) => (
-        <Category
-          key={c.name}
-          to={c.path}
-          active={category === c.name ? "true" : "false"}
-          onClick={() => onSelect(c.name)}
-        >
-          {c.text}
+    <>
+      <CategoryBlock>
+        <Category to="/event/" activeclassname="active">
+          전체
         </Category>
-      ))}
-    </CategoriesBlock>
+        <Category to="/event/movie" activeclassname="active">
+          영화
+        </Category>
+        <Category to="/event/promote" activeclassname="active">
+          제휴/할인
+        </Category>
+        <Category to="/event/other" activeclassname="active">
+          기타
+        </Category>
+      </CategoryBlock>
+    </>
   );
 };
 

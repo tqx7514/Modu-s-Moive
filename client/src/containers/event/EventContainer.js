@@ -4,16 +4,20 @@ import EventList from "../../components/event/EventListCompots";
 import { listEvents } from "../../modules/eventlist";
 
 const EventContainer = () => {
-    const dispatch = useDispatch();
-    const events = useSelector((state) =>({
-        eventlist: state.eventlist.event || [],
-    }))
+  const dispatch = useDispatch();
+  const events = useSelector((state) => ({
+    eventlist: state.eventlist.event || [],
+  }));
 
-    useEffect(() => {
-        dispatch(listEvents());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(listEvents());
+  }, [dispatch]);
 
-    return <EventList events={events} />;
+  return (
+    <div>
+      <EventList events={events} />
+    </div>
+  );
 };
 
 export default EventContainer;

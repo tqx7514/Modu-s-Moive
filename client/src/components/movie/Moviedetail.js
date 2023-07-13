@@ -75,7 +75,8 @@ const Button1 = styled.button`
 `;
 
 const Clickevent = styled.div`
-  text-align: center;
+  justify-content: center;
+  display: flex;
   button {
     width: 490px;
     background-color: white;
@@ -200,6 +201,7 @@ const InputBox = styled.div`
     padding: 0;
     color: #fff;
     font-size: 15px;
+    cursor: pointer;
   }
 `;
 
@@ -282,6 +284,9 @@ const ReviewTopInfo = styled.div`
 const ReviewInfo = styled.div`
 
 `
+const DeleteButton = styled.button`
+  
+`
 
 const MovieDetail = ({
   moviedetail,
@@ -294,7 +299,15 @@ const MovieDetail = ({
   showReviews,
   handleShowInfo,
   handleShowReviews,
+  onPublish,
+  content,
+  star,
+  onChangecontent,
+  onChangestar,
+  commentlist,
+  onRemove,
 }) => {
+  console.log("moviedetail123123===>", moviedetail)
   const [isOpen, setIsOpen] = useState(false);
   if (!moviedetail) {
     return <div>Loading...</div>;
@@ -333,7 +346,7 @@ const MovieDetail = ({
                   <MdOutlineWatchLater />
                   {moviedetail.runtime}분
                 </p>
-                <p className="movielist1">{moviedetail.popularity}명</p>
+                <p className="movielist1">{moviedetail.popularity}만명</p>
               </MovieInfo1>
               <MovieInfo2>
                 <button onClick={openModal}>
@@ -414,7 +427,7 @@ const MovieDetail = ({
                 <div className="starInfo">
                   <div className="starInfo1">
                     <Star>
-                      <StarRating onRate={handleRate} />
+                      <StarRating onRate={handleRate} star={star} onChangestar={onChangestar} />
                     </Star>
                     <img src="/temp_reviewcharacterbig_01.png" />
                   </div>
@@ -422,12 +435,12 @@ const MovieDetail = ({
                 </div>
                 <InputBox>
                   <div className="review-write-box">
-                    <textarea placeholder="평점 및 영화 관람평을 작성해 주세요. (최소 10글자 이상)"></textarea>
+                    <textarea onChange={onChangecontent} value={content} placeholder="평점 및 영화 관람평을 작성해 주세요. (최소 10글자 이상)"></textarea>
                     <span>
                       <strong>0</strong>/<em>220</em>
                     </span>
                   </div>
-                  <button>관람평 작성</button>
+                  <button onClick={onPublish} >관람평 작성</button>
                 </InputBox>
               </Title>
             </div>
@@ -442,18 +455,20 @@ const MovieDetail = ({
                   </div>
                 </div>
                 <ReviewComent>
-                    <li>
+                {commentlist && commentlist.map((comment) =>
+                    <li key={comment.mc_num}>
                       <span className="img">
                         <img src="/temp_reviewcharacterbig_01.png" alt="" />
                       </span>
-                      <ReviewTopInfo>
-                        <span>이준영</span>
-                        <span>2023.07.11 01:53</span>
+                      <ReviewTopInfo>                        
+                        <span>{comment.id}</span>
+                        <span>{comment.createdAt}</span>
                         <button className="btn_good">좋아요</button>
                       </ReviewTopInfo>
-                      <div>asdfjlksdfj!</div>
+                      <div>{comment.content}</div>
+                      <DeleteButton onClick={onRemove}>삭제</DeleteButton>
                     </li>
-                  
+                    )}
                 </ReviewComent>
               </div>
             </Comment>

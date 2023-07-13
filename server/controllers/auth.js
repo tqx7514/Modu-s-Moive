@@ -28,6 +28,7 @@ exports.register = async (req, res, next) => {
           name: newUser.name,
           email: newUser.email,
           grade: newUser.grade,
+          gender: newUser.gender,
         },
         process.env.ACCESS_SECRET,
         {
@@ -73,6 +74,7 @@ exports.login = async (req, res) => {
           name: userInfo.name,
           email: userInfo.email,
           grade: userInfo.grade,
+          gender: userInfo.gender,
           meet: meetNums,
         },
         process.env.ACCESS_SECRET,

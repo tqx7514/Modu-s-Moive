@@ -1,6 +1,7 @@
 import React from "react";
 import MeetTags from "../../common/MeetTags";
 import { styled } from "styled-components";
+import { FaChessKing } from "react-icons/fa";
 
 const MeetInfoBlock = styled.div`
   display: flex;
@@ -61,7 +62,13 @@ const MeetDetailHome = ({ meet, joinButton }) => {
           <hr />
           <div>지역 | {region}</div>
           <hr />
-          <div>모임장 | {userId}</div>
+          <div>
+            모임장 |{" "}
+            <span style={{ margin: "0 0.3rem 0 0.3rem " }}>
+              <FaChessKing />
+            </span>
+            {userId}
+          </div>
           <hr />
           <div>멤버 | {count}</div>
           <hr />

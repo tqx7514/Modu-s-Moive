@@ -2,8 +2,9 @@ import { styled } from "styled-components";
 import Responsive from "../common/Responsive";
 import { useState } from "react";
 import MeetDetailHome from "./meetdetail/MeetDetailHome";
-import MeetDetailChat from "./meetdetail/MeetDetailChat";
-import MeetDetailBoardPage from "../../pages/MeetDetailBoardPage";
+import MeetDetailChatContainer from "../../containers/meet/MeetDetailChatContainer";
+import MeetDetailBoardContainer from "../../containers/meet/MeetDetailBoardContainer";
+import { GrGroup } from "react-icons/gr";
 
 const MeetViewerBlock = styled(Responsive)`
   margin-top: 3rem;
@@ -105,7 +106,12 @@ const MeetViewer = ({ meet, error, loading, actionButtons, joinButton }) => {
       </MeetHeaderBlock>
       <hr />
       <MeetTitle>
-        <div>{title}</div>
+        <div>
+          <span style={{ margin: "0 1rem 0 1rem", alignItems: "center" }}>
+            <GrGroup />
+          </span>
+          {title}
+        </div>
         <div>{actionButtons}</div>
       </MeetTitle>
       <hr />
@@ -133,8 +139,8 @@ const MeetViewer = ({ meet, error, loading, actionButtons, joinButton }) => {
       {category === "Home" && (
         <MeetDetailHome meet={meet} joinButton={joinButton} />
       )}
-      {category === "Board" && <MeetDetailBoardPage />}
-      {category === "Chat" && <MeetDetailChat />}
+      {category === "Board" && <MeetDetailBoardContainer />}
+      {category === "Chat" && <MeetDetailChatContainer />}
     </MeetViewerBlock>
   );
 };

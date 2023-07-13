@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { AreaItem, MovieList } from "./SelectMovie";
 import { readTime, setTimeData } from "../../../modules/stepfirst";
+import { uniqBy } from "lodash";
 
 const BtnWrap = styled.div`
   display: flex;
@@ -40,10 +41,10 @@ const ScheduleBtn = styled.div`
   width: 23%;
   margin-left: 2%;
   margin-bottom: 10px;
-  &.selected{
+  &.selected {
     border: 1px solid;
   }
-  &:nth-child(4n + 1) {
+  &:nth-child(4n + 2) {
     margin-left: 0;
   }
   padding: 8px 14px;
@@ -73,188 +74,141 @@ const SelectTime = () => {
   };
 
   const { data, time } = useSelector(({ stepfirst }) => stepfirst);
-  console.log(data);
 
   const dispatch = useDispatch();
 
   const onSelctedTime = useCallback(
-    (time) => {
-      dispatch(setTimeData(time));
+    (start, end, seat) => {
+      dispatch(setTimeData({ start, end, seat }));
     },
     [dispatch]
   );
 
-  const handleSelectTime = (e, start, end) => {
-    setSelectedTime(e.target.start);
-    onSelctedTime(start, end);
-    console.log(selectedTime);
+  const handleSelectTime = (item) => {
+    setSelectedTime(item.movietimes_num);
+    onSelctedTime(item.start, item.end, item.seat);
   };
-  
+
   useEffect(() => {
     dispatch(readTime());
   }, []);
 
-  const groupedData = {};
+  const groupMoviesByTitle = () => {
+    const groupedMovies = {};
 
-  time.forEach((item) => {
-    const { cinema, movie_name, age, disp, language, start, end, seat } = item;
-    const key = `${movie_name}-${disp}-${language}`;
-    if (!groupedData[key]) {
-      groupedData[key] = {
-        cinema,
-        movie_name,
-        age,
-        disp,
-        language,
-        start: [],
-        end,
-        seat,
-      };
-    }
-    groupedData[key].start.push(start);
-  });
-
-  const uniqueTimes = Object.values(groupedData);
-
-  const filteredTimes = uniqueTimes
-    .filter((item) => {
-      if (selectedFilter === "전체") {
-        return true;
-      } else if (selectedFilter === "스페셜관") {
-        return item.disp === "스페셜관";
-      } else if (selectedFilter === "Atmos") {
-        return item.disp === "Atmos";
-      } else if (selectedFilter === "13시 이후") {
-        return item.start.some(
-          (start) => parseInt(start.split(":")[0], 10) >= 13
-        );
-      } else if (selectedFilter === "19시 이후") {
-        return item.start.some(
-          (start) => parseInt(start.split(":")[0], 10) >= 19
-        );
-      } else if (selectedFilter === "심야") {
-        return item.start.some((start) => {
-          const hour = parseInt(start.split(":")[0], 10);
-          return (hour >= 0 && hour < 6) || hour === 23;
-        });
+    time.forEach((item) => {
+      const key = `${item.age} ${item.movie_name}`;
+      if (!groupedMovies[key]) {
+        groupedMovies[key] = {
+          cinema: item.cinema,
+          disp: item.disp,
+          language: item.language,
+          showtimes: [],
+        };
       }
-      return true;
-    })
-    .map((item) => {
-      const { start } = item;
-      const filteredStart = start.filter((time) => {
-        if (selectedFilter === "13시 이후") {
-          return parseInt(time.split(":")[0], 10) >= 13;
-        } else if (selectedFilter === "19시 이후") {
-          return parseInt(time.split(":")[0], 10) >= 19;
-        } else if (selectedFilter === "심야") {
-          const hour = parseInt(time.split(":")[0], 10);
-          return (hour >= 0 && hour < 6) || hour === 23;
-        }
-        return true;
-      });
-      return { ...item, start: filteredStart };
+      groupedMovies[key].showtimes.push(item);
     });
+
+    return groupedMovies;
+  };
+
+  const renderMovies = () => {
+    const groupedMovies = groupMoviesByTitle();
+
+    if (data.cinema && data.date) {
+      const filteredMovies = Object.entries(groupedMovies).filter(
+        ([key, { cinema }]) => cinema === data.cinema
+      );
+
+      return filteredMovies.map(([key, { disp, language, showtimes }]) => (
+        <AreaItem key={key} className="movie_list time">
+          <MovieList>
+            <span
+              className={
+                `${key.split(" ")[0]}` === "all"
+                  ? "age_all age"
+                  : `${key.split(" ")[0]}` === "12"
+                  ? "age_12 age"
+                  : `${key.split(" ")[0]}` === "15"
+                  ? "age_15 age"
+                  : `${key.split(" ")[0]}` === "19"
+                  ? "age_19 age"
+                  : ""
+              }
+            ></span>
+            {`${key.split(" ")[1]}`}
+          </MovieList>
+          <div>
+            <p>{`${disp} ${language}`}</p>
+            {showtimes.map((item) => (
+              <ScheduleBtn
+                key={item.movietimes_num}
+                onClick={() => handleSelectTime(item)}
+                className={
+                  selectedTime === item.movietimes_num ? "selected" : ""
+                }
+              >
+                <div>
+                  <div>
+                    <strong>{`${item.start} ~ ${item.end}`}</strong>
+                    <span>{`${item.seat}자리`}</span>
+                  </div>
+                </div>
+              </ScheduleBtn>
+            ))}
+          </div>
+        </AreaItem>
+      ));
+    }
+
+    return null;
+  };
 
   return (
     <>
-      <BtnWrap>
-        <FilterBtn
-          onClick={handleFilter}
-          className={selectedFilter === "전체" ? "selected" : ""}
-        >
-          전체
-        </FilterBtn>
-        <FilterBtn
-          onClick={handleFilter}
-          className={selectedFilter === "스페셜관" ? "selected" : ""}
-        >
-          스페셜관
-        </FilterBtn>
-        <FilterBtn
-          onClick={handleFilter}
-          className={selectedFilter === "Atmos" ? "selected" : ""}
-        >
-          Atmos
-        </FilterBtn>
-        <FilterBtn
-          onClick={handleFilter}
-          className={selectedFilter === "13시 이후" ? "selected" : ""}
-        >
-          13시 이후
-        </FilterBtn>
-        <FilterBtn
-          onClick={handleFilter}
-          className={selectedFilter === "19시 이후" ? "selected" : ""}
-        >
-          19시 이후
-        </FilterBtn>
-        <FilterBtn
-          onClick={handleFilter}
-          className={selectedFilter === "심야" ? "selected" : ""}
-        >
-          심야
-        </FilterBtn>
-      </BtnWrap>
-      <TimeWrap>
-        {data.cinema && data.date && (
-          <>
-            {filteredTimes
-              .filter((item) => {
-                if (data.movie) {
-                  return (
-                    item.cinema === data.cinema &&
-                    item.movie_name === data.movie.movie_name
-                  );
-                } else {
-                  return item.cinema === data.cinema;
-                }
-              })
-              .map((item) => (
-                <AreaItem
-                  key={`${item.cinema}-${item.movie_name}-${item.age}-${item.disp}-${item.language}`}
-                  className="movie_list time"
-                >
-                  <MovieList>
-                    <span
-                      className={`${
-                        item.age === "all"
-                          ? "age_all"
-                          : item.age === "12"
-                          ? "age_12"
-                          : item.age === "15"
-                          ? "age_15"
-                          : item.age === "19"
-                          ? "age_19"
-                          : ""
-                      } age`}
-                    ></span>
-                    {item.movie_name}
-                  </MovieList>
-                  <div>
-                    <div>
-                      <p>{item.disp}</p>
-                      <p>{item.language}</p>
-                    </div>
-                    <div>
-                      {item.start.map((start, index) => (
-                        <ScheduleBtn
-                          key={index}
-                          onClick={(e) => handleSelectTime(e, start, item.end)}
-                          className={selectedTime ? 'selected' : ''}
-                        >
-                          <strong>{start}</strong>
-                          <span>{item.seat}</span>
-                          <span>{item.end}</span>
-                        </ScheduleBtn>
-                      ))}
-                    </div>
-                  </div>
-                </AreaItem>
-              ))}
-          </>
-        )}
-      </TimeWrap>
+      {data.cinema && data.date && (
+        <>
+          <BtnWrap>
+            <FilterBtn
+              onClick={() => handleFilter("전체")}
+              className={selectedFilter === "전체" ? "selected" : ""}
+            >
+              전체
+            </FilterBtn>
+            <FilterBtn
+              onClick={() => handleFilter("스페셜관")}
+              className={selectedFilter === "스페셜관" ? "selected" : ""}
+            >
+              스페셜관
+            </FilterBtn>
+            <FilterBtn
+              onClick={() => handleFilter("Atmos")}
+              className={selectedFilter === "Atmos" ? "selected" : ""}
+            >
+              Atmos
+            </FilterBtn>
+            <FilterBtn
+              onClick={() => handleFilter("13시 이후")}
+              className={selectedFilter === "13시 이후" ? "selected" : ""}
+            >
+              13시 이후
+            </FilterBtn>
+            <FilterBtn
+              onClick={() => handleFilter("19시 이후")}
+              className={selectedFilter === "19시 이후" ? "selected" : ""}
+            >
+              19시 이후
+            </FilterBtn>
+            <FilterBtn
+              onClick={() => handleFilter("심야")}
+              className={selectedFilter === "심야" ? "selected" : ""}
+            >
+              심야
+            </FilterBtn>
+          </BtnWrap>
+          <TimeWrap>{renderMovies()}</TimeWrap>
+        </>
+      )}
     </>
   );
 };

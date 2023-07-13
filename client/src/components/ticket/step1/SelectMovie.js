@@ -45,6 +45,7 @@ export const AreaItem = styled.li`
     padding: 10px 0;
     p{
       display: inline-block;
+      width: 100%;
     }
   }
   span {

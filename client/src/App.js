@@ -45,12 +45,13 @@ const App = () => {
       <Route path="/meet" element={<MeetListPage />} />
       <Route path="/meet/detail/:meetNum" element={<MeetPage />} />
       <Route path="/meet/write" element={<MeetWritePage />} />
-      <Route path="/admin" element={<AdminPage />} />
       <Route path="/event/promote" element={<EventPromotePage />} />
       <Route path="/event/other" element={<EventOtherPage />} />
       <Route path="/event/movie/:eventNum" element={<EventViewerPage />} />
       <Route path="/event/promote/:eventNum" element={<EventViewerPage />} />
       <Route path="/event/other/:eventNum" element={<EventViewerPage />} />
+      {/* 관리자페이지 */}
+      <Route path="/admin" element={<AdminPage />} />
     </Routes>
   );
 };

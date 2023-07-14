@@ -84,3 +84,19 @@ export const updateMeetComment = ({ meetcommentNum, MeetBoardNum, body }) => {
     body,
   });
 };
+
+export const sendMsg = ({ userId, meetNum, message }) => {
+  console.log(
+    "sendMsg 프론트 userId==",
+    userId,
+    "meetNum==",
+    meetNum,
+    "message==",
+    message
+  );
+  return client.post("/meet/chat/sendmsg", {
+    userId,
+    meetNum,
+    message,
+  });
+};

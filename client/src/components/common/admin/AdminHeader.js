@@ -120,10 +120,10 @@ const AdminHeader = ({ user, onLogout }) => {
             영화관 위치
           </NavLink>
           <NavLink
-            to="/event"
+            to="/admin/event"
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            EVENT
+            EVENT관리
           </NavLink>
           <NavLink
             to="/postlist"

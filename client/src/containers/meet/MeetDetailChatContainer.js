@@ -14,18 +14,26 @@ const MeetDetailChatContainer = () => {
   const messages = [
     {
       fromSelf: true,
+      sender: "skm0628",
+      gender: "남자",
       message: "하하하",
     },
     {
       fromSelf: true,
+      sender: "skm0628",
+      gender: "남자",
       message: "하하하2",
     },
     {
       fromSelf: false,
+      sender: "woman",
+      gender: "여자",
       message: "코코코",
     },
     {
       fromSelf: false,
+      sender: "woman",
+      gender: "여자",
       message: "코코코2",
     },
   ];

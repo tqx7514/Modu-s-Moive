@@ -18,7 +18,7 @@ const Category = styled(NavLink)`
   display: inline-block;
 
   &:not(:last-child)::after {
-    content: "|";
+    content: "";
     display: inline-block;
     width: 1px;
     height: 100%;

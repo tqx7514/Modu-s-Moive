@@ -26,9 +26,9 @@ const EventOtherContainerBlock = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
-  font-size: 12px;
   h2 {
     margin-bottom: 10px;
+    font-size: 20px;
   }
 `;
 

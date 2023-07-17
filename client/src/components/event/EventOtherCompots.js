@@ -47,7 +47,7 @@ const ShowMoreButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid gray;
+  border: 1px solid #ECECEC;
   margin: 10px 0px 10px 0px;
 `;
 
@@ -93,7 +93,7 @@ const EventOtherCompots = ({ events }) => {
             {filteredEvents.slice(0, visibleCount).map((e) => (
               <div key={e.eventNum}>
                 <Link to={`/event/other/${e.eventNum}`}>
-                  <img src={e.eventImg} alt="기타 이벤트" />
+                  <img src={e.eventImg} alt={e.eventTitle} />
                   <EventOtherInfoBlock>
                     <p>{e.eventTitle}</p>
                     <p className="textdate">

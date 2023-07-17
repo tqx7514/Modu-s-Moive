@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {
-  eventlist,
-  eventmovielist,
-  eventotherlist,
-  eventpromotelist,
-} from "../../lib/api/event";
+// import {
+//   eventlist,
+//   eventmovielist,
+//   eventotherlist,
+//   eventpromotelist,
+//   eventview,
+// } from "../../lib/api/event";
 import Button from "../common/Button";
 import EventCategory from "./EventCategory";
+import { eventPost } from "../../modules/eventpost";
+import { useDispatch } from "react-redux";
 
 const EventViewerBlock = styled.div`
   display: flex;
@@ -19,16 +22,26 @@ const EventViewerBlock = styled.div`
 
 const EventTitle = styled.h2`
   display: flex;
-  margin: 10px 0px 10px 0px;
-  width: 980px;
   justify-content: center;
 `;
 
 const EventDate = styled.p`
   display: flex;
-  margin-bottom: 10px;
-  width: 980px;
   justify-content: center;
+`;
+
+const EventCount = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+`;
+
+const EventTopBlock = styled.div`
+  width: 980px;
+`;
+
+const EventItemBlock = styled.div`
+  display: block;
 `;
 
 const EventButtonBlock = styled.div`
@@ -66,21 +79,28 @@ const EventViewerCompots = ({ eventpost }) => {
   const { eventNum } = useParams();
   const [eventData, setEventData] = useState(null);
   const navigate = useNavigate();
+  console.log('컴포넌트');
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchEventData = async () => {
       try {
-        let response = null;
-        if (eventNum.startsWith("event")) {
-          response = await eventlist(eventNum);
-        } else if (eventNum.startsWith("movie")) {
-          response = await eventmovielist(eventNum);
-        } else if (eventNum.startsWith("promote")) {
-          response = await eventpromotelist(eventNum);
-        } else if (eventNum.startsWith("other")) {
-          response = await eventotherlist(eventNum);
-        }
-        setEventData(response.data);
+        // let response = null;
+        // if (eventNum.startsWith("event")) {
+        //   response = await eventlist(eventNum);
+        // } else if (eventNum.startsWith("movie")) {
+        //   response = await eventmovielist(eventNum);
+        // } else if (eventNum.startsWith("promote")) {
+        //   response = await eventpromotelist(eventNum);
+        // } else if (eventNum.startsWith("other")) {
+        //   response = await eventotherlist(eventNum);
+        // }
+        // if (response && response.data) {
+        //   setEventData(response.data);
+        // } else {
+        //   setEventData(null);
+        // }
+        dispatch(eventPost(eventNum))
       } catch (error) {
         console.error(error);
       }
@@ -98,14 +118,27 @@ const EventViewerCompots = ({ eventpost }) => {
     alert("링크가 복사되었습니다");
   };
 
+  if (!eventDetail) {
+    return null;
+  }
+
   return (
     <EventViewerBlock>
       <EventCategory />
-      <EventTitle>{eventDetail.eventTitle}</EventTitle>
-      <EventDate>
-        {eventDetail.startEventDate} ~ {eventDetail.endEventDate}
-      </EventDate>
-      <img src={eventDetail.eventContent} alt={eventDetail.eventTitle} />
+      <EventTopBlock>
+        <EventTitle>{eventDetail.eventTitle}</EventTitle>
+        <EventDate>
+          {eventDetail.startEventDate} ~ {eventDetail.endEventDate}
+        </EventDate>
+        <EventCount>
+          {eventDetail.view !== null && (
+            <p>조회수: {eventDetail.view !== null ? eventDetail.view : 0}</p>
+          )}
+        </EventCount>
+      </EventTopBlock>
+      <EventItemBlock>
+        <img src={eventDetail.eventContent} alt={eventDetail.eventTitle} />
+      </EventItemBlock>
       <EventButtonBlock>
         <Button className="gobackBtn" onClick={handleGoback}>
           목록보기

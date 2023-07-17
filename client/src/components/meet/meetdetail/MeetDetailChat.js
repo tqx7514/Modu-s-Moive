@@ -1,16 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { styled } from "styled-components";
 import { useState } from "react";
 import { useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import MeetDetailChatInput from "./MeetDetailChatInput";
+import Man from "../../../public/Man.png";
+import Woman from "../../../public/Woman.png";
+import { getMsg, sendMsg } from "../../../lib/api/meet";
 
-const MeetDetailChat = ({ user, messages, meet }) => {
+const MeetDetailChat = ({ user, meet }) => {
+  const [msg, setMsg] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
 
-  const handleSendMsg = () => {};
+  useEffect(() => {
+    const getMessages = async () => {
+      const meetNum = meet.meetNum;
+      const userId = user.num;
+      const response = await getMsg({ meetNum, userId });
+      console.log("메시지 응답", response.data);
+      setMsg(response.data);
+    };
+    getMessages();
+  }, []);
+
+  const handleSendMsg = async (message) => {
+    try {
+      const userId = user.num;
+      const meetNum = meet.meetNum;
+      await sendMsg({ userId, meetNum, message });
+
+      const msgs = [...msg];
+      msgs.push({ fromSelf: true, message: message });
+      setMsg(msgs);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Container>
@@ -28,7 +55,7 @@ const MeetDetailChat = ({ user, messages, meet }) => {
         </div>
       </div>
       <div className="chat-messages">
-        {messages.map((message) => {
+        {msg.map((message) => {
           return (
             <div ref={scrollRef} key={uuidv4()}>
               <div
@@ -36,8 +63,14 @@ const MeetDetailChat = ({ user, messages, meet }) => {
                   message.fromSelf ? "sended" : "received"
                 }`}
               >
+                {message.fromSelf ? null : (
+                  <div>
+                    <Profile gender={message.gender} />
+                    <Profile2>{message.senderName}</Profile2>
+                  </div>
+                )}
                 <div className="content">
-                  <p>{message.message}</p>
+                  <span className="sender">{message.message}</span>
                 </div>
               </div>
             </div>
@@ -48,6 +81,37 @@ const MeetDetailChat = ({ user, messages, meet }) => {
     </Container>
   );
 };
+
+const Profile = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  margin: 0 0.5rem 0rem 0;
+  background-color: ${(props) =>
+    props.gender === "남자" ? "blue" : props.gender === "여자" ? "pink" : ""};
+  color: white;
+  font-weight: bold;
+  background-image: url(${(props) =>
+    props.gender === "남자" ? Man : props.gender === "여자" ? Woman : ""});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  .sender {
+    font-size: 0.7rem;
+    margin-top: 0.2rem;
+  }
+`;
+
+const Profile2 = styled.div`
+  margin: 0 1rem 3rem 0;
+  text-align: center;
+  font-weight: bold;
+`;
 
 const Container = styled.div`
   display: grid;

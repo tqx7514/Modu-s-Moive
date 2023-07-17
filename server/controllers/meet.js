@@ -5,6 +5,7 @@ const {
   users,
   meetboards,
   meetcomments,
+  meetmessages,
 } = require("../models");
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
@@ -447,5 +448,56 @@ exports.meetCommentUpdate = async (req, res) => {
     res.status(200).json({ comment, MeetBoardNum });
   } catch (error) {
     res.status(500).json(error);
+  }
+};
+
+exports.sendMsg = async (req, res, next) => {
+  const { userId, meetNum, message } = req.body;
+  console.log("userId==", userId, "meetNum==", meetNum, "message==", message);
+
+  try {
+    const newMeetMsg = await meetmessages.create({
+      sender: userId,
+      meetNum,
+      message,
+    });
+    // console.log("newMeetMsg============", newMeetMsg);
+    res.status(200).json(newMeetMsg);
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+};
+
+exports.getMsg = async (req, res, next) => {
+  try {
+    const { meetNum, userId } = req.body;
+    console.log("getMsg 백도착~~", meetNum, userId);
+
+    const messages = await meetmessages.findAll({
+      where: { meetNum },
+      include: [
+        {
+          model: users,
+          as: "sender_user",
+        },
+      ],
+    });
+    console.log("messages입니다ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ", messages);
+
+    const projectedMesages = messages.map((msg) => {
+      return {
+        fromSelf: msg.sender === userId,
+        message: msg.message,
+        sender: msg.sender,
+        senderId: msg.sender_user.id,
+        senderName: msg.sender_user.name,
+        gender: msg.sender_user.gender,
+      };
+    });
+    res.json(projectedMesages);
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
   }
 };

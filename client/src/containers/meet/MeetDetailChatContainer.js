@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { io } from "socket.io-client";
 import MeetDetailChat from "../../components/meet/meetdetail/MeetDetailChat";
 import { styled } from "styled-components";
-import Responsive from "../common/Responsive";
 import { useSelector } from "react-redux";
 import MeetDetailMember from "../../components/meet/meetdetail/MeetDetailMember";
+import { axios } from "axios";
+import { useNavigate } from "react-router-dom";
 
 const MeetDetailChatContainer = () => {
   const { user, loading, meet } = useSelector(({ user, loading, meet }) => ({
@@ -11,24 +13,22 @@ const MeetDetailChatContainer = () => {
     loading: loading["chat/CHAT_LIST"],
     meet: meet.meet,
   }));
-  const messages = [
-    {
-      fromSelf: true,
-      message: "하하하",
-    },
-    {
-      fromSelf: true,
-      message: "하하하2",
-    },
-    {
-      fromSelf: false,
-      message: "코코코",
-    },
-    {
-      fromSelf: false,
-      message: "코코코2",
-    },
-  ];
+  const navigate = useNavigate();
+  const socket = useRef();
+  const [members, setMembers] = useState([]);
+  // const [currentChat, setCurrentChat] = useState(undefined);
+  const [currentUser, setCurrentUser] = useState(undefined);
+
+  useEffect(() => {
+    const check = async () => {
+      if (!user) {
+        navigate("/login");
+      } else {
+        setCurrentUser(user);
+      }
+    };
+    check();
+  }, []);
 
   return (
     <Container>
@@ -38,7 +38,7 @@ const MeetDetailChatContainer = () => {
         ) : (
           <>
             <MeetDetailMember user={user} />
-            <MeetDetailChat user={user} messages={messages} meet={meet} />
+            <MeetDetailChat user={user} meet={meet} socket={socket} />
           </>
         )}
       </div>

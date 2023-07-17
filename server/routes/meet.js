@@ -16,6 +16,8 @@ const {
   meetCommentDelete,
   meetBoardUpdate,
   meetCommentUpdate,
+  sendMsg,
+  getMsg,
 } = require("../controllers/meet");
 const router = express.Router();
 
@@ -37,6 +39,10 @@ router.delete("/detail/:meetboardNum", meetBoardDelete);
 router.delete("/detail/comment/:meetcommentNum", meetCommentDelete);
 router.post(`/updateMeetBoard/:meetboardNum`, meetBoardUpdate);
 router.post(`/updateMeetComment/:meetcommentNum`, meetCommentUpdate);
+
+//모임 안 채팅
+router.post("/chat/sendmsg", sendMsg);
+router.post("/chat/getmsg", getMsg);
 
 // router.post("/updateToken", updateToken);
 

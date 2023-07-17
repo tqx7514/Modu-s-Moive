@@ -56,8 +56,8 @@ function initModels(sequelize) {
   posts.hasMany(postcomments, { as: "postcomments", foreignKey: "postNum"});
   cinemas.belongsTo(regions, { as: "grade_region", foreignKey: "grade"});
   regions.hasMany(cinemas, { as: "cinemas", foreignKey: "grade"});
-  events.belongsTo(users, { as: "userNum_user", foreignKey: "userNum"});
-  users.hasMany(events, { as: "events", foreignKey: "userNum"});
+  events.belongsTo(users, { as: "user", foreignKey: "userId"});
+  users.hasMany(events, { as: "events", foreignKey: "userId"});
   meetboards.belongsTo(users, { as: "user", foreignKey: "user_Id"});
   users.hasMany(meetboards, { as: "meetboards", foreignKey: "user_Id"});
   meetcomments.belongsTo(users, { as: "user", foreignKey: "user_Id"});

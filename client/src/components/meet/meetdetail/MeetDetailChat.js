@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { styled } from "styled-components";
 import { useState } from "react";
 import { useRef } from "react";
@@ -7,21 +7,32 @@ import { BsFillChatDotsFill } from "react-icons/bs";
 import MeetDetailChatInput from "./MeetDetailChatInput";
 import Man from "../../../public/Man.png";
 import Woman from "../../../public/Woman.png";
-import { sendMsg } from "../../../lib/api/meet";
+import { getMsg, sendMsg } from "../../../lib/api/meet";
 
-const MeetDetailChat = ({ user, messages, meet }) => {
+const MeetDetailChat = ({ user, meet }) => {
   const [msg, setMsg] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
 
+  useEffect(() => {
+    const getMessages = async () => {
+      const meetNum = meet.meetNum;
+      const userId = user.num;
+      const response = await getMsg({ meetNum, userId });
+      console.log("메시지 응답", response.data);
+      setMsg(response.data);
+    };
+    getMessages();
+  }, []);
+
   const handleSendMsg = async (message) => {
     try {
-      const userId = user.id;
+      const userId = user.num;
       const meetNum = meet.meetNum;
       await sendMsg({ userId, meetNum, message });
 
       const msgs = [...msg];
-      msgs.push({ fromSelf: true, message: msg });
+      msgs.push({ fromSelf: true, message: message });
       setMsg(msgs);
     } catch (error) {
       console.log(error);
@@ -44,7 +55,7 @@ const MeetDetailChat = ({ user, messages, meet }) => {
         </div>
       </div>
       <div className="chat-messages">
-        {messages.map((message) => {
+        {msg.map((message) => {
           return (
             <div ref={scrollRef} key={uuidv4()}>
               <div
@@ -55,7 +66,7 @@ const MeetDetailChat = ({ user, messages, meet }) => {
                 {message.fromSelf ? null : (
                   <div>
                     <Profile gender={message.gender} />
-                    <Profile2>{message.sender}</Profile2>
+                    <Profile2>{message.senderName}</Profile2>
                   </div>
                 )}
                 <div className="content">
@@ -98,6 +109,8 @@ const Profile = styled.div`
 
 const Profile2 = styled.div`
   margin: 0 1rem 3rem 0;
+  text-align: center;
+  font-weight: bold;
 `;
 
 const Container = styled.div`

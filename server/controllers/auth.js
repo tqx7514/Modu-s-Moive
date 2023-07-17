@@ -25,6 +25,7 @@ exports.register = async (req, res, next) => {
       const accessToken = jwt.sign(
         {
           id: newUser.id,
+          num: newUser.userNum,
           name: newUser.name,
           email: newUser.email,
           grade: newUser.grade,
@@ -71,6 +72,7 @@ exports.login = async (req, res) => {
       const accessToken = jwt.sign(
         {
           id: userInfo.id,
+          num: userInfo.userNum,
           name: userInfo.name,
           email: userInfo.email,
           grade: userInfo.grade,

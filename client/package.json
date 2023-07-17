@@ -30,6 +30,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-saga": "^1.2.3",
     "slick-carousel": "^1.8.1",
+    "socket.io": "^4.7.1",
+    "socket.io-client": "^4.7.1",
     "styled-components": "^6.0.0-rc.3",
     "sweetalert2": "^11.7.16",
     "swiper": "^9.4.1",

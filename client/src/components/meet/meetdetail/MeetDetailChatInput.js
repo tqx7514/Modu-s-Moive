@@ -9,9 +9,6 @@ import Picker from "emoji-picker-react";
 const MeetDetailChatInput = ({ handleSendMsg }) => {
   const [msg, setMsg] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const handleEmojiPickerhideShow = () => {
-    setShowEmojiPicker(!showEmojiPicker);
-  };
 
   const handleEmojiClick = (event, emojiObject) => {
     let message = msg;
@@ -29,12 +26,7 @@ const MeetDetailChatInput = ({ handleSendMsg }) => {
 
   return (
     <Container>
-      <div className="button-container">
-        <div className="emoji">
-          <BsEmojiSmileFill onClick={handleEmojiPickerhideShow} />
-          {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
-        </div>
-      </div>
+      <div></div>
       <form className="input-container" onSubmit={(event) => sendChat(event)}>
         <input
           type="text"
@@ -53,7 +45,7 @@ const MeetDetailChatInput = ({ handleSendMsg }) => {
 const Container = styled.div`
   display: grid;
   align-items: center;
-  grid-template-columns: 5% 95%;
+  grid-template-columns: 0% 100%;
   background-color: #080420;
   padding: 0 2rem;
   @media screen and (min-width: 720px) and (max-width: 1080px) {

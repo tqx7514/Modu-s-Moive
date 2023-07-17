@@ -85,15 +85,23 @@ export const updateMeetComment = ({ meetcommentNum, MeetBoardNum, body }) => {
   });
 };
 
-export const sendMsg = ({ userId, meetNum, message }) => {
-  console.log(
-    "sendMsg 프론트 userId==",
-    userId,
-    "meetNum==",
+export const getMsg = ({ meetNum, userId }) => {
+  console.log("getMsg 프론트API 도착", meetNum, userId);
+  return client.post("/meet/chat/getmsg", {
     meetNum,
-    "message==",
-    message
-  );
+    userId,
+  });
+};
+
+export const sendMsg = ({ userId, meetNum, message }) => {
+  // console.log(
+  //   "sendMsg 프론트 userId==",
+  //   userId,
+  //   "meetNum==",
+  //   meetNum,
+  //   "message==",
+  //   message
+  // );
   return client.post("/meet/chat/sendmsg", {
     userId,
     meetNum,

@@ -80,3 +80,49 @@ exports.Comment = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+exports.CommentDelete = async (req, res) => {
+  const { commentNum,movie_id} = req.query;
+  try{
+    const deletecomment = await moviecomments.destroy({
+      where: {mc_num: commentNum},
+    });
+
+    if (deletecomment === 0) {
+      res.status(404).json({message: "관람평이 존재하지 않습니다"});
+      return;
+    }
+    const commentlist = await moviecomments.findAll({
+      where:{movie_id}
+    })
+
+    res.status(200).json({commentlist});
+  } catch(error) {
+    res.status(500).json(error);
+  }
+};
+exports.CommentUpdate = async (req, res) => {
+  const {commentNum, movie_id, content} = req.body;
+  console.log('백백백',commentNum,movie_id,content);
+  try{
+    const [updatecomment] = await moviecomments.update(
+      {
+        content,
+      },
+      {
+        where: {mc_num:commentNum},
+      }
+    );
+    if(updatecomment === 0) {
+      res.status(404).json({msg: "관람평이 존재하지 않습니다"});
+      return;
+    }
+    const commentlist = await moviecomments.findAll({
+      where: {movie_id}
+    });
+    console.log('업데이트ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ',commentlist);
+    res.status(200).json({commentlist});
+  } catch(error) {
+    res.status(500).json(error);
+  }
+};

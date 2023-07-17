@@ -8,11 +8,11 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     sender: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: 'users',
-        key: 'id'
+        key: 'userNum'
       }
     },
     meetNum: {
@@ -41,17 +41,17 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "messages_FK",
-        using: "BTREE",
-        fields: [
-          { name: "sender" },
-        ]
-      },
-      {
         name: "messages_FK_1",
         using: "BTREE",
         fields: [
           { name: "meetNum" },
+        ]
+      },
+      {
+        name: "meetmessages_FK",
+        using: "BTREE",
+        fields: [
+          { name: "sender" },
         ]
       },
     ]

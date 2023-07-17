@@ -47,6 +47,7 @@ const MeetDetailBoardContainer = () => {
     commentError: meetcomment.error,
     commentWrite: meetcomment.write,
   }));
+
   const [expandedId, setExpandedId] = useState(null);
 
   const onChange = (e) => {

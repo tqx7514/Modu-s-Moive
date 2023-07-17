@@ -5,6 +5,7 @@ import VideoCarousel from "../common/VideoCarousel";
 import MovieVideoModal from "./MovieVideoModal";
 import { MdOutlineWatchLater, MdOutlineArrowRight } from "react-icons/md";
 import StarRating from "./StarRating";
+import CommentActionButtons from "./CommentActionButtons";
 
 const DetailContainer = styled.div`
   display: block;
@@ -226,7 +227,7 @@ const Comment = styled.div`
     align-items: center;
     margin-left: auto;
   }
-  .sortList{
+  .sortList {
     display: flex;
     position: relative;
     margin-left: 5px;
@@ -234,22 +235,22 @@ const Comment = styled.div`
     list-style: none;
     margin: 0;
     padding: 0;
-    li{
+    li {
       margin-left: 15px;
     }
   }
 `;
 
 const ReviewComent = styled.ul`
-    margin: 0;
-    padding: 0;
-    li{
-      border-color: #ccc;
-      position: relative;
-      padding: 20px 0 15px 68px;
-      border-top: 1px solid #eee;
-    }
-    .img{
+  margin: 0;
+  padding: 0;
+  li {
+    border-color: #ccc;
+    position: relative;
+    padding: 20px 0 15px 68px;
+    border-top: 1px solid #eee;
+  }
+  .img {
     display: block;
     position: absolute;
     top: 15px;
@@ -257,7 +258,7 @@ const ReviewComent = styled.ul`
     width: 42px;
     height: 42px;
   }
-  img{
+  img {
     width: 42px;
     height: 42px;
   }
@@ -266,12 +267,12 @@ const ReviewTopInfo = styled.div`
   display: block;
   position: relative;
   margin-bottom: 6px;
-  span{
+  span {
     display: block;
     font-size: 14px;
     padding-bottom: 8px;
   }
-  .btn_good{
+  .btn_good {
     position: absolute;
     top: 0;
     right: 10px;
@@ -281,12 +282,7 @@ const ReviewTopInfo = styled.div`
     cursor: pointer;
   }
 `;
-const ReviewInfo = styled.div`
-
-`
-const DeleteButton = styled.button`
-  
-`
+const ReviewInfo = styled.div``;
 
 const MovieDetail = ({
   moviedetail,
@@ -305,9 +301,10 @@ const MovieDetail = ({
   onChangecontent,
   onChangestar,
   commentlist,
+  actionButtons,
   onRemove,
+  onEdit,
 }) => {
-  console.log("moviedetail123123===>", moviedetail)
   const [isOpen, setIsOpen] = useState(false);
   if (!moviedetail) {
     return <div>Loading...</div>;
@@ -325,7 +322,6 @@ const MovieDetail = ({
     console.log("별점:", rating);
     // 여기에 별점을 처리하는 로직을 추가하세요.
   };
-
 
   return (
     <DetailContainer>
@@ -409,13 +405,13 @@ const MovieDetail = ({
               </div>
             </MovieContentInfo>
             <VideoImageInfo>
-              <h1>트레일러({videos.length})</h1>
+              <h1>트레일러({videos && videos.length})</h1>
               <Video>
-                <VideoCarousel videos={videos} />
+                <VideoCarousel videos={videos && videos} />
               </Video>
               <Image>
-                <h1>스틸컷({images.length})</h1>
-                <ImageCarousel images={images} />
+                <h1>스틸컷({images && images.length})</h1>
+                <ImageCarousel images={images && images} />
               </Image>
             </VideoImageInfo>
           </div>
@@ -427,7 +423,11 @@ const MovieDetail = ({
                 <div className="starInfo">
                   <div className="starInfo1">
                     <Star>
-                      <StarRating onRate={handleRate} star={star} onChangestar={onChangestar} />
+                      <StarRating
+                        onRate={handleRate}
+                        star={star}
+                        onChangestar={onChangestar}
+                      />
                     </Star>
                     <img src="/temp_reviewcharacterbig_01.png" />
                   </div>
@@ -435,12 +435,16 @@ const MovieDetail = ({
                 </div>
                 <InputBox>
                   <div className="review-write-box">
-                    <textarea onChange={onChangecontent} value={content} placeholder="평점 및 영화 관람평을 작성해 주세요. (최소 10글자 이상)"></textarea>
+                    <textarea
+                      onChange={onChangecontent}
+                      value={content}
+                      placeholder="평점 및 영화 관람평을 작성해 주세요. (최소 10글자 이상)"
+                    ></textarea>
                     <span>
                       <strong>0</strong>/<em>220</em>
                     </span>
                   </div>
-                  <button onClick={onPublish} >관람평 작성</button>
+                  <button onClick={onPublish}>관람평 작성</button>
                 </InputBox>
               </Title>
             </div>
@@ -455,20 +459,27 @@ const MovieDetail = ({
                   </div>
                 </div>
                 <ReviewComent>
-                {commentlist && commentlist.map((comment) =>
-                    <li key={comment.mc_num}>
-                      <span className="img">
-                        <img src="/temp_reviewcharacterbig_01.png" alt="" />
-                      </span>
-                      <ReviewTopInfo>                        
-                        <span>{comment.id}</span>
-                        <span>{comment.createdAt}</span>
-                        <button className="btn_good">좋아요</button>
-                      </ReviewTopInfo>
-                      <div>{comment.content}</div>
-                      <DeleteButton onClick={onRemove}>삭제</DeleteButton>
-                    </li>
-                    )}
+                  {commentlist &&
+                    commentlist.map((comment) => (
+                      <li key={comment.mc_num}>
+                        <span className="img">
+                          <img src="/temp_reviewcharacterbig_01.png" alt="" />
+                        </span>
+                        <ReviewTopInfo>
+                          <span>{comment.id}</span>
+                          <span>{comment.createdAt}</span>
+                          <button className="btn_good">좋아요</button>
+                        </ReviewTopInfo>
+                        <div>{comment.content}</div>
+                        <CommentActionButtons
+                          onRemove={onRemove}
+                          onEdit={onEdit}
+                          commentNum={comment.mc_num}
+                          content={comment.content}
+                          star={comment.star}
+                        />
+                      </li>
+                    ))}
                 </ReviewComent>
               </div>
             </Comment>

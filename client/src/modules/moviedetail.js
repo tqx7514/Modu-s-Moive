@@ -5,8 +5,6 @@ import createRequestSaga, {
 import * as movieAPI from "../lib/api/movie";
 import { takeLatest } from "redux-saga/effects";
 
-const [INITIALIZE] = createRequestActionTypes("moviedetail/INITIALIZE");
-
 const [DETAIL_POST, DETAIL_POST_SUCCESS, DETAIL_POST_FAIURE] =
   createRequestActionTypes("moviedetail/DETAIL_POST");
 
@@ -19,6 +17,8 @@ const [DETAIL_VIDEO, DETAIL_VIDEO_SUCCESS, DETAIL_VIDEO_FAIURE] =
 const [DETAIL_CREDIT, DETAIL_CREDIT_SUCCESS, DETAIL_CREDIT_FAIURE] =
   createRequestActionTypes("moviedetail/DETAIL_CREDIT");
 
+const [INITIALIZE] = createRequestActionTypes("moviedetail/INITIALIZE");
+
 const [CHANGE_FIELD] = createRequestActionTypes("moviedetail/CHANGE_FIELD");
 
 const [COMMENT_WRITE, COMMENT_WRITE_SUCCESS, COMMENT_WRITE_FAIURE] =
@@ -27,11 +27,18 @@ const [COMMENT_WRITE, COMMENT_WRITE_SUCCESS, COMMENT_WRITE_FAIURE] =
 const [READ_COMMENT, READ_COMMENT_SUCCESS, READ_COMMENT_FAIURE] =
   createRequestActionTypes("moviedetail/READ_COMMENT");
 
-export const initialize = createAction(INITIALIZE);
+const [UPDATE_COMMENT, UPDATE_COMMENT_SUCCESS, UPDATE_COMMENT_FAIURE] =
+  createRequestActionTypes("moviedetail/UPDATE_COMMENT");  
+
+const [REMOVE_COMMENT, REMOVE_COMMENT_SUCCESS, REMOVE_COMMENT_FAIURE] =
+  createRequestActionTypes("moviedetail/REMOVE_COMMENT");
+
 export const readDetail = createAction(DETAIL_POST, (id) => id);
 export const imageDetail = createAction(DETAIL_IMAGE, (id) => id);
 export const videoDetail = createAction(DETAIL_VIDEO, (id) => id);
 export const creditDetail = createAction(DETAIL_CREDIT, (id) => id);
+
+export const initialize = createAction(INITIALIZE);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
@@ -42,6 +49,18 @@ export const commentWrite = createAction(
 );
 export const readComment = createAction(READ_COMMENT, (id) => id);
 
+export const updateComment = createAction(UPDATE_COMMENT, ({
+  commentNum, movie_id, content, star,
+}) => ({
+  commentNum, movie_id, content, star
+}));
+
+export const removeComment = 
+  createAction(
+  REMOVE_COMMENT,
+  ({commentNum,movie_id}) => ({commentNum,movie_id})
+);
+
 const readDetailSaga = createRequestSaga(DETAIL_POST, movieAPI.moviedetail);
 const imageDetailSaga = createRequestSaga(DETAIL_IMAGE, movieAPI.moviedetail);
 const videoDetailSaga = createRequestSaga(DETAIL_VIDEO, movieAPI.moviedetail);
@@ -51,6 +70,9 @@ const commentWriteSaga = createRequestSaga(
   COMMENT_WRITE,
   movieAPI.commentwrite
 );
+const updateCommentSaga = createRequestSaga(UPDATE_COMMENT, movieAPI.updateComment);
+const removeCommentSaga = createRequestSaga(REMOVE_COMMENT, movieAPI.removeComment);
+
 export function* moviedetailSaga() {
   yield takeLatest(DETAIL_POST, readDetailSaga);
   yield takeLatest(DETAIL_IMAGE, imageDetailSaga);
@@ -58,6 +80,8 @@ export function* moviedetailSaga() {
   yield takeLatest(DETAIL_CREDIT, creditDetailSaga);
   yield takeLatest(COMMENT_WRITE, commentWriteSaga);
   yield takeLatest(READ_COMMENT, readCommentSaga);
+  yield takeLatest(UPDATE_COMMENT, updateCommentSaga);
+  yield takeLatest(REMOVE_COMMENT, removeCommentSaga);
 }
 
 const initialState = {
@@ -65,20 +89,16 @@ const initialState = {
   images: [],
   videos: [],
   credits: [],
+  error: null,
   content: "",
   star: "",
   comment: "",
-  commentlist: "",
+  commentlist: null,
   commentError: null,
-  error: null,
 };
 
 const moviedetail = handleActions(
   {
-    [INITIALIZE]: (state) => ({
-      ...state,
-      initialState,
-    }),
     [DETAIL_POST_SUCCESS]: (state, { payload: moviedetail }) => ({
       ...state,
       moviedetail: moviedetail.moviedetail,
@@ -112,11 +132,15 @@ const moviedetail = handleActions(
       ...state,
       error,
     }),
+    [INITIALIZE]: (state) => ({
+      ...state,
+      initialState,
+    }),
     [CHANGE_FIELD]: (state, { payload: { key, value } }) => ({
       ...state,
       [key]: value,
     }),
-    [COMMENT_WRITE]: state => ({
+    [COMMENT_WRITE]: (state) => ({
       ...state,
       comment: null,
       commentError: null,
@@ -129,11 +153,27 @@ const moviedetail = handleActions(
       ...state,
       commentError,
     }),
-    [READ_COMMENT_SUCCESS]: (state, {payload: commentlist}) => ({
+    [READ_COMMENT_SUCCESS]: (state, { payload: commentlist }) => ({
       ...state,
       commentlist: commentlist.commentlist,
     }),
-    [READ_COMMENT_FAIURE]: (state, {payload: error}) => ({
+    [READ_COMMENT_FAIURE]: (state, { payload: error }) => ({
+      ...state,
+      error,
+    }),
+    [UPDATE_COMMENT_SUCCESS]: (state, {payload: commentlist}) => ({
+      ...state,
+      commentlist: commentlist.commentlist,
+    }),
+    [UPDATE_COMMENT_FAIURE]: (state, {payload: error}) => ({
+      ...state,
+      error,
+    }),
+    [REMOVE_COMMENT_SUCCESS]: (state, {payload: commentlist}) => ({
+      ...state,
+      commentlist:commentlist.commentlist,
+    }),
+    [REMOVE_COMMENT_FAIURE]: (state, {payload: error}) => ({
       ...state,
       error,
     }),

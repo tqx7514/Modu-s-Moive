@@ -42,6 +42,10 @@ module.exports = function(sequelize, DataTypes) {
     seat: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    room: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {
     sequelize,

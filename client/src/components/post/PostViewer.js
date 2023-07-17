@@ -52,7 +52,7 @@ const formatDate = (dateString) => {
   return `${year}.${month}.${day}`;
 };
 
-const PostViewer = ({ post, error, loading, actionButtons }) => {
+const PostViewer = ({ post, error, loading, actionButtons, user }) => {
   if (error) {
     if (error.response && error.response.status === 404) {
       return <PostViewerBlock>존재하지 않는 포스트입니다.</PostViewerBlock>;
@@ -62,7 +62,7 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
   if (loading || !post) {
     return null;
   }
-  const { title, body, userId, updatedAt, tags, views } = post;
+  const { title, body, userId, updatedAt, tags, views, postNum } = post;
   const tagsArray = Array.isArray(tags) ? tags : JSON.parse(tags);
   const formattedDate = formatDate(updatedAt);
   return (
@@ -81,7 +81,7 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
         <PostContent dangerouslySetInnerHTML={{ __html: body }} />
         <hr />
         <PostCommentBlock>
-          <PostCommentList />
+          <PostCommentList postNum={postNum} userId={user} />
         </PostCommentBlock>
       </PostViewerBlock>
     </>

@@ -5,7 +5,11 @@ import { faPen, faTimes } from "@fortawesome/free-solid-svg-icons";
 import SubInfo from "../common/SubInfo";
 import palette from "../../lib/styles/palette";
 import { useDispatch, useSelector } from "react-redux";
-import { writePostComment } from "../../modules/postcomment";
+import {
+  initializePostComment,
+  readPostComment,
+  writePostComment,
+} from "../../modules/postcomment";
 
 const PostCommentListBlock = styled.div`
   border: solid 1px black;
@@ -116,15 +120,14 @@ const formatDate = (dateString) => {
 const PostCommentItem = ({ comment, onRemove }) => {
   const { commentNum, content, createdAt } = comment;
   const userId = useSelector((state) => state.user.userId) || "unknown";
-  const limitedUserId =
-    userId && userId.length > 6 ? `${userId.slice(0, 6)}..` : userId;
   const formattedDate = formatDate(createdAt);
+
   return (
     <CommentItemBlock>
       <CommentItemFirstLine>
         <CommentItemContent>
           <CommentItemBlockLine>
-            <UserId username={limitedUserId} />
+            <UserId>{userId}</UserId>
             <CommentItemThirdLine>
               <CommentItemButton onClick={() => onRemove(commentNum)}>
                 <FontAwesomeIcon icon={faTimes} />
@@ -143,11 +146,13 @@ const PostCommentItem = ({ comment, onRemove }) => {
   );
 };
 
-const PostCommentList = () => {
+const PostCommentList = ({ userId, postNum }) => {
   const [comment, setComment] = useState("");
-  const [comments, setComments] = useState([]);
+  // const [comments, setComments] = useState([]);
   const [commentNum, setCommentNum] = useState(0);
-
+  const { comments } = useSelector(({ postcomment }) => ({
+    comments: postcomment.comments,
+  }));
   const dispatch = useDispatch();
 
   const handleCommentChange = (e) => {
@@ -157,20 +162,27 @@ const PostCommentList = () => {
   const handleCommentSubmit = (e) => {
     e.preventDefault();
     const newComment = {
-      commentNum: commentNum,
+      // commentNum: commentNum,
       content: comment,
-      createdAt: new Date().toISOString(),
+      userId: userId.id,
+      postNum: postNum,
+      // createdAt: new Date().toISOString(),
+      // 유저아이디,  게시판 번호, 댓글 내용
     };
     dispatch(writePostComment(newComment));
-    setComments([...comments, newComment]);
-    setCommentNum(commentNum + 1);
+    setTimeout(() => {
+      dispatch(initializePostComment());
+      dispatch(readPostComment(postNum));
+    }, 100);
+    // setComments([...comments, newComment]);
+    // setCommentNum(commentNum + 1);
     setComment("");
   };
 
   const handleCommentRemove = (commentNum) => {
-    setComments(
-      comments.filter((comment) => comment.commentNum !== commentNum)
-    );
+    // setComments(
+    //   comments.filter((comment) => comment.commentNum !== commentNum)
+    // );
   };
 
   return (
@@ -187,13 +199,14 @@ const PostCommentList = () => {
         </CommentButton>
       </PostCommentForm>
       <CommentListBlock>
-        {comments.map((comment) => (
-          <PostCommentItem
-            key={comment.commentNum}
-            comment={comment}
-            onRemove={handleCommentRemove}
-          />
-        ))}
+        {comments &&
+          comments.map((comment) => (
+            <PostCommentItem
+              key={comment.commentNum}
+              comment={comment}
+              onRemove={handleCommentRemove}
+            />
+          ))}
       </CommentListBlock>
     </PostCommentListBlock>
   );

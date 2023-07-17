@@ -1,4 +1,4 @@
-const { posts } = require("../models");
+const { posts, postcomments } = require("../models");
 
 exports.write = async (req, res, next) => {
   const { title, body, tags, userId } = req.body;
@@ -123,5 +123,41 @@ exports.postDelete = async (req, res, next) => {
   } catch (error) {
     res.status(500).json(error);
     next(error);
+  }
+};
+
+exports.readPostComment = async (req, res) => {
+  const postNum = req.params.postNum;
+  console.log("sssssssssss", postNum);
+  try {
+    const postcomment = await postcomments.findAll({
+      where: { postNum },
+      order: [["createdAt", "ASC"]],
+    });
+    // const post = await posts.findOne({
+    //   where: { postNum: postNum },
+    // });
+    console.log("포스트커맨트", postcomment);
+    res.json(postcomment);
+  } catch (error) {
+    res.json(error);
+  }
+};
+
+exports.writePostComment = async (req, res) => {
+  const { userId, content, postNum } = req.body;
+  console.log(
+    `userId : ${userId}  /  content : ${content}   /  postNum : ${postNum}`
+  );
+  try {
+    const newPostComment = await postcomments.create({
+      postNum,
+      userId,
+      content,
+    });
+    console.log("newPostComment : ", newPostComment);
+    res.status(200).json(newPostComment);
+  } catch (error) {
+    res.status(500).json(error);
   }
 };

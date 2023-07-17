@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { MdDensityMedium, MdWindow } from "react-icons/md";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 
 const StepCinema = styled.div`
@@ -41,11 +41,13 @@ export const AreaItem = styled.li`
     }
   }
   &.time{
-    cursor: default;
+    margin-top: 20px;
     padding: 10px 0;
+    cursor: default;
     p{
       display: inline-block;
       width: 100%;
+      margin-bottom: 5px;
     }
   }
   span {
@@ -77,6 +79,9 @@ export const MovieList = styled.div`
   align-items: center;
   &.selected {
     border: 2px solid;
+  }
+  &.schedule{
+    margin-bottom: 20px;
   }
 `;
 
@@ -118,7 +123,7 @@ const MovieSelect = ({
     const handleSelectMovie = (movie) => {
       if (selectedMovie === movie.movie_name) {
         setSelectedMovie(null);
-        onSecondData(null); // 선택된 영화 해제 시, 부모 컴포넌트로 선택 해제를 전달
+        onSecondData(null);
       } else {
         setSelectedMovie(movie.movie_name);
         onSecondData(movie);

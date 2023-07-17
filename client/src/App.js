@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import WritePage from "./pages/WritePage";
-import TicketPage from "./pages/TicketPage";
+import TicketMoviePage from "./pages/TicketMoviePage";
 import CinemaPage from "./pages/CinemaPage";
 import EventPage from "./pages/EventPage";
 import PostListPage from "./pages/PostListPage";
@@ -31,9 +31,8 @@ const App = () => {
       <Route path="/write" element={<WritePage />} />
       <Route path="/currentmovie" element={<CurrentMoviePage />} />
       {/* 예매 페이지 */}
-      <Route path="/ticket" element={<TicketPage />}>
-        <Route path="/ticket/PersonSeat" element={<PersonSeat />} />
-      </Route>
+      <Route path="/ticket" element={<TicketMoviePage />} />
+      <Route path="/ticket/PersonSeat" element={<PersonSeat />} />
       {/* -----------*/}
       <Route path="/currentmovie/detail/:id" element={<MoviedetailPage />} />
       <Route path="/cinema" element={<CinemaPage />} />

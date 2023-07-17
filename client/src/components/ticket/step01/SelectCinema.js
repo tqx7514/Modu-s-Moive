@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const StepArea = styled.div`
   width: 30%;
@@ -29,22 +29,21 @@ const CinemaBtn = styled.button`
   height: 61px;
   text-align: center;
   background: #f5f5f5;
-  color: ${({ active }) => (active ? "#000" : "#7f7f7f")};
+  color: #7f7f7f;
+  font-size: 15px;
   border: none;
-  border-bottom: ${({ active }) =>
-    active ? "2px solid #000" : "1px solid #ccc"};
+  border-bottom: 1px solid #ccc;
   transition: border 0.1s ease-in-out;
   cursor: pointer;
   border-right: 1px solid #ddd;
   &:first-child {
     border-right: none;
   }
-
-  ${({ active }) =>
-    active &&
-    css`
-    background: white;Invalid Date
-  `}
+  &.selected {
+    color: #000;
+    font-weight: 400;
+    border-bottom: 2px solid;
+  }
 `;
 
 const AreaUl = styled.ul`
@@ -120,17 +119,21 @@ const AreaItem = styled.li`
   }
 `;
 
-
-const SelectCinema = ({ 
-  region, 
+const SelectCinema = ({
+  region,
   cinema,
-  onSelectRegion, 
-  onSelectCinema, 
-  onFirstData, 
+  onSelectRegion,
+  onSelectCinema,
+  onFirstData,
 }) => {
-
+  const [selectedSpecial, setSelectedSpecial] = useState("전체");
+  console.log(selectedSpecial);
   const [selectedRegion, setSelectedRegion] = useState(null);
   const [selectedCinema, setSelectedCinema] = useState("영화관");
+
+  const handleSelectedSpecial = (e) => {
+    setSelectedSpecial(e.target.textContent);
+  };
 
   const handleSelectRegion = (grade) => {
     setSelectedRegion(grade);
@@ -144,17 +147,30 @@ const SelectCinema = ({
   const handleSelectCinema = (cinema) => {
     setSelectedCinema(cinema);
     onFirstData(cinema);
-    onSelectCinema(); 
+    onSelectCinema();
   };
 
-  return (
+    return (
       <StepArea>
         <Title>{selectedCinema}</Title>
         <div>
-          <CinemaBtn>전체</CinemaBtn>
-          <CinemaBtn style={{ background: "white" }}>스페셜관</CinemaBtn>
+          <CinemaBtn
+            onClick={(e) => handleSelectedSpecial(e)}
+            className={selectedSpecial === "전체" ? "selected" : ""}
+          >
+            전체
+          </CinemaBtn>
+          <CinemaBtn
+            onClick={(e) => handleSelectedSpecial(e)}
+            className={selectedSpecial === "스페셜관" ? "selected" : ""}
+            style={{ background: "white" }}
+          >
+            스페셜관
+          </CinemaBtn>
         </div>
         <AreaUl>
+        {selectedSpecial === '전체' ? (
+          <>
           <AreaLi style={{ overflow: "inherit" }}>
             <ul>
               {region &&
@@ -185,9 +201,16 @@ const SelectCinema = ({
                 ))}
             </ul>
           </AreaLi>
+          </>
+      ) : (
+      <>
+        <AreaLi></AreaLi>
+        <AreaLi style={{ background: "white" }}></AreaLi>
+      </>
+      )}
         </AreaUl>
       </StepArea>
-  );
+    );
 };
 
 export default SelectCinema;

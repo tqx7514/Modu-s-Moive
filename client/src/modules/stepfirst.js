@@ -32,11 +32,26 @@ export const readMovie = createAction(READ_MOVIE);
 
 export const setData = createAction(SET_DATA, ({key,value}) => ({key,value}));
 
-export const setTimeData = createAction(SET_TIME_DATA, ({cinema, movie_name, start, end}) => ({
+export const setTimeData = createAction(SET_TIME_DATA, ({
+  cinema, 
+  movie_name,
+  age,
+  disp,
+  language, 
+  start, 
+  end, 
+  room,
+  seat,
+}) => ({
   cinema,
   movie_name,
+  age,
+  disp,
+  language,
   start,
   end,
+  room,
+  seat,
 }));
 
 export const readTime = createAction(READ_TIME);
@@ -125,11 +140,30 @@ const stepfirst = handleActions(
       },
     }),
     // ----------------------------------------------------
-    [SET_TIME_DATA]: (state, {payload: {cinema, movie_name, start, end}}) => ({
+    [SET_TIME_DATA]: (state, {payload: {
+      cinema, 
+      movie_name, 
+      age,
+      disp,
+      language,
+      start, 
+      end, 
+      room, 
+      seat,
+    }}) => ({
       ...state,
       data: {
         ...state.data,
-        time: {cinema, movie_name, start, end}
+        time: {
+          cinema, 
+          movie_name,
+          age,
+          disp,
+          language, 
+          start, end, 
+          room, 
+          seat
+        }
       }
     }),
     // ----------------------------------------------------

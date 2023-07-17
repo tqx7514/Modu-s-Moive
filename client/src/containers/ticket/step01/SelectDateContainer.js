@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux';
-import SelectDate from '../../components/ticket/step1/SelectDate'
-import { setData } from '../../modules/stepfirst';
+import SelectDate from '../../../components/ticket/step01/SelectDate'
+import { setData } from '../../../modules/stepfirst';
 
 
 const SelectDateContainer = () => {

@@ -9,17 +9,22 @@ const NavReserveUl = styled.ul`
 
 const NavReserveCont = styled.div`
   position: absolute;
-  left: 72px;
+  left: 69px;
   top: 0;
   display: none;
-  width: 172px;
+  width: 190px;
   height: 100%;
   padding-left: 40px;
   background: #ff243e;
+  text-align: left;
+  font-size: 12px;
+  letter-spacing: -0.9px;
   z-index: 999;
 
   ul > li {
     list-style: initial;
+    margin-bottom: 10px;
+
   }
 `;
 
@@ -55,17 +60,24 @@ const ReserveNav = ({ data }) => {
   const location = useLocation();
   const timeContent = data.time.cinema === undefined ? (
     <ul>
-      <li>{data && data.cinema}</li>
       <li>{data.movie ? data.movie.movie_name : ''}</li>
+      <li>{data && data.cinema}</li>
       <li>{data && data.date}</li>
       <li></li>
     </ul>
   ) : (
     <ul>
-      <li>{data.time.cinema}</li>
       <li>{data.time.movie_name}</li>
+      <li>
+        {data.time ? `${data.time.cinema} ${data.time.room}관` : ''}
+      </li>
       <li>{data.date}</li>
-      <li>{data.time.start}</li>
+      <li>
+        {
+          data.time ? 
+          `${data.time.start} ~ ${data.time.end}` : '' 
+        }
+      </li>
     </ul>
   )
   console.log('data??????????????', data.cinema);
@@ -85,8 +97,6 @@ const ReserveNav = ({ data }) => {
         인원/좌석
         <NavReserveCont>
           <ul>
-            <li></li>
-            <li></li>
             <li></li>
             <li></li>
           </ul>

@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import SelectCinema from "../../components/ticket/step1/SelectCinema";
+import SelectCinema from "../../../components/ticket/step01/SelectCinema";
 import {
   readMovie,
   readRegion,
   selectedRegion,
   setData,
   setTimeData,
-} from "../../modules/stepfirst";
+} from "../../../modules/stepfirst";
 
 const SelectCinemaContainer = () => {
   // Selector -----------------------------------------------------------
@@ -32,7 +32,7 @@ const SelectCinemaContainer = () => {
 
   const onSelectCinema = useCallback(() => {
     dispatch(readMovie());
-    dispatch(setData(""));
+    dispatch(setData({key: "movie", value: ""}));
     dispatch(setTimeData({}));
   }, [dispatch]);
 

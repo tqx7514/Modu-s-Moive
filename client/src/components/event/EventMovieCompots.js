@@ -26,9 +26,10 @@ const EventMovieContainerBlock = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
-  font-size: 12px;
+  font-size: 16px;
   h2 {
     margin-bottom: 10px;
+    font-size: 20px;
   }
 `;
 

@@ -36,8 +36,9 @@ const EventContainerBlock = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
-  font-size: 12px;
+
   h2 {
+    font-size: 20px;
     margin: 10px 0 10px 0;
   }
 `;
@@ -58,6 +59,11 @@ const RightArrowImage = styled.img`
   margin-left: 4px;
   align-items: center;
   justify-content: center;
+`;
+
+const RightArrowBlock = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const EventListCompots = ({ events }) => {
@@ -91,8 +97,10 @@ const EventListCompots = ({ events }) => {
       <EventContainerBlock className="eventmoviecontainer">
         <Link to="/event/movie">
           <h2>
-            영화
-            <RightArrowImage src="../../arrow_right.png" />
+            <RightArrowBlock>
+              영화
+              <RightArrowImage src="../../arrow_right.png" />
+            </RightArrowBlock>
           </h2>
         </Link>
         {sortedEvents && sortedEvents.length > 0 && (
@@ -120,8 +128,10 @@ const EventListCompots = ({ events }) => {
       <EventContainerBlock className="eventpromotecontainer">
         <Link to="/event/promote">
           <h2>
-            제휴/할인
-            <RightArrowImage src="../../arrow_right.png" />
+            <RightArrowBlock>
+              제휴/할인
+              <RightArrowImage src="../../arrow_right.png" />
+            </RightArrowBlock>
           </h2>
         </Link>
         {sortedEvents && sortedEvents.length > 0 && (
@@ -149,8 +159,10 @@ const EventListCompots = ({ events }) => {
       <EventContainerBlock className="eventothercontainer">
         <Link to="/event/other">
           <h2>
-            기타
-            <RightArrowImage src="../../arrow_right.png" />
+            <RightArrowBlock>
+              기타
+              <RightArrowImage src="../../arrow_right.png" />
+            </RightArrowBlock>
           </h2>
         </Link>
         {sortedEvents && sortedEvents.length > 0 && (

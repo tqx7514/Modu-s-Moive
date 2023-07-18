@@ -145,8 +145,7 @@ const Container = styled.div`
 // `;
 
 const MeetItem = ({ meet }) => {
-  const { createdAt, userId, tags, title, meetNum, region, views, count } =
-    meet;
+  const { createdAt, tags, title, meetNum, region, views, count } = meet;
   const tagsArray = Array.isArray(tags) ? tags : JSON.parse(tags);
   return (
     <MeetItemBlock>

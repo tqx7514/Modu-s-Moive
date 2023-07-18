@@ -33,12 +33,26 @@ exports.meetRead = async (req, res, next) => {
   const meet = await meets.findOne({
     where: { meetNum },
   });
+  const meetuser = await meetusers.findAll({
+    where: { meet_MeetNum: meetNum },
+    include: [
+      {
+        model: users,
+        as: "user_Num_user",
+      },
+    ],
+  });
+  // const userIds = meetuser.map((meetuser) => meetuser.user_Id);
+  // const userStrings = userIds.map((userId) => `${userId}`);
+  const userStrings = meetuser;
+
+  // console.log("meetuser 목록", userStrings);
   meet.views += 1;
   await meet.save();
   if (!meet) {
     res.status(404).json({ message: "포스트가 존재하지않습니다" });
   }
-  res.json(meet);
+  res.json({ meet, userStrings });
 };
 
 exports.meetlist = async (req, res) => {
@@ -153,6 +167,7 @@ exports.meetJoin = async (req, res) => {
   // console.log("dddddddddddddddd", user);
   try {
     const newJoin = await meetusers.create({
+      user_Num: user.num,
       user_Id: user.id,
       meet_MeetNum: meetNum,
     });
@@ -163,9 +178,11 @@ exports.meetJoin = async (req, res) => {
       const accessToken = jwt.sign(
         {
           id: userInfo.id,
+          num: userInfo.userNum,
           name: userInfo.name,
           email: userInfo.email,
           grade: userInfo.grade,
+          gender: userInfo.gender,
           meet: [...user.meet, meetNum],
         },
         process.env.ACCESS_SECRET,
@@ -472,7 +489,6 @@ exports.sendMsg = async (req, res, next) => {
 exports.getMsg = async (req, res, next) => {
   try {
     const { meetNum, userId } = req.body;
-    console.log("getMsg 백도착~~", meetNum, userId);
 
     const messages = await meetmessages.findAll({
       where: { meetNum },
@@ -483,7 +499,6 @@ exports.getMsg = async (req, res, next) => {
         },
       ],
     });
-    console.log("messages입니다ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ", messages);
 
     const projectedMesages = messages.map((msg) => {
       return {
@@ -496,6 +511,58 @@ exports.getMsg = async (req, res, next) => {
       };
     });
     res.json(projectedMesages);
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+};
+
+exports.mandate = async (req, res) => {
+  const meetuserId = req.params.meetuserId;
+  const meetNum = req.body.meetNum;
+  console.log("백 입니다. meetuserId==", meetuserId, meetNum);
+  try {
+    const updateMeet = await meets.update(
+      {
+        userId: meetuserId,
+      },
+      {
+        where: { meetNum },
+      }
+    );
+    res.status(500);
+    return;
+  } catch (error) {
+    res.json(error);
+  }
+};
+
+exports.meetUpdate = async (req, res, next) => {
+  const { title, body, tags, meetNum, region } = req.body;
+  try {
+    const tagsString = JSON.stringify(tags); // 배열을 JSON 형식의 문자열로 변환
+    const [updatedRows] = await meets.update(
+      {
+        title,
+        body,
+        tags: tagsString,
+        region,
+      },
+      {
+        where: { meetNum },
+      }
+    );
+
+    if (updatedRows === 0) {
+      res.status(404).json({ message: "포스트가 존재하지 않습니다" });
+      return;
+    }
+
+    const updatedMeet = await meets.findOne({
+      where: { meetNum },
+    });
+
+    res.json(updatedMeet);
   } catch (error) {
     res.status(500).json(error);
     next(error);

@@ -5,6 +5,7 @@ import MeetDetailHome from "./meetdetail/MeetDetailHome";
 import MeetDetailChatContainer from "../../containers/meet/MeetDetailChatContainer";
 import MeetDetailBoardContainer from "../../containers/meet/MeetDetailBoardContainer";
 import { GrGroup } from "react-icons/gr";
+import MeetDetailManageContainer from "../../containers/meet/MeetDetailManageContainer";
 
 const MeetViewerBlock = styled(Responsive)`
   margin-top: 3rem;
@@ -77,7 +78,14 @@ const activeStyle = {
   fontWeight: "bold",
 };
 
-const MeetViewer = ({ meet, error, loading, actionButtons, joinButton }) => {
+const MeetViewer = ({
+  meet,
+  error,
+  loading,
+  actionButtons,
+  joinButton,
+  ownMeet,
+}) => {
   const [category, setCategory] = useState("Home");
   const handleHomeClick = () => {
     setCategory("Home");
@@ -87,6 +95,9 @@ const MeetViewer = ({ meet, error, loading, actionButtons, joinButton }) => {
   };
   const handleChatClick = () => {
     setCategory("Chat");
+  };
+  const handleManageClick = () => {
+    setCategory("Manage");
   };
   if (error) {
     if (error.response && error.response.status === 404) {
@@ -99,6 +110,8 @@ const MeetViewer = ({ meet, error, loading, actionButtons, joinButton }) => {
     return null;
   }
   const { title, body, userId, createdAt, tags, region, count, meetNum } = meet;
+  // console.log("내 모임인가???", ownMeet);
+
   return (
     <MeetViewerBlock>
       <MeetHeaderBlock>
@@ -134,6 +147,14 @@ const MeetViewer = ({ meet, error, loading, actionButtons, joinButton }) => {
         >
           채팅
         </div>
+        {ownMeet && (
+          <div
+            style={category === "Manage" ? activeStyle : undefined}
+            onClick={handleManageClick}
+          >
+            회원관리
+          </div>
+        )}
       </Category>
       <hr />
       {category === "Home" && (
@@ -141,6 +162,7 @@ const MeetViewer = ({ meet, error, loading, actionButtons, joinButton }) => {
       )}
       {category === "Board" && <MeetDetailBoardContainer />}
       {category === "Chat" && <MeetDetailChatContainer />}
+      {category === "Manage" && <MeetDetailManageContainer />}
     </MeetViewerBlock>
   );
 };

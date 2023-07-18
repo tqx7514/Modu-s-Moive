@@ -33,6 +33,9 @@ const ActionButton = styled.button`
 const MeetDetailActionButtons = ({
   onEdit,
   onRemove,
+  onKick,
+  onMandate,
+  meetuserId,
   type,
   num,
   num2,
@@ -54,21 +57,31 @@ const MeetDetailActionButtons = ({
       onRemove();
     }
   };
-
+  const onMandateClick = () => {
+    onMandate(meetuserId);
+  };
   return (
     <>
       <MeetActionButtonsBlock>
-        <ActionButton
-          onClick={onEdit}
-          data-body={meetBoard && meetBoard.body}
-          data-userid={meetBoard && meetBoard.user_Id}
-          data-meetboardnum={meetBoard && meetBoard.meetboardNum}
-          data-commentbody={comments && comments.body}
-          data-meetcommentnum={comments && comments.meetcommentNum}
-        >
-          {type} 수정
-        </ActionButton>
-        <ActionButton onClick={onRemoveClick}>{type} 삭제</ActionButton>
+        {onEdit && (
+          <ActionButton
+            onClick={onEdit}
+            data-body={meetBoard && meetBoard.body}
+            data-userid={meetBoard && meetBoard.user_Id}
+            data-meetboardnum={meetBoard && meetBoard.meetboardNum}
+            data-commentbody={comments && comments.body}
+            data-meetcommentnum={comments && comments.meetcommentNum}
+          >
+            {type} 수정
+          </ActionButton>
+        )}
+        {onRemove && (
+          <ActionButton onClick={onRemoveClick}>{type} 삭제</ActionButton>
+        )}
+        {onKick && <ActionButton onClick={onKick}>{type} 강퇴</ActionButton>}
+        {onMandate && (
+          <ActionButton onClick={onMandateClick}>매니저 위임</ActionButton>
+        )}
       </MeetActionButtonsBlock>
       <MeetAskRemoveModal
         visible={modal}

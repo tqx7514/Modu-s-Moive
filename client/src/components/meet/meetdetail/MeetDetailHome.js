@@ -63,7 +63,7 @@ const MeetDetailHome = ({ meet, joinButton }) => {
           <div>지역 | {region}</div>
           <hr />
           <div>
-            모임장 |{" "}
+            매니저 |{" "}
             <span style={{ margin: "0 0.3rem 0 0.3rem " }}>
               <FaChessKing />
             </span>

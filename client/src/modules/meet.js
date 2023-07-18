@@ -24,9 +24,12 @@ const initialState = {
 
 const meet = handleActions(
   {
-    [READ_MEET_SUCCESS]: (state, { payload: meet }) => ({
+    [READ_MEET_SUCCESS]: (state, { payload: { meet, userStrings } }) => ({
       ...state,
-      meet,
+      meet: {
+        ...meet,
+        user: userStrings,
+      },
     }),
     [READ_MEET_FAILURE]: (state, { payload: error }) => ({
       ...state,

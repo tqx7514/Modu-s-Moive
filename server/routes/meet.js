@@ -18,6 +18,7 @@ const {
   meetCommentUpdate,
   sendMsg,
   getMsg,
+  mandate,
 } = require("../controllers/meet");
 const router = express.Router();
 
@@ -44,6 +45,6 @@ router.post(`/updateMeetComment/:meetcommentNum`, meetCommentUpdate);
 router.post("/chat/sendmsg", sendMsg);
 router.post("/chat/getmsg", getMsg);
 
-// router.post("/updateToken", updateToken);
-
+//모임 안 회원관리
+router.post("/manage/mandate/:meetuserId", mandate);
 module.exports = router;

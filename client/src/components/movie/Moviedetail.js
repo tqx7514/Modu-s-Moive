@@ -50,6 +50,70 @@ const MovieInfo1 = styled.div`
 const MovieInfo2 = styled.div`
   display: flex;
   margin-top: 50px;
+  .btn_trailer{
+    box-sizing: border-box;
+    height: 40px;
+    line-height: 38px;
+    padding: 0 15px;
+    border: 1px solid black;
+    border-radius: 50px;
+    background-color: white;
+    color: black;
+    font-size: 19px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+  .btn_icon_wish {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 88px;
+    height: 40px;
+    line-height: 38px;
+    padding: 0 15px;
+    border: 1px solid black;
+    border-radius: 50px;
+    background-color: white;
+    color: black;
+    font-size: 19px;
+    text-align: center;
+    vertical-align: middle;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  .icon_wishheart {
+    box-sizing: border-box;
+    position: relative;
+    width: 22px;
+    height: 18px;
+    background: url(/heart_bdr_black_off.svg) no-repeat 0 0;
+    border: none;
+    font: 0 auto;
+    text-indent: -9999999em;
+  }
+  .btn_icon_share{
+    align-items: center;
+    box-sizing: border-box;
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 50px;
+    background-color: white;
+    color: black;
+    font: 0 auto;
+    text-align: center;
+    vertical-align: middle;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  .icon_share{
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: url(/btn_icon_share.svg) 0 0 no-repeat;
+  }
   button {
     font-size: 19px;
   }
@@ -156,7 +220,8 @@ const Title = styled.div`
   }
 `;
 
-const Star = styled.div``;
+const Star = styled.div``
+;
 
 const InputBox = styled.div`
   height: 119px;
@@ -281,6 +346,14 @@ const ReviewTopInfo = styled.div`
     padding: 5px;
     cursor: pointer;
   }
+  button{
+    background-color: white;
+    border: none;
+  }
+  img{
+    width: 15px;
+    height: 15px;
+  }
 `;
 const ReviewInfo = styled.div``;
 
@@ -304,6 +377,7 @@ const MovieDetail = ({
   actionButtons,
   onRemove,
   onEdit,
+  ownPost,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   if (!moviedetail) {
@@ -345,12 +419,15 @@ const MovieDetail = ({
                 <p className="movielist1">{moviedetail.popularity}만명</p>
               </MovieInfo1>
               <MovieInfo2>
-                <button onClick={openModal}>
-                  <MdOutlineArrowRight /> 예고편 재생
+                <button className="btn_trailer" onClick={openModal}>
+                  <img src="/icon_trailerplay.svg" alt="예고편" /> 예고편 재생
                 </button>
-                <button>3,749</button>
-                <button>
-                  <img src="btn_icon_share.svg" />
+                <button className="btn_icon_wish">
+                  <span className="icon_wishheart"></span>
+                  3,749
+                  </button>
+                <button className="btn_icon_share">
+                  <span className="icon_share"></span>
                 </button>
               </MovieInfo2>
               <MovieInfo3>
@@ -429,7 +506,6 @@ const MovieDetail = ({
                         onChangestar={onChangestar}
                       />
                     </Star>
-                    <img src="/temp_reviewcharacterbig_01.png" />
                   </div>
                   <div>영화 관람 후 관람평 작성 시 L.POINT 50P 적립</div>
                 </div>
@@ -463,21 +539,56 @@ const MovieDetail = ({
                     commentlist.map((comment) => (
                       <li key={comment.mc_num}>
                         <span className="img">
-                          <img src="/temp_reviewcharacterbig_01.png" alt="" />
+                          {comment.star >= 1 && comment.star < 3 && (
+                            <img
+                              src="/temp_reviewcharacter_05.jpg"
+                              alt="별점 1,2점"
+                            />
+                          )}
+                          {comment.star >= 3 && comment.star < 5 && (
+                            <img
+                              src="/temp_reviewcharacter_04.jpg"
+                              alt="별점 3,4점"
+                            />
+                          )}
+                          {comment.star >= 5 && comment.star < 7 && (
+                            <img
+                              src="/temp_reviewcharacter_03.jpg"
+                              alt="별점 5,6점"
+                            />
+                          )}
+                          {comment.star >= 7 && comment.star < 9 && (
+                            <img
+                              src="/temp_reviewcharacter_02.jpg"
+                              alt="별점 7,8점"
+                            />
+                          )}
+                          {comment.star >= 9 && (
+                            <img
+                              src="/temp_reviewcharacterbig_01.png"
+                              alt="별점 9, 10점"
+                            />
+                          )}
                         </span>
                         <ReviewTopInfo>
                           <span>{comment.id}</span>
                           <span>{comment.createdAt}</span>
-                          <button className="btn_good">좋아요</button>
+                          <button className="btn_good"><img src="/ic_review_good.png"/>0</button>
                         </ReviewTopInfo>
                         <div>{comment.content}</div>
+                        <div>
+                          {ownPost(comment.id) &&
                         <CommentActionButtons
                           onRemove={onRemove}
                           onEdit={onEdit}
                           commentNum={comment.mc_num}
                           content={comment.content}
                           star={comment.star}
+                          onChangestar={onChangestar}
+                          onRate={handleRate}
                         />
+                      }
+                        </div>
                       </li>
                     ))}
                 </ReviewComent>

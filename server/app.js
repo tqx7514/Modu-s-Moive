@@ -49,6 +49,23 @@ app.use(
 //   .catch((err) => {
 //     console.error(err);
 //   });
+// app.post('/api/data', (req, res) => {
+//   const { data } = req.body;
+
+//   const query = `INSERT INTO your_table_name (column_name) VALUES (?)`;
+//   connection.query(query, [data], (err, results) => {
+//     if (err) {
+//       console.error(err);
+//       res.status(500).json({ error: 'Internal server error' });
+//     } else {
+//       res.status(200).json({ message: 'Data inserted successfully' });
+//     }
+//   });
+// });
+
+// app.listen(3001, () => {
+//   console.log('Server is running on port 3001');
+// });
 
 app.use("/auth", authRouter);
 app.use("/ticket", ticketRouter);

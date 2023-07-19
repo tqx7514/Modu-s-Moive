@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { moviecomments } = require("../models");
+const { moviecomments,users } = require("../models");
 
 exports.List = async (req, res) => {
   try {
@@ -74,6 +74,11 @@ exports.Comment = async (req, res) => {
       movie_id,
       star,
     });
+    const point = await users.findOne({
+      where:{id:userId}
+    });
+    point.point+=50;
+    await point.save();
 
     res.status(200).json(comment);
   } catch (error) {
@@ -102,12 +107,13 @@ exports.CommentDelete = async (req, res) => {
   }
 };
 exports.CommentUpdate = async (req, res) => {
-  const {commentNum, movie_id, content} = req.body;
-  console.log('백백백',commentNum,movie_id,content);
+  const {commentNum, movie_id, editContent, rating} = req.body;
+  console.log('백백백',commentNum,movie_id,editContent, rating);
   try{
     const [updatecomment] = await moviecomments.update(
       {
-        content,
+        content:editContent,
+        star: rating,
       },
       {
         where: {mc_num:commentNum},

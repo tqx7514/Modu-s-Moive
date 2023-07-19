@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState,  } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "../../../node_modules/react-router-dom/dist/index";
@@ -15,8 +15,6 @@ import {
   removeComment,
   updateComment
 } from "../../modules/moviedetail";
-import Swal from "sweetalert2";
-import StarRating from "../../components/movie/StarRating";
 
 const DetailContainer = () => {
   const { id } = useParams();
@@ -114,60 +112,17 @@ const DetailContainer = () => {
     } catch (e) {
       console.log(e);
     }
+  };  
+
+  const onEdit = (commentNum, editContent, rating) => {
+    dispatch(updateComment({commentNum, movie_id, editContent, rating}));
   };
-
-  const [rating, setRating] = useState(parseInt(star));
-
-  const handleStarClick = (selectedRating) => {
-    setRating(selectedRating);
-  };
-  
-  const handleStarMouseEnter = (selectedRating) => {
-    setRating(selectedRating);
-  };
-  
-  const handleStarMouseLeave = () => {
-    // 별점 값 유지
-  };
-  
-
-
-  const onEdit = (e) => {
-    const content = e.target.dataset.content;
-    const commentNum = e.target.dataset.mc_num;
-    const star = e.target.dataset.star;
-    console.log("conent,commentNum,star", content,commentNum, star);
-    Swal.fire({
-      title: "댓글 수정",
-      input: "text",
-      inputValue: `${content}`,
-      showCancelButton: true,
-      cancelButtonText: "취소",
-      confirmButtonText: "수정",
-      showLoaderOnConfirm: true,
-      preConfirm: (input) => {
-        dispatch(
-          updateComment({
-            commentNum,
-            movie_id: movie_id,
-            content: input,
-          })
-        );
-      },
-    }).then((res) => {
-      if (res.isConfirmed) {
-        Swal.fire({
-          icon: "success",
-          text: "수정 성공",
-        });
-      }
-    });
-  }
-
-
-
-  const ownPost = (user && user.userId) === (commentlist && commentlist.id);
-
+  // const ownPost = (user && user.userId) === (commentlist && commentlist);
+const ownPost = (id) =>{
+  console.log('iddddddddddddddddddd',id);
+  console.log('userssssssssssssss',userId);
+  return (userId&&userId) === (id)
+}
   return (
     <Moviedetail
       moviedetail={moviedetail}
@@ -188,6 +143,7 @@ const DetailContainer = () => {
       commentlist={commentlist}
       onRemove = {onRemove}
       onEdit={onEdit}
+      ownPost={ownPost}
     />
   );
 };

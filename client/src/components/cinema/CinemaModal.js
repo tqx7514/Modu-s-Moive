@@ -11,29 +11,56 @@ export const Modal = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 9999;
+    overflow: hidden;
 `;
 
 const Title = styled.div`
-    display: flex;
-    justify-content: center;
-    font-size: 18px;
-    h1{
-        margin: 0;
+    position: relative;
+    height: 54px;
+    line-height: 58px;
+    border-bottom: 1px solid #CCC;
+    color: white;
+    text-align: center;
+    h4{
+        font-size: 18px;
+        color: black;
     }
     button{
-        margin-left: auto;
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        width: 19px;
+        height: 19px;
+        border: none;
+        text-indent: -9999em;
+        background: transparent url("/close_19.png") no-repeat 0 0;
+        font-size: 12px;
+        color: black;
+        cursor: pointer;
     }
+`;
+const Map = styled.div`
+    padding-top: 30px;
 `;
 
 export const ModalContent = styled.div`
     background-color: white;
-    padding: 20px;
+    padding: 25px;
 `;
 
 const { kakao } = window;
 
 const CinemaModal = ({oncloseModal, cinema}) => {
     console.log("1", oncloseModal);
+
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, []);
 
     useEffect(() => {
         const container = document.getElementById('map');
@@ -70,13 +97,17 @@ const CinemaModal = ({oncloseModal, cinema}) => {
     return (
         <Modal>
           <ModalContent>
-            <Title>
-              <h1>지도</h1>
+          <Title>
+              <h4>지도</h4>
               <button onClick={oncloseModal}>
-                <img src="close_13_gry.png"/>
+                닫기
               </button>
             </Title>
-            <div id="map" style={{ width: "500px", height: "500px" }}></div>
+            <Map>
+            <div id="map" style={{ width: "500px", height: "500px" }}>
+                <p></p>
+            </div>
+            </Map>
           </ModalContent>
         </Modal>
     )

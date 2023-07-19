@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import styled from "styled-components";
 import palette from "../../lib/styles/palette";
 import CommentRemoveModal from "./CommentRemoveModeal";
+import MovieCommentEditModal from "./MovieCommentEditModal";
 
 const CommentActionButtonsBlock = styled.div`
     display: flex;
@@ -28,8 +29,9 @@ const ActionButton = styled.button`
     }
 `;
 
-const CommentActionButtons = ({onRemove, commentNum, onEdit, content, star}) => {
+const CommentActionButtons = ({onRemove, commentNum, onEdit, content, star, onChangestar, onRate}) => {
     const [modal, setModal] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const onRemoveClick = () => {
         setModal(true);
     };
@@ -40,10 +42,17 @@ const CommentActionButtons = ({onRemove, commentNum, onEdit, content, star}) => 
         setModal(false);
         onRemove(commentNum);
     }
+    const openModal = () => {
+        setIsOpen(true);
+      };
+      const oncloseModal = () => {
+        setIsOpen(false);
+      };
     return(
         <>
         <CommentActionButtonsBlock>
-            <ActionButton onClick={onEdit} data-mc_num={commentNum} data-content={content} data-star={star}>수정</ActionButton>
+            {/* <ActionButton onClick={onEdit} data-mc_num={commentNum} data-content={content} data-star={star}>수정</ActionButton> */}
+            <ActionButton onClick={openModal}>수정</ActionButton>
             <ActionButton onClick={onRemoveClick}>삭제</ActionButton>
         </CommentActionButtonsBlock>
         <CommentRemoveModal
@@ -51,6 +60,9 @@ const CommentActionButtons = ({onRemove, commentNum, onEdit, content, star}) => 
         onConfirm={onConfirm}
         onCancel={onCancel}
         />
+        {isOpen && (
+            <MovieCommentEditModal oncloseModal={oncloseModal} onEdit={onEdit} commentNum={commentNum} content={content} star={star} onChangestar={onChangestar} onRate={onRate}/>
+        )}
         </>
     )
 }

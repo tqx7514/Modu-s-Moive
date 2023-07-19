@@ -92,6 +92,7 @@ const ModalTag = styled.div`
     background-color: white;
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
   img {
     margin-right: 10px;
@@ -109,7 +110,7 @@ const Cinema = ({ cinema, region }) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCinemas, setSelectedCinemas] = useState([]);
-  const [selectedAddrDetail, setSelectedAddrDetail] = useState(null);
+  const [selectedAddrDetail, setSelectedAddrDetail] = useState("");
   const [selectedCinema, setSelectedCinema] = useState(null);
   const openModal = () => {
     setIsOpen(true);

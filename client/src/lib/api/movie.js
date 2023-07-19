@@ -21,12 +21,13 @@ export const removeComment = ({commentNum,movie_id}) => {
   params: {commentNum, movie_id}});
 };
 
-export const updateComment = ({commentNum, movie_id, content}) => {
-  console.log('update====>', commentNum, movie_id, content);
+export const updateComment = ({ commentNum,movie_id, editContent, rating}) => {
+  console.log('update====>', commentNum, movie_id, editContent, rating);
   return client.post('/currentmovie/detail/comment/update', {
     commentNum,
     movie_id,
-    content,
+    editContent,
+    rating,
   
   });
 };

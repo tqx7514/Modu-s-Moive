@@ -50,9 +50,9 @@ export const commentWrite = createAction(
 export const readComment = createAction(READ_COMMENT, (id) => id);
 
 export const updateComment = createAction(UPDATE_COMMENT, ({
-  commentNum, movie_id, content, star,
+   commentNum, movie_id, editContent, rating,
 }) => ({
-  commentNum, movie_id, content, star
+    commentNum, movie_id, editContent, rating
 }));
 
 export const removeComment = 

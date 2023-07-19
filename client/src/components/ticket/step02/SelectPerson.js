@@ -95,7 +95,8 @@ const SelectPerson = ({number, onIncrease, onDecrease,}) => {
     if (number >= 8) {
       alert('인원은 최대 8명까지 선택 가능합니다.');
     } else {
-      onIncrease();
+      onIncrease(number + 1);
+      
     }
   };
   return (

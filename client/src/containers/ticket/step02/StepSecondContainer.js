@@ -8,18 +8,22 @@ const StepSecondContainer = () => {
   const {number} = useSelector(({stepsecond}) => stepsecond);
   const dispatch = useDispatch();
 
-  const onIncrease = useCallback(() => {
-    dispatch(increase());
-  }, [dispatch]);
+  // const onIncrease = useCallback(() => {
+  //   dispatch(increase());
+  // }, [dispatch]);
   
-  const onDecrease = useCallback(() => {
-    dispatch(decrease());
-  }, [dispatch]);
+  // const onDecrease = useCallback(() => {
+  //   dispatch(decrease());
+  // }, [dispatch]);
 
   return (
     <>
         <ReserveNavContainer/>
-        <SelectPerson number={number} onIncrease={onIncrease} onDecrease={onDecrease}/>
+        <SelectPerson 
+          number={number} 
+          // onIncrease={onIncrease} 
+          // onDecrease={onDecrease}
+        />
     </>
   )
 }

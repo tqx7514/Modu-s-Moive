@@ -97,7 +97,7 @@ const ReserveNav = ({ data, adult, teenager }) => {
         <NavReserveCont>
           <ul>
             <li>
-              {adult.name}({adult.number}), {teenager.name}({teenager.number})
+              {/* {adult.name}({adult.number}), {teenager.name}({teenager.number}) */}
             </li>
             <li></li>
           </ul>

@@ -5,24 +5,14 @@ import { decrease, increase } from '../../../modules/stepsecond';
 
 const SelectPersonContiner = () => {
   const {number} = useSelector(({stepsecond}) => stepsecond);
-  const {
-    adultNumber,
-    teenagerNumber,
-    seniorNumber,
-    disabledNumber,
-  } = useSelector(({stepsecond}) => ({
-    adultNumber: stepsecond.adult.number,
-    teenagerNumber: stepsecond.teenager.number,
-    seniorNumber: stepsecond.senior.number,
-    disabledNumber: stepsecond.disabled.number,
-  }))
+
   const dispatch = useDispatch();
-  const onIncrease = useCallback((key) => {
-    dispatch(increase(key));
+  const onIncrease = useCallback(() => {
+    dispatch(increase());
   }, [dispatch]);
   
   const onDecrease = useCallback((key) => {
-    dispatch(decrease(key));
+    dispatch(decrease({key}));
   }, [dispatch]);
 
 
@@ -30,10 +20,6 @@ const SelectPersonContiner = () => {
     <>
         <SelectPerson 
             number={number}
-            adultNumber={adultNumber}
-            teenagerNumber={teenagerNumber}
-            seniorNumber={seniorNumber}
-            disabledNumber={disabledNumber}
             onIncrease={onIncrease} 
             onDecrease={onDecrease}
         />

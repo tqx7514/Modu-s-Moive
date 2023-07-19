@@ -89,7 +89,7 @@ const PersonNum = styled.div`
 `;
 
 const SelectPerson = ({
-  number,
+  // number,
   adultNumber,
   teenagerNumber,
   seniorNumber,
@@ -98,17 +98,19 @@ const SelectPerson = ({
   onDecrease,
 }) => {
   const {data} = useSelector(({stepfirst}) => stepfirst);
+  const {person} = useSelector(({stepsecond}) => stepsecond);
+  console.log('123123123123123',person)
 
-  const handleIncrease = (key) => {
-    if (number >= 8) {
-      alert('인원은 최대 8명까지 선택 가능합니다.');
-    } else {
-      onIncrease(key);
-    }
+  const handleIncrease = () => {
+    // if (number >= 8) {
+    //   alert('인원은 최대 8명까지 선택 가능합니다.');
+    // } else {
+      onIncrease();
+    // }
   };
   const handleDecrease = (key,number)=>{
     if(number<=0){
-      alert('더이상 줄일수 없습니다.')
+      return;
     }else{
       onDecrease(key)
     }
@@ -152,38 +154,16 @@ const SelectPerson = ({
           </MovieSubInfo>
         </MovieInfo>
         <PersonNum>
-          <div>
-            <p>성인</p>
-            <div>
-              <button onClick={()=>handleDecrease("adult",adultNumber)}>-</button>
-              {adultNumber}
-              <button onClick={() => handleIncrease("adult")}>+</button>
+          {Object.keys(person).map((p) => (
+            <div key={p}>
+              {person[p].name}
+              <div>
+                <button>-</button>
+                {person[p].number}
+                <button onClick={() => handleIncrease(p)}>+</button>
+              </div>
             </div>
-          </div>
-          <div>
-            <p>청소년</p>
-            <div>
-              <button onClick={()=>handleDecrease("teenager",teenagerNumber)}>-</button>
-              {teenagerNumber}
-              <button onClick={() => handleIncrease("teenager")}>+</button>
-            </div>
-          </div>
-          <div>
-            <p>시니어</p>
-            <div>
-            <button onClick={()=>handleDecrease("senior",seniorNumber)}>-</button>
-              {seniorNumber}
-              <button onClick={() => handleIncrease("senior")}>+</button>
-            </div>
-          </div>
-          <div>
-            <p>장애인</p>
-            <div>
-            <button onClick={()=>handleDecrease("disabled",disabledNumber)}>-</button>
-              {disabledNumber}
-              <button onClick={() => handleIncrease("disabled")}>+</button>
-            </div>
-          </div>
+          ))}
         </PersonNum>
       </PersonSelect>
     </PersonSeatWrap>

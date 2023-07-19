@@ -28,7 +28,7 @@ const EventTitle = styled.div`
   margin: 10px 0 10px 0;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid #EEE;
 `;
 
 const EventContainerBlock = styled.div`
@@ -111,7 +111,7 @@ const EventListCompots = ({ events }) => {
               .map((e) => (
                 <div key={e.eventNum}>
                   <Link to={`/event/movie/${e.eventNum}`}>
-                    <img src={e.eventImg} alt="영화 이벤트" />
+                    <img src={e.eventImg} alt={e.eventTitle} />
                     <EventInfoBlock>
                       <p>{e.eventTitle}</p>
                       <p>
@@ -142,7 +142,7 @@ const EventListCompots = ({ events }) => {
               .map((e) => (
                 <div key={e.eventNum}>
                   <Link to={`/event/promote/${e.eventNum}`}>
-                    <img src={e.eventImg} alt="제휴/할인 이벤트" />
+                    <img src={e.eventImg} alt={e.eventTitle} />
                     <EventInfoBlock>
                       <p>{e.eventTitle}</p>
                       <p>
@@ -173,7 +173,7 @@ const EventListCompots = ({ events }) => {
               .map((e) => (
                 <div key={e.eventNum}>
                   <Link to={`/event/other/${e.eventNum}`}>
-                    <img src={e.eventImg} alt="기타 이벤트" />
+                    <img src={e.eventImg} alt={e.eventTitle} />
                     <EventInfoBlock>
                       <p>{e.eventTitle}</p>
                       <p className="textdate">

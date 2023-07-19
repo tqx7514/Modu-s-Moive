@@ -48,7 +48,7 @@ const ShowMoreButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid gray;
+  border: 1px solid #ECECEC;
   margin: 10px 0px 10px 0px;
 `;
 
@@ -94,7 +94,7 @@ const EventMovieCompots = ({ events }) => {
             {filteredEvents.slice(0, visibleCount).map((e) => (
               <div key={e.eventNum}>
                 <Link to={`/event/movie/${e.eventNum}`}>
-                  <img src={e.eventImg} alt="영화 이벤트" />
+                  <img src={e.eventImg} alt={e.eventTitle} />
                   <EventMovieInfoBlock>
                     <p>{e.eventTitle}</p>
                     <p className="textdate">

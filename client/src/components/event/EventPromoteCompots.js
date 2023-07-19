@@ -44,7 +44,7 @@ const ShowMoreButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid gray;
+  border: 1px solid #ECECEC;
   margin: 10px 0 10px 0;
 `;
 
@@ -90,7 +90,7 @@ const EventPromoteCompots = ({ events }) => {
             {filteredEvents.slice(0, visibleCount).map((e) => (
               <div key={e.eventNum}>
                 <Link to={`/event/promote/${e.eventNum}`}>
-                  <img src={e.eventImg} alt="제휴/할인 이벤트" />
+                  <img src={e.eventImg} alt={e.eventTitle} />
                   <EventPromoteInfoBlock>
                     <p>{e.eventTitle}</p>
                     <p className="textdate">

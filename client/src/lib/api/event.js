@@ -15,3 +15,11 @@ export const eventpromotelist = (eventNum) => {
 export const eventotherlist = (eventNum) => {
   return client.get(`/event/other/${eventNum}`);
 };
+
+export const eventview = (eventNum) => {
+  return client.get(`/event/${eventNum}/view`);
+};
+
+// export const eventalllist = (eventNum) => {
+//   return client.get("/admin/event");
+// };

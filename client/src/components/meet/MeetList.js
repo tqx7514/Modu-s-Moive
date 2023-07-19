@@ -49,7 +49,7 @@ const MeetItemBlock = styled.div`
   justify-content: space-between;
 
   &:hover {
-    background-color: lightgray;
+    background-color: pink;
   }
 `;
 

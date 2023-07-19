@@ -28,7 +28,7 @@ const RegionBlock = styled.div`
   text-align: center;
 
   &:hover {
-    color: blue;
+    color: red;
     font-weight: bold;
   }
 `;

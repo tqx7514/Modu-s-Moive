@@ -21,10 +21,10 @@ const TagBlock = styled.div`
   border-radius: 0.5rem;
   margin-bottom: 1rem;
   &:hover {
-    border: 2px solid black;
-    background: gray;
+    border: 2px solid red;
+    background: white;
     font-weight: bold;
-    color: lightblue;
+    color: hotpink;
   }
 `;
 

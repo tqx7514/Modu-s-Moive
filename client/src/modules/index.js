@@ -18,6 +18,7 @@ import stepfirst, {
   movieReadSaga,
   timeSaga,
 } from "./stepfirst";
+import stepsecond from "./stepsecond";
 import meetwrite, { meetWriteSaga } from "./meetwrite";
 import meet, { meetSaga } from "./meet";
 import meetlist, { meetsSaga } from "./meetlist";
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
   moviedetail,
   posts,
   stepfirst,
+  stepsecond,
   meetwrite,
   meet,
   meetlist,

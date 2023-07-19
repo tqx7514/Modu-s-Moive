@@ -50,6 +50,15 @@ export const AreaItem = styled.li`
       margin-bottom: 5px;
     }
   }
+  &.stepsecond{
+    padding: 0 0 5px;
+    font-size: 17px;
+    list-style: none;
+    cursor: default;
+    span.age{
+      margin-right: 5px;
+    }
+  }
   span {
     font-size: 11px;
     color: #666;

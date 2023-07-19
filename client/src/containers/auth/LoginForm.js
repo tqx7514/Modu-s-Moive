@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import AuthForm from "../../components/auth/AuthForm";
 import { changeField, initializeForm, login } from "../../modules/auth";
 import { check } from "../../modules/user";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { Navigate } from "../../../node_modules/react-router-dom/dist/index";
 
 const LoginForm = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8080,
@@ -65,14 +67,16 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/");
+      const { from } = location.state || { from: { pathname: "/" } };
       try {
         localStorage.setItem("user", JSON.stringify(user));
       } catch (e) {
         console.log("로칼스토리지는 일안하는중~");
       }
+      navigate(from);
     }
-  }, [navigate, user]);
+  }, [navigate, user, location.state]);
+  
 
   return (
     <div>

@@ -80,7 +80,6 @@ const ReserveNav = ({ data }) => {
       </li>
     </ul>
   )
-  console.log('data??????????????', data.cinema);
   return (
     <NavReserveUl>
       <NavReserveLi active={String(location.pathname === "/ticket")}>

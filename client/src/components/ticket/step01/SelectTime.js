@@ -171,10 +171,13 @@ const SelectTime = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if(isModal){
+    if (isModal) {
       document.body.style.overflow = "hidden";
     }
-  }, []);
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isModal]);
 
   const groupMoviesByTitle = () => {
     const groupedMovies = {};
@@ -235,7 +238,7 @@ const SelectTime = () => {
                     : ""
                 }
               ></span>
-              {`${key.replace("all ", "")}`}
+              {`${key.replace(/all|12|15|19 /g, "")}`}
             </MovieList>
             <div>
               <p>{`${disp} ${language}`}</p>
@@ -299,7 +302,8 @@ const SelectTime = () => {
                     : ""
                 }
               ></span>
-              {`${key.replace("all ", "")}`}
+              {`${key.replace(/all|12|15|19 /g, "")}`}
+
             </MovieList>
             <div>
               <p>{`${movie.disp} ${movie.language}`}</p>

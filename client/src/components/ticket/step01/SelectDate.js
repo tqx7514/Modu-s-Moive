@@ -110,7 +110,7 @@ const SelectDate = ({onDateData}) => {
   const renderCalendar = () => {
     const calendar = [];
     const todayDate = today.getDate();
-
+  
     for (let i = todayDate; i <= daysInMonth; i++) {
       const date = new Date(year, month, i);
       const dayOfWeek = week[(firstDayOfMonth + i - 1) % 7];
@@ -121,7 +121,7 @@ const SelectDate = ({onDateData}) => {
         dayOfWeek === '일' ? `${daySelect} sunday` :
         dayOfWeek === '토' ? `${daySelect} satday` :
         daySelect;
-
+  
       calendar.push(
         <DayItem 
           key={date.getTime()} 
@@ -138,9 +138,40 @@ const SelectDate = ({onDateData}) => {
         </DayItem>
       );
     }
-
-    return calendar;
+  
+    // 다음 달의 날짜 출력
+    const nextMonthFirstDay = new Date(year, month + 1, 1).getDay();
     
+    for (let i = 1; i <= 7 - nextMonthFirstDay; i++) {
+      const date = new Date(year, month + 1, i);
+      const dayOfWeek = week[(nextMonthFirstDay + i - 1) % 7];
+      const dayContent = dayOfWeek;
+      const isSelected = selectedDate && selectedDate.getTime() === date.getTime();
+      const daySelect = isSelected ? 'day selected' : 'day';
+      const dayClass = 
+        dayOfWeek === '일' ? `${daySelect} sunday` :
+        dayOfWeek === '토' ? `${daySelect} satday` :
+        daySelect
+      ;
+
+      const isFirstDayOfMonth = i === 1;
+      const isNextMonthFirstDay = i === 1 && month < 11;
+      const isFirstMonth = isFirstDayOfMonth || isNextMonthFirstDay;
+  
+      calendar.push(
+        <DayItem 
+          key={date.getTime()} 
+          className={`${dayClass}`} 
+          onClick={() => handleDateClick(date)}
+        >
+        {isFirstMonth && <FirstMonth>{month + 2}월</FirstMonth>}
+        <DayDate className='date'>{i}</DayDate>
+        <DayWeek>{dayContent}</DayWeek>
+        </DayItem>
+      );
+    }
+  
+    return calendar;
   }
     
   return (

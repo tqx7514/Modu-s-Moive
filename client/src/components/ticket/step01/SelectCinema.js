@@ -127,7 +127,6 @@ const SelectCinema = ({
   onFirstData,
 }) => {
   const [selectedSpecial, setSelectedSpecial] = useState("전체");
-  console.log(selectedSpecial);
   const [selectedRegion, setSelectedRegion] = useState(null);
   const [selectedCinema, setSelectedCinema] = useState("영화관");
 

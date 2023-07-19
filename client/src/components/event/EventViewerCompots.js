@@ -64,6 +64,7 @@ const EventShareButton = styled.button`
   margin-left: 10px;
   align-items: center;
   justify-content: center;
+  background: #ffffff;
 `;
 
 const BtnShareImage = styled.img`
@@ -78,7 +79,6 @@ const EventViewerCompots = ({ eventpost }) => {
   const { eventNum } = useParams();
   const [eventData, setEventData] = useState(null);
   const navigate = useNavigate();
-  console.log('컴포넌트');
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 // import React, { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 // import styled from "styled-components";
-// import { getEventDetails } from "../../api/event";
+// import { getEventDetails } from "../../../lib/api/event";
 
 // const AdminEventBoardDetailsContainer = styled.div``;
 

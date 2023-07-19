@@ -1,5 +1,5 @@
 // import React, { useState, useEffect } from "react";
-// import { eventalllist } from "../../api/event";
+// import { eventalllist } from "../../../lib/api/event";
 // import AdminEventBoardList from "../../../components/common/admin/AdminEventBoardListCompots";
 // import styled from "styled-components";
 

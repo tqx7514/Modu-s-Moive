@@ -56,7 +56,7 @@ const NavReserveLi = styled.li`
     `}
 `;
 
-const ReserveNav = ({ data }) => {
+const ReserveNav = ({ data, adult, teenager }) => {
   const location = useLocation();
   const timeContent = data.time.cinema === undefined ? (
     <ul>
@@ -96,7 +96,9 @@ const ReserveNav = ({ data }) => {
         인원/좌석
         <NavReserveCont>
           <ul>
-            <li></li>
+            <li>
+              {adult.name}({adult.number}), {teenager.name}({teenager.number})
+            </li>
             <li></li>
           </ul>
         </NavReserveCont>

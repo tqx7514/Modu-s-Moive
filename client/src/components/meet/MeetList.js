@@ -38,7 +38,9 @@ const MeetItemBlock = styled.div`
   @media (min-width: 1024px) {
     width: 30%;
   }
-  border: 1px solid black;
+  border: 1px solid
+    ${({ meetNum, user_meet }) =>
+      user_meet && user_meet.includes(meetNum) ? "red" : "black"};
   margin-top: 1rem;
   margin-bottom: 1rem;
   transition: background-color 0.3s ease;
@@ -47,7 +49,7 @@ const MeetItemBlock = styled.div`
   justify-content: space-between;
 
   &:hover {
-    background-color: lightgray;
+    background-color: pink;
   }
 `;
 
@@ -144,12 +146,12 @@ const Container = styled.div`
 //   cursor: pointer;
 // `;
 
-const MeetItem = ({ meet }) => {
-  const { createdAt, userId, tags, title, meetNum, region, views, count } =
+const MeetItem = ({ meet, user_Id, user_meet }) => {
+  const { createdAt, tags, title, meetNum, region, views, count, userId } =
     meet;
   const tagsArray = Array.isArray(tags) ? tags : JSON.parse(tags);
   return (
-    <MeetItemBlock>
+    <MeetItemBlock meetNum={meetNum} user_meet={user_meet}>
       <Link to={`/meet/detail/${meetNum}`}>
         <h2>{title}</h2>
         <MeetSubInfo
@@ -173,7 +175,14 @@ const MeetItem = ({ meet }) => {
   );
 };
 
-const MeetList = ({ meets, loading, error, showWriteButton, regions }) => {
+const MeetList = ({
+  meets,
+  loading,
+  error,
+  showWriteButton,
+  regions,
+  user,
+}) => {
   const [selectedRegion, setSelectedRegion] = useState("전국");
   const navigate = useNavigate();
   if (error) {
@@ -214,7 +223,12 @@ const MeetList = ({ meets, loading, error, showWriteButton, regions }) => {
           {!loading && meets && (
             <MeetListItem>
               {meets.map((meet) => (
-                <MeetItem meet={meet} key={meet.meetNum} />
+                <MeetItem
+                  meet={meet}
+                  key={meet.meetNum}
+                  user_Id={user.id}
+                  user_meet={user.meet}
+                />
               ))}
             </MeetListItem>
           )}

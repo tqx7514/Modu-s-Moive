@@ -81,6 +81,7 @@ const MeetViewerContainer = () => {
       meet={meet}
       loading={loading}
       error={error}
+      ownMeet={ownMeet}
       actionButtons={
         ownMeet && (
           <MeetDetailActionButtons

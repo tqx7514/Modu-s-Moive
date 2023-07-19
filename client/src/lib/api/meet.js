@@ -5,6 +5,7 @@ export const writeMeet = ({ title, body, tags, userId, region }) => {
   return client.post("/meet/write", { title, body, tags, userId, region });
 };
 export const readMeet = (meetNum) => {
+  console.log("readMeet입니다~", meetNum);
   return client.get(`/meet/detail/${meetNum}`);
 };
 export const Meetlist = ({ tag, region, page }) => {
@@ -28,11 +29,8 @@ export const updateMeet = ({ meetNum, title, body, tags, region }) =>
   });
 export const removeMeet = (meetNum) =>
   client.delete(`/meet/${meetNum}`, meetNum);
-// export const updateToken = (user) => {
-//   console.log("프론트", user);
-//   return client.post("/meet/updateToken", user);
-// };
 
+// 게시판
 export const writeMeetBoard = ({ body, userId, meetNum }) => {
   console.log("프론트api meetboard글쓰기");
   return client.post("/meet/writeMeetBoard", { body, userId, meetNum });
@@ -85,6 +83,7 @@ export const updateMeetComment = ({ meetcommentNum, MeetBoardNum, body }) => {
   });
 };
 
+// 채팅
 export const getMsg = ({ meetNum, userId }) => {
   console.log("getMsg 프론트API 도착", meetNum, userId);
   return client.post("/meet/chat/getmsg", {
@@ -94,17 +93,15 @@ export const getMsg = ({ meetNum, userId }) => {
 };
 
 export const sendMsg = ({ userId, meetNum, message }) => {
-  // console.log(
-  //   "sendMsg 프론트 userId==",
-  //   userId,
-  //   "meetNum==",
-  //   meetNum,
-  //   "message==",
-  //   message
-  // );
   return client.post("/meet/chat/sendmsg", {
     userId,
     meetNum,
     message,
   });
+};
+
+//회원관리
+export const mandate = ({ meetuserId, meetNum }) => {
+  console.log("매니저위임 프론트api meetuserId===", meetuserId, meetNum);
+  return client.post(`/meet/manage/mandate/${meetuserId}`, { meetNum });
 };

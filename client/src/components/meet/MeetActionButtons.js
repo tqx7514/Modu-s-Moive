@@ -28,7 +28,7 @@ const ActionButton = styled.button`
   }
 `;
 
-const MeetActionButtons = ({ onEdit, onRemove }) => {
+const MeetActionButtons = ({ onEdit, onRemove, onKick }) => {
   const [modal, setModal] = useState(false);
   const onRemoveClick = () => {
     setModal(true);
@@ -44,8 +44,9 @@ const MeetActionButtons = ({ onEdit, onRemove }) => {
   return (
     <>
       <MeetActionButtonsBlock>
-        <ActionButton onClick={onEdit}>수정</ActionButton>
-        <ActionButton onClick={onRemoveClick}>삭제</ActionButton>
+        {onEdit && <ActionButton onClick={onEdit}>수정</ActionButton>}
+        {onRemove && <ActionButton onClick={onRemoveClick}>삭제</ActionButton>}
+        {onKick && <ActionButton onClick={onKick}>강퇴</ActionButton>}
       </MeetActionButtonsBlock>
       <MeetAskRemoveModal
         visible={modal}

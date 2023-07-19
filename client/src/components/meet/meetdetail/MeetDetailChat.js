@@ -13,16 +13,18 @@ const MeetDetailChat = ({ user, meet }) => {
   const [msg, setMsg] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
-
+  const getMessages = async () => {
+    const meetNum = meet.meetNum;
+    const userId = user.num;
+    const response = await getMsg({ meetNum, userId });
+    setMsg(response.data);
+  };
   useEffect(() => {
-    const getMessages = async () => {
-      const meetNum = meet.meetNum;
-      const userId = user.num;
-      const response = await getMsg({ meetNum, userId });
-      console.log("메시지 응답", response.data);
-      setMsg(response.data);
+    const interval = setInterval(getMessages, 2000); // 0.1초마다 getMessages 호출
+
+    return () => {
+      clearInterval(interval); // 컴포넌트가 언마운트되면 interval을 정리(cleanup)
     };
-    getMessages();
   }, []);
 
   const handleSendMsg = async (message) => {
@@ -34,11 +36,15 @@ const MeetDetailChat = ({ user, meet }) => {
       const msgs = [...msg];
       msgs.push({ fromSelf: true, message: message });
       setMsg(msgs);
+      getMessages();
     } catch (error) {
       console.log(error);
     }
   };
 
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [msg]);
   return (
     <Container>
       <div className="chat-header">

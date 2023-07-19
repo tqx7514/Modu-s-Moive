@@ -7,7 +7,7 @@ const MeetInfoBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: lavender;
+  background-color: white;
   height: 30rem;
   font-size: 1.1rem;
 
@@ -18,7 +18,7 @@ const MeetInfoBlock = styled.div`
 `;
 const MeetInfo = styled.div`
   width: 48%;
-  background-color: yellow;
+  background-color: white;
   height: 95%;
   text-align: center;
   display: flex;
@@ -28,7 +28,7 @@ const MeetInfo = styled.div`
   margin: 0.5rem;
   hr {
     border: none;
-    border-top: 1px solid black;
+    border-top: 1px solid lightgray;
     margin: 0.5rem 0;
     width: 80%;
   }
@@ -37,6 +37,21 @@ const MeetInfo = styled.div`
     margin: 0.5rem 0 0.5rem 0;
   }
 `;
+
+const MeetInfoImg = styled.div`
+  width: 48%;
+  background: url("/MeetMovie.jpg") no-repeat;
+  background-size: cover; /* 배경 이미지를 사진에 딱 맞게 조절 */
+  background-position: center; /* 배경 이미지를 가운데로 정렬 */
+  height: 95%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem;
+`;
+
 const MeetContent = styled.div`
   padding: 2rem 2rem 0 2rem;3
   text-align: center;
@@ -56,14 +71,16 @@ const MeetDetailHome = ({ meet, joinButton }) => {
   return (
     <div>
       <MeetInfoBlock>
-        <MeetInfo>이미지</MeetInfo>
+        <MeetInfoImg>
+          <img src="MeetMovie.jpg" alt="" />
+        </MeetInfoImg>
         <MeetInfo>
           <div>모임번호 | {meetNum}</div>
           <hr />
           <div>지역 | {region}</div>
           <hr />
           <div>
-            모임장 |{" "}
+            매니저 |{" "}
             <span style={{ margin: "0 0.3rem 0 0.3rem " }}>
               <FaChessKing />
             </span>

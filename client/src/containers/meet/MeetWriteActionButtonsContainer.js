@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { writeMeet, updateMeet } from "../../modules/meetwrite";
 import WriteActionButtons from "../../components/meet/WriteActionButtons";
+import { join } from "../../modules/user";
 
 const MeetWriteActionButtonsContainer = () => {
   const navigate = useNavigate();
@@ -17,11 +18,13 @@ const MeetWriteActionButtonsContainer = () => {
     userId,
     region,
     originalMeetNum,
+    user,
   } = useSelector(({ meetwrite, user }) => ({
     title: meetwrite.title,
     body: meetwrite.body,
     tags: meetwrite.tags,
     meet: meetwrite.meet,
+    user: user.user,
     userId: user.user && user.user.id,
     region: meetwrite.region,
     meetError: meetwrite.meetError,
@@ -43,6 +46,7 @@ const MeetWriteActionButtonsContainer = () => {
         region,
       })
     );
+    // dispatch(join({ user, meetNum }));
   };
 
   const onCancel = () => {
@@ -51,6 +55,9 @@ const MeetWriteActionButtonsContainer = () => {
 
   useEffect(() => {
     if (meet) {
+      const meetNum = meet.meetNum;
+      console.log("방금만든 meetNum입니다", meetNum);
+      dispatch(join({ user, meetNum }));
       navigate("/meet");
     }
     if (meetError) {

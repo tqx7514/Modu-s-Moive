@@ -7,13 +7,17 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    user_Id: {
-      type: DataTypes.STRING(255),
+    user_Num: {
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: 'users',
-        key: 'id'
+        key: 'userNum'
       }
+    },
+    user_Id: {
+      type: DataTypes.STRING(255),
+      allowNull: false
     },
     meet_MeetNum: {
       type: DataTypes.INTEGER,
@@ -48,7 +52,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "meetusers_FK",
         using: "BTREE",
         fields: [
-          { name: "user_Id" },
+          { name: "user_Num" },
         ]
       },
     ]

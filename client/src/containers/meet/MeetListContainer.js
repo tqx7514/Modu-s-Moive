@@ -37,6 +37,7 @@ const MeetListContainer = () => {
       meets={meets}
       showWriteButton={user}
       regions={regions}
+      user={user}
     />
   );
 };

@@ -15,7 +15,8 @@ const MeetDetailManage = ({ members, meet, onKick, onMandate }) => {
   // 현재 페이지에 해당하는 멤버 목록을 계산
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentMembers = members.slice(indexOfFirstItem, indexOfLastItem);
+  const currentMembers =
+    members && members.slice(indexOfFirstItem, indexOfLastItem);
 
   // 페이지 변경 처리
   const handlePageChange = (pageNumber) => {
@@ -38,47 +39,49 @@ const MeetDetailManage = ({ members, meet, onKick, onMandate }) => {
           </tr>
         </thead>
         <tbody>
-          {currentMembers.map((member) => (
-            <tr key={member.meetuserNum}>
-              <td style={{ textAlign: "center" }}>{member.meetuserNum}</td>
-              <td style={{ textAlign: "center" }}>
-                {meet.userId == member.user_Id && (
-                  <span style={{ margin: "0 0.3rem 0 0.3rem " }}>
-                    <FaChessKing />
-                  </span>
+          {currentMembers &&
+            currentMembers.map((member) => (
+              <tr key={member.meetuserNum}>
+                <td style={{ textAlign: "center" }}>{member.meetuserNum}</td>
+                <td style={{ textAlign: "center" }}>
+                  {meet.userId == member.user_Id && (
+                    <span style={{ margin: "0 0.3rem 0 0.3rem " }}>
+                      <FaChessKing />
+                    </span>
+                  )}
+                  {member.user_Id}
+                </td>
+                <td style={{ textAlign: "center" }}>
+                  {formatDate(member.createdAt)}
+                </td>
+                <td style={{ textAlign: "center" }}>
+                  {member.user_Num_user.gender}
+                </td>
+                <td style={{ textAlign: "center" }}>
+                  {member.user_Num_user.age}
+                </td>
+                <td style={{ textAlign: "center" }}>
+                  {member.user_Num_user.email}
+                </td>
+                {meet.userId !== member.user_Id && (
+                  <ButtonsCell>
+                    <MeetDetailActionButtons
+                      type="회원"
+                      onKick={onKick}
+                      onMandate={onMandate}
+                      meetuserId={member.user_Id}
+                      meetuserNum={member.meetuserNum}
+                    />
+                  </ButtonsCell>
                 )}
-                {member.user_Id}
-              </td>
-              <td style={{ textAlign: "center" }}>
-                {formatDate(member.createdAt)}
-              </td>
-              <td style={{ textAlign: "center" }}>
-                {member.user_Num_user.gender}
-              </td>
-              <td style={{ textAlign: "center" }}>
-                {member.user_Num_user.age}
-              </td>
-              <td style={{ textAlign: "center" }}>
-                {member.user_Num_user.email}
-              </td>
-              {meet.userId !== member.user_Id && (
-                <ButtonsCell>
-                  <MeetDetailActionButtons
-                    type="회원"
-                    onKick={onKick}
-                    onMandate={onMandate}
-                    meetuserId={member.user_Id}
-                  />
-                </ButtonsCell>
-              )}
-            </tr>
-          ))}
+              </tr>
+            ))}
         </tbody>
       </table>
 
       <Pagination>
         {Array.from(
-          { length: Math.ceil(members.length / itemsPerPage) },
+          { length: Math.ceil(members && members.length / itemsPerPage) },
           (_, index) => (
             <PageNumber
               key={index + 1}

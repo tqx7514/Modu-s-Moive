@@ -36,6 +36,7 @@ const MeetDetailActionButtons = ({
   onKick,
   onMandate,
   meetuserId,
+  meetuserNum,
   type,
   num,
   num2,
@@ -60,6 +61,10 @@ const MeetDetailActionButtons = ({
   const onMandateClick = () => {
     onMandate(meetuserId);
   };
+  const onKickClick = () => {
+    console.log("온킥큭릭", meetuserNum);
+    onKick(meetuserNum);
+  };
   return (
     <>
       <MeetActionButtonsBlock>
@@ -78,7 +83,9 @@ const MeetDetailActionButtons = ({
         {onRemove && (
           <ActionButton onClick={onRemoveClick}>{type} 삭제</ActionButton>
         )}
-        {onKick && <ActionButton onClick={onKick}>{type} 강퇴</ActionButton>}
+        {onKick && (
+          <ActionButton onClick={onKickClick}>{type} 강퇴</ActionButton>
+        )}
         {onMandate && (
           <ActionButton onClick={onMandateClick}>매니저 위임</ActionButton>
         )}

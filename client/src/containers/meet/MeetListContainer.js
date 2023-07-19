@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { meetList } from "../../modules/meetlist";
 import MeetList from "../../components/meet/MeetList";
 import { initialize } from "../../modules/meetwrite";
+import { loadUser } from "../../index";
 
 const MeetListContainer = () => {
   // const location = useLocation();
@@ -20,6 +21,10 @@ const MeetListContainer = () => {
       user: user.user,
     })
   );
+  useEffect(() => {
+    console.log("로드유저");
+    loadUser();
+  }, []);
   useEffect(() => {
     dispatch(initialize());
     const page = parseInt(searchParams.get("page"), 10) || 1;

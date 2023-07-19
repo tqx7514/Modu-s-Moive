@@ -18,7 +18,7 @@ const store = createStore(
 );
 const user = localStorage.getItem("user");
 
-function loadUser() {
+export function loadUser() {
   try {
     if (!user) return;
     store.dispatch(tempSetUser(user));

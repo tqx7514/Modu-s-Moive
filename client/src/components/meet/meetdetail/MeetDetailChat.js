@@ -8,10 +8,13 @@ import MeetDetailChatInput from "./MeetDetailChatInput";
 import Man from "../../../public/Man.png";
 import Woman from "../../../public/Woman.png";
 import { getMsg, sendMsg } from "../../../lib/api/meet";
+import { useSelector } from "react-redux";
 
 const MeetDetailChat = ({ user, meet }) => {
   const [msg, setMsg] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [a, setA] = useState(1);
   const scrollRef = useRef();
   const getMessages = async () => {
     const meetNum = meet.meetNum;
@@ -26,9 +29,19 @@ const MeetDetailChat = ({ user, meet }) => {
       clearInterval(interval); // 컴포넌트가 언마운트되면 interval을 정리(cleanup)
     };
   }, []);
-
+  const down = () => {
+    console.log("aaaaaaaaaaaaaaaaaaaa", a);
+    if (a === 1) {
+      console.log("실행합니다");
+      scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+    setA(2);
+  };
   const handleSendMsg = async (message) => {
     try {
+      setA(1);
+      console.log("핸들센드메시지", a);
+
       const userId = user.num;
       const meetNum = meet.meetNum;
       await sendMsg({ userId, meetNum, message });
@@ -36,6 +49,7 @@ const MeetDetailChat = ({ user, meet }) => {
       const msgs = [...msg];
       msgs.push({ fromSelf: true, message: message });
       setMsg(msgs);
+      down();
       getMessages();
     } catch (error) {
       console.log(error);
@@ -43,48 +57,57 @@ const MeetDetailChat = ({ user, meet }) => {
   };
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [msg]);
+    if (msg.length > 0) {
+      down();
+    }
+  }, [msg, a]);
+
   return (
-    <Container>
-      <div className="chat-header">
-        <div className="user-details">
-          {/* <div className="avatar">{meet.meetNum}</div> */}
-          <div className="meet-title">
-            <h3>
-              <span>
-                <BsFillChatDotsFill />
-                <h2>{meet && meet.title}</h2>
-              </span>
-            </h3>
-          </div>
-        </div>
-      </div>
-      <div className="chat-messages">
-        {msg.map((message) => {
-          return (
-            <div ref={scrollRef} key={uuidv4()}>
-              <div
-                className={`message ${
-                  message.fromSelf ? "sended" : "received"
-                }`}
-              >
-                {message.fromSelf ? null : (
-                  <div>
-                    <Profile gender={message.gender} />
-                    <Profile2>{message.senderName}</Profile2>
-                  </div>
-                )}
-                <div className="content">
-                  <span className="sender">{message.message}</span>
-                </div>
+    <>
+      {loading ? (
+        <img src="robot.gif" alt="" />
+      ) : (
+        <Container>
+          <div className="chat-header">
+            <div className="user-details">
+              {/* <div className="avatar">{meet.meetNum}</div> */}
+              <div className="meet-title">
+                <h3>
+                  <span>
+                    <BsFillChatDotsFill />
+                    <h2>{meet && meet.title}</h2>
+                  </span>
+                </h3>
               </div>
             </div>
-          );
-        })}
-      </div>
-      <MeetDetailChatInput handleSendMsg={handleSendMsg} />
-    </Container>
+          </div>
+          <div className="chat-messages">
+            {msg.map((message) => {
+              return (
+                <div ref={scrollRef} key={uuidv4()}>
+                  <div
+                    className={`message ${
+                      message.fromSelf ? "sended" : "received"
+                    }`}
+                  >
+                    {message.fromSelf ? null : (
+                      <div>
+                        <Profile gender={message.gender} />
+                        <Profile2>{message.senderName}</Profile2>
+                      </div>
+                    )}
+                    <div className="content">
+                      <span className="sender">{message.message}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <MeetDetailChatInput handleSendMsg={handleSendMsg} />
+        </Container>
+      )}
+    </>
   );
 };
 

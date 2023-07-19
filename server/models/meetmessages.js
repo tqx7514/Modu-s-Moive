@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     message: {
-      type: DataTypes.STRING(1000),
+      type: DataTypes.STRING(9999),
       allowNull: false
     }
   }, {

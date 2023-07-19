@@ -4,7 +4,7 @@ import MeetDetailActionButtons from "../../components/meet/meetdetail/MeetDetail
 import MeetDetailManage from "../../components/meet/meetdetail/MeetDetailManage";
 import { mandate } from "../../lib/api/meet";
 import { useNavigate } from "react-router-dom";
-import { readMeet } from "../../modules/meet";
+import { kickMeet, readMeet } from "../../modules/meet";
 import Swal from "sweetalert2";
 
 const MeetDetailManageContainer = () => {
@@ -15,8 +15,9 @@ const MeetDetailManageContainer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onKick = async (userNum) => {
-    console.log("온킥~");
+  const onKick = async (meetuserNum) => {
+    const meetNum = meet.meetNum;
+    dispatch(kickMeet({ meetNum, meetuserNum }));
   };
 
   const onMandate = (meetuserId) => {

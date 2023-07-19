@@ -45,7 +45,7 @@ export const removePostComment = ({ commentNum, postNum }) => {
     commentNum,
     postNum
   );
-  return client.delete(`/post/removePostComment`, {
-    data: { commentNum, postNum },
+  return client.delete(`/post/removePostComment/${postNum}`, {
+    params: { commentNum, postNum },
   });
 };

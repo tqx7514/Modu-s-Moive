@@ -7,6 +7,7 @@ const {
   postDelete,
   writePostComment,
   readPostComment,
+  removePostComment,
 } = require("../controllers/post");
 const router = express.Router();
 
@@ -20,5 +21,6 @@ router.delete("/:postNum", postDelete);
 //postcomment관련
 router.post("/writePostComment", writePostComment);
 router.get("/readPostComment/:postNum", readPostComment);
+router.delete("/removePostComment/:postNum", removePostComment);
 
 module.exports = router;

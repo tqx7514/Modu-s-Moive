@@ -132,7 +132,7 @@ exports.readPostComment = async (req, res) => {
   try {
     const postcomment = await postcomments.findAll({
       where: { postNum },
-      order: [["createdAt", "ASC"]],
+      order: [["createdAt", "DESC"]],
     });
     // const post = await posts.findOne({
     //   where: { postNum: postNum },
@@ -159,5 +159,22 @@ exports.writePostComment = async (req, res) => {
     res.status(200).json(newPostComment);
   } catch (error) {
     res.status(500).json(error);
+  }
+};
+
+exports.removePostComment = async (req, res, next) => {
+  const { commentNum } = req.query;
+  try {
+    const deletedRows = await postcomments.destroy({
+      where: { commentNum },
+    });
+    if (deletedRows === 0) {
+      res.status(404).json({ message: "존재하지않는 댓글입니다." });
+      return;
+    }
+    res.status(200).json({ postcomment });
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
   }
 };

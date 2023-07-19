@@ -138,7 +138,9 @@ const PostCommentItem = ({ comment, onRemove }) => {
             <h2>{content}</h2>
           </CommentItemSecondLine>
           <CommentItemBlockLine>
-            <PublishedDate username={formattedDate} />
+            <h5>
+              <PublishedDate username={formattedDate} />
+            </h5>
           </CommentItemBlockLine>
         </CommentItemContent>
       </CommentItemFirstLine>

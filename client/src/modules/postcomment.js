@@ -7,8 +7,11 @@ import { takeLatest } from "redux-saga/effects";
 
 const INITIALIZE_POSTCOMMENT = "postcomment/INITIALIZE_POSTCOMMENT";
 const UNLOAD_POSTCOMMENT = "postcomment/UNLOAD_POSTCOMMENT";
-const [WRITE_POSTCOMMET, WRITE_POSTCOMMET_SUCCESS, WRITE_POSTCOMMET_FAILURE] =
-  createRequestActionTypes("postcomment/WRITE_POSTCOMMET");
+const [
+  WRITE_POSTCOMMENT,
+  WRITE_POSTCOMMENT_SUCCESS,
+  WRITE_POSTCOMMENT_FAILURE,
+] = createRequestActionTypes("postcomment/WRITE_POSTCOMMENT");
 const [
   REMOVE_POSTCOMMENT,
   REMOVE_POSTCOMMENT_SUCCESS,
@@ -26,7 +29,7 @@ export const readPostComment = createAction(
   (postNum) => postNum
 );
 export const writePostComment = createAction(
-  WRITE_POSTCOMMET,
+  WRITE_POSTCOMMENT,
   ({ userId, content, postNum }) => ({
     userId,
     content,
@@ -45,7 +48,7 @@ export const readPostCommentSaga = createRequestSaga(
 );
 
 const writePostCommentSaga = createRequestSaga(
-  WRITE_POSTCOMMET,
+  WRITE_POSTCOMMENT,
   postsAPI.writePostComment
 );
 
@@ -56,7 +59,7 @@ const removePostCommentSaga = createRequestSaga(
 
 export function* postCommentSaga() {
   yield takeLatest(READ_POSTCOMMENT, readPostCommentSaga);
-  yield takeLatest(WRITE_POSTCOMMET, writePostCommentSaga);
+  yield takeLatest(WRITE_POSTCOMMENT, writePostCommentSaga);
   yield takeLatest(REMOVE_POSTCOMMENT, removePostCommentSaga);
 }
 
@@ -98,14 +101,14 @@ const postcomment = handleActions(
       error,
     }),
     [UNLOAD_POSTCOMMENT]: () => initialState,
-    [WRITE_POSTCOMMET_SUCCESS]: (state, { payload: comment }) => ({
+    [WRITE_POSTCOMMENT_SUCCESS]: (state, { payload: comment }) => ({
       ...state,
       write: {
         ...state.write,
         comment,
       },
     }),
-    [WRITE_POSTCOMMET_FAILURE]: (state, { payload: commentError }) => ({
+    [WRITE_POSTCOMMENT_FAILURE]: (state, { payload: commentError }) => ({
       ...state,
       write: {
         ...state.write,
@@ -114,10 +117,10 @@ const postcomment = handleActions(
     }),
     [REMOVE_POSTCOMMENT_SUCCESS]: (state, { payload: comments }) => ({
       ...state,
-      post: {
-        ...state.post,
-        postNum: comments.postNum,
-      },
+      // post: {
+      // ...state.post,
+      // postNum: comments.postNum,
+      // },
       comments: comments.comment,
     }),
     [REMOVE_POSTCOMMENT_FAILURE]: (state, { payload: error }) => ({

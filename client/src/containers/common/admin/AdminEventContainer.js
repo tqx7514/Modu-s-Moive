@@ -1,5 +1,5 @@
 // import React, { useState, useEffect } from "react";
-// import { getAllEvents } from "../../api/event";
+// import { eventalllist } from "../../api/event";
 // import AdminEventBoardList from "../../../components/common/admin/AdminEventBoardListCompots";
 // import styled from "styled-components";
 
@@ -11,7 +11,7 @@
 //   useEffect(() => {
 //     const fetchEvents = async () => {
 //       try {
-//         const response = await getAllEvents();
+//         const response = await event();
 //         setEvents(response.data);
 //       } catch (error) {
 //         console.error("AdminEventContainer Error", error);

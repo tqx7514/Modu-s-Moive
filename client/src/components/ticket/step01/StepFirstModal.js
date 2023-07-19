@@ -26,7 +26,6 @@ const FirstModalBox = styled.div`
   width: 500px;
   min-height: 400px;
   background: #fff;
-  overflow: hidden;
 `;
 
 const FirstModalWrap = styled.div`
@@ -34,6 +33,7 @@ const FirstModalWrap = styled.div`
   width: 100%;
   height: 100%;
   text-align: center;
+  padding-bottom: 20px;
 
   span {
     display: block;
@@ -127,8 +127,10 @@ const ModalAge = styled.div`
 `;
 
 const ModalGuide = styled.div`
+  margin-top: 5px;
+  padding-bottom: 30px;
   font-size: 11px;
-  color: #333;
+  color: #666;
 `;
 
 const ModalBtn = styled.div`
@@ -205,7 +207,6 @@ const LoginModalBox = styled.div`
 
 const StepFirstModal = ({ modal, setIsModal }) => {
   const [isLogin, setIslogin] = useState(false);
-  const navigate = useNavigate();
 
   const { data } = useSelector(({ stepfirst }) => stepfirst);
   const { user } = useSelector(({ user }) => ({ user: user.user }));
@@ -217,11 +218,6 @@ const StepFirstModal = ({ modal, setIsModal }) => {
   const handleLinkClick = () => {
     setIslogin(true);
   };
-
-  const handleLoginPage = () => {
-    navigate.pushState("/login", {from: "/ticket/PersonSeat"});
-  }
-
 
   return (
     <FirstModal className={modal === true ? "on" : ""}>
@@ -323,7 +319,7 @@ const StepFirstModal = ({ modal, setIsModal }) => {
         <LoginModalWrap>
           <LoginModalBox>
             <p>로그인이 필요한 서비스 입니다.</p>
-            <Link to="/login">확인</Link>
+            <Link to="/ticket/PersonSeat">확인</Link>
           </LoginModalBox>
         </LoginModalWrap>
       </LoginModal>

@@ -106,15 +106,13 @@ const SelectPerson = ({
       onIncrease(key);
     }
   };
-  const handletDecrease = (key)=>{
-    console.log('ddddddddddddddddd',`${key}Number`)
-    if(`${key}Number`<=0){
+  const handleDecrease = (key,number)=>{
+    if(number<=0){
       alert('더이상 줄일수 없습니다.')
     }else{
       onDecrease(key)
     }
   }
-
   return (
     <PersonSeatWrap>
       <Title>
@@ -157,7 +155,7 @@ const SelectPerson = ({
           <div>
             <p>성인</p>
             <div>
-              <button onClick={()=>handletDecrease("adult")}>-</button>
+              <button onClick={()=>handleDecrease("adult",adultNumber)}>-</button>
               {adultNumber}
               <button onClick={() => handleIncrease("adult")}>+</button>
             </div>
@@ -165,7 +163,7 @@ const SelectPerson = ({
           <div>
             <p>청소년</p>
             <div>
-              <button onClick={()=>onDecrease("teenager")}>-</button>
+              <button onClick={()=>handleDecrease("teenager",teenagerNumber)}>-</button>
               {teenagerNumber}
               <button onClick={() => handleIncrease("teenager")}>+</button>
             </div>
@@ -173,7 +171,7 @@ const SelectPerson = ({
           <div>
             <p>시니어</p>
             <div>
-            <button onClick={()=>onDecrease("senior")}>-</button>
+            <button onClick={()=>handleDecrease("senior",seniorNumber)}>-</button>
               {seniorNumber}
               <button onClick={() => handleIncrease("senior")}>+</button>
             </div>
@@ -181,7 +179,7 @@ const SelectPerson = ({
           <div>
             <p>장애인</p>
             <div>
-            <button onClick={()=>onDecrease("disabled")}>-</button>
+            <button onClick={()=>handleDecrease("disabled",disabledNumber)}>-</button>
               {disabledNumber}
               <button onClick={() => handleIncrease("disabled")}>+</button>
             </div>

@@ -21,6 +21,7 @@ import MeetPage from "./pages/MeetPage";
 import EventPromotePage from "./pages/EventPromotePage";
 import EventOtherPage from "./pages/EventOtherPage";
 import EventViewerPage from "./pages/EventViewerPage";
+import AdminCurrentMoviePage from "./pages/admin/AdminCurrentMoviePage"
 
 const App = () => {
   return (
@@ -51,6 +52,7 @@ const App = () => {
       <Route path="/event/other/:eventNum" element={<EventViewerPage />} />
       {/* 관리자페이지 */}
       <Route path="/admin" element={<AdminPage />} />
+      <Route path="/admin/currentmovie" element={<AdminCurrentMoviePage/>} />
     </Routes>
   );
 };

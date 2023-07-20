@@ -42,6 +42,14 @@ const Title = styled.div`
 `;
 const Map = styled.div`
     padding-top: 30px;
+    p{
+        line-height: 19px;
+        margin-bottom: 18px;
+        padding-left: 20px;
+        font-size: 13px;
+        color: black;
+        background: url("/location_pointer.png") no-repeat 0 0;
+    }
 `;
 
 export const ModalContent = styled.div`
@@ -80,15 +88,11 @@ const CinemaModal = ({oncloseModal, cinema}) => {
         if(status === kakao.maps.services.Status.OK) {
             const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-            const marker = new kakao.maps.Marker({
+            new kakao.maps.Marker({
                 map: map,
                 position: coords,
             });
-
-            const infowindow = new kakao.maps.InfoWindow({
-                content: `<div style="width:150px;text-align:center;padding:6px 0;">${cinema}</div>`,
-            });
-            infowindow.open(map, marker);
+ 
             map.setCenter(coords);
         }
     });
@@ -104,8 +108,8 @@ const CinemaModal = ({oncloseModal, cinema}) => {
               </button>
             </Title>
             <Map>
+            <p>{cinema}</p>
             <div id="map" style={{ width: "500px", height: "500px" }}>
-                <p></p>
             </div>
             </Map>
           </ModalContent>

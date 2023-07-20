@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import Button from "../common/Button";
+import Button from "../../common/Button";
 import { MdStarRate, BsStopwatch } from "react-icons/md";
 import { Link } from "react-router-dom";
-import ImageCarousel from "../common/MainCarousel";
+import ImageCarousel from "../../common/MainCarousel";
+
+const AdminMovieInfo = styled.div`
+  background-color: gray;
+`;
 
 const AppContainer = styled.div`
   display: flex;
@@ -106,6 +110,10 @@ const MovieInfo = styled.div`
   align-items: center;
   font-size: 13px;
   margin-bottom: 42px;
+  button{
+    cursor: pointer;
+  }
+
 `;
 
 const Movieimg = styled.div`
@@ -126,13 +134,14 @@ const Movieimg = styled.div`
 
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
 
-const MovieList = ({
+const AdminMovie = ({
   movielist,
   handleCurrentMovies,
   handleUpcomingMovies,
   handleSortByPopularity,
   handleSortByStar,
   handleSortByCount,
+  onEdit,
 }) => {
   const [isActive, setIsActive] = useState(true); // 현재상영작 버튼을 초기에 활성화 상태로 설정
 
@@ -145,10 +154,10 @@ const MovieList = ({
     handleUpcomingMovies();
     setIsActive(false);
   };
-  console.log("movilist=========+++>",movielist);
+  console.log("movilist=========+++>", movielist);
 
   return (
-    <div>
+    <AdminMovieInfo>
       <ImageCarousel movielist={movielist} />
       <ChangePost>
         <Changebutton>
@@ -205,13 +214,29 @@ const MovieList = ({
                   <h4>{item.title}</h4>
                   <MdStarRate />
                   <span>{item.vote_average}</span>
+                  <div>
+                  <button
+                    onClick={() =>
+                      onEdit({
+                        title: item.title,
+                        vote_count: item.vote_count,
+                        vote_average: item.vote_average,
+                        popularity: item.popularity,
+                        id: item.id,
+                        poster_path: item.poster_path,
+                      })
+                    }
+                  >
+                    추가하기
+                  </button>
+                  </div>
                 </MovieInfo>
               </MovieBlock>
             </div>
           ))}
       </AppContainer>
-    </div>
+    </AdminMovieInfo>
   );
 };
 
-export default MovieList;
+export default AdminMovie;

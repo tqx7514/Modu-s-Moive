@@ -9,7 +9,7 @@ import EventPage from "./pages/EventPage";
 import PostListPage from "./pages/PostListPage";
 import MeetListPage from "./pages/MeetListPage";
 import MainPage from "./pages/MainPage";
-import PersonSeat from "./pages/PersonSeat";
+import TicketSeatPage from "./pages/TicketSeatPage";
 import MoviedetailPage from "./pages/MoviedetailPage";
 import CurrentMoviePage from "./pages/CurrentMoviePage";
 import PostPage from "./pages/PostPage";
@@ -32,7 +32,7 @@ const App = () => {
       <Route path="/currentmovie" element={<CurrentMoviePage />} />
       {/* 예매 페이지 */}
       <Route path="/ticket" element={<TicketMoviePage />} />
-      <Route path="/ticket/PersonSeat" element={<PersonSeat />} />
+      <Route path="/ticket/PersonSeat" element={<TicketSeatPage />} />
       {/* -----------*/}
       <Route path="/currentmovie/detail/:id" element={<MoviedetailPage />} />
       <Route path="/cinema" element={<CinemaPage />} />

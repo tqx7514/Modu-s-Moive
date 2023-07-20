@@ -30,7 +30,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     age: {
       type: DataTypes.STRING(100),
-      allowNull: false
+      allowNull: true
+    },
+    img: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,

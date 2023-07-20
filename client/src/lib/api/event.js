@@ -19,15 +19,3 @@ export const eventotherlist = (eventNum) => {
 export const eventview = (eventNum) => {
   return client.get(`/event/${eventNum}/view`);
 };
-
-export const admineventview = (eventNum) => {
-  return client.get(`/admin/event/${eventNum}/view`);
-};
-
-// export const editEvent = async (eventNum) => {
-
-// }
-
-// export const eventalllist = (eventNum) => {
-//   return client.get("/admin/event");
-// };

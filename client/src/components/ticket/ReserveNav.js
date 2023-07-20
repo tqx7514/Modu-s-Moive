@@ -24,7 +24,6 @@ const NavReserveCont = styled.div`
   ul > li {
     list-style: initial;
     margin-bottom: 10px;
-
   }
 `;
 
@@ -56,39 +55,31 @@ const NavReserveLi = styled.li`
     `}
 `;
 
-const ReserveNav = ({ data, adult, teenager }) => {
+const ReserveNav = ({ data, adult, teenager, senior, disabled }) => {
   const location = useLocation();
-  const timeContent = data.time.cinema === undefined ? (
-    <ul>
-      <li>{data.movie ? data.movie.movie_name : ''}</li>
-      <li>{data && data.cinema}</li>
-      <li>{data && data.date}</li>
-      <li></li>
-    </ul>
-  ) : (
-    <ul>
-      <li>{data.time.movie_name}</li>
-      <li>
-        {data.time ? `${data.time.cinema} ${data.time.room}관` : ''}
-      </li>
-      <li>{data.date}</li>
-      <li>
-        {
-          data.time ? 
-          `${data.time.start} ~ ${data.time.end}` : '' 
-        }
-      </li>
-    </ul>
-  )
+  const timeContent =
+    data.time.cinema === undefined ? (
+      <ul>
+        <li>{data.movie ? data.movie.movie_name : ""}</li>
+        <li>{data && data.cinema}</li>
+        <li>{data && data.date}</li>
+        <li></li>
+      </ul>
+    ) : (
+      <ul>
+        <li>{data.time.movie_name}</li>
+        <li>{data.time ? `${data.time.cinema} ${data.time.room}관` : ""}</li>
+        <li>{data.date}</li>
+        <li>{data.time ? `${data.time.start} ~ ${data.time.end}` : ""}</li>
+      </ul>
+    );
   return (
     <NavReserveUl>
       <NavReserveLi active={String(location.pathname === "/ticket")}>
         01
         <br />
         상영시간
-        <NavReserveCont>
-            {timeContent}
-        </NavReserveCont>
+        <NavReserveCont>{timeContent}</NavReserveCont>
       </NavReserveLi>
       <NavReserveLi active={String(location.pathname === "/ticket/PersonSeat")}>
         02
@@ -97,7 +88,37 @@ const ReserveNav = ({ data, adult, teenager }) => {
         <NavReserveCont>
           <ul>
             <li>
-              {adult.name}({adult.number}), {teenager.name}({teenager.number})
+              {adult.number > 0 && (
+                <>
+                  {adult.name}
+                  {adult.number}
+                  {teenager.number > 0 ||
+                  senior.number > 0 ||
+                  disabled.number > 0
+                    ? ", "
+                    : ""}
+                </>
+              )}
+              {teenager.number > 0 && (
+                <>
+                  {teenager.name}
+                  {teenager.number}
+                  {senior.number > 0 || disabled.number > 0 ? ", " : ""}
+                </>
+              )}
+              {senior.number > 0 && (
+                <>
+                  {senior.name}
+                  {senior.number}
+                  {disabled.number > 0 ? ", " : ""}
+                </>
+              )}
+              {disabled.number > 0 && (
+                <>
+                  {disabled.name}
+                  {disabled.number}
+                </>
+              )}
             </li>
             <li></li>
           </ul>

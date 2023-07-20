@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import SelectPerson from '../../../components/ticket/step02/SelectPerson';
+import SelectSeat from '../../../components/ticket/step02/SelectSeat';
 import { useDispatch, useSelector } from 'react-redux';
 import { decrease, increase } from '../../../modules/stepsecond';
 
@@ -27,7 +28,7 @@ const SelectPersonContiner = () => {
 
 
   return (
-    <>
+    <div style={{width: '100%'}}>
         <SelectPerson 
             number={number}
             adultNumber={adultNumber}
@@ -37,7 +38,8 @@ const SelectPersonContiner = () => {
             onIncrease={onIncrease} 
             onDecrease={onDecrease}
         />
-    </>
+        <SelectSeat/>
+    </div>
   )
 }
 

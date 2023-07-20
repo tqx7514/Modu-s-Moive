@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import ReserveNavContainer from '../ReserveNavContainer';
-import SelectPersonContiner from './selectPersonContainer';
+import SelectPersonContiner from './SelectPersonContainer';
 
 const StepSecondContainer = () => {
  

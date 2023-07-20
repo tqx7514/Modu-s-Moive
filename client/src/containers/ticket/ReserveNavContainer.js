@@ -12,6 +12,8 @@ const ReserveNavContainer = () => {
                 data={data}
                 adult={adult}
                 teenager={teenager}
+                senior={senior}
+                disabled={disabled}
             />
         </>
     )

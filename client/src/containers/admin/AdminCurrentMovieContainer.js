@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
-import MovieList from "../../components/movie/MovieList";
-import { listPosts } from "../../modules/currentmovie";
+import AdminMovie from "../../components/admin/movie/AdminMovie";
+import { listPosts, updateList } from "../../modules/currentmovie";
 
 const MovieContainer = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const MovieContainer = () => {
   }));
 
   const [currentList, setCurrentList] = useState(movielist);
-  console.log("1111111111111111->", currentList)
+  // console.log("1111111111111111->", currentList)
   const handleCurrentMovies = () => {
     setCurrentList(movielist.movielist);
   };
@@ -48,15 +48,23 @@ const MovieContainer = () => {
     setCurrentList(movielist.movielist);
   }, [movielist.movielist]);
 
+  const onEdit = ({title, vote_count, vote_average, popularity, id, poster_path}) => {
+    console.log("onEdit============>", title, vote_count, vote_average, popularity, id, poster_path);
+    dispatch(updateList({title, vote_count, vote_average, popularity, id, poster_path}));
+  };
+  
+
+
   return (
     
-      <MovieList
+      <AdminMovie
         movielist={currentList}
         handleCurrentMovies={handleCurrentMovies}
         handleUpcomingMovies={handleUpcomingMovies}
         handleSortByPopularity={handleSortByPopularity}
         handleSortByStar={handleSortByStar}
         handleSortByCount={handleSortByCount}
+        onEdit={onEdit}
       />
     
   );

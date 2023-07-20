@@ -10,25 +10,26 @@ const [
 ] = createRequestActionTypes('currentmovie/LIST_POSTS');
 
 const [
-  UPCOMING_POSTS,
-  UPCOMING_POSTS_SUCCESS,
-  UPCOMING_POSTS_FAILURE,
-] = createRequestActionTypes('currentmovie/UPCOMING_POSTS');
+  UPDATE_LIST,
+  UPDATE_LIST_SUCCESS,
+  UPDATE_LIST_FAIURE,
+] = createRequestActionTypes('currentmovie/UPDATE_LIST');
 
 export const listPosts = createAction(LIST_POSTS);
-export const upcomingPosts = createAction(UPCOMING_POSTS);
+export const updateList = createAction(UPDATE_LIST, ({title, vote_count, vote_average, popularity, id, poster_path}) => ({
+  title, vote_count, vote_average, popularity, id, poster_path
+}));
 
 const listPostsSaga = createRequestSaga(LIST_POSTS, movieAPI.movielist);
-const upcomingPostsSaga = createRequestSaga(UPCOMING_POSTS, movieAPI.movielist);
+const updateListSaga = createRequestSaga(UPDATE_LIST, movieAPI.updateMovielist);
 
 export function* movieSaga() {
   yield takeLatest(LIST_POSTS, listPostsSaga);
-  yield takeLatest(UPCOMING_POSTS, upcomingPostsSaga);
+  yield takeLatest(UPDATE_LIST, updateListSaga);
 }
 
 const initialState = {
   movielist: [],
-  upcominglist: [],
   error: null,
 };
 
@@ -42,11 +43,11 @@ const movielist = handleActions(
       ...state,
       error,
     }),
-    [UPCOMING_POSTS_SUCCESS]: (state, {payload: upcominglist}) => ({
+    [UPDATE_LIST_SUCCESS]: (state, {payload: updatemovies}) => ({
       ...state,
-      upcominglist,
+      updatemovies,
     }),
-    [UPCOMING_POSTS_FAILURE]: (state, {payload: error}) => ({
+    [UPDATE_LIST_FAIURE]: (state, {payload: error}) => ({
       ...state,
       error,
     }),

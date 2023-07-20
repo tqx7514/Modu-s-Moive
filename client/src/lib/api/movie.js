@@ -31,3 +31,10 @@ export const updateComment = ({ commentNum,movie_id, editContent, rating}) => {
   
   });
 };
+
+export const updateMovielist = ({title, vote_count, vote_average, popularity, id, poster_path}) => {
+  console.log("updateMovielist==============++>", title, vote_count, vote_average, popularity, id, poster_path)
+  return client.post('currentmovie/AdminMovielist', {
+    title, vote_count, vote_average, popularity, id, poster_path
+  })
+};

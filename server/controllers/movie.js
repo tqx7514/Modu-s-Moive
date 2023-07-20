@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { moviecomments,users } = require("../models");
+const { moviecomments,users, movies } = require("../models");
 
 exports.List = async (req, res) => {
   try {
@@ -132,3 +132,25 @@ exports.CommentUpdate = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+exports.AdminMovielist = async (req, res) => {
+  try {
+    const { title, vote_count, vote_average, popularity, id, poster_path } = req.body;
+
+    // 데이터베이스에 영화 정보 삽입
+    const insertedMovie = await movies.create({
+      movie_name: title,
+      tiketing: vote_count,
+      star: vote_average,
+      popularity: popularity,
+      movie_id: id,
+      img: poster_path
+    });
+
+    res.status(200).json({ message: 'Movie information added successfully', insertedMovie });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+

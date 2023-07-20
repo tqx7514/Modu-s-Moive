@@ -33,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     img: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.JSON,
       allowNull: true
     }
   }, {

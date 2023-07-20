@@ -1,9 +1,9 @@
 // import React from "react";
 // import AdminEventContainer from "../../containers/common/admin/AdminEventContainer";
-// import AdminEventForm from "../../components/common/admin/AdminEventFormCompots";
-// import AdminEventBoardDetails from "../../components/common/admin/AdminEventBoardDetailsCompots";
+// import AdminEventForm from "../../components/admin/event/AdminEventFormCompots";
+// import AdminEventBoardDetails from "../../components/common/admin/AdminEventWriteButton";
 // import AdminEventSearch from "../../components/common/admin/AdminEventSearchCompots";
-// import AdminEventPagination from "../../components/common/admin/AdminEventBoardPaginationCompots";
+// import AdminEventPagination from "../../components/common/admin/AdminEventPaginationCompots";
 // import styled from "styled-components";
 
 // const AdminEventPageTopBlock = styled.div``;

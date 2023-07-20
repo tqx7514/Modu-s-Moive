@@ -1,12 +1,12 @@
-import { createAction, handleActions } from 'redux-actions';
-import { takeLatest } from 'redux-saga/effects';
-import createRequestSaga, {createRequestActionTypes} from '../lib/createRequestSaga';
+import { createAction, handleActions } from "redux-actions";
+import { takeLatest } from "redux-saga/effects";
+import createRequestSaga, {
+  createRequestActionTypes,
+} from "../lib/createRequestSaga";
 import * as eventAPI from "../lib/api/event";
-const [
-  LIST_EVENTS,
-  LIST_EVENTS_SUCCESS,
-  LIST_EVENTS_FAILURE,
-] = createRequestActionTypes('event/LIST_EVENTS');
+
+const [LIST_EVENTS, LIST_EVENTS_SUCCESS, LIST_EVENTS_FAILURE] =
+  createRequestActionTypes("event/LIST_EVENTS");
 
 export const listEvents = createAction(LIST_EVENTS);
 
@@ -23,16 +23,16 @@ const initialState = {
 
 const eventlist = handleActions(
   {
-    [LIST_EVENTS_SUCCESS]: (state, {payload: event}) => ({
+    [LIST_EVENTS_SUCCESS]: (state, { payload: event }) => ({
       ...state,
       event,
     }),
-    [LIST_EVENTS_FAILURE]: (state, {payload: error}) => ({
+    [LIST_EVENTS_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,
     }),
   },
-  initialState,
+  initialState
 );
 
 export default eventlist;

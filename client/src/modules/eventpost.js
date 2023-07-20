@@ -11,15 +11,7 @@ const [EVENT_POST, EVENT_POST_SUCCESS, EVENT_POST_FAILURE] =
 export const eventPost = createAction(EVENT_POST, (eventNum) => eventNum);
 
 const eventPostSagaWorker = createRequestSaga(EVENT_POST, (eventNum) => {
-  // if (eventNum.startsWith("movie")) {
-  //   return eventAPI.eventmovielist(eventNum);
-  // } else if (eventNum.startsWith("promote")) {
-  //   return eventAPI.eventpromotelist(eventNum);
-  // } else if (eventNum.startsWith("other")) {
-  //   return eventAPI.eventotherlist(eventNum);
-  // }
-  // return null;
-  return eventAPI.eventview(eventNum)
+  return eventAPI.eventview(eventNum);
 });
 
 export function* eventPostSaga() {

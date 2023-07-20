@@ -25,7 +25,7 @@ export const removePost = (postNum) =>
 // comment부분들
 
 export const readPostComment = (postNum) => {
-  console.log("dddddddddddddddddddd", postNum);
+  console.log("client>src>lib>api>posts>readPostComment", postNum);
   return client.get(`/post/readPostComment/${postNum}`);
 };
 
@@ -40,11 +40,12 @@ export const writePostComment = ({ userId, content, postNum }) => {
 };
 
 export const removePostComment = ({ commentNum, postNum }) => {
-  console.log(
-    "client>src>lib>api>posts>removePostComment",
-    commentNum,
-    postNum
-  );
+  // console.log(
+  //   "client>src>lib>api>posts>removePostComment",
+  //   commentNum,
+  //   postNum
+  // );
+  console.log("aaaaaaaaaaaaaaaaaaaaaaa");
   return client.delete(`/post/removePostComment/${postNum}`, {
     params: { commentNum, postNum },
   });

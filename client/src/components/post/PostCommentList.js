@@ -4,16 +4,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTimes } from "@fortawesome/free-solid-svg-icons";
 import SubInfo from "../common/SubInfo";
 import palette from "../../lib/styles/palette";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   initializePostComment,
   readPostComment,
   writePostComment,
 } from "../../modules/postcomment";
+import Responsive from "../common/Responsive";
 
-const PostCommentListBlock = styled.div`
+const PostCommentListBlock = styled(Responsive)`
   border: solid 1px black;
   padding: 1rem;
+  margin-top: 3rem;
 `;
 
 const PostCommentForm = styled.form`
@@ -88,7 +90,7 @@ const CommentItemButton = styled.button`
   cursor: pointer;
 `;
 
-const UserId = styled(SubInfo)`
+const UserId = styled.div`
   width: 8rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -117,10 +119,13 @@ const formatDate = (dateString) => {
   return `${year}.${month}.${day}.`;
 };
 
-const PostCommentItem = ({ comment, onRemove }) => {
-  const { commentNum, content, createdAt } = comment;
-  const userId = useSelector((state) => state.user.userId) || "unknown";
+const PostCommentItem = ({ comment, onRemove, postNum, user }) => {
+  const { userId, commentNum, content, createdAt } = comment;
   const formattedDate = formatDate(createdAt);
+
+  const handleDelete = () => {
+    onRemove({ commentNum, postNum });
+  };
 
   return (
     <CommentItemBlock>
@@ -128,11 +133,13 @@ const PostCommentItem = ({ comment, onRemove }) => {
         <CommentItemContent>
           <CommentItemBlockLine>
             <UserId>{userId}</UserId>
-            <CommentItemThirdLine>
-              <CommentItemButton onClick={() => onRemove(commentNum)}>
-                <FontAwesomeIcon icon={faTimes} />
-              </CommentItemButton>
-            </CommentItemThirdLine>
+            {user && user.id === userId && (
+              <CommentItemThirdLine>
+                <CommentItemButton onClick={handleDelete}>
+                  <FontAwesomeIcon icon={faTimes} />
+                </CommentItemButton>
+              </CommentItemThirdLine>
+            )}
           </CommentItemBlockLine>
           <CommentItemSecondLine>
             <h2>{content}</h2>
@@ -148,13 +155,9 @@ const PostCommentItem = ({ comment, onRemove }) => {
   );
 };
 
-const PostCommentList = ({ userId, postNum }) => {
+const PostCommentList = ({ user, post, onRemove, postNum, postcomment }) => {
+  console.log("PostCommentList의 postcomment입니다.", postcomment);
   const [comment, setComment] = useState("");
-  // const [comments, setComments] = useState([]);
-  const [commentNum, setCommentNum] = useState(0);
-  const { comments } = useSelector(({ postcomment }) => ({
-    comments: postcomment.comments,
-  }));
   const dispatch = useDispatch();
 
   const handleCommentChange = (e) => {
@@ -164,27 +167,16 @@ const PostCommentList = ({ userId, postNum }) => {
   const handleCommentSubmit = (e) => {
     e.preventDefault();
     const newComment = {
-      // commentNum: commentNum,
       content: comment,
-      userId: userId.id,
-      postNum: postNum,
-      // createdAt: new Date().toISOString(),
-      // 유저아이디,  게시판 번호, 댓글 내용
+      userId: user.id,
+      postNum: post.postNum,
     };
     dispatch(writePostComment(newComment));
     setTimeout(() => {
       dispatch(initializePostComment());
-      dispatch(readPostComment(postNum));
+      dispatch(readPostComment(post.postNum));
     }, 100);
-    // setComments([...comments, newComment]);
-    // setCommentNum(commentNum + 1);
     setComment("");
-  };
-
-  const handleCommentRemove = (commentNum) => {
-    // setComments(
-    //   comments.filter((comment) => comment.commentNum !== commentNum)
-    // );
   };
 
   return (
@@ -201,12 +193,15 @@ const PostCommentList = ({ userId, postNum }) => {
         </CommentButton>
       </PostCommentForm>
       <CommentListBlock>
-        {comments &&
-          comments.map((comment) => (
+        {postcomment &&
+          postcomment.map((comment) => (
             <PostCommentItem
+              user={user}
               key={comment.commentNum}
               comment={comment}
-              onRemove={handleCommentRemove}
+              onRemove={onRemove}
+              postNum={postNum}
+              postcomment={comment.userId}
             />
           ))}
       </CommentListBlock>

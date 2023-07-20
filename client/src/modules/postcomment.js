@@ -121,7 +121,7 @@ const postcomment = handleActions(
       // ...state.post,
       // postNum: comments.postNum,
       // },
-      comments: comments.comment,
+      comments: comments.postcomment,
     }),
     [REMOVE_POSTCOMMENT_FAILURE]: (state, { payload: error }) => ({
       ...state,

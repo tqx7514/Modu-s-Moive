@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import MyPageMain from "../../components/mypage/MyPageMain";
 
 const MyPageMainContainer = () => {
   const { user } = useSelector(({ user }) => ({ user: user.user }));
@@ -10,11 +11,7 @@ const MyPageMainContainer = () => {
       navigate("/");
     }
   }, [user]);
-  return (
-    <div>
-      <div>마이페이지 메인</div>
-    </div>
-  );
+  return <MyPageMain />;
 };
 
 export default MyPageMainContainer;

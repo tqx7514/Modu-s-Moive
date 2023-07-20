@@ -9,7 +9,7 @@ import rootReducer, { rootSaga } from "./modules/index";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
 import createSagaMiddleware from "redux-saga";
-import { check, tempSetUser } from "./modules/user";
+import { check, logout, tempSetUser } from "./modules/user";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
@@ -18,9 +18,13 @@ const store = createStore(
 );
 const user = localStorage.getItem("user");
 
-function loadUser() {
+export function loadUser() {
+  console.log("user입니다", user);
   try {
-    if (!user) return;
+    if (user === null) {
+      console.log("유저가없다");
+      store.dispatch(logout());
+    }
     store.dispatch(tempSetUser(user));
     store.dispatch(check());
   } catch (e) {

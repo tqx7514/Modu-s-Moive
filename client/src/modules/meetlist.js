@@ -7,7 +7,7 @@ import { takeLatest } from "redux-saga/effects";
 import { handleActions } from "redux-actions";
 
 const [MEET_LIST, MEET_LIST_SUCCESS, MEET_LIST_FAILURE] =
-  createRequestActionTypes("meet/MEET_LIST");
+  createRequestActionTypes("meetlist/MEET_LIST");
 
 export const meetList = createAction(MEET_LIST, ({ tag, region, page }) => ({
   tag,

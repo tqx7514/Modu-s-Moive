@@ -17,7 +17,24 @@ const MeetDetailManageContainer = () => {
 
   const onKick = async (meetuserNum) => {
     const meetNum = meet.meetNum;
-    dispatch(kickMeet({ meetNum, meetuserNum }));
+    Swal.fire({
+      title: "회원 강퇴",
+      text: `${meetuserNum}번 회원님을 모임에서 강퇴하시겠습니까?`,
+      showCancelButton: true,
+      cancelButtonText: "취소",
+      confirmButtonText: "강퇴",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        dispatch(kickMeet({ meetNum, meetuserNum }));
+      },
+    }).then((res) => {
+      if (res.isConfirmed) {
+        Swal.fire({
+          icon: "success",
+          text: "강퇴하였습니다.",
+        });
+      }
+    });
   };
 
   const onMandate = (meetuserId) => {

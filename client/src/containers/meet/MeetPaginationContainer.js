@@ -14,7 +14,7 @@ const PaginationContainer = () => {
     ({ meetlist, loading }) => ({
       lastPage: meetlist.lastPage,
       meetList: meetlist.meets,
-      loading: loading["posts/LIST_POSTS"],
+      loading: loading["meetlist/MEET_LIST"],
     })
   );
 

@@ -23,7 +23,10 @@ const MeetListContainer = () => {
   );
   useEffect(() => {
     console.log("로드유저");
-    loadUser();
+    if (user) {
+      console.log("유저잇음 컨테이너", user);
+      loadUser();
+    }
   }, []);
   useEffect(() => {
     dispatch(initialize());

@@ -11,6 +11,7 @@ import { removeMeet } from "../../lib/api/meet";
 import Button from "../../components/common/Button";
 import { join, withdraw } from "../../modules/user";
 import MeetDetailActionButtons from "../../components/meet/meetdetail/MeetDetailActionButtons";
+import Swal from "sweetalert2";
 
 const MeetViewerContainer = () => {
   const { meetNum } = useParams();
@@ -49,15 +50,49 @@ const MeetViewerContainer = () => {
 
   const onJoin = async () => {
     const meetNum = meet.meetNum;
-    dispatch(join({ user, meetNum }));
-    dispatch(readMeet(meetNum));
+    Swal.fire({
+      title: "가입하기",
+      text: "이 모임에 가입하시겠습니까?",
+      showCancelButton: true,
+      cancelButtonText: "취소",
+      confirmButtonText: "가입",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        dispatch(join({ user, meetNum }));
+        dispatch(readMeet(meetNum));
+      },
+    }).then((res) => {
+      if (res.isConfirmed) {
+        Swal.fire({
+          icon: "success",
+          text: "가입 성공",
+        });
+      }
+    });
 
     // dispatch(updateToken({ userId, meetNum }));
   };
   const onWithdraw = async () => {
     const meetNum = meet.meetNum;
-    dispatch(withdraw({ user, meetNum }));
-    dispatch(readMeet(meetNum));
+    Swal.fire({
+      title: "탈퇴하기",
+      text: "정말로 탈퇴하시겠습니까?",
+      showCancelButton: true,
+      cancelButtonText: "취소",
+      confirmButtonText: "탈퇴",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        dispatch(withdraw({ user, meetNum }));
+        dispatch(readMeet(meetNum));
+      },
+    }).then((res) => {
+      if (res.isConfirmed) {
+        Swal.fire({
+          icon: "success",
+          text: "탈퇴 성공",
+        });
+      }
+    });
   };
   // useEffect(() => {
   //   const localUser = localStorage.getItem("user");

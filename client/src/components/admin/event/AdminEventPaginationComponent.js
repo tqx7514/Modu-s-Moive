@@ -2,10 +2,10 @@
 // import styled from "styled-components";
 
 // const AdminEventPaginationContainer = styled.div``;
+// const AdminEventPagesBlock = styled.div``;
+// const AdminEventPaginationButton = styled.button``;
 
-// const AdminEventPaginationBtn = styled.button``;
-
-// const AdminEventBoardPagination = ({
+// const AdminEventPaginationComponent = ({
 //   currentPage,
 //   totalPages,
 //   handlePageChange,
@@ -14,31 +14,31 @@
 // }) => {
 //   return (
 //     <AdminEventPaginationContainer>
-//       <AdminEventPaginationBtn
+//       <AdminEventPaginationButton
 //         disabled={currentPage === 1}
 //         onClick={() => handlePageChange(previousPage)}
 //       >
 //         이전
-//       </AdminEventPaginationBtn>
+//       </AdminEventPaginationButton>
 //       {Array.from({ length: totalPages }, (_, index) => index + 1).map(
 //         (page) => (
-//           <AdminEventPaginationBtn
+//           <AdminEventPagesBlock
 //             key={page}
 //             onClick={() => handlePageChange(page)}
 //             disabled={currentPage === page}
 //           >
 //             {page}
-//           </AdminEventPaginationBtn>
+//           </AdminEventPagesBlock>
 //         )
 //       )}
-//       <AdminEventPaginationBtn
+//       <AdminEventPaginationButton
 //         disabled={currentPage === totalPages}
 //         onClick={() => handlePageChange(nextPage)}
 //       >
 //         다음
-//       </AdminEventPaginationBtn>
+//       </AdminEventPaginationButton>
 //     </AdminEventPaginationContainer>
 //   );
 // };
 
-// export default AdminEventBoardPagination;
+// export default AdminEventPaginationComponent;

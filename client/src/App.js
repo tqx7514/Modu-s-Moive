@@ -22,7 +22,7 @@ import EventPromotePage from "./pages/EventPromotePage";
 import EventOtherPage from "./pages/EventOtherPage";
 import EventViewerPage from "./pages/EventViewerPage";
 import AdminCurrentMoviePage from "./pages/admin/AdminCurrentMoviePage";
-import AdminEventPage from "./pages/admin/AdminEventPage";
+// import AdminEventPage from "./pages/admin/AdminEventPage";
 
 const App = () => {
   return (

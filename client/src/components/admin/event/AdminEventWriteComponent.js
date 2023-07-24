@@ -1,71 +1,75 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+// import React, { useState } from "react";
+// import styled from "styled-components";
 
-const AdminEventWriteItemBlock = styled.div``;
+// const AdminEventWriteItemBlock = styled.div``;
 
-const AdminEventWriteBlock = styled.form``;
+// const AdminEventWriteBlock = styled.form``;
 
-const AdminEventWriteComponent = () => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [eventImg, setEventImg] = useState("");
-  const [category, setCategory] = useState("");
-  const [startEventDate, setStartEventDate] = useState("");
-  const [endEventDate, setEndEventDate] = useState("");
+// const AdminEventWriteComponent = () => {
+//   const [eventTitle, setEventTitle] = useState("");
+//   const [eventContent, setEventContent] = useState("");
+//   const [eventImg, setEventImg] = useState("");
+//   const [categoryId, setCategoryId] = useState("");
+//   const [startEventDate, setStartEventDate] = useState("");
+//   const [endEventDate, setEndEventDate] = useState("");
 
-  return (
-    <AdminEventWriteBlock>
-      <AdminEventWriteItemBlock>
-        <input
-          type="text"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          placeholder="카테고리"
-        />
-      </AdminEventWriteItemBlock>
-      <AdminEventWriteItemBlock>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="제목"
-        />
-      </AdminEventWriteItemBlock>
-      <AdminEventWriteItemBlock>
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="내용"
-        ></textarea>
-      </AdminEventWriteItemBlock>
-      <AdminEventWriteItemBlock>
-        <p>
-          썸네일
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setEventImg(e.target.files[0])}
-          />
-        </p>
-      </AdminEventWriteItemBlock>
-      <AdminEventWriteItemBlock>
-        <input
-          type="date"
-          value={startEventDate}
-          onChange={(e) => setStartEventDate(e.target.value)}
-          placeholder="이벤트 시작일"
-        />
-      </AdminEventWriteItemBlock>
-      <AdminEventWriteItemBlock>
-        <input
-          type="date"
-          value={endEventDate}
-          onChange={(e) => setEndEventDate(e.target.value)}
-          placeholder="이벤트 종료일"
-        />
-      </AdminEventWriteItemBlock>
-    </AdminEventWriteBlock>
-  );
-};
+//   const onSubmit = (e) => {
+//     e.preventDefault();
 
-export default AdminEventWriteComponent;
+//     console.log("AdminEventWriteComponent:", eventTitle);
+//   };
+
+//   return (
+//     <AdminEventWriteBlock onSubmit={onSubmit}>
+//       <AdminEventWriteItemBlock>
+//         <input
+//           type="text"
+//           value={categoryId}
+//           onChange={(e) => setCategoryId(e.target.value)}
+//           placeholder="카테고리"
+//         />
+//       </AdminEventWriteItemBlock>
+//       <AdminEventWriteItemBlock>
+//         <input
+//           type="text"
+//           value={eventTitle}
+//           onChange={(e) => setEventTitle(e.target.value)}
+//           placeholder="제목"
+//         />
+//       </AdminEventWriteItemBlock>
+//       <AdminEventWriteItemBlock>
+//         <textarea
+//           value={eventContent}
+//           onChange={(e) => setEventContent(e.target.value)}
+//           placeholder="내용 이미지 주소 입력"
+//         ></textarea>
+//       </AdminEventWriteItemBlock>
+//       <AdminEventWriteItemBlock>
+//         <input
+//           type="text"
+//           value={eventImg}
+//           onChange={(e) => setEventImg(e.target.value)}
+//           placeholder="썸네일 이미지 주소 입력"
+//         />
+//       </AdminEventWriteItemBlock>
+//       <AdminEventWriteItemBlock>
+//         <input
+//           type="date"
+//           value={startEventDate}
+//           onChange={(e) => setStartEventDate(e.target.value)}
+//           placeholder="이벤트 시작일"
+//         />
+//       </AdminEventWriteItemBlock>
+//       <AdminEventWriteItemBlock>
+//         <input
+//           type="date"
+//           value={endEventDate}
+//           onChange={(e) => setEndEventDate(e.target.value)}
+//           placeholder="이벤트 종료일"
+//         />
+//       </AdminEventWriteItemBlock>
+//     </AdminEventWriteBlock>
+//   );
+// };
+
+// export default AdminEventWriteComponent;

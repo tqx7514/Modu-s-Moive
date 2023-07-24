@@ -6,29 +6,35 @@ import "slick-carousel/slick/slick-theme.css";
 
 const Imgcarousel = styled.div`
   background-color: black;
+  height: 774px;
+  width: 100%;
+  position: relative;
+  z-index: 0;
 
-  img {
+  /* img {
     width: 100%;
-    height: 420px;
+    height: 774px;
     margin: 0 auto;
     object-fit: contain;
-  }
+  } */
 `;
 const Pre = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 31px;
+  height: 60px;
   position: absolute;
-  top: 1px;
-  left: 3%;
+  margin-top: -15px;
+  left: 30px;
   z-index: 3;
+  background-size: auto;
 `;
 
 const NextTo = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 31px;
+  height: 60px;
   position: absolute;
-  top: 1px;
-  right: 3%;
+  margin-top: -15px;
+  right: 30px;
+  background-size: auto;
   z-index: 3;
 `;
 
@@ -46,9 +52,19 @@ const Slidera = styled(Slider)`
   .slick-dots {
     bottom: 20px;
   }
+  &:after{
+    content: "";
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 140px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 1) 100%);
+  }
 `;
 
-const MainCarousel = ({ currentmovielist }) => {
+const IndexCarousel = ({ currentmovielist }) => {
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
   console.log("aaaaaaaaaaaaa", currentmovielist)
 
@@ -74,18 +90,23 @@ const MainCarousel = ({ currentmovielist }) => {
 
   return (
     <Imgcarousel>
-      <h1>무비</h1>
       <Slidera {...settings}>
-        {Array.isArray(currentmovielist) &&
+        {/* {Array.isArray(currentmovielist) &&
           currentmovielist.map((image) => (
             <div key={image.id}>
               <img src={IMG_BASE_URL + (image.img || image.poster_path)} alt="영화 포스터" />
             </div>
           ))}
-          
+           */}
+           <div>
+            <img src="/Conan_1920774.jpg" alt="" />
+           </div>
+           <div>
+            <img src="RUBYGILLMAN_1920774.jpg" alt="" />
+           </div>
       </Slidera>
     </Imgcarousel>
   );
 };
 
-export default MainCarousel;
+export default IndexCarousel;

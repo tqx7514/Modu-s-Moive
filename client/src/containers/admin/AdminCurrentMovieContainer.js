@@ -1,24 +1,32 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import AdminMovie from "../../components/admin/movie/AdminMovie";
-import { listPosts, updateList } from "../../modules/currentmovie";
+import { listPosts, updateList, deleteList } from "../../modules/currentmovie";
 
 const MovieContainer = () => {
   const dispatch = useDispatch();
   const { movielist } = useSelector((state) => ({
     movielist: state.movielist.movielist,
     upcominglist: state.movielist.upcominglist,
+    currentmovielist: state.movielist.currentmovielist,
   }));
-
+  console.log("mvoie",movielist);
   const [currentList, setCurrentList] = useState(movielist);
-  // console.log("1111111111111111->", currentList)
+  const [currentType, setCurrentType] = useState("current");
   const handleCurrentMovies = () => {
-    setCurrentList(movielist.movielist);
+    setCurrentList(movielist.currentmovielist);
+    setCurrentType("currentmovielist");
   };
 
   const handleUpcomingMovies = () => {
-    setCurrentList(movielist.upcominglist);
+    setCurrentList(movielist.movielist);
+    setCurrentType("movielist");
   };
+
+  const handleUpcomingMovie = () => {
+    setCurrentList(movielist.upcominglist);
+    setCurrentType("upcoming");
+  }
 
   const handleSortByPopularity = () => {
     const sortedList = [...currentList].sort(
@@ -53,7 +61,10 @@ const MovieContainer = () => {
     dispatch(updateList({title, vote_count, vote_average, popularity, id, poster_path}));
   };
   
-
+  const onRemove = (movie_num) => {
+    console.log(movie_num);
+    dispatch(deleteList(movie_num));
+  }
 
   return (
     
@@ -61,10 +72,13 @@ const MovieContainer = () => {
         movielist={currentList}
         handleCurrentMovies={handleCurrentMovies}
         handleUpcomingMovies={handleUpcomingMovies}
+        handleUpcomingMovie={handleUpcomingMovie}
         handleSortByPopularity={handleSortByPopularity}
         handleSortByStar={handleSortByStar}
         handleSortByCount={handleSortByCount}
         onEdit={onEdit}
+        currentType={currentType}
+        onRemove={onRemove}
       />
     
   );

@@ -48,8 +48,9 @@ const Slidera = styled(Slider)`
   }
 `;
 
-const ImageCarousel = ({ movielist }) => {
+const MainCarousel = ({ currentmovielist }) => {
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
+  console.log("aaaaaaaaaaaaa", currentmovielist)
 
   const settings = {
     dots: true,
@@ -75,15 +76,16 @@ const ImageCarousel = ({ movielist }) => {
     <Imgcarousel>
       <h1>무비</h1>
       <Slidera {...settings}>
-        {Array.isArray(movielist) &&
-          movielist?.map((image) => (
+        {Array.isArray(currentmovielist) &&
+          currentmovielist.map((image) => (
             <div key={image.id}>
-              <img src={IMG_BASE_URL + image.poster_path} alt="영화 포스터" />
+              <img src={IMG_BASE_URL + (image.img || image.poster_path)} alt="영화 포스터" />
             </div>
           ))}
+          
       </Slidera>
     </Imgcarousel>
   );
 };
 
-export default ImageCarousel;
+export default MainCarousel;

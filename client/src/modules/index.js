@@ -11,6 +11,7 @@ import posts, { postsSaga } from "./posts";
 import eventpost, { eventPostSaga } from "./eventpost";
 import meetcomment, { meetCommentSaga } from "./meetcomment";
 import postcomment, { postCommentSaga } from "./postcomment";
+import adminposts, { adminpostsSaga } from "./admin/adminposts";
 
 import stepfirst, {
   regionSaga,
@@ -25,6 +26,9 @@ import meetlist, { meetsSaga } from "./meetlist";
 import eventlist, { eventSaga } from "./eventlist";
 import cinema, { cinemaSaga } from "./cinema";
 import meetboard, { meetBoardSaga } from "./meetboard";
+// import adminevent, { readEventSaga } from "./admin/adminevent";
+// import admineventlist, { adminEventListSaga } from "./admin/admineventlist";
+// import admineventwrite, { eventWriteSaga } from "./admin/admineventwrite";
 
 const rootReducer = combineReducers({
   auth,
@@ -46,6 +50,10 @@ const rootReducer = combineReducers({
   cinema,
   eventpost,
   postcomment,
+  adminposts,
+  // adminevent,
+  // admineventlist,
+  // admineventwrite,
 });
 
 export function* rootSaga() {
@@ -70,6 +78,10 @@ export function* rootSaga() {
     eventPostSaga(),
     timeSaga(),
     postCommentSaga(),
+    adminpostsSaga(),
+    // readEventSaga(),
+    // adminEventListSaga(),
+    // eventWriteSaga(),
   ]);
 }
 

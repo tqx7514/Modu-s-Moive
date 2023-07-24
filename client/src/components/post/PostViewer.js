@@ -4,7 +4,7 @@ import palette from "../../lib/styles/palette";
 import Responsive from "../common/Responsive";
 import SubInfo from "../common/SubInfo";
 import Tags from "../common/Tags";
-import PostCommentList from "./PostCommentList";
+// import PostCommentList from "./PostCommentList";
 
 const PostViewerBlock = styled(Responsive)`
   margin-top: 4rem;
@@ -40,9 +40,9 @@ const PostContent = styled.div`
   margin-bottom: 5rem;
 `;
 
-const PostCommentBlock = styled.div`
-  margin-top: 3rem;
-`;
+// const PostCommentBlock = styled.div`
+// margin-top: 3rem;
+// `;
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -80,9 +80,9 @@ const PostViewer = ({ post, error, loading, actionButtons, user }) => {
         </PostHead>
         <PostContent dangerouslySetInnerHTML={{ __html: body }} />
         <hr />
-        <PostCommentBlock>
-          <PostCommentList postNum={postNum} userId={user} />
-        </PostCommentBlock>
+        {/* <PostCommentBlock> */}
+        {/* <PostCommentList postNum={postNum} userId={user} /> */}
+        {/* </PostCommentBlock> */}
       </PostViewerBlock>
     </>
   );

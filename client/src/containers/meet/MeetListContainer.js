@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { meetList } from "../../modules/meetlist";
 import MeetList from "../../components/meet/MeetList";
 import { initialize } from "../../modules/meetwrite";
+import { check, tempSetUser } from "../../modules/user";
 
 const MeetListContainer = () => {
   // const location = useLocation();
@@ -20,6 +21,14 @@ const MeetListContainer = () => {
       user: user.user,
     })
   );
+  useEffect(() => {
+    console.log("로드유저");
+    if (user) {
+      console.log("유저잇음 컨테이너", user);
+      dispatch(tempSetUser(user));
+      dispatch(check());
+    }
+  }, []);
   useEffect(() => {
     dispatch(initialize());
     const page = parseInt(searchParams.get("page"), 10) || 1;

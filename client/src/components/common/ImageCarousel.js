@@ -68,7 +68,7 @@ const ImageCarousel = ({images}) => {
   return (
     <Imgcarousel>
       <StyledSlider {...settings}>
-        {images.map((image) => (
+        {images && images.map((image) => (
           <div key={image.file_path}>
             <img className = "img1" src={IMG_BASE_URL + image.file_path} alt='영화 포스터'/>
           </div>

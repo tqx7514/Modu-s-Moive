@@ -4,7 +4,7 @@ exports.getEvents = async (req, res) => {
   eventNum = req.params.eventNum;
   try {
     const event = await events.findAll({});
-    
+
     res.status(200).json(event);
   } catch (error) {
     console.error(error);
@@ -57,7 +57,7 @@ exports.GetEventDetail = async (req, res) => {
     const eventDetail = await events.findOne({
       where: { eventNum },
     });
-    
+
     eventDetail.view += 1;
     await eventDetail.save();
 

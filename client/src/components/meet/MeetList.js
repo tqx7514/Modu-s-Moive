@@ -224,10 +224,10 @@ const MeetList = ({
             <MeetListItem>
               {meets.map((meet) => (
                 <MeetItem
-                  meet={meet}
-                  key={meet.meetNum}
-                  user_Id={user.id}
-                  user_meet={user.meet}
+                  meet={meet && meet}
+                  key={meet && meet.meetNum}
+                  user_Id={user && user.id}
+                  user_meet={user && user.meet}
                 />
               ))}
             </MeetListItem>

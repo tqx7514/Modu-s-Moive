@@ -46,6 +46,10 @@ module.exports = function(sequelize, DataTypes) {
     room: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    date: {
+      type: DataTypes.STRING(100),
+      allowNull: false
     }
   }, {
     sequelize,

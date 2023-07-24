@@ -9,7 +9,7 @@ import EventPage from "./pages/EventPage";
 import PostListPage from "./pages/PostListPage";
 import MeetListPage from "./pages/MeetListPage";
 import MainPage from "./pages/MainPage";
-import PersonSeat from "./pages/PersonSeat";
+import TicketSeatPage from "./pages/TicketSeatPage";
 import MoviedetailPage from "./pages/MoviedetailPage";
 import CurrentMoviePage from "./pages/CurrentMoviePage";
 import PostPage from "./pages/PostPage";
@@ -21,6 +21,9 @@ import MeetPage from "./pages/MeetPage";
 import EventPromotePage from "./pages/EventPromotePage";
 import EventOtherPage from "./pages/EventOtherPage";
 import EventViewerPage from "./pages/EventViewerPage";
+import AdminCurrentMoviePage from "./pages/admin/AdminCurrentMoviePage";
+import AdminPostListPage from "./pages/admin/AdminPostListPage";
+// import AdminEventPage from "./pages/admin/AdminEventPage";
 
 const App = () => {
   return (
@@ -32,7 +35,7 @@ const App = () => {
       <Route path="/currentmovie" element={<CurrentMoviePage />} />
       {/* 예매 페이지 */}
       <Route path="/ticket" element={<TicketMoviePage />} />
-      <Route path="/ticket/PersonSeat" element={<PersonSeat />} />
+      <Route path="/ticket/PersonSeat" element={<TicketSeatPage />} />
       {/* -----------*/}
       <Route path="/currentmovie/detail/:id" element={<MoviedetailPage />} />
       <Route path="/cinema" element={<CinemaPage />} />
@@ -51,6 +54,9 @@ const App = () => {
       <Route path="/event/other/:eventNum" element={<EventViewerPage />} />
       {/* 관리자페이지 */}
       <Route path="/admin" element={<AdminPage />} />
+      <Route path="/admin/currentmovie" element={<AdminCurrentMoviePage />} />
+      <Route path="/admin/postlist" element={<AdminPostListPage />} />
+      {/* <Route path="/admin/event" element={<AdminEventPage />} />  */}
     </Routes>
   );
 };

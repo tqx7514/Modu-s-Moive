@@ -1,15 +1,18 @@
 // import React, { useState } from "react";
-// import { searchEvent } from "../../api/event";
+// import { searchEvent } from "../../../lib/api/admin/adminevent";
 // import styled from "styled-components";
-// import AdminEventItemCompots from "./AdminEventItemCompots";
+// import AdminEventItemComponent from "./AdminEventItemComponent";
+// import Button from "../../common/Button";
 
-// const AdminEventSearchContainer = styled.div``;
+// const AdminEventSearchBlock = styled.div``;
 
-// const AdminEventSearchFormBlock = styled.form``;
+// const AdminEventSearchBox = styled.form``;
 
 // const AdminEventSearchSelectItem = styled.select``;
 
-// const AdminEventSearchCompots = () => {
+// const AdminEventSearchButton = styled(Button)``;
+
+// const AdminEventSearchComponent = () => {
 //   const [searchQuery, setSearchQuery] = useState("");
 //   const [searchType, setSearchType] = useState("userId");
 //   const [searchResult, setSearchResult] = useState([]);
@@ -35,8 +38,8 @@
 //   };
 
 //   return (
-//     <AdminEventSearchContainer>
-//       <AdminEventSearchFormBlock onSubmit={handleSearchSubmit}>
+//     <AdminEventSearchBlock>
+//       <AdminEventSearchBox onSubmit={handleSearchSubmit}>
 //         <input
 //           type="text"
 //           value={searchQuery}
@@ -52,14 +55,14 @@
 //           <option value="content">내용</option>
 //           <option value="titleContent">제목 + 내용</option>
 //         </AdminEventSearchSelectItem>
-//         <button type="submit">검색</button>
-//       </AdminEventSearchFormBlock>
+//         <AdminEventSearchButton type="submit">검색</AdminEventSearchButton>
+//       </AdminEventSearchBox>
 
 //       {searchResult.map((event) => (
-//         <AdminEventItemCompots key={event.id} event={event} />
+//         <AdminEventItemComponent key={event.eventNum} event={event} />
 //       ))}
-//     </AdminEventSearchContainer>
+//     </AdminEventSearchBlock>
 //   );
 // };
 
-// export default AdminEventSearchCompots;
+// export default AdminEventSearchComponent;

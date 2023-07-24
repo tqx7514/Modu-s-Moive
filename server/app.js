@@ -13,6 +13,7 @@ const postRouter = require("./routes/post");
 const eventRouter = require("./routes/event");
 const currentMovie = require("./routes/currentmovie");
 const cinemaRouter = require("./routes/cinema");
+// const adminEventRouter = require("./routes/admin/adminevent");
 
 const axios = require("axios");
 const mysql = require("mysql2");
@@ -36,36 +37,18 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",
+      "http://192.168.10.130:3000",
+      "http://192.168.10.113:3000",
+      "http://192.168.10.210:3000",
+      "http://192.168.10.211:3000",
+      "http://192.168.10.95:3000",
+    ],
     methods: ["GET", "POST", "OPTIONS", "PATCH", "DELETE"],
     credentials: true,
   })
 );
-// sequelize
-//   .sync({ force: false })
-//   .then(() => {
-//     console.log("데이터베이스 연결성공!!");
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   });
-// app.post('/api/data', (req, res) => {
-//   const { data } = req.body;
-
-//   const query = `INSERT INTO your_table_name (column_name) VALUES (?)`;
-//   connection.query(query, [data], (err, results) => {
-//     if (err) {
-//       console.error(err);
-//       res.status(500).json({ error: 'Internal server error' });
-//     } else {
-//       res.status(200).json({ message: 'Data inserted successfully' });
-//     }
-//   });
-// });
-
-// app.listen(3001, () => {
-//   console.log('Server is running on port 3001');
-// });
 
 app.use("/auth", authRouter);
 app.use("/ticket", ticketRouter);
@@ -75,6 +58,7 @@ app.use("/event", eventRouter);
 app.use("/currentmovie", currentMovie);
 app.use("/meet", meetRouter);
 app.use("/cinema", cinemaRouter);
+// app.use("/admin/event/", adminEventRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -127,7 +127,6 @@ const PostList = ({ posts, loading, error, showWriteButton }) => {
       navigate(`/postlist?title=${encodeURIComponent(title)}`);
     }
   };
-
   if (error) {
     return <PostListBlock>에러가 발생했습니다.</PostListBlock>;
   }

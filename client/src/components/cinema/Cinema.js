@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ImageCarousel from "../common/MainCarousel";
+import MainCarousel from "../common/MainCarousel";
 import CinemaModal from "./CinemaModal";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -55,6 +55,18 @@ const Title = styled.div`
   padding: 50px 0 0 0;
   margin-bottom: 34px;
 
+  .btn_col4 {
+    height: 28px;
+    line-height: 26px;
+    padding: 0 14px;
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid #dddddd;
+    font-size: 14px;
+    color: #000000 !important;
+  }
+
   h1,
   button {
     margin-right: 10px;
@@ -102,11 +114,11 @@ const ModalTag = styled.div`
   }
 `;
 const Cinema = ({ cinema, region }) => {
-  const { movielist } = useSelector((state) => ({
-    movielist: state.movielist.movielist,
+  const { currentmovielist } = useSelector((state) => ({
+    currentmovielist: state.movielist.currentmovielist,
     upcominglist: state.movielist.upcominglist,
   }));
-  const cinemacarousel = movielist.movielist;
+  const cinemacarousel = currentmovielist.currentmovielist;
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCinemas, setSelectedCinemas] = useState([]);
@@ -133,7 +145,7 @@ const Cinema = ({ cinema, region }) => {
 
   return (
     <div>
-      <ImageCarousel movielist={cinemacarousel} />
+      <MainCarousel currentmovielist={cinemacarousel} />
       <CinemaContent>
         <Menu>
           <div>
@@ -161,7 +173,7 @@ const Cinema = ({ cinema, region }) => {
 
         <Title>
         {selectedCinema && <h1>{selectedCinema}</h1>}
-          <button>MY 영화관</button>
+          <button className="btn_col4">MY 영화관</button>
           <button>단체/대관문의</button>
         </Title>
         <Total>

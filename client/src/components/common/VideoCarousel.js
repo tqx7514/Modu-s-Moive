@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
+import LazyLoad from "react-lazyload";
 
 const StyledSlider = styled(Slider)`
   height: 260px;
@@ -20,22 +21,21 @@ const StyledSlider = styled(Slider)`
 `;
 
 const Pre = styled.div`
-   left: 94%;
-   top: -5px;
-   position: absolute;
-   margin-top: -20px;
+  left: 94%;
+  top: -5px;
+  position: absolute;
+  margin-top: -20px;
 `;
 
 const NextTo = styled.div`
   right: 20px;
-   top: -5px;
-   margin-top: -20px;
-   position: absolute;
-   z-index: 3;
+  top: -5px;
+  margin-top: -20px;
+  position: absolute;
+  z-index: 3;
 `;
 
 const VideoCarousel = ({ videos }) => {
-
   const settings = {
     dots: false,
     infinite: true,
@@ -54,7 +54,6 @@ const VideoCarousel = ({ videos }) => {
         <img src="/arr_lf_11.png" alt="" />
       </Pre>
     ),
-    
   };
 
   return (
@@ -62,15 +61,17 @@ const VideoCarousel = ({ videos }) => {
       <StyledSlider {...settings}>
         {videos.map((video) => (
           <div key={video.key}>
-            <iframe
-              title={video.name}
-              width="300"
-              height="200"
-              src={`https://www.youtube.com/embed/${video.key}`}
-              frameBorder="0"
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-            ></iframe>
+            {/* <LazyLoad height={200} offset={100}> */}
+              <iframe
+                title={video.name}
+                width="300"
+                height="200"
+                src={`https://www.youtube.com/embed/${video.key}`}
+                frameBorder="0"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+              ></iframe>
+            {/* </LazyLoad> */}
           </div>
         ))}
       </StyledSlider>

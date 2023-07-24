@@ -78,7 +78,7 @@ const AdminHeader = ({ user, onLogout }) => {
     <>
       <HeaderBlock>
         <LogoWrapper>
-          <Link to="/" className="logo">
+          <Link to="/admin" className="logo">
             <Logo src={LogoImage} alt="Logo" />
           </Link>
           {user ? (
@@ -102,7 +102,7 @@ const AdminHeader = ({ user, onLogout }) => {
         </LogoWrapper>
         <Wrapper>
           <NavLink
-            to="/currentmovie"
+            to="/admin/currentmovie"
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
             상영중인 영화
@@ -126,7 +126,7 @@ const AdminHeader = ({ user, onLogout }) => {
             EVENT관리
           </NavLink>
           <NavLink
-            to="/postlist"
+            to="/admin/postlist"
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
             게시판

@@ -127,16 +127,13 @@ exports.postDelete = async (req, res, next) => {
 };
 
 exports.readPostComment = async (req, res) => {
-  const postNum = req.params.postNum;
-  console.log("sssssssssss", postNum);
+  const { postNum } = req.params;
+  console.log("controller의 readPostComment입니다.", req.params);
   try {
     const postcomment = await postcomments.findAll({
       where: { postNum },
       order: [["createdAt", "DESC"]],
     });
-    // const post = await posts.findOne({
-    //   where: { postNum: postNum },
-    // });
     console.log("포스트커맨트", postcomment);
     res.json(postcomment);
   } catch (error) {
@@ -163,10 +160,15 @@ exports.writePostComment = async (req, res) => {
 };
 
 exports.removePostComment = async (req, res, next) => {
-  const { commentNum } = req.query;
+  const { commentNum, postNum } = req.query;
+  console.log("commentNum, postNum", req.query);
   try {
     const deletedRows = await postcomments.destroy({
       where: { commentNum },
+    });
+    const postcomment = await postcomments.findAll({
+      where: { postNum },
+      order: [["createdAt", "DESC"]],
     });
     if (deletedRows === 0) {
       res.status(404).json({ message: "존재하지않는 댓글입니다." });

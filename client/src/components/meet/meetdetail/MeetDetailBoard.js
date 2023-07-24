@@ -79,6 +79,9 @@ const BoardHeaderItem = styled.div`
   align-items: center;
   text-align: center;
   ${({ width }) => width && `flex-basis: ${width};`}
+  > h4 {
+    margin-right: 2rem;
+  }
 `;
 
 const CustomCommentWrapper = styled.div`
@@ -240,15 +243,15 @@ const MeetBoardItem = ({
         <BoardHeaderItem width="15%">{user_Id}</BoardHeaderItem>
         <BoardHeaderItem width="50%">
           {expandedId === meetboardNum ? (
-            <div dangerouslySetInnerHTML={{ __html: formattedBody }} />
+            <h4 dangerouslySetInnerHTML={{ __html: formattedBody }} />
           ) : (
-            firstLine
+            <h4>{firstLine}</h4>
           )}
         </BoardHeaderItem>
-        <BoardHeaderItem width="15%">
+        <BoardHeaderItem width="13%">
           {formatCreatedAt(createdAt)}
         </BoardHeaderItem>
-        <BoardHeaderItem width="5%" onClick={() => onClick(meetboardNum)}>
+        <BoardHeaderItem width="7%" onClick={() => onClick(meetboardNum)}>
           <BoardHeaderItemIcon icon={faChevronDown} className="detail" />
         </BoardHeaderItem>
       </div>
@@ -364,8 +367,8 @@ const MeetDetailBoard = ({
           <BoardHeaderItem width="10%">번호</BoardHeaderItem>
           <BoardHeaderItem width="15%">아이디</BoardHeaderItem>
           <BoardHeaderItem width="50%">내용</BoardHeaderItem>
-          <BoardHeaderItem width="15%">날짜</BoardHeaderItem>
-          <BoardHeaderItem width="5%">더보기</BoardHeaderItem>
+          <BoardHeaderItem width="13%">날짜</BoardHeaderItem>
+          <BoardHeaderItem width="7%">더보기</BoardHeaderItem>
         </BoardHeaderBlock>
         {meetBoards && (
           <MeetBoardListItem>

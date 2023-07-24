@@ -67,6 +67,7 @@ export const AreaItem = styled.li`
       height: 22px;
       display: inline-block;
       margin-right: 10px;
+      vertical-align: bottom;
     }
     &.age_all {
       background: url("/age_all.png") no-repeat;
@@ -91,6 +92,9 @@ export const MovieList = styled.div`
   }
   &.schedule{
     margin-bottom: 20px;
+  }
+  &.selectPerson{
+    display: block;
   }
 `;
 

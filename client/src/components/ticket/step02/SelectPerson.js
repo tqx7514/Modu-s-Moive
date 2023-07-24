@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { AreaItem, MovieList } from '../step01/SelectMovie';
 import { useDispatch, useSelector } from 'react-redux';
 
-const PersonSeatWrap = styled.div`
+const SelectPersonWrap = styled.div`
   width:100%;
 `;
 
@@ -34,8 +34,18 @@ const PersonSelect = styled.div`
 `;
 
 const MovieInfo = styled.div`
+  position: relative;
   width: 320px;
   padding: 25px 0 0 55px;
+
+  img{
+    position: absolute;
+    left: 0;
+    top: 25px;
+    width: 45px;
+    height: 60px;
+    border-radius: 5px;
+  }
 `;
 
 const MovieSubInfo = styled.div`
@@ -84,8 +94,38 @@ const CinemaInfo = styled.div`
 
 const PersonNum = styled.div`
   display: flex;
-  justify-content: space-around;
-  width: 100%;
+  align-items: center;
+  width: 825px;
+  padding: 0 40px;
+
+  div.personBtn{
+    display: flex;
+    align-items: center;
+  }
+`;
+
+const PersonBtn = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100px;
+  height: 40px;
+  margin-right: 20px;
+  margin-left: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+
+  button{
+    display: block;
+    width: 25px;
+    height: 100%;
+    border: none;
+    background: none;
+    font-size: 30px;
+    color: #666;
+    cursor: pointer;
+  }
 `;
 
 const SelectPerson = ({
@@ -97,6 +137,7 @@ const SelectPerson = ({
   onIncrease, 
   onDecrease,
 }) => {
+<<<<<<< HEAD
   const {data} = useSelector(({stepfirst}) => stepfirst);
   const {person} = useSelector(({stepsecond}) => stepsecond);
   console.log('123123123123123',person)
@@ -107,6 +148,25 @@ const SelectPerson = ({
     // } else {
       onIncrease();
     // }
+=======
+  const {data, movie} = useSelector(({stepfirst}) => stepfirst);
+  const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
+  const selectedMovie = movie.find((movieObj) => movieObj.movie_name === data.time.movie_name);  const selectedMovieImg = selectedMovie ? selectedMovie.img : null;
+console.log('pay??????????????????????', adultNumber.price)
+  // useEffect(() => {
+  //   number(0);
+  //   adultNumber(0);
+  //   teenagerNumber(0);
+  //   seniorNumber(0);
+  //   disabledNumber(0);
+  // }, []);
+  const handleIncrease = (key) => {
+    if (number >= 8) {
+      alert('인원은 최대 8명까지 선택 가능합니다.');
+    } else {
+      onIncrease(key);
+    }
+>>>>>>> 4abecc005ad097afcdaaeb1bda5ebca57e7ac233
   };
   const handleDecrease = (key,number)=>{
     if(number<=0){
@@ -116,15 +176,20 @@ const SelectPerson = ({
     }
   }
   return (
-    <PersonSeatWrap>
+    <SelectPersonWrap>
       <Title>
         인원/좌석 선택
         <span>인원은 최대 8명까지 선택 가능합니다.</span>
       </Title>
       <PersonSelect>
         <MovieInfo>
+          {selectedMovie && (
+            <>
+              <img src={IMG_BASE_URL + selectedMovie.img} />
+            </>
+          )}
           <AreaItem className='stepsecond'>
-            <MovieList>
+            <MovieList className='selectPerson'>
               <span
                 className={`${
                   data.time.age === "all"
@@ -154,6 +219,7 @@ const SelectPerson = ({
           </MovieSubInfo>
         </MovieInfo>
         <PersonNum>
+<<<<<<< HEAD
           {Object.keys(person).map((p) => (
             <div key={p}>
               {person[p].name}
@@ -164,9 +230,43 @@ const SelectPerson = ({
               </div>
             </div>
           ))}
+=======
+          <div className='personBtn'>
+            <p>성인</p>
+            <PersonBtn>
+              <button onClick={()=>handleDecrease("adult",adultNumber)}>-</button>
+              {adultNumber.number}
+              <button onClick={() => handleIncrease("adult")}>+</button>
+            </PersonBtn>
+          </div>
+          <div className='personBtn'>
+            <p>청소년</p>
+            <PersonBtn>
+              <button onClick={()=>handleDecrease("teenager",teenagerNumber)}>-</button>
+              {teenagerNumber.number}
+              <button onClick={() => handleIncrease("teenager")}>+</button>
+            </PersonBtn>
+          </div>
+          <div className='personBtn'>
+            <p>시니어</p>
+            <PersonBtn>
+              <button onClick={()=>handleDecrease("senior",seniorNumber)}>-</button>
+              {seniorNumber.number}
+              <button onClick={() => handleIncrease("senior")}>+</button>
+            </PersonBtn>
+          </div>
+          <div className='personBtn'>
+            <p>장애인</p>
+            <PersonBtn>
+              <button onClick={()=>handleDecrease("disabled",disabledNumber)}>-</button>
+              {disabledNumber.number}
+              <button onClick={() => handleIncrease("disabled")}>+</button>
+            </PersonBtn>
+          </div>
+>>>>>>> 4abecc005ad097afcdaaeb1bda5ebca57e7ac233
         </PersonNum>
       </PersonSelect>
-    </PersonSeatWrap>
+    </SelectPersonWrap>
   );
 };
 

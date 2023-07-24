@@ -15,6 +15,7 @@ var _movietimes = require("./movietimes");
 var _postcomments = require("./postcomments");
 var _posts = require("./posts");
 var _regions = require("./regions");
+var _reservations = require("./reservations");
 var _tickets = require("./tickets");
 var _users = require("./users");
 
@@ -35,6 +36,7 @@ function initModels(sequelize) {
   var postcomments = _postcomments(sequelize, DataTypes);
   var posts = _posts(sequelize, DataTypes);
   var regions = _regions(sequelize, DataTypes);
+  var reservations = _reservations(sequelize, DataTypes);
   var tickets = _tickets(sequelize, DataTypes);
   var users = _users(sequelize, DataTypes);
 
@@ -88,6 +90,7 @@ function initModels(sequelize) {
     postcomments,
     posts,
     regions,
+    reservations,
     tickets,
     users,
   };

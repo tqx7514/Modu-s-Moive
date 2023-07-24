@@ -8,10 +8,13 @@ import MeetDetailChatInput from "./MeetDetailChatInput";
 import Man from "../../../public/Man.png";
 import Woman from "../../../public/Woman.png";
 import { getMsg, sendMsg } from "../../../lib/api/meet";
+import { useSelector } from "react-redux";
+import robot from "../../../public/robot.gif";
 
 const MeetDetailChat = ({ user, meet }) => {
   const [msg, setMsg] = useState([]);
-  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [a, setA] = useState(1);
   const scrollRef = useRef();
   const getMessages = async () => {
     const meetNum = meet.meetNum;
@@ -20,15 +23,31 @@ const MeetDetailChat = ({ user, meet }) => {
     setMsg(response.data);
   };
   useEffect(() => {
+    if (msg.length > 0) {
+      setLoading(false);
+    }
+  }, [msg]);
+
+  useEffect(() => {
     const interval = setInterval(getMessages, 2000); // 0.1초마다 getMessages 호출
 
     return () => {
       clearInterval(interval); // 컴포넌트가 언마운트되면 interval을 정리(cleanup)
     };
   }, []);
-
+  const down = () => {
+    // console.log("aaaaaaaaaaaaaaaaaaaa", a);
+    if (a === 1) {
+      console.log("실행합니다");
+      scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+    setA(2);
+  };
   const handleSendMsg = async (message) => {
     try {
+      setA(1);
+      // console.log("핸들센드메시지", a);
+
       const userId = user.num;
       const meetNum = meet.meetNum;
       await sendMsg({ userId, meetNum, message });
@@ -36,6 +55,7 @@ const MeetDetailChat = ({ user, meet }) => {
       const msgs = [...msg];
       msgs.push({ fromSelf: true, message: message });
       setMsg(msgs);
+      down();
       getMessages();
     } catch (error) {
       console.log(error);
@@ -43,8 +63,11 @@ const MeetDetailChat = ({ user, meet }) => {
   };
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [msg]);
+    if (msg.length > 0) {
+      down();
+    }
+  }, [msg, a]);
+
   return (
     <Container>
       <div className="chat-header">
@@ -61,27 +84,35 @@ const MeetDetailChat = ({ user, meet }) => {
         </div>
       </div>
       <div className="chat-messages">
-        {msg.map((message) => {
-          return (
-            <div ref={scrollRef} key={uuidv4()}>
-              <div
-                className={`message ${
-                  message.fromSelf ? "sended" : "received"
-                }`}
-              >
-                {message.fromSelf ? null : (
-                  <div>
-                    <Profile gender={message.gender} />
-                    <Profile2>{message.senderName}</Profile2>
+        {loading ? (
+          <LoadingBlock>
+            <img src={robot} alt="" />
+          </LoadingBlock>
+        ) : (
+          <>
+            {msg.map((message) => {
+              return (
+                <div ref={scrollRef} key={uuidv4()}>
+                  <div
+                    className={`message ${
+                      message.fromSelf ? "sended" : "received"
+                    }`}
+                  >
+                    {message.fromSelf ? null : (
+                      <div>
+                        <Profile gender={message.gender} />
+                        <Profile2>{message.senderName}</Profile2>
+                      </div>
+                    )}
+                    <div className="content">
+                      <span className="sender">{message.message}</span>
+                    </div>
                   </div>
-                )}
-                <div className="content">
-                  <span className="sender">{message.message}</span>
                 </div>
-              </div>
-            </div>
-          );
-        })}
+              );
+            })}
+          </>
+        )}
       </div>
       <MeetDetailChatInput handleSendMsg={handleSendMsg} />
     </Container>
@@ -200,6 +231,10 @@ const Container = styled.div`
       }
     }
   }
+`;
+
+const LoadingBlock = styled.div`
+  display: flex;
 `;
 
 export default MeetDetailChat;

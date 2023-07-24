@@ -19,6 +19,7 @@ const {
   sendMsg,
   getMsg,
   mandate,
+  kick,
 } = require("../controllers/meet");
 const router = express.Router();
 
@@ -47,4 +48,5 @@ router.post("/chat/getmsg", getMsg);
 
 //모임 안 회원관리
 router.post("/manage/mandate/:meetuserId", mandate);
+router.post("/manage/kick/:meetuserNum", kick);
 module.exports = router;

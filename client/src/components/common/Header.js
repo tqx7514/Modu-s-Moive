@@ -4,10 +4,12 @@ import { Link, NavLink } from "react-router-dom";
 import Responsive from "./Responsive";
 import Button from "./Button";
 import LogoImage from "../../public/Logo.png";
+import { useLocation } from "../../../node_modules/react-router-dom/dist/index";
 
 const HeaderBlock = styled.div`
   position: fixed;
   width: 100%;
+  height: 150px;
   background: white;
   z-index: 9999;
 `;
@@ -157,9 +159,10 @@ const UserHi = styled.div`
 
 
 const Header = ({ user, onLogout }) => {
+  const location = useLocation();
   return (
     <>
-      <HeaderBlock>
+      <HeaderBlock className={String(location.pathname='/') && 'main'}>
         <LogoWrapper>
           <div>
             <a href="#">페이스북</a>
@@ -220,7 +223,7 @@ const Header = ({ user, onLogout }) => {
           <div className="border"/>
         </Wrapper>
       </HeaderBlock>
-      <Spacer />
+      <Spacer className="aaa"/>
     </>
   );
 };

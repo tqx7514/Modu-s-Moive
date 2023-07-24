@@ -226,7 +226,10 @@ const Index = () => {
   return (
     <>
       <IndexCarousel currentmovielist={currentmovielist} />
-      <MovielistCarousel currentmovielist={currentmovielist} />
+      <MovielistCarousel 
+        className="main"
+        currentmovielist={currentmovielist} 
+      />
       <MainInfo>
         <div className="main_specialCinema">
           <div className="sec_tit">스페셜관</div>

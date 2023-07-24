@@ -127,7 +127,7 @@ const MovielistCarousel = ({ currentmovielist }) => {
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
   console.log("aaaaaaaaaaaaa", currentmovielist);
 
-  const currentmovie = currentmovielist.currentmovielist;
+  const currentmovie = currentmovielist && currentmovielist.currentmovielist;
   console.log("MovieListCarousel의 currentmovie", currentmovie);
   const settings = {
     dots: true,

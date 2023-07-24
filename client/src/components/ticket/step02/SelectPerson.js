@@ -140,7 +140,7 @@ const SelectPerson = ({
   const {data, movie} = useSelector(({stepfirst}) => stepfirst);
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
   const selectedMovie = movie.find((movieObj) => movieObj.movie_name === data.time.movie_name);  const selectedMovieImg = selectedMovie ? selectedMovie.img : null;
-
+console.log('pay??????????????????????', adultNumber.price)
   // useEffect(() => {
   //   number(0);
   //   adultNumber(0);
@@ -210,7 +210,7 @@ const SelectPerson = ({
             <p>성인</p>
             <PersonBtn>
               <button onClick={()=>handleDecrease("adult",adultNumber)}>-</button>
-              {adultNumber}
+              {adultNumber.number}
               <button onClick={() => handleIncrease("adult")}>+</button>
             </PersonBtn>
           </div>
@@ -218,7 +218,7 @@ const SelectPerson = ({
             <p>청소년</p>
             <PersonBtn>
               <button onClick={()=>handleDecrease("teenager",teenagerNumber)}>-</button>
-              {teenagerNumber}
+              {teenagerNumber.number}
               <button onClick={() => handleIncrease("teenager")}>+</button>
             </PersonBtn>
           </div>
@@ -226,7 +226,7 @@ const SelectPerson = ({
             <p>시니어</p>
             <PersonBtn>
               <button onClick={()=>handleDecrease("senior",seniorNumber)}>-</button>
-              {seniorNumber}
+              {seniorNumber.number}
               <button onClick={() => handleIncrease("senior")}>+</button>
             </PersonBtn>
           </div>
@@ -234,7 +234,7 @@ const SelectPerson = ({
             <p>장애인</p>
             <PersonBtn>
               <button onClick={()=>handleDecrease("disabled",disabledNumber)}>-</button>
-              {disabledNumber}
+              {disabledNumber.number}
               <button onClick={() => handleIncrease("disabled")}>+</button>
             </PersonBtn>
           </div>

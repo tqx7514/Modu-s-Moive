@@ -13,10 +13,10 @@ const SelectPersonContiner = () => {
     seniorNumber,
     disabledNumber,
   } = useSelector(({stepsecond}) => ({
-    adultNumber: stepsecond.adult.number,
-    teenagerNumber: stepsecond.teenager.number,
-    seniorNumber: stepsecond.senior.number,
-    disabledNumber: stepsecond.disabled.number,
+    adultNumber: stepsecond.adult,
+    teenagerNumber: stepsecond.teenager,
+    seniorNumber: stepsecond.senior,
+    disabledNumber: stepsecond.disabled,
   }))
   const dispatch = useDispatch();
   const onIncrease = useCallback((key) => {

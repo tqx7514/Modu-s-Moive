@@ -16,18 +16,22 @@ const initialState = {
   adult: {
     name: '성인',
     number: 0,
+    price: '13,000',
   }, 
   teenager: {
     name: '청소년',
     number: 0,
+    price: '10,000',
   }, 
   senior: {
     name: '시니어',
     number: 0,
+    price: '7,000',
   }, 
   disabled: {
     name: '장애인',
     number: 0,
+    price: '5,000',
   },
   seat: null,
 };

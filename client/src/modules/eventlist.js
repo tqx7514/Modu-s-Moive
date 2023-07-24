@@ -18,6 +18,7 @@ export function* eventSaga() {
 
 const initialState = {
   eventlist: [],
+  event: [],
   error: null,
 };
 

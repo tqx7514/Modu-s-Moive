@@ -112,7 +112,6 @@ const MeetDetailBoardContainer = () => {
   };
 
   const onRemoveComment = async (a) => {
-    console.log("ㅋㅋㅋㅋㅋㅋㅋㅋㅋ", a);
     try {
       await dispatch(removeMeetComment(a));
     } catch (error) {

@@ -1,5 +1,10 @@
 import client from "./client";
 
+export const currentlist = () => {
+  console.log("currentlist=====>");
+  return client.get("/currentmovie/movielist");
+}
+
 export const movielist = () => {
   return client.get("/currentmovie");
 };
@@ -38,3 +43,7 @@ export const updateMovielist = ({title, vote_count, vote_average, popularity, id
     title, vote_count, vote_average, popularity, id, poster_path
   })
 };
+
+export const adminRemove = ({movie_num}) => {
+  return client.delete('/currentmovie/admin/remove', {params: {movie_num}});
+}

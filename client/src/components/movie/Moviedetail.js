@@ -149,6 +149,10 @@ const Clickevent = styled.div`
     border: none;
     font-size: 30px;
     border-bottom: 1px solid #ccc;
+
+    &.active{
+      border-bottom: 1px solid #000;
+    }
   }
 `;
 
@@ -170,11 +174,13 @@ const Genre = styled.div`
 
 const Director = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const Talent = styled.div`
   ul {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
   }
 `;
@@ -242,6 +248,7 @@ const InputBox = styled.div`
     padding: 13px 18px;
     resize: none;
     font-size: 14px;
+    outline: none;
   }
   span {
     margin: 0 10px 5px 0;
@@ -359,11 +366,6 @@ const ReviewInfo = styled.div``;
 
 const MovieDetail = ({
   moviedetail,
-  images,
-  videos,
-  credits,
-  credit,
-  genres,
   showInfo,
   showReviews,
   handleShowInfo,
@@ -374,16 +376,39 @@ const MovieDetail = ({
   onChangecontent,
   onChangestar,
   commentlist,
-  actionButtons,
   onRemove,
   onEdit,
   ownPost,
+  loading,
+  selectBtn,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  if (!moviedetail) {
-    return <div>Loading...</div>;
+
+  if (moviedetail.length===0) {
+    console.log('아앙아아아아아');
+    return 
+      (<img src="/loader.gif" alt="" />)
   }
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
+
+  console.log('m무비디테일ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ',moviedetail);
+
+const genres = moviedetail.genres;
+const images = moviedetail.images.posters;
+const videos = moviedetail.videos.results;
+const credits = moviedetail.credits.cast;
+const credit = moviedetail.credits.crew;
+console.log("moviedetailcomponents", moviedetail);
+
+const changeDate = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const result = `${year}-${month}-${day}`;
+
+  return result;
+};
 
   const openModal = () => {
     setIsOpen(true);
@@ -398,7 +423,7 @@ const MovieDetail = ({
   };
 
   return (
-    <DetailContainer>
+<DetailContainer>
       <div>
         <DetailContent>
           <DetailTop>
@@ -438,8 +463,14 @@ const MovieDetail = ({
           </DetailTop>
         </DetailContent>
         <Clickevent>
-          <button onClick={handleShowInfo}>영화정보</button>
-          <button onClick={handleShowReviews}>평점 및 관람평</button>
+          <button 
+            onClick={(e) => handleShowInfo(e)}
+            className={selectBtn === "영화정보" && 'active'}
+          >영화정보</button>
+          <button 
+            onClick={(e) => handleShowReviews(e)}
+            className={selectBtn === "평점 및 관람평" && 'active'}
+          >평점 및 관람평</button>
         </Clickevent>
         {showInfo && (
           <div>
@@ -453,7 +484,7 @@ const MovieDetail = ({
                       genres.map((genre) => <p key={genre.id}>{genre.name}</p>)}
                   </Genre>
                   <Director>
-                    <p>감독:</p>
+                  <p>감독:</p>
                     {credit &&
                       credit.map((credit) => {
                         if (credit.job === "Director") {
@@ -464,14 +495,14 @@ const MovieDetail = ({
                   </Director>
                   <Talent>
                     <ul>
-                      <p>출연:</p>
+                    <p>출연진:</p>
                       {credits &&
                         credits.map((credit) => (
                           <li key={credit.id}>
                             {credit.profile_path &&
                               credit.known_for_department === "Acting" && (
                                 <>
-                                  <p>{credit.name}</p>
+                                  <p>{credit.name},&nbsp;&nbsp;</p>
                                 </>
                               )}
                           </li>
@@ -488,7 +519,7 @@ const MovieDetail = ({
               </Video>
               <Image>
                 <h1>스틸컷({images && images.length})</h1>
-                <ImageCarousel images={images && images} />
+                <ImageCarousel images={ images && images} />
               </Image>
             </VideoImageInfo>
           </div>
@@ -512,12 +543,13 @@ const MovieDetail = ({
                 <InputBox>
                   <div className="review-write-box">
                     <textarea
-                      onChange={onChangecontent}
+                      onChange={onChangecontent}sdfsdfsdfdfsdfsdf
                       value={content}
+                      maxLength={220}
                       placeholder="평점 및 영화 관람평을 작성해 주세요. (최소 10글자 이상)"
                     ></textarea>
                     <span>
-                      <strong>0</strong>/<em>220</em>
+                      <strong>{content.length}</strong>/<em>220</em>
                     </span>
                   </div>
                   <button onClick={onPublish}>관람평 작성</button>
@@ -572,7 +604,7 @@ const MovieDetail = ({
                         </span>
                         <ReviewTopInfo>
                           <span>{comment.id}</span>
-                          <span>{comment.createdAt}</span>
+                          <span>{changeDate(comment.createdAt)}</span>
                           <button className="btn_good"><img src="/ic_review_good.png"/>0</button>
                         </ReviewTopInfo>
                         <div>{comment.content}</div>
@@ -601,7 +633,7 @@ const MovieDetail = ({
         <MovieVideoModal oncloseModal={oncloseModal} videos={videos} />
       )}
     </DetailContainer>
-  );
-};
+    )}
+  
 
 export default MovieDetail;

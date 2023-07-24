@@ -8,15 +8,6 @@ import { takeLatest } from "redux-saga/effects";
 const [DETAIL_POST, DETAIL_POST_SUCCESS, DETAIL_POST_FAIURE] =
   createRequestActionTypes("moviedetail/DETAIL_POST");
 
-const [DETAIL_IMAGE, DETAIL_IMAGE_SUCCESS, DETAIL_IMAGE_FAIURE] =
-  createRequestActionTypes("moviedetail/DETAIL_IMAGE");
-
-const [DETAIL_VIDEO, DETAIL_VIDEO_SUCCESS, DETAIL_VIDEO_FAIURE] =
-  createRequestActionTypes("moviedetail/DETAIL_VIDEO");
-
-const [DETAIL_CREDIT, DETAIL_CREDIT_SUCCESS, DETAIL_CREDIT_FAIURE] =
-  createRequestActionTypes("moviedetail/DETAIL_CREDIT");
-
 const [INITIALIZE] = createRequestActionTypes("moviedetail/INITIALIZE");
 
 const [CHANGE_FIELD] = createRequestActionTypes("moviedetail/CHANGE_FIELD");
@@ -34,10 +25,6 @@ const [REMOVE_COMMENT, REMOVE_COMMENT_SUCCESS, REMOVE_COMMENT_FAIURE] =
   createRequestActionTypes("moviedetail/REMOVE_COMMENT");
 
 export const readDetail = createAction(DETAIL_POST, (id) => id);
-export const imageDetail = createAction(DETAIL_IMAGE, (id) => id);
-export const videoDetail = createAction(DETAIL_VIDEO, (id) => id);
-export const creditDetail = createAction(DETAIL_CREDIT, (id) => id);
-
 export const initialize = createAction(INITIALIZE);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
@@ -62,9 +49,6 @@ export const removeComment =
 );
 
 const readDetailSaga = createRequestSaga(DETAIL_POST, movieAPI.moviedetail);
-const imageDetailSaga = createRequestSaga(DETAIL_IMAGE, movieAPI.moviedetail);
-const videoDetailSaga = createRequestSaga(DETAIL_VIDEO, movieAPI.moviedetail);
-const creditDetailSaga = createRequestSaga(DETAIL_CREDIT, movieAPI.moviedetail);
 const readCommentSaga = createRequestSaga(READ_COMMENT, movieAPI.moviedetail);
 const commentWriteSaga = createRequestSaga(
   COMMENT_WRITE,
@@ -75,9 +59,6 @@ const removeCommentSaga = createRequestSaga(REMOVE_COMMENT, movieAPI.removeComme
 
 export function* moviedetailSaga() {
   yield takeLatest(DETAIL_POST, readDetailSaga);
-  yield takeLatest(DETAIL_IMAGE, imageDetailSaga);
-  yield takeLatest(DETAIL_VIDEO, videoDetailSaga);
-  yield takeLatest(DETAIL_CREDIT, creditDetailSaga);
   yield takeLatest(COMMENT_WRITE, commentWriteSaga);
   yield takeLatest(READ_COMMENT, readCommentSaga);
   yield takeLatest(UPDATE_COMMENT, updateCommentSaga);
@@ -86,9 +67,6 @@ export function* moviedetailSaga() {
 
 const initialState = {
   moviedetail: [],
-  images: [],
-  videos: [],
-  credits: [],
   error: null,
   content: "",
   star: "",
@@ -104,31 +82,6 @@ const moviedetail = handleActions(
       moviedetail: moviedetail.moviedetail,
     }),
     [DETAIL_POST_FAIURE]: (state, { payload: error }) => ({
-      ...state,
-      error,
-    }),
-    [DETAIL_IMAGE_SUCCESS]: (state, { payload: images }) => ({
-      ...state,
-      images: images.movieimage,
-    }),
-    [DETAIL_IMAGE_FAIURE]: (state, { payload: error }) => ({
-      ...state,
-      error,
-    }),
-    [DETAIL_VIDEO_SUCCESS]: (state, { payload: videos }) => ({
-      ...state,
-      videos: videos.movievideo,
-    }),
-    [DETAIL_VIDEO_FAIURE]: (state, { payload: error }) => ({
-      ...state,
-      error,
-    }),
-    [DETAIL_CREDIT_SUCCESS]: (state, { payload: credits }) => ({
-      ...state,
-      credits: credits.moviecredits,
-      credit: credits.moviecredit,
-    }),
-    [DETAIL_CREDIT_FAIURE]: (state, { payload: error }) => ({
       ...state,
       error,
     }),

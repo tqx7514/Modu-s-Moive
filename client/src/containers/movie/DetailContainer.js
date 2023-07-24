@@ -5,9 +5,6 @@ import { useNavigate } from "../../../node_modules/react-router-dom/dist/index";
 import Moviedetail from "../../components/movie/Moviedetail";
 import {
   readDetail,
-  imageDetail,
-  videoDetail,
-  creditDetail,
   initialize,
   commentWrite,
   changeField,
@@ -21,13 +18,7 @@ const DetailContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
-    user,
     moviedetail,
-    images,
-    videos,
-    credits,
-    credit,
-    genres,
     userId,
     content,
     movie_id,
@@ -35,14 +26,9 @@ const DetailContainer = () => {
     comment,
     commentError,
     commentlist,
+    loading,
   } = useSelector((state) => ({
-    user: state.user.user,
     moviedetail: state.moviedetail.moviedetail,
-    genres: state.moviedetail.moviedetail.genres,
-    images: state.moviedetail.images,
-    videos: state.moviedetail.videos,
-    credit: state.moviedetail.credit,
-    credits: state.moviedetail.credits,
     userId: state.user.user && state.user.user.id,
     content: state.moviedetail.content,
     movie_id: state.moviedetail.moviedetail.id,
@@ -50,26 +36,32 @@ const DetailContainer = () => {
     comment: state.moviedetail.comment,
     commentError: state.moviedetail.commentError,
     commentlist: state.moviedetail.commentlist,
+    loading:state.loading["moviedetail/DETAIL_POST"]
   }));
-  console.log("commentlist=======+++>", commentlist);
+  console.log("moviedetail===========>", moviedetail);
   const [showInfo, setShowInfo] = useState(true);
   const [showReviews, setShowReviews] = useState(false);
+  const [selectBtn, setSelectBtn] = useState(null);
 
-  const handleShowInfo = () => {
+  const handleBtn = (e) => {
+    setSelectBtn(e.target.textContent);
+  }
+
+  const handleShowInfo = (e) => {
     setShowInfo(true);
     setShowReviews(false);
+    handleBtn(e)
+    console.log('btn????????????????', selectBtn);
   };
 
-  const handleShowReviews = () => {
+  const handleShowReviews = (e) => {
     setShowInfo(false);
     setShowReviews(true);
+    handleBtn(e)
   };
 
   useEffect(() => {
     dispatch(readDetail(id));
-    dispatch(imageDetail(id));
-    dispatch(videoDetail(id));
-    dispatch(creditDetail(id));
     dispatch(readComment(id));
   }, [dispatch, id]);
 
@@ -113,24 +105,16 @@ const DetailContainer = () => {
       console.log(e);
     }
   };  
-
   const onEdit = (commentNum, editContent, rating) => {
     dispatch(updateComment({commentNum, movie_id, editContent, rating}));
   };
-  // const ownPost = (user && user.userId) === (commentlist && commentlist);
+
 const ownPost = (id) =>{
-  console.log('iddddddddddddddddddd',id);
-  console.log('userssssssssssssss',userId);
   return (userId&&userId) === (id)
 }
   return (
     <Moviedetail
       moviedetail={moviedetail}
-      images={images}
-      videos={videos}
-      credits={credits}
-      credit={credit}
-      genres={genres}
       showInfo={showInfo}
       showReviews={showReviews}
       handleShowInfo={handleShowInfo}
@@ -144,6 +128,8 @@ const ownPost = (id) =>{
       onRemove = {onRemove}
       onEdit={onEdit}
       ownPost={ownPost}
+      loading={loading}
+      selectBtn={selectBtn}
     />
   );
 };

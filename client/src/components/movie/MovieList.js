@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import Button from "../common/Button";
 import { MdStarRate, BsStopwatch } from "react-icons/md";
 import { Link } from "react-router-dom";
-import ImageCarousel from "../common/MainCarousel";
+import MainCarousel from "../common/MainCarousel";
 
 const AppContainer = styled.div`
   display: flex;
@@ -106,6 +106,16 @@ const MovieInfo = styled.div`
   align-items: center;
   font-size: 13px;
   margin-bottom: 42px;
+  div {
+    display: flex;
+    justify-content: center;
+  }
+  img{
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
+    margin-right: 5px;
+  }
 `;
 
 const Movieimg = styled.div`
@@ -127,12 +137,15 @@ const Movieimg = styled.div`
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
 
 const MovieList = ({
-  movielist,
+  currentmovielist,
   handleCurrentMovies,
   handleUpcomingMovies,
   handleSortByPopularity,
   handleSortByStar,
   handleSortByCount,
+  SortPopularity,
+  SortStar,
+  SortCount
 }) => {
   const [isActive, setIsActive] = useState(true); // 현재상영작 버튼을 초기에 활성화 상태로 설정
 
@@ -145,11 +158,11 @@ const MovieList = ({
     handleUpcomingMovies();
     setIsActive(false);
   };
-  console.log("movilist=========+++>",movielist);
+  console.log("movilist=========+++>",currentmovielist);
 
   return (
     <div>
-      <ImageCarousel movielist={movielist} />
+      <MainCarousel currentmovielist={currentmovielist} />
       <ChangePost>
         <Changebutton>
           <button
@@ -166,15 +179,15 @@ const MovieList = ({
           </button>
         </Changebutton>
         <Sort>
-          <button onClick={handleSortByPopularity}>
+          <button onClick={isActive ? handleSortByPopularity : SortPopularity}>
             <span>흥행도순</span>
           </button>
 
-          <button onClick={handleSortByStar}>
+          <button onClick={isActive ? handleSortByStar : SortStar}>
             <span>평점순</span>
           </button>
 
-          <button onClick={handleSortByCount}>
+          <button onClick={isActive ? handleSortByCount : SortCount}>
             <span>관람평 많은순</span>
           </button>
 
@@ -184,8 +197,47 @@ const MovieList = ({
         </Sort>
       </ChangePost>
       <AppContainer>
-        {Array.isArray(movielist) &&
-          movielist.map((item) => (
+      {isActive === true ? (
+          // 현재 상영작 목록 출력
+          Array.isArray(currentmovielist) &&
+          currentmovielist.map((item) => (
+            <div className="movie-poster" key={item.movie_num}>
+              <MovieBlock>
+                <img src={IMG_BASE_URL + item.img} alt="영화포스터" />
+                {true && (
+                  <Movieimg className="movieImg">
+                    <div>
+                      <Link to={"/ticket"}>
+                        <Button>예매하기</Button>
+                      </Link>
+                      <Link to={`/currentmovie/detail/${item.movie_id}`}>
+                        <Button>상세정보</Button>
+                      </Link>
+                    </div>
+                  </Movieimg>
+                )}
+                <MovieInfo>
+                  <div>
+                  {item.age === "all" ? (
+                      <img src="/age_all.png" alt="전체 관람 가능" />
+                    ) : item.age === "12" ? (
+                      <img src="/age_12.png" alt="12세 이상 관람 가능" />
+                    ) : item.age === "15" ? (
+                      <img src="/age_15.png" alt="15세 이상 관람 가능" />
+                    ) : item.age === "19" ? (
+                      <img src="/age_19.png" alt="19세 이상 관람 가능" />
+                    ) : null}
+                  <h4>{item.movie_name}</h4>
+                  </div>
+                  <MdStarRate />
+                  <span>{item.star}</span>
+                </MovieInfo>
+              </MovieBlock>
+              </div>
+          ))
+        ) : (
+          Array.isArray(currentmovielist) &&
+          currentmovielist.map((item) => (
             <div className="movie-poster" key={item.id}>
               <MovieBlock>
                 <img src={IMG_BASE_URL + item.poster_path} alt="영화포스터" />
@@ -207,8 +259,9 @@ const MovieList = ({
                   <span>{item.vote_average}</span>
                 </MovieInfo>
               </MovieBlock>
-            </div>
-          ))}
+          </div>
+          ))
+        )}
       </AppContainer>
     </div>
   );

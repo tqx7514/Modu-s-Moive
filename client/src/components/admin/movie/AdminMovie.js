@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import Button from "../../common/Button";
 import { MdStarRate, BsStopwatch } from "react-icons/md";
 import { Link } from "react-router-dom";
-import ImageCarousel from "../../common/MainCarousel";
+import AdminCarousel from "../../common/AdminCarousel";
 
 const AdminMovieInfo = styled.div`
   background-color: gray;
@@ -16,7 +16,7 @@ const AppContainer = styled.div`
   width: 980px;
   margin: 0 auto;
   padding: 50px 0 0 0;
-  h4{
+  h4 {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -110,10 +110,9 @@ const MovieInfo = styled.div`
   align-items: center;
   font-size: 13px;
   margin-bottom: 42px;
-  button{
+  button {
     cursor: pointer;
   }
-
 `;
 
 const Movieimg = styled.div`
@@ -138,38 +137,40 @@ const AdminMovie = ({
   movielist,
   handleCurrentMovies,
   handleUpcomingMovies,
+  handleUpcomingMovie,
   handleSortByPopularity,
   handleSortByStar,
   handleSortByCount,
   onEdit,
+  onRemove,
+  currentType,
 }) => {
-  const [isActive, setIsActive] = useState(true); // 현재상영작 버튼을 초기에 활성화 상태로 설정
 
-  const handleClickCurrentMovies = () => {
-    handleCurrentMovies();
-    setIsActive(true);
+  const handleRemove = (movie_num) => {
+    // 여기서 삭제 버튼을 눌렀을 때 처리할 로직을 구현합니다.
+    onRemove(movie_num);
   };
-
-  const handleClickUpcomingMovies = () => {
-    handleUpcomingMovies();
-    setIsActive(false);
-  };
-  console.log("movilist=========+++>", movielist);
 
   return (
     <AdminMovieInfo>
-      <ImageCarousel movielist={movielist} />
+      <AdminCarousel movielist={movielist} />
       <ChangePost>
         <Changebutton>
           <button
-            onClick={handleClickCurrentMovies}
-            style={isActive === true ? activeStyle : undefined}
+            onClick={handleCurrentMovies}
+            style={currentType === "currentmovielist" ? activeStyle : undefined}
           >
-            현재 상영작
+            현재상영작(DB)
           </button>
           <button
-            onClick={handleClickUpcomingMovies}
-            style={isActive === false ? activeStyle : undefined}
+            onClick={handleUpcomingMovies}
+            style={currentType === "movielist" ? activeStyle : undefined}
+          >
+            현재 상영작(API)
+          </button>
+          <button
+            onClick={handleUpcomingMovie}
+            style={currentType === "upcoming" ? activeStyle : undefined}
           >
             상영 예정작
           </button>
@@ -193,7 +194,39 @@ const AdminMovie = ({
         </Sort>
       </ChangePost>
       <AppContainer>
-        {Array.isArray(movielist) &&
+        {currentType === "currentmovielist" &&
+          Array.isArray(movielist) &&
+          movielist.map((item) => (
+            <div className="movie-poster" key={item.movie_id}>
+              <MovieBlock>
+                <img src={IMG_BASE_URL + item.img} alt="영화포스터" />
+                {true && (
+                  <Movieimg className="movieImg">
+                    <div>
+                      <Link to={"/ticket"}>
+                        <Button>예매하기</Button>
+                      </Link>
+                      <Link to={`/currentmovie/detail/${item.movie_id}`}>
+                        <Button>상세정보</Button>
+                      </Link>
+                    </div>
+                  </Movieimg>
+                )}
+                <MovieInfo>
+                  <h4>{item.movie_name}</h4>
+                  <MdStarRate />
+                  <span>{item.star}</span>
+                  <div>
+                  <button onClick={() => handleRemove(item.movie_num)}>
+                      삭제하기
+                      </button>
+                  </div>
+                </MovieInfo>
+              </MovieBlock>
+            </div>
+          ))}
+        {currentType === "movielist" &&
+          Array.isArray(movielist) &&
           movielist.map((item) => (
             <div className="movie-poster" key={item.id}>
               <MovieBlock>
@@ -215,20 +248,62 @@ const AdminMovie = ({
                   <MdStarRate />
                   <span>{item.vote_average}</span>
                   <div>
-                  <button
-                    onClick={() =>
-                      onEdit({
-                        title: item.title,
-                        vote_count: item.vote_count,
-                        vote_average: item.vote_average,
-                        popularity: item.popularity,
-                        id: item.id,
-                        poster_path: item.poster_path,
-                      })
-                    }
-                  >
-                    추가하기
-                  </button>
+                    <button
+                      onClick={() =>
+                        onEdit({
+                          title: item.title,
+                          vote_count: item.vote_count,
+                          vote_average: item.vote_average,
+                          popularity: item.popularity,
+                          id: item.id,
+                          poster_path: item.poster_path,
+                        })
+                      }
+                    >
+                      추가하기
+                    </button>
+                  </div>
+                </MovieInfo>
+              </MovieBlock>
+            </div>
+          ))}
+        {currentType === "upcoming" &&
+          Array.isArray(movielist) &&
+          movielist.map((item) => (
+            <div className="movie-poster" key={item.id}>
+              <MovieBlock>
+                <img src={IMG_BASE_URL + item.poster_path} alt="영화포스터" />
+                {true && (
+                  <Movieimg className="movieImg">
+                    <div>
+                      <Link to={"/ticket"}>
+                        <Button>예매하기</Button>
+                      </Link>
+                      <Link to={`/currentmovie/detail/${item.id}`}>
+                        <Button>상세정보</Button>
+                      </Link>
+                    </div>
+                  </Movieimg>
+                )}
+                <MovieInfo>
+                  <h4>{item.title}</h4>
+                  <MdStarRate />
+                  <span>{item.vote_average}</span>
+                  <div>
+                    <button
+                      onClick={() =>
+                        onEdit({
+                          title: item.title,
+                          vote_count: item.vote_count,
+                          vote_average: item.vote_average,
+                          popularity: item.popularity,
+                          id: item.id,
+                          poster_path: item.poster_path,
+                        })
+                      }
+                    >
+                      추가하기
+                    </button>
                   </div>
                 </MovieInfo>
               </MovieBlock>

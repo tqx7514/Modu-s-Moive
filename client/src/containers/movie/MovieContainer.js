@@ -1,64 +1,78 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import MovieList from "../../components/movie/MovieList";
-import { listPosts } from "../../modules/currentmovie";
+import { listMovie } from "../../modules/currentmovie";
 
 const MovieContainer = () => {
   const dispatch = useDispatch();
-  const { movielist } = useSelector((state) => ({
+  const { movielist, currentmovielist } = useSelector((state) => ({
+    currentmovielist: state.movielist.currentmovielist,
     movielist: state.movielist.movielist,
     upcominglist: state.movielist.upcominglist,
   }));
-
-  const [currentList, setCurrentList] = useState(movielist);
-  console.log("1111111111111111->", currentList)
+  console.log("currentmovielist");
+  const [currentList, setCurrentList] = useState([]);
+ 
   const handleCurrentMovies = () => {
-    setCurrentList(movielist.movielist);
+    setCurrentList(currentmovielist.currentmovielist);
+
   };
 
   const handleUpcomingMovies = () => {
-    setCurrentList(movielist.upcominglist);
+    setCurrentList(currentmovielist.upcominglist);
+
   };
 
   const handleSortByPopularity = () => {
-    const sortedList = [...currentList].sort(
-      (a, b) => b.popularity - a.popularity
-    );
+    const sortedList = [...currentList].sort((a, b) => b.popularity - a.popularity);
     setCurrentList(sortedList);
   };
 
   const handleSortByStar = () => {
-    const sortedList = [...currentList].sort(
-      (a, b) => b.vote_average - a.vote_average
-    );
+    const sortedList = [...currentList].sort((a, b) => b.star - a.star);
     setCurrentList(sortedList);
   };
+
   const handleSortByCount = () => {
-    const sortedList = [...currentList].sort(
-      (a, b) => b.vote_count - a.vote_count
-    );
+    const sortedList = [...currentList].sort((a, b) => b.popularity - a.tiketing);
+    setCurrentList(sortedList);
+  };
+
+  const handleSortBypopularity = () => {
+    const sortedList = [...currentList].sort((a, b) => b.vote_count - a.vote_count);
+    setCurrentList(sortedList);
+  };
+
+  const handleSortBystar = () => {
+    const sortedList = [...currentList].sort((a, b) => b.vote_average - a.vote_average);
+    setCurrentList(sortedList);
+  };
+
+  const handleSortBycount = () => {
+    const sortedList = [...currentList].sort((a, b) => b.popularity - a.popularity);
     setCurrentList(sortedList);
   };
 
   useEffect(() => {
-    dispatch(listPosts());
+    dispatch(listMovie());
   }, [dispatch]);
 
   useEffect(() => {
-    setCurrentList(movielist.movielist);
-  }, [movielist.movielist]);
+    setCurrentList(currentmovielist.currentmovielist);
+  }, [currentmovielist.currentmovielist]);
 
   return (
-    
-      <MovieList
-        movielist={currentList}
-        handleCurrentMovies={handleCurrentMovies}
-        handleUpcomingMovies={handleUpcomingMovies}
-        handleSortByPopularity={handleSortByPopularity}
-        handleSortByStar={handleSortByStar}
-        handleSortByCount={handleSortByCount}
-      />
-    
+    <MovieList
+      currentmovielist={currentList}
+      handleCurrentMovies={handleCurrentMovies}
+      handleUpcomingMovies={handleUpcomingMovies}
+      handleSortByPopularity={handleSortByPopularity}
+      handleSortByStar={handleSortByStar}
+      handleSortByCount={handleSortByCount}
+      SortPopularity={handleSortBypopularity}
+      SortStar={handleSortBystar}
+      SortCount={handleSortBycount}
+    />
   );
 };
 

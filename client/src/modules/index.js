@@ -26,6 +26,9 @@ import meetlist, { meetsSaga } from "./meetlist";
 import eventlist, { eventSaga } from "./eventlist";
 import cinema, { cinemaSaga } from "./cinema";
 import meetboard, { meetBoardSaga } from "./meetboard";
+// import adminevent, { readEventSaga } from "./admin/adminevent";
+// import admineventlist, { adminEventListSaga } from "./admin/admineventlist";
+// import admineventwrite, { eventWriteSaga } from "./admin/admineventwrite";
 
 const rootReducer = combineReducers({
   auth,
@@ -48,6 +51,9 @@ const rootReducer = combineReducers({
   eventpost,
   postcomment,
   adminposts,
+  // adminevent,
+  // admineventlist,
+  // admineventwrite,
 });
 
 export function* rootSaga() {
@@ -73,6 +79,9 @@ export function* rootSaga() {
     timeSaga(),
     postCommentSaga(),
     adminpostsSaga(),
+    // readEventSaga(),
+    // adminEventListSaga(),
+    // eventWriteSaga(),
   ]);
 }
 

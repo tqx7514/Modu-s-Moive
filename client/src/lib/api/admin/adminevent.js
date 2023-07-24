@@ -22,11 +22,11 @@
 // };
 
 // export const readAdminEvent = (eventNum) => {
-//   console.log("readAdminEvent입니다!", eventNum);
-//   return client.get(`/admin/event/${eventNum}`);
+//   return client.get(`/admin/event/detail/${eventNum}`);
 // };
 
 // export const adminEventBoardList = ({ page, name, searchEventResult }) => {
+//   console.log("adminEventBoardList 문제", page, name, searchEventResult)
 //   return client.get(`/admin/event/list`, {
 //     params: { page, name, searchEventResult },
 //   });
@@ -40,30 +40,17 @@
 //   eventImg,
 //   startEventDate,
 //   endEventDate,
-// }) => {
-//   try {
-//     const response = await client.patch(`/admin/event/${eventNum}`, {
-//       eventNum,
-//       categoryId,
-//       eventTitle,
-//       eventContent,
-//       eventImg,
-//       startEventDate,
-//       endEventDate,
-//     });
-//     return response.data;
-//   } catch (error) {
-//     console.error("updateAdminEvent error:", error);
-//     throw error;
-//   }
-// };
+// }) =>
+//   client.patch(`/admin/event/detail/${eventNum}`, {
+//     eventNum,
+//     categoryId,
+//     eventTitle,
+//     eventContent,
+//     eventImg,
+//     startEventDate,
+//     endEventDate,
+//   });
 
 // export const removeAdminEvent = async (eventNum) => {
-//   try {
-//     const response = await client.delete(`/admin/event/${eventNum}`);
-//     return response.data;
-//   } catch (error) {
-//     console.error("removeAdminEvent error:", error);
-//     throw error;
-//   }
+//   return client.delete(`/admin/event/${eventNum}`, eventNum);
 // };

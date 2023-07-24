@@ -5,11 +5,11 @@
 // import * as admineventAPI from "../../lib/api/admin/adminevent";
 // import { takeLatest } from "redux-saga/effects";
 
-// const [LIST_ADMINEVENT, LIST_ADMINEVENT_SUCCESS, LIST_ADMINEVENT_FAILURE] =
-//   createRequestActionTypes("adminevent/LIST_ADMINEVENT");
+// const [ADMINEVENT_LIST, ADMINEVENT_LIST_SUCCESS, ADMINEVENT_LIST_FAILURE] =
+//   createRequestActionTypes("adminevent/ADMINEVENT_LIST");
 
 // export const adminEventList = createAction(
-//   LIST_ADMINEVENT,
+//   ADMINEVENT_LIST,
 //   ({ name, page, searchEventResult }) => ({
 //     name,
 //     page,
@@ -17,30 +17,33 @@
 //   })
 // );
 
-// const adminEventListSaga = createRequestSaga(LIST_ADMINEVENT, admineventAPI.adminEventBoardList);
-// export function* adminEventListsSaga() {
-//     yield takeLatest(LIST_ADMINEVENT, adminEventListSaga);
+// const adminEventListsSaga = createRequestSaga(
+//   ADMINEVENT_LIST,
+//   admineventAPI.adminEventBoardList
+// );
+// export function* adminEventListSaga() {
+//   yield takeLatest(ADMINEVENT_LIST, adminEventListsSaga);
 // }
 
 // const initialState = {
-//     adminevent: null,
-//     error: null,
-//     lastPage: 1,
+//   events: null,
+//   error: null,
+//   lastPage: 1,
 // };
 
-// const adminevent = handleActions(
-//     {
-//         [LIST_ADMINEVENT_SUCCESS]: (state, { payload: adminevent }) => ({
-//             ...state,
-//             adminevent: adminevent.admineventlists,
-//             lastPage: adminevent.totalPages,
-//         }),
-//         [LIST_ADMINEVENT_FAILURE]: (state, { payload: error }) => ({
-//             ...state,
-//             error,
-//         }),
-//     },
-//     initialState
+// const admineventlist = handleActions(
+//   {
+//     [ADMINEVENT_LIST_SUCCESS]: (state, { payload: events }) => ({
+//       ...state,
+//       events : events.admineventlists,
+//       lastPage: events.totalPages,
+//     }),
+//     [ADMINEVENT_LIST_FAILURE]: (state, { payload: error }) => ({
+//       ...state,
+//       error,
+//     }),
+//   },
+//   initialState
 // );
 
-// export default adminevent;
+// export default admineventlist;

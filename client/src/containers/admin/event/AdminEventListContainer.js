@@ -5,30 +5,28 @@ import AdminEventListComponent from "../../../components/admin/event/AdminEventL
 import { adminEventList } from "../../../modules/admin/admineventlist";
 
 const AdminEventListContainer = () => {
-  const { name } = useParams();
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
-  const { events, error, loading, user } = useSelector(
-    ({ events, loading, user }) => ({
-      events: events.events,
-      error: events.error,
+  const { admineventlist, error, loading, user } = useSelector(
+    ({ admineventlist, loading, user }) => ({
+      admineventlist: admineventlist.admineventlist,
       loading: loading["adminevent/ADMINEVENT_LIST"],
       user: user.user,
     })
   );
+  console.log("12342123142312", admineventlist);
 
   useEffect(() => {
-    const searchResult = searchParams.get("search");
     const page = parseInt(searchParams.get("page"), 10) || 1;
-    dispatch(adminEventList({ name, page, searchResult }));
-  }, [dispatch, searchParams, name]);
+    dispatch(adminEventList({ page }));
+  }, [dispatch, searchParams]);
 
   return (
     <>
       <AdminEventListComponent
         loading={loading}
         error={error}
-        events={events}
+        events={admineventlist}
         showWriteButton={user}
       />
     </>

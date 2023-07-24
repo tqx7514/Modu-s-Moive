@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Responsive from "../../common/Responsive";
 import Button from "../../common/Button";
 import { Link, useNavigate } from "react-router-dom";
-import AdminEventSearchComponent from "./AdminEventSearchComponent";
 import AdminEventListTitleComponent from "./AdminEventListTitleComponent";
 import AdminEventItemComponent from "./AdminEventItemComponent";
 
@@ -15,8 +14,6 @@ const WriteEventButtonWrapper = styled.div``;
 
 const WriteEventButton = styled(Button)``;
 
-const AdminEventSearchBlock = styled.div``;
-
 const AdminEventCategoryBlock = styled.div``;
 
 const AdminEventListComponent = ({
@@ -25,21 +22,10 @@ const AdminEventListComponent = ({
   error,
   showWriteButton,
 }) => {
-  const [filteredEvents, setFilteredEvents] = useState(events);
   const [selectedCategory, setSelectedCategory] = useState("전체");
 
   const handleCategorySelect = (category) => {
-    k;
     setSelectedCategory(category);
-
-    if (category === "전체") {
-      setFilteredEvents(events);
-    } else {
-      const filteredEvents = events.filter(
-        (event) => event.categoryId === category
-      );
-      setFilteredEvents(filteredEvents);
-    }
   };
 
   // const handleSearch = async (searchQuery, searchType) => {
@@ -66,12 +52,13 @@ const AdminEventListComponent = ({
         </select>
       </AdminEventCategoryBlock>
 
-      <AdminEventListTitleComponent events={filteredEvents} />
+      <AdminEventListTitleComponent />
       {!loading && events && (
         <AdminEventItemBlock>
-          {filteredEvents.map((event) => (
-            <AdminEventItemComponent key={event.eventNum} event={event} />
-          ))}
+          {events &&
+            events.map((event) => (
+              <AdminEventItemComponent key={event.eventNum} event={event} />
+            ))}
         </AdminEventItemBlock>
       )}
       {/* <AdminEventSearchBlock>

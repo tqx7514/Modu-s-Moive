@@ -2,9 +2,14 @@ import { createAction, handleActions } from 'redux-actions';
 
 const INCREASE = 'stepsecond/INCREASE';
 const DECREASE = 'stepsecond/DECREASE';
+const SET_SELECTED_SEAT = 'stepsecond/SET_SELECTED_SEAT';
+
+const RESET_NUMBER = 'stepsecond/RESET_NUMBER';
 
 export const increase = createAction(INCREASE, (key) => (key));
 export const decrease = createAction(DECREASE,(key)=>(key));
+export const setSelectedSeat = createAction(SET_SELECTED_SEAT);
+export const resetNumber = createAction(RESET_NUMBER);
 
 const initialState = {
   number: 0,
@@ -23,7 +28,8 @@ const initialState = {
   disabled: {
     name: '장애인',
     number: 0,
-  }
+  },
+  seat: null,
 };
 
 const stepsecond = handleActions(
@@ -44,6 +50,11 @@ const stepsecond = handleActions(
         number:state[key].number > 0 ? state[key].number -1 : 0,
       }
     }),
+    [SET_SELECTED_SEAT]: (state, action) => ({
+      ...state,
+      seat: action.payload,
+    }),
+    [RESET_NUMBER]: () => initialState,
   },
   initialState
 );

@@ -1,11 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import SelectPerson from '../../../components/ticket/step02/SelectPerson';
 import SelectSeat from '../../../components/ticket/step02/SelectSeat';
 import { useDispatch, useSelector } from 'react-redux';
-import { decrease, increase } from '../../../modules/stepsecond';
+import { decrease, increase, resetNumber, setSelectedSeat } from '../../../modules/stepsecond';
+import SelectPayBtn from '../../../components/ticket/step02/SelectPayBtn';
 
 const SelectPersonContiner = () => {
-  const {number} = useSelector(({stepsecond}) => stepsecond);
+  const {number, seat} = useSelector(({stepsecond}) => stepsecond);
   const {
     adultNumber,
     teenagerNumber,
@@ -26,6 +27,14 @@ const SelectPersonContiner = () => {
     dispatch(decrease(key));
   }, [dispatch]);
 
+  const onSelectSeat = useCallback((row, col) => {
+    dispatch(setSelectedSeat(row, col));
+  });
+  
+  useEffect(() => {
+    dispatch(resetNumber());
+  }, [dispatch]);
+
 
   return (
     <div style={{width: '100%'}}>
@@ -38,7 +47,10 @@ const SelectPersonContiner = () => {
             onIncrease={onIncrease} 
             onDecrease={onDecrease}
         />
-        <SelectSeat/>
+        <SelectSeat
+          onSelectSeat={onSelectSeat}
+        />
+        <SelectPayBtn/>
     </div>
   )
 }

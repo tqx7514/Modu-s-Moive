@@ -10,13 +10,6 @@ const Imgcarousel = styled.div`
   width: 100%;
   position: relative;
   z-index: 0;
-
-  /* img {
-    width: 100%;
-    height: 774px;
-    margin: 0 auto;
-    object-fit: contain;
-  } */
 `;
 const Pre = styled.div`
   width: 31px;

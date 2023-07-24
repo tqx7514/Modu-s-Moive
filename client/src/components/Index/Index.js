@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React, { useEffect } from "react";
 import IndexCarousel from "../common/IndexCarousel";
 import MovielistCarousel from "../common/MovielistCarousel";
+import HeaderContainer from "../../containers/common/HeaderContainer";
 import {
   useSelector,
   useDispatch,
@@ -170,7 +171,7 @@ const MainInfo = styled.div`
   }
   .main_cont_wrap.notice {
     margin: 0;
-
+    position: relative;
     border-bottom: 1px solid #aaa;
 
     .sec_tit {
@@ -214,6 +215,8 @@ const MainInfo = styled.div`
   }
 `;
 
+
+
 const Index = () => {
   const dispatch = useDispatch();
   const { currentmovielist } = useSelector((state) => state.movielist);
@@ -225,6 +228,7 @@ const Index = () => {
 
   return (
     <>
+    <HeaderContainer />
       <IndexCarousel currentmovielist={currentmovielist} />
       <MovielistCarousel 
         className="main"

@@ -5,7 +5,7 @@ const MainPage = () => {
   
   return (
     <div>
-      <HeaderContainer />
+      {/* <HeaderContainer /> */}
       <Index/>
     </div>
   );

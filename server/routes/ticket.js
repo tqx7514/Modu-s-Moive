@@ -54,6 +54,7 @@ router.get("/times", async (req, res) => {
   try {
     const time = await movietimes.findAll({});
     res.status(200).json(time);
+    console.log(time)
   } catch (e) {
     console.error(e);
   }

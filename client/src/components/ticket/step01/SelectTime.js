@@ -63,14 +63,14 @@ const ScheduleBtn = styled.div`
   span {
     display: inline-block;
     font-size: 11px;
-    &.seat{
+    &.seat {
       float: left;
     }
-    &.room{
+    &.room {
       float: right;
     }
   }
-  .endTime{
+  .endTime {
     display: none;
     position: absolute;
     left: 50%;
@@ -84,8 +84,8 @@ const ScheduleBtn = styled.div`
     line-height: 32px;
     white-space: nowrap;
     border-radius: 5px;
-    &:after{
-      content: '';
+    &:after {
+      content: "";
       position: absolute;
       top: 32px;
       left: 50%;
@@ -96,11 +96,11 @@ const ScheduleBtn = styled.div`
       border-bottom: 5px solid transparent;
     }
   }
-  &:hover{
-      .endTime{
-        display: block;
-      }
+  &:hover {
+    .endTime {
+      display: block;
     }
+  }
 `;
 
 const SelectTime = () => {
@@ -113,47 +113,40 @@ const SelectTime = () => {
   };
 
   const { data, time } = useSelector(({ stepfirst }) => stepfirst);
+  console.log("time???????????????", data.date, time[0].date);
   const dispatch = useDispatch();
 
   const onSelctedTime = useCallback(
-    (
-      cinema, 
-      movie_name, 
-      age,
-      disp,
-      language,
-      start, 
-      end, 
-      room, 
-      seat
-    ) => {
-      dispatch(setTimeData({ 
-        cinema, 
-        movie_name, 
-        age,
-        disp,
-        language,
-        start, 
-        end, 
-        room, 
-        seat, 
-      }));
+    (cinema, movie_name, age, disp, language, start, end, room, seat) => {
+      dispatch(
+        setTimeData({
+          cinema,
+          movie_name,
+          age,
+          disp,
+          language,
+          start,
+          end,
+          room,
+          seat,
+        })
+      );
     },
     [dispatch]
   );
 
   const handleSelectTime = (item) => {
     setSelectedTime(item.movietimes_num);
-    onSelctedTime( 
-      item.cinema, 
-      item.movie_name, 
+    onSelctedTime(
+      item.cinema,
+      item.movie_name,
       item.age,
       item.disp,
       item.language,
-      item.start, 
-      item.end, 
+      item.start,
+      item.end,
       item.room,
-      item.seat, 
+      item.seat
     );
     setIsModal(true);
   };
@@ -189,6 +182,7 @@ const SelectTime = () => {
           cinema: item.cinema,
           disp: item.disp,
           language: item.language,
+          date: item.date,
           showtimes: [],
         };
       }
@@ -200,28 +194,35 @@ const SelectTime = () => {
 
   const renderMovies = () => {
     const groupedMovies = groupMoviesByTitle();
-  
+    const sameDateTime = time.filter((item) => item.date === data.date);
+
     if (data.cinema && data.date && !data.movie) {
       const filteredMovies = Object.entries(groupedMovies).filter(
         ([key, { cinema }]) => cinema === data.cinema
       );
-  
+
       return filteredMovies.map(([key, { disp, language, showtimes }]) => {
-        const filteredShowtimes = showtimes.filter((item) => {
-          if (selectedFilter === "전체") return true;
-          if (selectedFilter === "스페셜관") return item.disp === "스페셜관";
-          if (selectedFilter === "Atmos") return item.disp === "Atmos";
-          if (selectedFilter === "13시 이후")
-            return Number(item.start.split(":")[0]) >= 13;
-          if (selectedFilter === "19시 이후")
-            return Number(item.start.split(":")[0]) >= 19;
-          if (selectedFilter === "심야")
-            return Number(item.start.split(":")[0]) >= 24;
-          return true;
+        const filteredShowtimesSameDateTime = showtimes.filter((item) => {
+          return sameDateTime.includes(item);
         });
-  
+
+        const filteredShowtimes = filteredShowtimesSameDateTime.filter(
+          (item) => {
+            if (selectedFilter === "전체") return true;
+            if (selectedFilter === "스페셜관") return item.disp === "스페셜관";
+            if (selectedFilter === "Atmos") return item.disp === "Atmos";
+            if (selectedFilter === "13시 이후")
+              return Number(item.start.split(":")[0]) >= 13;
+            if (selectedFilter === "19시 이후")
+              return Number(item.start.split(":")[0]) >= 19;
+            if (selectedFilter === "심야")
+              return Number(item.start.split(":")[0]) >= 24;
+            return true;
+          }
+        );
+
         if (filteredShowtimes.length === 0) return null;
-  
+
         return (
           <AreaItem key={key} className="movie_list time">
             <MovieList className="schedule">
@@ -265,27 +266,33 @@ const SelectTime = () => {
         );
       });
     }
-  
+
     if (data.cinema && data.date && data.movie) {
       const key = `${data.movie.age} ${data.movie.movie_name}`;
       const movie = groupedMovies[key];
-  
+
       if (movie && movie.cinema === data.cinema) {
-        const filteredShowtimes = movie.showtimes.filter((item) => {
-          if (selectedFilter === "전체") return true;
-          if (selectedFilter === "스페셜관") return item.disp === "스페셜관";
-          if (selectedFilter === "Atmos") return item.disp === "Atmos";
-          if (selectedFilter === "13시 이후")
-            return Number(item.start.split(":")[0]) >= 13;
-          if (selectedFilter === "19시 이후")
-            return Number(item.start.split(":")[0]) >= 19;
-          if (selectedFilter === "심야")
-            return Number(item.start.split(":")[0]) >= 24;
-          return true;
+        const filteredShowtimesSameDateTime = movie.showtimes.filter((item) => {
+          return sameDateTime.includes(item);
         });
-  
+
+        const filteredShowtimes = filteredShowtimesSameDateTime.filter(
+          (item) => {
+            if (selectedFilter === "전체") return true;
+            if (selectedFilter === "스페셜관") return item.disp === "스페셜관";
+            if (selectedFilter === "Atmos") return item.disp === "Atmos";
+            if (selectedFilter === "13시 이후")
+              return Number(item.start.split(":")[0]) >= 13;
+            if (selectedFilter === "19시 이후")
+              return Number(item.start.split(":")[0]) >= 19;
+            if (selectedFilter === "심야")
+              return Number(item.start.split(":")[0]) >= 24;
+            return true;
+          }
+        );
+
         if (filteredShowtimes.length === 0) return null;
-  
+
         return (
           <AreaItem className="movie_list time">
             <MovieList className="schedule">
@@ -303,34 +310,33 @@ const SelectTime = () => {
                 }
               ></span>
               {`${key.replace(/all|12|15|19 /g, "")}`}
-
             </MovieList>
             <div>
               <p>{`${movie.disp} ${movie.language}`}</p>
               {filteredShowtimes.map((item) => (
                 <ScheduleBtn
-                key={item.movietimes_num}
-                onClick={() => handleSelectTime(item)}
-                className={
-                  selectedTime === item.movietimes_num ? "selected" : ""
-                }
-              >
-                <div>
+                  key={item.movietimes_num}
+                  onClick={() => handleSelectTime(item)}
+                  className={
+                    selectedTime === item.movietimes_num ? "selected" : ""
+                  }
+                >
                   <div>
-                    <strong>{item.start}</strong>
-                    <span className="seat">{item.seat}</span>
-                    <span className="room">{item.room}관</span>
+                    <div>
+                      <strong>{item.start}</strong>
+                      <span className="seat">{item.seat}</span>
+                      <span className="room">{item.room}관</span>
+                    </div>
                   </div>
-                </div>
-                <div className="endTime">종료: {item.end}</div>
-              </ScheduleBtn>
+                  <div className="endTime">종료: {item.end}</div>
+                </ScheduleBtn>
               ))}
             </div>
           </AreaItem>
         );
       }
     }
-  
+
     return null;
   };
 
@@ -375,7 +381,7 @@ const SelectTime = () => {
         </FilterBtn>
       </BtnWrap>
       <TimeWrap>{renderMovies()}</TimeWrap>
-      <StepFirstModal modal={isModal} setIsModal={setIsModal}/>
+      <StepFirstModal modal={isModal} setIsModal={setIsModal} />
     </>
   );
 };

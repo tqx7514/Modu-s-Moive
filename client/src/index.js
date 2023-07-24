@@ -1,21 +1,33 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { applyMiddleware, legacy_createStore as createStore } from "redux";
+import { applyMiddleware, createStore, compose } from "redux"; // 여기서 createStore로 변경
 import rootReducer, { rootSaga } from "./modules/index";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
 import createSagaMiddleware from "redux-saga";
 import { check, logout, tempSetUser } from "./modules/user";
+import storage from "redux-persist/lib/storage";
+import { persistReducer, persistStore } from "redux-persist"; // persistReducer와 persistStore를 import
 
 const sagaMiddleware = createSagaMiddleware();
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(sagaMiddleware))
+  persistedReducer,
+  composeEnhancers(applyMiddleware(sagaMiddleware))
 );
+
+const persistor = persistStore(store);
 const user = localStorage.getItem("user");
 
 export function loadUser() {

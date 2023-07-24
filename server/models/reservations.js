@@ -1,17 +1,13 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('movietimes', {
-    movietimes_num: {
+  return sequelize.define('reservations', {
+    reserve_num: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
-      references: {
-        model: 'cinemas',
-        key: 'cinema_num'
-      }
+      primaryKey: true
     },
-    cinema: {
+    user_id: {
       type: DataTypes.STRING(100),
       allowNull: false
     },
@@ -19,41 +15,33 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(100),
       allowNull: false
     },
-    age: {
+    cinema: {
       type: DataTypes.STRING(100),
-      allowNull: false
-    },
-    disp: {
-      type: DataTypes.STRING(100),
-      allowNull: false
-    },
-    language: {
-      type: DataTypes.STRING(100),
-      allowNull: true
-    },
-    start: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    end: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    seat: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    room: {
-      type: DataTypes.INTEGER,
       allowNull: false
     },
     date: {
       type: DataTypes.STRING(100),
       allowNull: false
+    },
+    start: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    end: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    person: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    seat: {
+      type: DataTypes.STRING(100),
+      allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'movietimes',
+    tableName: 'reservations',
     timestamps: false,
     indexes: [
       {
@@ -61,7 +49,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "movietimes_num" },
+          { name: "reserve_num" },
         ]
       },
     ]

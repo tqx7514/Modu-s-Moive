@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { AreaItem, MovieList } from '../step01/SelectMovie';
 import { useDispatch, useSelector } from 'react-redux';
@@ -138,11 +138,16 @@ const SelectPerson = ({
   onDecrease,
 }) => {
   const {data, movie} = useSelector(({stepfirst}) => stepfirst);
-  console.log('data?????????????', data.time.movie_name)
-  console.log('movie?????????????', movie)
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
   const selectedMovie = movie.find((movieObj) => movieObj.movie_name === data.time.movie_name);  const selectedMovieImg = selectedMovie ? selectedMovie.img : null;
 
+  // useEffect(() => {
+  //   number(0);
+  //   adultNumber(0);
+  //   teenagerNumber(0);
+  //   seniorNumber(0);
+  //   disabledNumber(0);
+  // }, []);
   const handleIncrease = (key) => {
     if (number >= 8) {
       alert('인원은 최대 8명까지 선택 가능합니다.');

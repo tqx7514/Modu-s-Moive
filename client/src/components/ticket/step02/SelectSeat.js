@@ -1,5 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import styled from "styled-components";
 
 const SelectSeatWrap = styled.div`
   width: 100%;
@@ -12,7 +13,7 @@ const SelectInfo = styled.div`
   margin-bottom: 20px;
   padding-top: 10px;
 
-  p{
+  p {
     text-align: center;
     color: #fff;
     font-size: 11px;
@@ -24,7 +25,7 @@ const Screen = styled.div`
   padding: 0 20px;
   margin-bottom: 30px;
 
-  div{
+  div {
     padding: 5px;
     background: #6e6e6e;
     text-align: center;
@@ -40,11 +41,12 @@ const Seat = styled.div`
   margin: 0 auto;
   color: #fff;
 
-  li{
+  li {
     position: relative;
+    margin-bottom: 10px;
   }
 
-  p{
+  p {
     position: absolute;
     left: -20px;
     top: 5px;
@@ -52,7 +54,7 @@ const Seat = styled.div`
     font-size: 12px;
   }
 
-  span{
+  span {
     display: inline-block;
     width: 21px;
     height: 16px;
@@ -65,39 +67,108 @@ const Seat = styled.div`
     font-size: 10px;
     cursor: pointer;
     margin-right: 5px;
+
+    &.firstRoom {
+      &:nth-child(3) {
+        margin-right: 20px;
+      }
+      &:nth-child(14) {
+        margin-left: 20px;
+      }
+    }
+    &.selected {
+      background: #ff243e;
+      color: #fff;
+    }
+    &.unselected{
+      pointer-events: none;
+      background: url(/no_select.png);
+    }
   }
 `;
 
-const SelectSeat = () => {
-  const seatRow = ['A', 'B', 'C', 'D', 'E', 'F'];
+const SelectSeat = ({ onSelectSeat }) => {
+  const seatRow = ["A", "B", "C", "D", "E", "F"];
   const seatCol = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+
+  const { data } = useSelector(({ stepfirst }) => stepfirst);
+  const { number, seat } = useSelector(({ stepsecond }) => stepsecond);
+
+  console.log(seat)
+  
+  const [selectedSeats, setSelectedSeats] = useState([]);
+
+  const handleSeatClick = (e, row, col) => {
+    if (number === 0) {
+      alert("인원을 선택하세요");
+      return;
+    }
+
+    const seatId = `${row}${col}`;
+    const isSelected = selectedSeats.includes(seatId);
+
+    if (isSelected) {
+      setSelectedSeats((prevSelectedSeats) =>
+        prevSelectedSeats.filter((seat) => seat !== seatId)
+      );
+    } else {
+      if (selectedSeats.length < number) {
+        setSelectedSeats((prevSelectedSeats) => [...prevSelectedSeats, seatId]);
+      }
+    }
+
+    onSelectSeat(selectedSeats);
+  };
+
+  useEffect(() => {
+    onSelectSeat(selectedSeats);
+  }, [selectedSeats]);
 
   return (
     <>
-        <SelectSeatWrap>
-          <SelectInfo>
-            <p>- 좌석 선택 후 결제하기 버튼을 클릭하세요</p>
-          </SelectInfo>
-          <Screen>
-            <div>
-              S C R E E N
-            </div>
-          </Screen>
-          <Seat>
-              <ul>
-                {seatRow.map((row, rowIndex) => (
-                  <li key={rowIndex}>
-                    <p>{row}</p>
-                    {seatCol.map((col, colIndex) => (
-                      <span key={colIndex}>{col}</span>
-                    ))}
-                  </li>
-                ))}
-              </ul>
-          </Seat>
-        </SelectSeatWrap>
+      <SelectSeatWrap>
+        <SelectInfo>
+          <p>- 좌석 선택 후 결제하기 버튼을 클릭하세요</p>
+        </SelectInfo>
+        <Screen>
+          <div>S C R E E N</div>
+        </Screen>
+        <Seat data={String(data)}>
+          <ul>
+            {seatRow.map((row, rowIndex) => (
+              <li key={rowIndex}>
+                <p>{row}</p>
+                {seatCol.map((col, colIndex) => {
+                  const seatId = `${row}${col}`;
+                  const isSelected = seat?.includes(seatId);
+                  const isUnselected = !isSelected && seat?.length >= number && number !== 0;
+                  let classes = "";
+                  if (isSelected) {
+                    classes += "selected ";
+                  }
+                  if (isUnselected) {
+                    classes += "unselected ";
+                  }
+                  if (data.time.room === 1) {
+                    classes += "firstRoom";
+                  }
+                  return (
+                    <span
+                      key={colIndex}
+                      onClick={(e) => handleSeatClick(e, row, col)}
+                      className={classes.trim()}
+                    >
+                      {col}
+                    </span>
+                  );
+                })}
+              </li>
+            ))}
+          </ul>
+        </Seat>
+      </SelectSeatWrap>
     </>
-  )
-}
+  );
+};
 
-export default SelectSeat
+export default SelectSeat;

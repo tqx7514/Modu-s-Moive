@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "../../../node_modules/react-router-dom/dist/index";
 
 const NavReserveUl = styled.ul`
   width: 76px;
@@ -9,7 +10,7 @@ const NavReserveUl = styled.ul`
 
 const NavReserveCont = styled.div`
   position: absolute;
-  left: 69px;
+  left: 76px;
   top: 0;
   display: none;
   width: 190px;
@@ -29,7 +30,7 @@ const NavReserveCont = styled.div`
 
 const NavReserveLi = styled.li`
   position: relative;
-  width: 100%;
+  width: 76px;
   height: calc(100% / 4);
   padding-top: 80px;
   border-bottom: 1px solid #666;
@@ -39,6 +40,14 @@ const NavReserveLi = styled.li`
   line-height: 1.5;
   &:last-child {
     border-bottom: none;
+  }
+  &:hover{
+    ${NavReserveCont} {
+      display: flex;
+      align-items: center;
+      background: #333;
+      color: #fff;
+    }
   }
   ${(props) =>
     props.active === "true" &&
@@ -50,13 +59,15 @@ const NavReserveLi = styled.li`
         ${NavReserveCont} {
           display: flex;
           align-items: center;
+          background: #ff243e;
         }
       }
     `}
 `;
 
-const ReserveNav = ({ data, adult, teenager, senior, disabled }) => {
+const ReserveNav = ({ data, adult, teenager, senior, disabled, seat }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const timeContent =
     data.time.cinema === undefined ? (
       <ul>
@@ -75,7 +86,10 @@ const ReserveNav = ({ data, adult, teenager, senior, disabled }) => {
     );
   return (
     <NavReserveUl>
-      <NavReserveLi active={String(location.pathname === "/ticket")}>
+      <NavReserveLi 
+        active={String(location.pathname === "/ticket")}
+        onClick={() => navigate('/ticket')}
+      >
         01
         <br />
         상영시간
@@ -120,7 +134,9 @@ const ReserveNav = ({ data, adult, teenager, senior, disabled }) => {
                 </>
               )}
             </li>
-            <li></li>
+            <li>
+              {seat}
+            </li>
           </ul>
         </NavReserveCont>
       </NavReserveLi>

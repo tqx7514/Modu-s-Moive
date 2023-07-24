@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const ReserveNavContainer = () => {
     const { data } = useSelector(({stepfirst}) => stepfirst);
-    const {adult, teenager, senior, disabled} = useSelector(({stepsecond}) => stepsecond)
+    const {adult, teenager, senior, disabled, seat} = useSelector(({stepsecond}) => stepsecond)
 
     return(
         <>
@@ -14,6 +14,7 @@ const ReserveNavContainer = () => {
                 teenager={teenager}
                 senior={senior}
                 disabled={disabled}
+                seat={seat}
             />
         </>
     )

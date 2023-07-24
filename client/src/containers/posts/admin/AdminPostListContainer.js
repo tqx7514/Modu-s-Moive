@@ -13,7 +13,7 @@ const AdminPostListContainer = () => {
     ({ posts, loading, user }) => ({
       posts: posts.posts,
       error: posts.error,
-      loading: loading["posts/ADMINLIST_POSTS"],
+      loading: loading["adminposts/ADMINLIST_POSTS"],
       user: user.user,
     })
   );

@@ -1,14 +1,14 @@
 import React from "react";
 import AdminCurrentMovieContainer from "../../containers/admin/AdminCurrentMovieContainer";
-import AdminHeader from "../../components/common/admin/AdminHeader";
+import AdminHeaderContainer from "../../containers/common/admin/AdminHeaderContainer";
 
 const CurrentMoviePage = () => {
-    return (
-        <div>
-            <AdminHeader/>
-            <AdminCurrentMovieContainer/>
-        </div>
-    );
+  return (
+    <div>
+      <AdminHeaderContainer />
+      <AdminCurrentMovieContainer />
+    </div>
+  );
 };
 
 export default CurrentMoviePage;

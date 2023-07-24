@@ -1,11 +1,11 @@
 import React from "react";
-import AdminHeader from "../../components/common/admin/AdminHeader";
 import AdminPostListContainer from "../../containers/posts/admin/AdminPostListContainer";
+import AdminHeaderContainer from "../../containers/common/admin/AdminHeaderContainer";
 
 const AdminPostListPage = () => {
   return (
     <div>
-      <AdminHeader />
+      <AdminHeaderContainer />
       <AdminPostListContainer />
     </div>
   );

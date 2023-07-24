@@ -68,7 +68,7 @@ exports.postRead = async (req, res, next) => {
   post.views += 1;
   await post.save();
   if (!post) {
-    res.status(404).json({ message: "게시글이 존재하지않습니다" });
+    res.status(404).json({ message: "게시글이 존재하지 않습니다" });
   }
   res.json(post);
 };

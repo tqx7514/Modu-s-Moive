@@ -13,6 +13,8 @@ const postRouter = require("./routes/post");
 const eventRouter = require("./routes/event");
 const currentMovie = require("./routes/currentmovie");
 const cinemaRouter = require("./routes/cinema");
+//관리자페이지 라우터
+const adminPostRouter = require("./routes/admin/adminpost");
 // const adminEventRouter = require("./routes/admin/adminevent");
 
 const axios = require("axios");
@@ -52,12 +54,14 @@ app.use(
 
 app.use("/auth", authRouter);
 app.use("/ticket", ticketRouter);
-
 app.use("/post", postRouter);
 app.use("/event", eventRouter);
 app.use("/currentmovie", currentMovie);
 app.use("/meet", meetRouter);
 app.use("/cinema", cinemaRouter);
+
+//관리자페이지
+app.use("/admin/post", adminPostRouter);
 // app.use("/admin/event/", adminEventRouter);
 
 // catch 404 and forward to error handler

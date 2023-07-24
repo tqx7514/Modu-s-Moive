@@ -12,6 +12,7 @@ const AdminHeaderContainer = () => {
     dispatch(logout());
     navigate("/");
   };
+  console.log("sdsdadas", user);
   return <AdminHeader user={user} onLogout={onLogout} />;
 };
 

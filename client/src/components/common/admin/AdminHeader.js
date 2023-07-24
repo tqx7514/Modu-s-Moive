@@ -126,7 +126,7 @@ const AdminHeader = ({ user, onLogout }) => {
             EVENT관리
           </NavLink>
           <NavLink
-            to="/postlist"
+            to="/admin/postlist"
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
             게시판

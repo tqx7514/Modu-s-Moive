@@ -10,7 +10,7 @@ export const readPost = (postNum) => {
 };
 
 export const listPosts = ({ page, name, tags, searchResult }) => {
-  console.log("sssssssss", searchResult);
+  console.log("client>src>lib>api>posts>listPosts", searchResult);
   return client.get("/post/postlist", {
     params: { page, name, tags, searchResult },
   });

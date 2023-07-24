@@ -1,15 +1,24 @@
-// import React from "react";
+import React from "react";
+import styled from "styled-components";
+import AdminEventListContainer from "../../containers/admin/event/AdminEventListContainer";
+import AdminEventSearchComponent from "../../components/admin/event/AdminEventSearchComponent";
+import AdminHeaderContainer from "../../containers/common/admin/AdminHeaderContainer";
+import AdminEventPaginationContainer from "../../containers/admin/event/AdminEventPaginationContainer";
 
-// import styled from "styled-components";
+const AdminEventPageTopBlock = styled.div``;
 
-// const AdminEventPageTopBlock = styled.div``;
+const AdminEventPageMidBlock = styled.div``;
 
-// const AdminEventPageMidBlock = styled.div``;
+const AdminEventPageBtmBlock = styled.div``;
 
-// const AdminEventPageBtmBlock = styled.div``;
+const AdminEventPage = () => {
+  return (
+    <div>
+        <AdminHeaderContainer />
+            <AdminEventListContainer />
+            <AdminEventPaginationContainer />
+    </div>
+  )
+};
 
-// const AdminEventPage = () => {
-//   return;
-// };
-
-// export default AdminEventPage;
+export default AdminEventPage;

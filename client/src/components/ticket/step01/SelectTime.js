@@ -113,7 +113,7 @@ const SelectTime = () => {
   };
 
   const { data, time } = useSelector(({ stepfirst }) => stepfirst);
-  console.log("time???????????????", data.date, time[0].date);
+  // console.log("time???????????????", data.date, time[0].date);
   const dispatch = useDispatch();
 
   const onSelctedTime = useCallback(

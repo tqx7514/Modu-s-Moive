@@ -1,12 +1,13 @@
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import AdminEventListComponent from "../../../components/admin/event/AdminEventListComponent";
 import { adminEventList } from "../../../modules/admin/admineventlist";
 
 const AdminEventListContainer = () => {
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
+  
   const { admineventlist, error, loading, user } = useSelector(
     ({ admineventlist, loading, user }) => ({
       admineventlist: admineventlist.admineventlist,
@@ -20,6 +21,7 @@ const AdminEventListContainer = () => {
     const page = parseInt(searchParams.get("page"), 10) || 1;
     dispatch(adminEventList({ page }));
   }, [dispatch, searchParams]);
+  
 
   return (
     <>

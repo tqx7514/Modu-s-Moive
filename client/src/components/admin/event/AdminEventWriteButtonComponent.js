@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Button from "../Button";
+import Button from "../../common/Button";
 
 const AdminEventWriteButtonBlock = styled.div`
   margin-top: 1rem;
@@ -19,7 +19,7 @@ const AdminEventButton = styled(Button)`
 const AdminEventWriteButtonComponent = ({ onCancel, onPublish, isEdit }) => {
   return (
     <AdminEventWriteButtonBlock>
-      <AdminEventButton cyan onClick={onPublish}>
+      <AdminEventButton cyan="true" onClick={onPublish}>
         이벤트 {isEdit ? "수정" : "등록"}
       </AdminEventButton>
       <AdminEventButton onClick={onCancel}>취소</AdminEventButton>

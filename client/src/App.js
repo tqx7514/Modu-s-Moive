@@ -23,6 +23,7 @@ import EventOtherPage from "./pages/EventOtherPage";
 import EventViewerPage from "./pages/EventViewerPage";
 import AdminCurrentMoviePage from "./pages/admin/AdminCurrentMoviePage";
 import AdminEventPage from "./pages/admin/AdminEventPage";
+import AdminEventWritePage from "./pages/admin/AdminEventWritePage";
 
 const App = () => {
   return (
@@ -55,6 +56,7 @@ const App = () => {
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/admin/currentmovie" element={<AdminCurrentMoviePage />} />
       <Route path="/admin/event" element={<AdminEventPage />} /> 
+      <Route path="/admin/event/write" element={<AdminEventWritePage />} />
     </Routes>
   );
 };

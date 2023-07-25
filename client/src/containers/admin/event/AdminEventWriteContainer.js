@@ -1,20 +1,41 @@
-// import { useDispatch } from "react-redux";
-// import AdminEventWriteComponent from "../../../components/admin/event/AdminEventWriteComponent";
-// import { writeEvent } from "../../../modules/admin/admineventwrite";
+import React, { useState } from "react";
+import AdminEventWriteComponent from "../../../components/admin/event/AdminEventWriteComponent";
+import styled from "styled-components";
 
-// const AdminEventWriteContainer = () => {
-//     const dispatch = useDispatch();
 
-//     const handleSubmit = async (e, eventData) => {
-//         e.preventDefault();
-//         try {
-//             dispatch(writeEvent(eventData));
-//         } catch (error) {
-//             console.error("AdminEventWriteContainer 오류:", error);
-//         }
-//     };
+const AdminEventWriteBlockContainer = styled.div`
+`;
 
-//     return <AdminEventWriteComponent onSubmit={handleSubmit} />;
-// };
+const AdminEventWriteContainer = () => {
+    const [eventData, setEventData] = useState({
+        categoryId: "",
+        eventTitle: "",
+        eventContent: "",
+        eventImg: "",
+        startEventDate: "",
+        endEventDate: "",
+    });
 
-// export default AdminEventWriteContainer;
+    const handleChange = (name, value) => {
+        setEventData({
+            ...eventData,
+            [name]: value,
+        });
+    };
+
+    return (
+        <AdminEventWriteBlockContainer>
+            <AdminEventWriteComponent
+            categoryId={eventData.categoryId}
+            eventTitle={eventData.eventTitle}
+            eventContent={eventData.eventContent}
+            eventImg={eventData.eventImg}
+            startEventDate={eventData.startEventDate}
+            endEventDate={eventData.endEventDate}
+            onChange={handleChange}
+            />
+        </AdminEventWriteBlockContainer>
+    );
+};
+
+export default AdminEventWriteContainer;

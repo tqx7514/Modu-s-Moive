@@ -22,7 +22,8 @@ const AdminEventListComponent = ({
   error,
   showWriteButton,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState("전체");
+  const [selectedCategory, setSelectedCategory] = useState(4);
+  console.log("eeeeeeeeeeeeeeeeeeeee", showWriteButton);
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -45,10 +46,10 @@ const AdminEventListComponent = ({
           value={selectedCategory}
           onChange={(e) => handleCategorySelect(e.target.value)}
         >
-          <option value="전체">전체</option>
-          <option value="영화">영화</option>
-          <option value="제휴/할인">제휴/할인</option>
-          <option value="기타">기타</option>
+          <option value="4">전체</option>
+          <option value="1">영화</option>
+          <option value="2">제휴/할인</option>
+          <option value="3">기타</option>
         </select>
       </AdminEventCategoryBlock>
 
@@ -67,7 +68,7 @@ const AdminEventListComponent = ({
 
       <WriteEventButtonWrapper>
         {showWriteButton && (
-          <WriteEventButton cyan to="/write">
+          <WriteEventButton cyan="true" to="/admin/event/write">
             글쓰기
           </WriteEventButton>
         )}

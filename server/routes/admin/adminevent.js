@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get("/list", adminEventList);
 router.get("/:eventNum", adminEventRead);
-router.post("/write", adminEventWrite);
+router.post("/admin/event/write", adminEventWrite);
 router.delete("/:eventNum", adminEventDelete);
 router.patch("/:eventNum", adminEventUpdate);
 

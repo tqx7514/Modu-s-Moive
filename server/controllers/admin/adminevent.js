@@ -12,8 +12,8 @@ exports.adminEventWrite = async (req, res, next) => {
     endEventDate,
   } = req.body;
 
-  if (!eventTitle || !eventContent) {
-    res.status(400).json({ message: "제목과 내용를 입력해주세요." });
+  if (!categoryId || !eventTitle || !eventContent || !eventImg || !startEventDate || !endEventDate) {
+    res.status(400).json({ message: "제목과 내용들을 입력해주세요." });
   }
   try {
     const newAdminEventWrite = await events.create({
@@ -25,7 +25,7 @@ exports.adminEventWrite = async (req, res, next) => {
       startEventDate,
       endEventDate,
     });
-    console.log("adminEventWrite", newAdminEventWrite);
+    console.log("newAdminEventWrite", newAdminEventWrite);
     res.status(200).json(newAdminEventWrite);
   } catch (error) {
     res.status(500).json(error);
@@ -86,6 +86,16 @@ exports.adminEventUpdate = async (req, res, next) => {
   } = req.body;
 
   try {
+
+    const existingEvent = await events.findOne({
+      where: { eventNum },
+    });
+
+    if (!existingEvent) {
+      res.status(404).json({ message: "이벤트가 존재하지 않습니다." });
+      return;
+    }
+
     const [updateEventRows] = await events.update(
       {
         categoryId,
@@ -101,7 +111,7 @@ exports.adminEventUpdate = async (req, res, next) => {
     );
 
     if (updateEventRows === 0) {
-      res.status(404).json({ message: "이벤트가 존재하지 않습니다." });
+      res.status(404).json({ message: "업데이트되지 않았습니다." });
       return;
     }
 

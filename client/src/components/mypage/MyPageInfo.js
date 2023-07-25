@@ -8,6 +8,7 @@ const MyPageInfo = ({
   onWithdrawClick,
   confirmed,
   info,
+  click,
 }) => {
   const shouldShowEditContainer = category === "Edit" && confirmed === true;
   return (
@@ -28,7 +29,9 @@ const MyPageInfo = ({
           회원탈퇴
         </div>
       </CategoryBlock>
-      {shouldShowEditContainer && <MyPageInfoEditContainer info={info} />}
+      {shouldShowEditContainer && (
+        <MyPageInfoEditContainer info={info} click={click} />
+      )}
       {category === "Withdraw" && <MyPageInfoWithDrawContainer />}
     </MyPageInfoBlock>
   );

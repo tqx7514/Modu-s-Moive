@@ -1,7 +1,13 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 
-const MyPageTopInfo = ({ user, loading, eventlist }) => {
+const MyPageTopInfo = ({
+  user,
+  loading,
+  eventlist,
+  handleInfoClick,
+  category,
+}) => {
   if (!user || eventlist.length === 0) {
     console.log("loading", eventlist.length, !user);
     return <div>로딩중</div>;
@@ -18,7 +24,7 @@ const MyPageTopInfo = ({ user, loading, eventlist }) => {
         <RightInfoTop>
           <RightTopFirst>
             <UserGrade>{userGrade}</UserGrade>
-            <UserEdit>
+            <UserEdit onClick={handleInfoClick}>
               <img src="/edit_15.png" alt="" />
               편집
             </UserEdit>

@@ -1,9 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import MyPageMeet from "../../components/mypage/MyPageMeet";
+import { useSelector } from "react-redux";
+import * as myMeetAPI from "../../lib/api/mypage";
 
 const MyPageMeetContainer = () => {
+  const { user } = useSelector(({ user }) => ({
+    user: user.user,
+  }));
+  const [myMeet, setMyMeet] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const id = user && user.id;
+  const meetNum = user && user.meet;
+
+  useEffect(() => {
+    setLoading(true);
+    if (user.meet !== null) {
+      const fetchData = async () => {
+        try {
+          const response = await myMeetAPI.myMeet({ id, meetNum });
+          console.log(response.data);
+          setMyMeet(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchData();
+      if (myMeet !== []) {
+        setLoading(false);
+      }
+    } else {
+      setLoading(false);
+    }
+  }, [id, meetNum]);
+
   return (
     <div>
-      <div>마이페이지 모임 컨테이너</div>
+      <MyPageMeet user={user} myMeet={myMeet} loading={loading} user={user} />
     </div>
   );
 };

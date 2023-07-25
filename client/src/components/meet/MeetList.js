@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import Button from "../common/Button";
-import { Link, useNavigate, NavLink } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MeetSubInfo from "../common/MeetSubInfo";
 import MeetTags from "../common/MeetTags";
 import { faPerson, faEye } from "@fortawesome/free-solid-svg-icons";

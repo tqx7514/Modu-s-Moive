@@ -161,3 +161,40 @@ exports.checkPW = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+exports.updateInfo = async (req, res) => {
+  const { id, pw, email, tel, age, gender } = req.body;
+  console.log(
+    "id, pw, email, tel, age, gender",
+    id,
+    pw,
+    email,
+    tel,
+    age,
+    gender
+  );
+  console.log('pw === ""', pw === "");
+  try {
+    const updateData = {
+      email,
+      tel,
+      age,
+      gender,
+    };
+    if (pw !== "") {
+      const hash = await bcrypt.hash(pw, 12);
+      updateData.password = hash;
+    }
+
+    const [updatedRows] = await users.update(updateData, {
+      where: { id },
+    });
+
+    const updatedUser = await users.findOne({
+      where: { id },
+    });
+    res.json(updatedUser);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};

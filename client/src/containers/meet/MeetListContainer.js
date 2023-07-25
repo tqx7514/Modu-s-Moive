@@ -16,13 +16,12 @@ const MeetListContainer = () => {
     ({ meetlist, loading, user }) => ({
       meets: meetlist.meets,
       error: meetlist.error,
-      loading: loading["meet/MEET_LIST"],
+      loading: loading["meetlist/MEET_LIST"],
       regions: meetlist.regions,
       user: user.user,
     })
   );
   useEffect(() => {
-    console.log("로드유저");
     if (user) {
       console.log("유저잇음 컨테이너", user);
       dispatch(tempSetUser(user));

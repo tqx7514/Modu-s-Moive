@@ -31,3 +31,9 @@ export const checkPW = ({ id, password }) => {
   console.log("비번확인", id, password);
   return client.post(`/auth/check/${id}`, { id, password });
 };
+
+export const updateInfo = ({ id, pw, email, tel, age, gender }) => {
+  console.log("updateInfo 프론트API", id, pw, email, tel, age, gender);
+  console.log("pw", pw === "");
+  return client.post(`/auth/update/${id}`, { id, pw, email, tel, age, gender });
+};

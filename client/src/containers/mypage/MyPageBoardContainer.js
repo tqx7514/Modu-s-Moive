@@ -1,9 +1,10 @@
 import React from "react";
+import MyPageBoard from "../../components/mypage/MyPageBoard";
 
 const MyPageBoardContainer = () => {
   return (
     <div>
-      <div>마이페이지 게시글컨테이너</div>
+      <MyPageBoard />
     </div>
   );
 };

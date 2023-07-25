@@ -6,3 +6,10 @@ export const myMeet = ({ id, meetNum }) => {
     params: { meetNum },
   });
 };
+
+export const myPost = ({ id, pages }) => {
+  console.log("myBoard API, id========", id, pages);
+  return client.get(`/mypage/postlist/${id}`, {
+    params: { pages },
+  });
+};

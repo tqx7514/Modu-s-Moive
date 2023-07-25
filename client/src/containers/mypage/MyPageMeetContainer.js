@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MyPageMeet from "../../components/mypage/MyPageMeet";
 import { useSelector } from "react-redux";
-import * as myMeetAPI from "../../lib/api/mypage";
+import * as myPageAPI from "../../lib/api/mypage";
 
 const MyPageMeetContainer = () => {
   const { user } = useSelector(({ user }) => ({
@@ -17,7 +17,7 @@ const MyPageMeetContainer = () => {
     if (user.meet !== null) {
       const fetchData = async () => {
         try {
-          const response = await myMeetAPI.myMeet({ id, meetNum });
+          const response = await myPageAPI.myMeet({ id, meetNum });
           console.log(response.data);
           setMyMeet(response.data);
         } catch (error) {
@@ -35,7 +35,7 @@ const MyPageMeetContainer = () => {
 
   return (
     <div>
-      <MyPageMeet user={user} myMeet={myMeet} loading={loading} user={user} />
+      <MyPageMeet user={user} myMeet={myMeet} loading={loading} />
     </div>
   );
 };

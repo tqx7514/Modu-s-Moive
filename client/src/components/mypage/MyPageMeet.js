@@ -27,7 +27,7 @@ const Message = styled.div`
   }
 `;
 
-const MyPageMeet = ({ myMeet, loading, user }) => {
+const MyPageMeet = ({ user, myMeet, loading }) => {
   return (
     <MyPageMeetBlock>
       {loading ? (

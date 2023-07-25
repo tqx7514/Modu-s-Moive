@@ -1,4 +1,4 @@
-const { meets, posts } = require("../models");
+const { meets, posts, inquirys } = require("../models");
 
 exports.myMeet = async (req, res) => {
   console.log("백 myMeet 왓습니다", req.params.id);
@@ -46,6 +46,33 @@ exports.myPost = async (req, res) => {
     const postDataArray = postList.map((post) => post.dataValues);
     console.log("postList", totalPages);
     res.status(200).json({ postDataArray, totalPages });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
+
+exports.myInquiry = async (req, res) => {
+  const userId = req.params.id;
+  const page = req.query.page;
+  if (page < 1) {
+    res.status(400);
+    return;
+  }
+  const limit = 1;
+  const offset = (page - 1) * limit;
+  console.log("id======", userId, "page=======", page);
+  try {
+    const inquiryList = await inquirys.findAll({
+      where: { userId },
+      order: [["createdAt", "DESC"]],
+      limit,
+      offset,
+    });
+    const totalCount = await inquirys.count({ where: { userId } });
+    const totalPages = totalCount ? Math.ceil(totalCount / limit) : 1;
+    const inquiryDataArray = inquiryList.map((inquiry) => inquiry.dataValues);
+    console.log("토탈페이지", totalPages);
+    res.status(200).json({ inquiryDataArray, totalPages });
   } catch (error) {
     res.status(500).json({ msg: error });
   }

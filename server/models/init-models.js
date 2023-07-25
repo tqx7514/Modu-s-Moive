@@ -1,8 +1,10 @@
 var DataTypes = require("sequelize").DataTypes;
+var _Mycinema = require("./Mycinema");
 var _cinemas = require("./cinemas");
 var _cinemas1 = require("./cinemas1");
 var _eventcategory = require("./eventcategory");
 var _events = require("./events");
+var _inquirys = require("./inquirys");
 var _meetboards = require("./meetboards");
 var _meetcomments = require("./meetcomments");
 var _meetmessages = require("./meetmessages");
@@ -20,10 +22,12 @@ var _tickets = require("./tickets");
 var _users = require("./users");
 
 function initModels(sequelize) {
+  var Mycinema = _Mycinema(sequelize, DataTypes);
   var cinemas = _cinemas(sequelize, DataTypes);
   var cinemas1 = _cinemas1(sequelize, DataTypes);
   var eventcategory = _eventcategory(sequelize, DataTypes);
   var events = _events(sequelize, DataTypes);
+  var inquirys = _inquirys(sequelize, DataTypes);
   var meetboards = _meetboards(sequelize, DataTypes);
   var meetcomments = _meetcomments(sequelize, DataTypes);
   var meetmessages = _meetmessages(sequelize, DataTypes);
@@ -40,6 +44,8 @@ function initModels(sequelize) {
   var tickets = _tickets(sequelize, DataTypes);
   var users = _users(sequelize, DataTypes);
 
+  Mycinema.belongsTo(cinemas, { as: "cinema_num_cinema", foreignKey: "cinema_num"});
+  cinemas.hasMany(Mycinema, { as: "Mycinemas", foreignKey: "cinema_num"});
   movietimes.belongsTo(cinemas, { as: "movietimes_num_cinema", foreignKey: "movietimes_num"});
   cinemas.hasOne(movietimes, { as: "movietime", foreignKey: "movietimes_num"});
   events.belongsTo(eventcategory, { as: "category", foreignKey: "categoryId"});
@@ -58,8 +64,12 @@ function initModels(sequelize) {
   posts.hasMany(postcomments, { as: "postcomments", foreignKey: "postNum"});
   cinemas.belongsTo(regions, { as: "grade_region", foreignKey: "grade"});
   regions.hasMany(cinemas, { as: "cinemas", foreignKey: "grade"});
+  Mycinema.belongsTo(users, { as: "id_user", foreignKey: "id"});
+  users.hasMany(Mycinema, { as: "Mycinemas", foreignKey: "id"});
   events.belongsTo(users, { as: "user", foreignKey: "userId"});
   users.hasMany(events, { as: "events", foreignKey: "userId"});
+  inquirys.belongsTo(users, { as: "user", foreignKey: "userId"});
+  users.hasMany(inquirys, { as: "inquiries", foreignKey: "userId"});
   meetboards.belongsTo(users, { as: "user", foreignKey: "user_Id"});
   users.hasMany(meetboards, { as: "meetboards", foreignKey: "user_Id"});
   meetcomments.belongsTo(users, { as: "user", foreignKey: "user_Id"});
@@ -74,10 +84,12 @@ function initModels(sequelize) {
   users.hasMany(postcomments, { as: "postcomments", foreignKey: "userId"});
 
   return {
+    Mycinema,
     cinemas,
     cinemas1,
     eventcategory,
     events,
+    inquirys,
     meetboards,
     meetcomments,
     meetmessages,

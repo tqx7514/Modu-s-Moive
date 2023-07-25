@@ -34,6 +34,7 @@ const meetlist = handleActions(
       meets: meets.meet,
       lastPage: meets.totalPages,
       regions: meets.regionArray,
+      error: null,
     }),
     [MEET_LIST_FAILURE]: (state, { payload: error }) => ({
       ...state,

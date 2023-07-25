@@ -28,11 +28,9 @@ const MyPageMain = ({ user, loading }) => {
   const handleInfoClick = () => {
     setCategory("Info");
   };
-  console.log("category", category);
   useEffect(() => {
     dispatch(listEvents());
   }, [dispatch]);
-  console.log("eventlist", events);
   return (
     <MyPageMainBlock>
       <MyPageTopInfo

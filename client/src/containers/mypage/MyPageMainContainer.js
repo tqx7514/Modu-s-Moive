@@ -15,11 +15,11 @@ const MyPageMainContainer = () => {
   useEffect(() => {
     const checkUser = async () => {
       if (!user) {
-        console.log("!user입니다");
+        // console.log("!user입니다");
         alert("로그인 하십시오");
         navigate("/");
       } else if (user.id && user.id !== id) {
-        console.log("다른아이디로옴", user.id, id);
+        // console.log("다른아이디로옴", user.id, id);
         alert("본인이 아닙니다");
         navigate(`/mypage/${user.id}`);
       }
@@ -27,7 +27,7 @@ const MyPageMainContainer = () => {
     checkUser();
   }, [user]);
 
-  console.log("user", user, "loading", loading);
+  // console.log("user", user, "loading", loading);
 
   return <MyPageMain user={user} loading={loading} />;
 };

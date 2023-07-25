@@ -9,10 +9,8 @@ const MyPageTopInfo = ({
   category,
 }) => {
   if (!user || eventlist.length === 0) {
-    console.log("loading", eventlist.length, !user);
     return <div>로딩중</div>;
   }
-  console.log("loading2", eventlist.length, !user);
 
   const randomIndex = Math.floor(Math.random() * eventlist.length);
   const userGrade =

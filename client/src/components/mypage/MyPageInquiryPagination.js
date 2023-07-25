@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Button from "../common/Button";
 
@@ -17,12 +17,17 @@ const PageNumber = styled.div`
   font-size: 1.3rem;
 `;
 
-const Pagination = ({
-  //   page,
+const MyPageInquiryPagination = ({
   lastPage,
   pagination,
+  currentPage,
+  handleNextPage,
+  handlePreviousPage,
 }) => {
   const [page, setPage] = useState(1);
+  useEffect(() => {
+    setPage(currentPage);
+  }, []);
   const onNextPage = () => {
     pagination(page + 1);
     setPage(page + 1);
@@ -44,4 +49,4 @@ const Pagination = ({
   );
 };
 
-export default Pagination;
+export default MyPageInquiryPagination;

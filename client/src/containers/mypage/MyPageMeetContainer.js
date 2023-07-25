@@ -18,7 +18,6 @@ const MyPageMeetContainer = () => {
       const fetchData = async () => {
         try {
           const response = await myPageAPI.myMeet({ id, meetNum });
-          console.log(response.data);
           setMyMeet(response.data);
         } catch (error) {
           console.error(error);

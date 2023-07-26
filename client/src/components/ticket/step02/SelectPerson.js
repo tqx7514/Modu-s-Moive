@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { AreaItem, MovieList } from '../step01/SelectMovie';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { AreaItem, MovieList } from "../step01/SelectMovie";
+import { useDispatch, useSelector } from "react-redux";
 
 const SelectPersonWrap = styled.div`
-  width:100%;
+  width: 100%;
 `;
 
 const Title = styled.div`
@@ -16,8 +16,8 @@ const Title = styled.div`
   color: #fff;
   text-align: center;
   font-size: 18px;
-  
-  span{
+
+  span {
     position: absolute;
     right: 20px;
     bottom: 10px;
@@ -38,7 +38,7 @@ const MovieInfo = styled.div`
   width: 320px;
   padding: 25px 0 0 55px;
 
-  img{
+  img {
     position: absolute;
     left: 0;
     top: 25px;
@@ -53,19 +53,19 @@ const MovieSubInfo = styled.div`
 `;
 
 const MovieDateTime = styled.div`
-  span{
-    &:first-child{
+  span {
+    &:first-child {
       position: relative;
       margin-right: 10px;
       padding-right: 10px;
-      &:after{
-        content: '';
+      &:after {
+        content: "";
         position: absolute;
         right: 0;
         top: 50%;
         transform: translateY(-50%);
         width: 1px;
-        height:80%;
+        height: 80%;
         background: #ddd;
       }
     }
@@ -73,19 +73,19 @@ const MovieDateTime = styled.div`
 `;
 
 const CinemaInfo = styled.div`
-  span{
+  span {
     position: relative;
     margin-right: 5px;
     padding-right: 5px;
-    &:after{
-      content: '·';
+    &:after {
+      content: "·";
       position: absolute;
       right: 0;
       top: 50%;
       transform: translateY(-50%);
     }
-    &:last-child{
-      &:after{
+    &:last-child {
+      &:after {
         display: none;
       }
     }
@@ -98,7 +98,7 @@ const PersonNum = styled.div`
   width: 825px;
   padding: 0 40px;
 
-  div.personBtn{
+  div.personBtn {
     display: flex;
     align-items: center;
   }
@@ -116,7 +116,7 @@ const PersonBtn = styled.div`
   border: 1px solid #ddd;
   border-radius: 5px;
 
-  button{
+  button {
     display: block;
     width: 25px;
     height: 100%;
@@ -129,38 +129,34 @@ const PersonBtn = styled.div`
 `;
 
 const SelectPerson = ({
-  // number,
+  number,
   adultNumber,
   teenagerNumber,
   seniorNumber,
   disabledNumber,
-  onIncrease, 
+  onIncrease,
   onDecrease,
 }) => {
-<<<<<<< HEAD
-  const {data, movie} = useSelector(({stepfirst}) => stepfirst);
+  const { data, movie } = useSelector(({ stepfirst }) => stepfirst);
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
-  const selectedMovie = movie.find((movieObj) => movieObj.movie_name === data.time.movie_name);  
-=======
-  const {data} = useSelector(({stepfirst}) => stepfirst);
-  const {person} = useSelector(({stepsecond}) => stepsecond);
-  console.log('123123123123123',person)
->>>>>>> fbb1014 (123)
+  const selectedMovie = movie.find(
+    (movieObj) => movieObj.movie_name === data.time.movie_name
+  );
 
-  const handleIncrease = () => {
-    // if (number >= 8) {
-    //   alert('인원은 최대 8명까지 선택 가능합니다.');
-    // } else {
-      onIncrease();
-    // }
-  };
-  const handleDecrease = (key,number)=>{
-    if(number<=0){
-      return;
-    }else{
-      onDecrease(key)
+  const handleIncrease = (key) => {
+    if (number >= 8) {
+      alert("인원은 최대 8명까지 선택 가능합니다.");
+    } else {
+      onIncrease(key);
     }
-  }
+  };
+  const handleDecrease = (key, number) => {
+    if (number <= 0) {
+      return;
+    } else {
+      onDecrease(key);
+    }
+  };
   return (
     <SelectPersonWrap>
       <Title>
@@ -174,8 +170,8 @@ const SelectPerson = ({
               <img src={IMG_BASE_URL + selectedMovie.img} />
             </>
           )}
-          <AreaItem className='stepsecond'>
-            <MovieList className='selectPerson'>
+          <AreaItem className="stepsecond">
+            <MovieList className="selectPerson">
               <span
                 className={`${
                   data.time.age === "all"
@@ -195,7 +191,9 @@ const SelectPerson = ({
           <MovieSubInfo>
             <MovieDateTime>
               <span>{data.date}</span>
-              <span>{data.time.start} ~ {data.time.end}</span>
+              <span>
+                {data.time.start} ~ {data.time.end}
+              </span>
             </MovieDateTime>
             <CinemaInfo>
               <span>{data.time.cinema}</span>
@@ -205,51 +203,50 @@ const SelectPerson = ({
           </MovieSubInfo>
         </MovieInfo>
         <PersonNum>
-<<<<<<< HEAD
-          <div className='personBtn'>
+          <div className="personBtn">
             <p>성인</p>
             <PersonBtn>
-              <button onClick={()=>handleDecrease("adult",adultNumber)}>-</button>
+              <button onClick={() => handleDecrease("adult", adultNumber)}>
+                -
+              </button>
               {adultNumber.number}
               <button onClick={() => handleIncrease("adult")}>+</button>
             </PersonBtn>
           </div>
-          <div className='personBtn'>
+          <div className="personBtn">
             <p>청소년</p>
             <PersonBtn>
-              <button onClick={()=>handleDecrease("teenager",teenagerNumber)}>-</button>
+              <button
+                onClick={() => handleDecrease("teenager", teenagerNumber)}
+              >
+                -
+              </button>
               {teenagerNumber.number}
               <button onClick={() => handleIncrease("teenager")}>+</button>
             </PersonBtn>
           </div>
-          <div className='personBtn'>
+          <div className="personBtn">
             <p>시니어</p>
             <PersonBtn>
-              <button onClick={()=>handleDecrease("senior",seniorNumber)}>-</button>
+              <button onClick={() => handleDecrease("senior", seniorNumber)}>
+                -
+              </button>
               {seniorNumber.number}
               <button onClick={() => handleIncrease("senior")}>+</button>
             </PersonBtn>
           </div>
-          <div className='personBtn'>
+          <div className="personBtn">
             <p>장애인</p>
             <PersonBtn>
-              <button onClick={()=>handleDecrease("disabled",disabledNumber)}>-</button>
+              <button
+                onClick={() => handleDecrease("disabled", disabledNumber)}
+              >
+                -
+              </button>
               {disabledNumber.number}
               <button onClick={() => handleIncrease("disabled")}>+</button>
             </PersonBtn>
           </div>
-=======
-          {Object.keys(person).map((p) => (
-            <div key={p}>
-              {person[p].name}
-              <div>
-                <button>-</button>
-                {person[p].number}
-                <button onClick={() => handleIncrease(p)}>+</button>
-              </div>
-            </div>
-          ))}
->>>>>>> fbb1014 (123)
         </PersonNum>
       </PersonSelect>
     </SelectPersonWrap>

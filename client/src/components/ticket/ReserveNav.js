@@ -123,7 +123,6 @@ const ReserveNav = ({
         <NavReserveCont>
           <ul>
             <li>
-<<<<<<< HEAD
               {adult.number > 0 && (
                 <>
                   {adult.name}
@@ -173,9 +172,6 @@ const ReserveNav = ({
                 totalPrice && `총합계 ${formatTotalPrice}원`
                 // totalPrice와 user.point의 숫자를 뺀 결과를 출력
               }
-=======
-              {/* {adult.name}({adult.number}), {teenager.name}({teenager.number}) */}
->>>>>>> fbb1014 (123)
             </li>
           </ul>
         </NavReserveCont>

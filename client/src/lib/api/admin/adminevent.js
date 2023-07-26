@@ -9,7 +9,7 @@ export const writeAdminEvent = ({
   startEventDate,
   endEventDate,
 }) => {
-  console.log("관리자용 이벤트 글쓰기 프론트api입니다");
+  console.log("관리자용 이벤트 글쓰기 프론트api입니다",categoryId,userId,eventTitle,eventContent,eventImg,startEventDate,endEventDate);
   return client.post("/admin/event/write", {
     categoryId,
     userId,

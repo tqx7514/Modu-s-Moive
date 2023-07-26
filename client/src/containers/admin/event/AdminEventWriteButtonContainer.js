@@ -21,7 +21,18 @@ const AdminEventWriteButtonContainer = () => {
     error,
     userId,
     originalEventNum,
-  } = useSelector((state) => state.admineventwrite);
+  } = useSelector(({admineventwrite, user}) => ({
+    categoryId: admineventwrite.categoryId,
+    eventTitle: admineventwrite.eventTitle,
+    eventContent: admineventwrite.eventContent,
+    eventImg: admineventwrite.eventImg,
+    startEventDate: admineventwrite.startEventDate,
+    endEventDate: admineventwrite.endEventDate,
+    event: admineventwrite.event,
+    error: admineventwrite.error,
+    userId: user.user && user.user.id,
+    originalEventNum: admineventwrite.originalEventNum,
+  }));
 
   const onPublish = () => {
     if (originalEventNum) {
@@ -36,6 +47,7 @@ const AdminEventWriteButtonContainer = () => {
           endEventDate,
         })
       );
+      return;
     } else {
       dispatch(
         writeEvent({

@@ -44,7 +44,7 @@ export const writeEvent = createAction(
 
 export const setOriginalEvent = createAction(
   SET_ORIGINAL_EVENT,
-  (event) => event
+  (adminevent) => adminevent
 );
 
 export const updateEvent = createAction(
@@ -83,14 +83,14 @@ export function* eventWriteSaga() {
 }
 
 const initialState = {
-  categoryId: "",
-  eventTitle: "",
-  eventContent: "",
-  eventImg: "",
-  userId: "",
-  event: {},
-  error: null,
-  originalEventNum: null,
+  "categoryId": "",
+  "eventTitle": "",
+  "eventContent": "",
+  "eventImg": "",
+  "userId": "",
+  "adminevent": {},
+  "error": null,
+  "originalEventNum": null,
 };
 
 const admineventwrite = handleActions({
@@ -101,30 +101,30 @@ const admineventwrite = handleActions({
   }),
   [WRITE_EVENT]: (state) => ({
     ...state,
-    event: {},
+    adminevent: {},
     error: null,
   }),
-  [WRITE_EVENT_SUCCESS]: (state, { payload: event }) => ({
+  [WRITE_EVENT_SUCCESS]: (state, { payload: adminevent }) => ({
     ...state,
-    event,
+    adminevent,
   }),
   [WRITE_EVENT_FAILURE]: (state, { payload: error }) => ({
     ...state,
     error,
   }),
-  [SET_ORIGINAL_EVENT]: (state, { payload: event }) => ({
+  [SET_ORIGINAL_EVENT]: (state, { payload: adminevent }) => ({
     ...state,
-    categoryId: event.categoryId,
-    eventTitle: event.eventTitle,
-    eventContent: JSON.parse(event.eventContent),
-    eventImg: JSON.parse(event.eventImg),
-    startEventDate: event.startEventDate,
-    endEventDate: event.endEventDate,
-    originalEventNum: event.originalEventNum,
+    categoryId: adminevent.categoryId,
+    eventTitle: adminevent.eventTitle,
+    eventContent: JSON.parse(adminevent.eventContent),
+    eventImg: JSON.parse(adminevent.eventImg),
+    startEventDate: adminevent.startEventDate,
+    endEventDate: adminevent.endEventDate,
+    originalEventNum: adminevent.originalEventNum,
   }),
-  [UPDATE_EVENT_SUCCESS]: (state, { payload: event }) => ({
+  [UPDATE_EVENT_SUCCESS]: (state, { payload: adminevent }) => ({
     ...state,
-    event,
+    adminevent,
   }),
   [UPDATE_EVENT_FAILURE]: (state, { payload: error }) => ({
     ...state,

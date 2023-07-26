@@ -1,41 +1,50 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import AdminEventWriteComponent from "../../../components/admin/event/AdminEventWriteComponent";
-import styled from "styled-components";
-
-
-const AdminEventWriteBlockContainer = styled.div`
-`;
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeField,
+  initialize,
+} from "../../../modules/admin/admineventwrite";
 
 const AdminEventWriteContainer = () => {
-    const [eventData, setEventData] = useState({
-        categoryId: "",
-        eventTitle: "",
-        eventContent: "",
-        eventImg: "",
-        startEventDate: "",
-        endEventDate: "",
-    });
+  const dispatch = useDispatch();
+  const {
+    categoryId,
+    eventTitle,
+    eventContent,
+    eventImg,
+    startEventDate,
+    endEventDate,
+  } = useSelector(({ admineventwrite }) => ({
+    categoryId: admineventwrite.categoryId,
+    eventTitle: admineventwrite.eventTitle,
+    eventContent: admineventwrite.eventContent,
+    eventImg: admineventwrite.eventImg,
+    startEventDate: admineventwrite.startEventDate,
+    endEventDate: admineventwrite.startEventDate,
+  }));
 
-    const handleChange = (name, value) => {
-        setEventData({
-            ...eventData,
-            [name]: value,
-        });
+  const onChangeField = useCallback(
+    (payload) => dispatch(changeField(payload)),
+    [dispatch]
+  );
+  useEffect(() => {
+    return () => {
+      dispatch(initialize());
     };
+  }, [dispatch]);
 
-    return (
-        <AdminEventWriteBlockContainer>
-            <AdminEventWriteComponent
-            categoryId={eventData.categoryId}
-            eventTitle={eventData.eventTitle}
-            eventContent={eventData.eventContent}
-            eventImg={eventData.eventImg}
-            startEventDate={eventData.startEventDate}
-            endEventDate={eventData.endEventDate}
-            onChange={handleChange}
-            />
-        </AdminEventWriteBlockContainer>
-    );
+  return (
+    <AdminEventWriteComponent
+      onChangeField={onChangeField}
+      categoryId={categoryId}
+      eventTitle={eventTitle}
+      eventContent={eventContent}
+      eventImg={eventImg}
+      startEventDate={startEventDate}
+      endEventDate={endEventDate}
+    />
+  );
 };
 
 export default AdminEventWriteContainer;

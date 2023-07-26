@@ -14,14 +14,18 @@ exports.adminEventWrite = async (req, res, next) => {
 
   if (!categoryId || !eventTitle || !eventContent || !eventImg || !startEventDate || !endEventDate) {
     res.status(400).json({ message: "제목과 내용들을 입력해주세요." });
+    return;
   }
+
   try {
+    const eventImgString = JSON.stringify(eventImg);
+    const eventContentString = JSON.stringify(eventContent);
     const newAdminEventWrite = await events.create({
       categoryId,
       userId,
       eventTitle,
-      eventContent,
-      eventImg,
+      eventContent: eventContentString,
+      eventImg: eventImgString,
       startEventDate,
       endEventDate,
     });
@@ -86,7 +90,8 @@ exports.adminEventUpdate = async (req, res, next) => {
   } = req.body;
 
   try {
-
+    const eventImgString = JSON.stringify(eventImg);
+    const eventContentString = JSON.stringify(eventContent);
     const existingEvent = await events.findOne({
       where: { eventNum },
     });
@@ -100,8 +105,8 @@ exports.adminEventUpdate = async (req, res, next) => {
       {
         categoryId,
         eventTitle,
-        eventContent,
-        eventImg,
+        eventContent: eventContentString,
+        eventImg: eventImgString,
         startEventDate,
         endEventDate,
       },

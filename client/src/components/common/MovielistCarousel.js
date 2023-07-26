@@ -13,7 +13,7 @@ const Imgcarousel = styled.div`
   margin-top: 624px;
   margin-bottom: 70px;
 
-  .movie_title{
+  .movie_title {
     color: white;
     width: 970px;
     margin: 0 auto;
@@ -136,7 +136,6 @@ const MovieInfo = styled.div`
 `;
 
 const MovielistCarousel = ({ currentmovielist }) => {
-
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
   console.log("aaaaaaaaaaaaa", currentmovielist);
 
@@ -164,7 +163,10 @@ const MovielistCarousel = ({ currentmovielist }) => {
 
   return (
     <Imgcarousel>
-    <div className="movie_title"><MdOutlineWatchLater/>&nbsp;07.25 24:40기준</div>
+      <div className="movie_title">
+        <MdOutlineWatchLater />
+        &nbsp;07.25 24:40기준
+      </div>
       <Slidera {...settings}>
         {Array.isArray(currentmovie) &&
           currentmovie.map((item) => (

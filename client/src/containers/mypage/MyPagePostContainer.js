@@ -38,7 +38,6 @@ const MyPageBoardContainer = () => {
       console.error(error);
     }
   };
-
   return (
     <div>
       <MyPageBoard

@@ -16,12 +16,14 @@ const PostListContainer = () => {
       user: user.user,
     })
   );
+  console.log("PostListContainer의 posts입니다.", posts);
+  console.log("PostListContainer의 error입니다.", error);
+  console.log("PostListContainer의 loading입니다.", loading);
   useEffect(() => {
     const tags = searchParams.get("tags");
-    const searchResult = searchParams.get("search");
-    console.log("constaienr", searchResult);
+    // const searchResult = searchParams.get("search");
     const page = parseInt(searchParams.get("page"), 10) || 1;
-    dispatch(listPosts({ tags, name, page, searchResult }));
+    dispatch(listPosts({ page, name, tags }));
   }, [dispatch, searchParams, name]);
 
   return (

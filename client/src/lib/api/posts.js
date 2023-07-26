@@ -9,10 +9,15 @@ export const readPost = (postNum) => {
   return client.get(`/post/detail/${postNum}`);
 };
 
-export const listPosts = ({ page, name, tags, searchResult }) => {
-  console.log("client>src>lib>api>posts>listPosts", searchResult);
+export const listPosts = ({ page, name, tags }) => {
+  console.log(
+    "client>src>lib>api>posts>listPosts의 page, name, tags",
+    page,
+    name,
+    tags
+  );
   return client.get("/post/postlist", {
-    params: { page, name, tags, searchResult },
+    params: { page, name, tags },
   });
 };
 

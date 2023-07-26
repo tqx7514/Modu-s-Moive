@@ -12,6 +12,7 @@ import eventpost, { eventPostSaga } from "./eventpost";
 import meetcomment, { meetCommentSaga } from "./meetcomment";
 import postcomment, { postCommentSaga } from "./postcomment";
 import adminposts, { adminpostsSaga } from "./admin/adminposts";
+import adminPost, { adminPostSaga } from "./admin/adminpost";
 
 import stepfirst, {
   regionSaga,
@@ -54,6 +55,7 @@ const rootReducer = combineReducers({
   postcomment,
   mypage,
   adminposts,
+  adminPost,
   // adminevent,
   admineventlist,
   admineventwrite,
@@ -83,6 +85,7 @@ export function* rootSaga() {
     postCommentSaga(),
     mypageSaga(),
     adminpostsSaga(),
+    adminPostSaga(),
     // readEventSaga(),
     adminEventListSaga(),
     eventWriteSaga(),

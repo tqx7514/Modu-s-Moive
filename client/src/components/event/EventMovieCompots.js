@@ -82,7 +82,7 @@ const EventMovieCompots = ({ events }) => {
     }
   });
 
-  const filteredEvents = sortedEvents.filter((e) => e.categoryId === 1);
+  const filteredEvents = sortedEvents.filter((e) => e.categoryId === "영화");
 
   return (
     <EventMovieContentBlock>

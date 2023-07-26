@@ -15,14 +15,16 @@ const AdminEventWriteContainer = () => {
     eventImg,
     startEventDate,
     endEventDate,
-  } = useSelector(({ admineventwrite }) => ({
-    categoryId: admineventwrite.categoryId,
-    eventTitle: admineventwrite.eventTitle,
-    eventContent: admineventwrite.eventContent,
-    eventImg: admineventwrite.eventImg,
-    startEventDate: admineventwrite.startEventDate,
-    endEventDate: admineventwrite.startEventDate,
-  }));
+  } = useSelector((state) => {
+    return {
+      categoryId: state.admineventwrite.categoryId,
+      eventTitle: state.admineventwrite.eventTitle,
+      eventContent: state.admineventwrite.eventContent,
+      eventImg: state.admineventwrite.eventImg,
+      startEventDate: state.admineventwrite.startEventDate,
+      endEventDate: state.admineventwrite.startEventDate,
+    };
+  }, []);
 
   const onChangeField = useCallback(
     (payload) => dispatch(changeField(payload)),

@@ -22,15 +22,15 @@ export function* readEventSaga() {
 }
 
 const initialState = {
-  event: {},
+  adminevent: null,
   error: null,
 };
 
 const adminevent = handleActions(
   {
-    [READ_EVENT_SUCCESS]: (state, { payload: event }) => ({
+    [READ_EVENT_SUCCESS]: (state, { payload: adminevent }) => ({
       ...state,
-      event,
+      adminevent,
     }),
     [READ_EVENT_FAILURE]: (state, { payload: error }) => ({
       ...state,

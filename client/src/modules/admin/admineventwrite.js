@@ -88,7 +88,7 @@ const initialState = {
   "eventContent": "",
   "eventImg": "",
   "userId": "",
-  "adminevent": {},
+  "adminevent": null,
   "error": null,
   "originalEventNum": null,
 };
@@ -101,7 +101,7 @@ const admineventwrite = handleActions({
   }),
   [WRITE_EVENT]: (state) => ({
     ...state,
-    adminevent: {},
+    adminevent: null,
     error: null,
   }),
   [WRITE_EVENT_SUCCESS]: (state, { payload: adminevent }) => ({

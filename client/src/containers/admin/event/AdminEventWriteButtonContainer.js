@@ -17,7 +17,7 @@ const AdminEventWriteButtonContainer = () => {
     eventImg,
     startEventDate,
     endEventDate,
-    event,
+    adminevent,
     error,
     userId,
     originalEventNum,
@@ -28,9 +28,9 @@ const AdminEventWriteButtonContainer = () => {
     eventImg: admineventwrite.eventImg,
     startEventDate: admineventwrite.startEventDate,
     endEventDate: admineventwrite.endEventDate,
-    event: admineventwrite.event,
+    adminevent: admineventwrite.adminevent,
     error: admineventwrite.error,
-    userId: user.user && user.user.id,
+    userId: user.user?.id,
     originalEventNum: admineventwrite.originalEventNum,
   }));
 
@@ -70,13 +70,14 @@ const AdminEventWriteButtonContainer = () => {
   const isEdit = !!originalEventNum;
 
   useEffect(() => {
-    if (Object.keys(event).length > 0) {
+    if (adminevent && Object.keys(adminevent).length > 0) {
       navigate("/admin/event");
     }
     if (error) {
       console.log("AdminEventWriteButtonContainer Error", error);
     }
-  }, [navigate, event, error]);
+  }, [navigate, adminevent, error]);
+  console.log("ddddddddddddd", adminevent);
   return (
     <AdminEventWriteButtonComponent
       onPublish={onPublish}

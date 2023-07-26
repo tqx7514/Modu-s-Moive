@@ -12,7 +12,7 @@ const AdminEventWriteComponent = ({
   eventImg,
   startEventDate,
   endEventDate,
-  onChange,
+  onChangeField,
 }) => {
   const onSubmit = (e) => {
     e.preventDefault();
@@ -34,7 +34,7 @@ const AdminEventWriteComponent = ({
       <AdminEventWriteItemBlock>
         <select
           value={categoryId}
-          onChange={(e) => onChange("categoryId", e.target.value)}
+          onChange={(e) => onChangeField({ key: "categoryId", value: e.target.value })}
         >
           <option value={""}>카테고리 선택</option>
           <option value={"영화"}>영화</option>
@@ -46,14 +46,14 @@ const AdminEventWriteComponent = ({
         <input
           type="text"
           value={eventTitle}
-          onChange={(e) => onChange("eventTitle", e.target.value)}
+          onChange={(e) => onChangeField({ key: "eventTitle", value: e.target.value })}
           placeholder="제목"
         />
       </AdminEventWriteItemBlock>
       <AdminEventWriteItemBlock>
         <textarea
           value={eventContent}
-          onChange={(e) => onChange("eventContent", e.target.value)}
+          onChange={(e) => onChangeField({ key: "eventContent", value: e.target.value })}
           placeholder="내용 이미지 주소 입력"
         ></textarea>
       </AdminEventWriteItemBlock>
@@ -61,7 +61,7 @@ const AdminEventWriteComponent = ({
         <input
           type="text"
           value={eventImg}
-          onChange={(e) => onChange("eventImg", e.target.value)}
+          onChange={(e) => onChangeField({ key: "eventImg", value: e.target.value})}
           placeholder="썸네일 이미지 주소 입력"
         />
       </AdminEventWriteItemBlock>
@@ -69,7 +69,7 @@ const AdminEventWriteComponent = ({
         <input
           type="date"
           value={startEventDate}
-          onChange={(e) => onChange("startEventDate", e.target.value)}
+          onChange={(e) => onChangeField({ key: "startEventDate", value: e.target.value})}
           placeholder="이벤트 시작일"
         />
       </AdminEventWriteItemBlock>
@@ -77,7 +77,7 @@ const AdminEventWriteComponent = ({
         <input
           type="date"
           value={endEventDate}
-          onChange={(e) => onChange("endEventDate", e.target.value)}
+          onChange={(e) => onChangeField({ key: "endEventDate", value: e.target.value})}
           placeholder="이벤트 종료일"
         />
       </AdminEventWriteItemBlock>

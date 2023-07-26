@@ -1,10 +1,10 @@
 import { styled } from "styled-components";
 import { useState } from "react";
 import MyPageTicketContainer from "../../containers/mypage/MyPageTicketContainer";
-import MyPageBoardContainer from "../../containers/mypage/MyPageBoardContainer";
 import MyPageMeetContainer from "../../containers/mypage/MyPageMeetContainer";
 import MyPageInquiryContainer from "../../containers/mypage/MyPageInquiryContainer";
 import MyPageInfoContainer from "../../containers/mypage/MyPageInfoContainer";
+import MyPagePostContainer from "../../containers/mypage/MyPagePostContainer";
 
 const MyPageBottomInfo = () => {
   const [category, setCategory] = useState("Ticket");
@@ -60,7 +60,7 @@ const MyPageBottomInfo = () => {
         </div>
       </Category>
       {category === "Ticket" && <MyPageTicketContainer />}
-      {category === "Board" && <MyPageBoardContainer />}
+      {category === "Board" && <MyPagePostContainer />}
       {category === "Meet" && <MyPageMeetContainer />}
       {category === "Inquiry" && <MyPageInquiryContainer />}
       {category === "Info" && <MyPageInfoContainer />}

@@ -38,3 +38,20 @@ exports.adminpostread = async (req, res, next) => {
   }
   res.json({ post });
 };
+
+exports.adminpostdelete = async (req, res, next) => {
+  const postNum = req.params.postNum;
+  try {
+    const deletedRows = await posts.destroy({
+      where: { postNum },
+    });
+    if (deletedRows === 0) {
+      res.status(404).json({ message: "존재하지 않는 게시물입니다." });
+      return;
+    }
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+};

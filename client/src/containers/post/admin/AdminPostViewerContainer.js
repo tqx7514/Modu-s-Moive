@@ -8,9 +8,10 @@ import {
 import AdminPostViewer from "../../../components/post/admin/AdminPostViewer";
 import PostActionButtons from "../../../components/post/PostActionButtons";
 import { AdminRemovePost } from "../../../lib/api/admin/adminposts";
+import { AdminListPost } from "../../../modules/admin/adminposts";
 
 const AdminPostViewerContainer = () => {
-  const { postNum } = useParams();
+  const { postNum, name } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { post, error, loading, user } = useSelector(
@@ -31,8 +32,13 @@ const AdminPostViewerContainer = () => {
   }, [dispatch, postNum]);
 
   const onRemove = async () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const tags = searchParams.get("tags");
+    // const searchResult = searchParams.get("search");
+    const page = parseInt(searchParams.get("page"), 10) || 1;
     try {
       await AdminRemovePost(postNum);
+      console.log("kdkdk");
       navigate("/admin/postlist");
     } catch (e) {
       console.log(e);

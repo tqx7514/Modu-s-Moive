@@ -1,6 +1,6 @@
 import React from "react";
 
-const MyPageBoardContainer = () => {
+const MyPagePostContainer = () => {
   return (
     <div>
       <div>마이페이지 게시글컨테이너</div>
@@ -8,4 +8,4 @@ const MyPageBoardContainer = () => {
   );
 };
 
-export default MyPageBoardContainer;
+export default MyPagePostContainer;

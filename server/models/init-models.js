@@ -3,6 +3,7 @@ var _cinemas = require("./cinemas");
 var _cinemas1 = require("./cinemas1");
 var _eventcategory = require("./eventcategory");
 var _events = require("./events");
+var _inquirys = require("./inquirys");
 var _meetboards = require("./meetboards");
 var _meetcomments = require("./meetcomments");
 var _meetmessages = require("./meetmessages");
@@ -12,6 +13,7 @@ var _moviecomments = require("./moviecomments");
 var _moviereviews = require("./moviereviews");
 var _movies = require("./movies");
 var _movietimes = require("./movietimes");
+var _mycinema = require("./mycinema");
 var _postcomments = require("./postcomments");
 var _posts = require("./posts");
 var _regions = require("./regions");
@@ -24,6 +26,7 @@ function initModels(sequelize) {
   var cinemas1 = _cinemas1(sequelize, DataTypes);
   var eventcategory = _eventcategory(sequelize, DataTypes);
   var events = _events(sequelize, DataTypes);
+  var inquirys = _inquirys(sequelize, DataTypes);
   var meetboards = _meetboards(sequelize, DataTypes);
   var meetcomments = _meetcomments(sequelize, DataTypes);
   var meetmessages = _meetmessages(sequelize, DataTypes);
@@ -33,6 +36,7 @@ function initModels(sequelize) {
   var moviereviews = _moviereviews(sequelize, DataTypes);
   var movies = _movies(sequelize, DataTypes);
   var movietimes = _movietimes(sequelize, DataTypes);
+  var mycinema = _mycinema(sequelize, DataTypes);
   var postcomments = _postcomments(sequelize, DataTypes);
   var posts = _posts(sequelize, DataTypes);
   var regions = _regions(sequelize, DataTypes);
@@ -42,6 +46,8 @@ function initModels(sequelize) {
 
   movietimes.belongsTo(cinemas, { as: "movietimes_num_cinema", foreignKey: "movietimes_num"});
   cinemas.hasOne(movietimes, { as: "movietime", foreignKey: "movietimes_num"});
+  mycinema.belongsTo(cinemas, { as: "cinema_num_cinema", foreignKey: "cinema_num"});
+  cinemas.hasMany(mycinema, { as: "mycinemas", foreignKey: "cinema_num"});
   events.belongsTo(eventcategory, { as: "category", foreignKey: "categoryId"});
   eventcategory.hasMany(events, { as: "events", foreignKey: "categoryId"});
   meetcomments.belongsTo(meetboards, { as: "meetboard_Num_meetboard", foreignKey: "meetboard_Num"});
@@ -60,6 +66,8 @@ function initModels(sequelize) {
   regions.hasMany(cinemas, { as: "cinemas", foreignKey: "grade"});
   events.belongsTo(users, { as: "user", foreignKey: "userId"});
   users.hasMany(events, { as: "events", foreignKey: "userId"});
+  inquirys.belongsTo(users, { as: "user", foreignKey: "userId"});
+  users.hasMany(inquirys, { as: "inquiries", foreignKey: "userId"});
   meetboards.belongsTo(users, { as: "user", foreignKey: "user_Id"});
   users.hasMany(meetboards, { as: "meetboards", foreignKey: "user_Id"});
   meetcomments.belongsTo(users, { as: "user", foreignKey: "user_Id"});
@@ -70,6 +78,8 @@ function initModels(sequelize) {
   users.hasMany(meetusers, { as: "meetusers", foreignKey: "user_Num"});
   moviecomments.belongsTo(users, { as: "id_user", foreignKey: "id"});
   users.hasMany(moviecomments, { as: "moviecomments", foreignKey: "id"});
+  mycinema.belongsTo(users, { as: "id_user", foreignKey: "id"});
+  users.hasMany(mycinema, { as: "mycinemas", foreignKey: "id"});
   postcomments.belongsTo(users, { as: "user", foreignKey: "userId"});
   users.hasMany(postcomments, { as: "postcomments", foreignKey: "userId"});
 
@@ -78,6 +88,7 @@ function initModels(sequelize) {
     cinemas1,
     eventcategory,
     events,
+    inquirys,
     meetboards,
     meetcomments,
     meetmessages,
@@ -87,6 +98,7 @@ function initModels(sequelize) {
     moviereviews,
     movies,
     movietimes,
+    mycinema,
     postcomments,
     posts,
     regions,

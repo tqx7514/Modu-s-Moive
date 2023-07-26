@@ -6,6 +6,7 @@ import MeetTagBoxContainer from "../containers/meet/MeetTagBoxContainer";
 import MeetWriteActionButtonsContainer from "../containers/meet/MeetWriteActionButtonsContainer";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/common/Footer";
 
 const MeetWritePage = () => {
   const { user } = useSelector(({ user }) => ({ user: user.user }));
@@ -25,6 +26,7 @@ const MeetWritePage = () => {
         <MeetTagBoxContainer />
         <MeetWriteActionButtonsContainer />
       </Responsive>
+      <Footer />
     </>
   );
 };

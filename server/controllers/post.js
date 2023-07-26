@@ -50,7 +50,9 @@ exports.postlist = async (req, res, next) => {
       limit,
       offset,
     });
+    // console.log("postcontrollers의 postlist입니다.", postlists);
     const totalCount = await posts.count({ where });
+    console.log("totalCount:", totalCount);
     const totalPages = totalCount ? Math.ceil(totalCount / limit) : 1;
     console.log("totalPages:", totalPages);
     res.json({ postlists, totalPages });
@@ -115,7 +117,7 @@ exports.postDelete = async (req, res, next) => {
     });
 
     if (deletedRows === 0) {
-      res.status(404).json({ message: "존재하지 않는 글입니다." });
+      res.status(404).json({ message: "존재하지 않는 게시물입니다." });
       return;
     }
 

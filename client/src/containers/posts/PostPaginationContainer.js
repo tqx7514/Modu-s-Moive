@@ -15,7 +15,6 @@ const PostPaginationContainer = () => {
     postList: posts.posts,
     loading: loading["posts/LIST_POSTS"],
   }));
-  console.log("dddddddddddddddd", lastPage);
 
   if (!postList || loading) return null;
 

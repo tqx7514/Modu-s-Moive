@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom"; // Updated import
 import AdminPostList from "../../../components/posts/admin/AdminPostList";
 import { AdminListPost } from "../../../modules/admin/adminposts";
+import { listPosts } from "../../../modules/posts";
 
 const AdminPostListContainer = () => {
   const { name } = useParams();
@@ -22,9 +23,10 @@ const AdminPostListContainer = () => {
     // Retrieve the URL search params from the window object
     const searchParams = new URLSearchParams(window.location.search);
     const tags = searchParams.get("tags");
-    const searchResult = searchParams.get("search");
+    // const searchResult = searchParams.get("search");
     const page = parseInt(searchParams.get("page"), 10) || 1;
-    dispatch(AdminListPost({ tags, name, page, searchResult }));
+    // dispatch(AdminListPost({ tags, name, page }));
+    dispatch(listPosts({ page, name, tags }));
   }, [dispatch, name]);
 
   return (

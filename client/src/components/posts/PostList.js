@@ -100,6 +100,7 @@ const PostItem = ({ post }) => {
   const formattedViews = views > 999 ? "999+" : views;
   const limitedUserId = userId.length > 6 ? `${userId.slice(0, 6)}..` : userId;
   const formattedDate = formatDate(createdAt);
+  console.log("PostItem의 post입니다.", post);
 
   return (
     <PostItemBlock>
@@ -114,8 +115,9 @@ const PostItem = ({ post }) => {
     </PostItemBlock>
   );
 };
-
+// console.log("PostListComponent의 PostItem입니다.", PostItem);
 const PostList = ({ posts, loading, error, showWriteButton }) => {
+  console.log("PostListComponent의 PostList의 posts입니다.", posts);
   const [searchTitle, setSearchTitle] = useState("");
   const navigate = useNavigate();
 
@@ -130,7 +132,6 @@ const PostList = ({ posts, loading, error, showWriteButton }) => {
   if (error) {
     return <PostListBlock>에러가 발생했습니다.</PostListBlock>;
   }
-
   return (
     <PostListBlock>
       <PostSearchBlock>

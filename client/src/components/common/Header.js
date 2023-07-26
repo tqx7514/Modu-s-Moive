@@ -241,8 +241,8 @@ const Header = ({ user, onLogout }) => {
   const location = useLocation();
   return (
     <>
-      <HeaderBlock>
-        <LogoWrapper>
+      <HeaderBlock className={location.pathname === "/" ? "main" : ""}>
+        <LogoWrapper className="logoWrap">
           <Icons>
             <a href="#">
               <FontAwesomeIcon icon={faFacebook} style={{ color: "#1d69ed" }} />

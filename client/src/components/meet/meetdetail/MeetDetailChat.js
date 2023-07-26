@@ -22,19 +22,6 @@ const MeetDetailChat = ({ user, meet }) => {
     const response = await getMsg({ meetNum, userId });
     setMsg(response.data);
   };
-  useEffect(() => {
-    if (msg.length > 0) {
-      setLoading(false);
-    }
-  }, [msg]);
-
-  useEffect(() => {
-    const interval = setInterval(getMessages, 2000); // 0.1초마다 getMessages 호출
-
-    return () => {
-      clearInterval(interval); // 컴포넌트가 언마운트되면 interval을 정리(cleanup)
-    };
-  }, []);
   const down = () => {
     // console.log("aaaaaaaaaaaaaaaaaaaa", a);
     if (a === 1) {
@@ -43,6 +30,20 @@ const MeetDetailChat = ({ user, meet }) => {
     }
     setA(2);
   };
+  useEffect(() => {
+    if (msg.length > 0) {
+      setLoading(false);
+    }
+  }, [msg]);
+
+  useEffect(() => {
+    const interval = setInterval(getMessages, 2000); // 0.1초마다 getMessages 호출
+    down();
+    return () => {
+      clearInterval(interval); // 컴포넌트가 언마운트되면 interval을 정리(cleanup)
+    };
+  }, []);
+
   const handleSendMsg = async (message) => {
     try {
       setA(1);
@@ -55,8 +56,8 @@ const MeetDetailChat = ({ user, meet }) => {
       const msgs = [...msg];
       msgs.push({ fromSelf: true, message: message });
       setMsg(msgs);
-      down();
       getMessages();
+      down();
     } catch (error) {
       console.log(error);
     }

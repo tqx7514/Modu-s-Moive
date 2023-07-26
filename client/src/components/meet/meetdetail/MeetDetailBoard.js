@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { styled } from "styled-components";
+import { styled, css } from "styled-components";
 import Button from "../../common/Button";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -79,8 +79,17 @@ const BoardHeaderItem = styled.div`
   align-items: center;
   text-align: center;
   ${({ width }) => width && `flex-basis: ${width};`}
+
   > h4 {
     margin-right: 2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    ${({ wrapText }) =>
+      wrapText &&
+      css`
+        word-wrap: break-word; /* 해당 속성을 추가합니다. */
+      `}
   }
 `;
 
@@ -174,6 +183,7 @@ const MeetBoardItem = ({
     meetBoard;
   const formattedBody = body.replace(/\n/g, "<br />");
   const firstLine = body.split("\n")[0];
+  const showEllipsis = firstLine.length > 30;
   const dispatch = useDispatch();
   const ownPost = (id) => {
     if (userId === id) {
@@ -241,13 +251,14 @@ const MeetBoardItem = ({
       <div>
         <BoardHeaderItem width="10%">{meetboardNum}</BoardHeaderItem>
         <BoardHeaderItem width="15%">{user_Id}</BoardHeaderItem>
-        <BoardHeaderItem width="50%">
+        <BoardHeaderItem width="50%" wrapText>
           {expandedId === meetboardNum ? (
             <h4 dangerouslySetInnerHTML={{ __html: formattedBody }} />
           ) : (
-            <h4>{firstLine}</h4>
+            <h4>{showEllipsis ? `${firstLine.slice(0, 30)}...` : firstLine}</h4>
           )}
         </BoardHeaderItem>
+
         <BoardHeaderItem width="13%">
           {formatCreatedAt(createdAt)}
         </BoardHeaderItem>

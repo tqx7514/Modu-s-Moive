@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { checkPW } from "../../lib/api/auth";
 import { useSelector } from "react-redux";
 
-const MyPageInfoContainer = () => {
+const MyPageInfoContainer = ({ click }) => {
   const { user } = useSelector(({ user }) => ({
     user: user.user,
   }));
@@ -57,6 +57,7 @@ const MyPageInfoContainer = () => {
         onWithdrawClick={handleWithdrawClick}
         confirmed={confirmed}
         info={info}
+        click={click}
       />
     </div>
   );

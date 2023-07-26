@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import Button from "../common/Button";
-import { Link, useNavigate, NavLink } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MeetSubInfo from "../common/MeetSubInfo";
 import MeetTags from "../common/MeetTags";
 import { faPerson, faEye } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +10,7 @@ import Responsive from "../common/Responsive";
 
 const MeetListBlock = styled(Responsive)`
   margin-top: 3rem;
+
   > hr {
     margin-bottom: 1rem;
     border: none;
@@ -56,6 +57,7 @@ const MeetItemBlock = styled.div`
 const MeetListItem = styled.div`
   display: flex;
   flex-wrap: wrap;
+  margin-left: 2rem;
 `;
 
 const IconBlock = styled.div`

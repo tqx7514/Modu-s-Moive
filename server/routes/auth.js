@@ -7,6 +7,7 @@ const {
   checkDuplicate,
   withdraw,
   checkPW,
+  updateInfo,
 } = require("../controllers/auth");
 const router = express.Router();
 
@@ -19,5 +20,6 @@ router.post("/checkDuplicate", checkDuplicate);
 //MyPage
 router.post("/withdraw/:id", withdraw);
 router.post("/check/:id", checkPW);
+router.post("/update/:id", updateInfo);
 
 module.exports = router;

@@ -36,7 +36,7 @@ const MyPageInfoWithDraw = ({
       <SCustomCheckboxWrapper>
         <SCustomCheckbox type="checkbox" isChecked={checked} />
         <SCustomLabel onClick={handleCheckBox} isChecked={checked} />
-        <div>
+        <div onClick={handleCheckBox} className="checklabel">
           &nbsp;&nbsp;&nbsp;&nbsp; 위 유의사항을 모두 확인하였고 회원탈퇴에
           동의합니다.
         </div>
@@ -90,6 +90,9 @@ const MyPageInfoWithDrawBlock = styled.div`
 const SCustomCheckboxWrapper = styled.div`
   position: relative;
   display: flex;
+  > .checklabel {
+    cursor: pointer;
+  }
 `;
 
 const SCustomCheckbox = styled.input`

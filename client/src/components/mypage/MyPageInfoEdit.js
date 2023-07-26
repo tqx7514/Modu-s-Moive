@@ -2,8 +2,10 @@ import { styled } from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { updateInfo } from "../../lib/api/auth";
+import Swal from "sweetalert2";
 
-const MyPageInfoEdit = ({ info }) => {
+const MyPageInfoEdit = ({ info, click }) => {
   const navigate = useNavigate();
   const toastOptions = {
     position: "bottom-right",
@@ -90,8 +92,27 @@ const MyPageInfoEdit = ({ info }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log("아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ");
-    if (!handleValidation()) {
-      return;
+    const id = info.id;
+    if (handleValidation()) {
+      Swal.fire({
+        title: "회원정보수정",
+        text: "정말로 수정하시겠습니까?",
+        showCancelButton: true,
+        confirmButtonText: "확인",
+        cancelButtonText: "취소",
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          updateInfo({ id, pw, email, tel, age, gender });
+          click();
+        },
+      }).then((res) => {
+        if (res.isConfirmed) {
+          Swal.fire({
+            icon: "success",
+            text: "수정 성공 / 마이페이지 홈으로 돌아갑니다",
+          });
+        }
+      });
     }
   };
 

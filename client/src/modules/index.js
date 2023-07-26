@@ -29,6 +29,8 @@ import meetboard, { meetBoardSaga } from "./meetboard";
 // import adminevent, { readEventSaga } from "./admin/adminevent";
 import admineventlist, { adminEventListSaga } from "./admin/admineventlist";
 import admineventwrite, { eventWriteSaga } from "./admin/admineventwrite";
+// import admineventwrite, { eventWriteSaga } from "./admin/admineventwrite";
+import mypage, { mypageSaga } from "./mypage";
 
 const rootReducer = combineReducers({
   auth,
@@ -50,6 +52,7 @@ const rootReducer = combineReducers({
   cinema,
   eventpost,
   postcomment,
+  mypage,
   adminposts,
   // adminevent,
   admineventlist,
@@ -78,6 +81,7 @@ export function* rootSaga() {
     eventPostSaga(),
     timeSaga(),
     postCommentSaga(),
+    mypageSaga(),
     adminpostsSaga(),
     // readEventSaga(),
     adminEventListSaga(),

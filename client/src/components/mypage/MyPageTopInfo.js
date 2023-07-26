@@ -1,11 +1,22 @@
+import React, { useState } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
 import MyCinemaModal from "./MyCinemaModal";
 
-const MyPageTopInfo = ({ user, loading, eventlist, viewcinema }) => {
+const MyPageTopInfo = ({
+  user,
+  loading,
+  eventlist,
+  handleInfoClick,
+  category,
+  viewcinema,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedAddrDetail, setSelectedAddrDetail] = useState("");
+
+  if (!user || eventlist.length === 0) {
+    return <div>로딩중</div>;
+  }
 
   const openModal = (addr) => {
     setIsOpen(true);
@@ -15,12 +26,6 @@ const MyPageTopInfo = ({ user, loading, eventlist, viewcinema }) => {
   const oncloseModal = () => {
     setIsOpen(false);
   };
-
-  if (!user || eventlist.length === 0) {
-    console.log("loading", eventlist.length, !user);
-    return <div>로딩중</div>;
-  }
-  console.log("loading2", eventlist.length, !user);
 
   const randomIndex = Math.floor(Math.random() * eventlist.length);
   const userGrade =
@@ -32,7 +37,7 @@ const MyPageTopInfo = ({ user, loading, eventlist, viewcinema }) => {
         <RightInfoTop>
           <RightTopFirst>
             <UserGrade>{userGrade}</UserGrade>
-            <UserEdit>
+            <UserEdit onClick={handleInfoClick}>
               <img src="/edit_15.png" alt="" />
               편집
             </UserEdit>

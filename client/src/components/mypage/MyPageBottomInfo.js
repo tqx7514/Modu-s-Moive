@@ -6,25 +6,14 @@ import MyPageMeetContainer from "../../containers/mypage/MyPageMeetContainer";
 import MyPageInquiryContainer from "../../containers/mypage/MyPageInquiryContainer";
 import MyPageInfoContainer from "../../containers/mypage/MyPageInfoContainer";
 
-const MyPageBottomInfo = () => {
-  const [category, setCategory] = useState("Ticket");
-  const handleTicketClick = () => {
-    setCategory("Ticket");
-  };
-
-  const handleBoardClick = () => {
-    setCategory("Board");
-  };
-  const handleMeetClick = () => {
-    setCategory("Meet");
-  };
-  const handleInquiryClick = () => {
-    setCategory("Inquiry");
-  };
-  const handleInfoClick = () => {
-    setCategory("Info");
-  };
-
+const MyPageBottomInfo = ({
+  handleTicketClick,
+  handleBoardClick,
+  handleMeetClick,
+  handleInquiryClick,
+  handleInfoClick,
+  category,
+}) => {
   return (
     <MyPageBottomInfoBlock>
       <Category>
@@ -63,7 +52,7 @@ const MyPageBottomInfo = () => {
       {category === "Board" && <MyPageBoardContainer />}
       {category === "Meet" && <MyPageMeetContainer />}
       {category === "Inquiry" && <MyPageInquiryContainer />}
-      {category === "Info" && <MyPageInfoContainer />}
+      {category === "Info" && <MyPageInfoContainer click={handleTicketClick} />}
     </MyPageBottomInfoBlock>
   );
 };

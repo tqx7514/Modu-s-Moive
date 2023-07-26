@@ -13,6 +13,7 @@ const postRouter = require("./routes/post");
 const eventRouter = require("./routes/event");
 const currentMovie = require("./routes/currentmovie");
 const cinemaRouter = require("./routes/cinema");
+const mypageRouter = require("./routes/mypage");
 const adminEventRouter = require("./routes/admin/adminevent");
 
 const axios = require("axios");
@@ -58,6 +59,7 @@ app.use("/event", eventRouter);
 app.use("/currentmovie", currentMovie);
 app.use("/meet", meetRouter);
 app.use("/cinema", cinemaRouter);
+app.use("/mypage", mypageRouter);
 app.use("/admin/event/", adminEventRouter);
 
 // catch 404 and forward to error handler

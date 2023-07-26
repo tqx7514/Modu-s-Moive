@@ -1,44 +1,43 @@
-// import React from "react";
-// import styled from "styled-components";
+import React from "react";
+import styled from "styled-components";
+import qs from "qs";
+import Button from "../../common/Button";
 
-// const AdminEventPaginationContainer = styled.div``;
-// const AdminEventPagesBlock = styled.div``;
-// const AdminEventPaginationButton = styled.button``;
+const EventPaginationBlock = styled.div`
+  width: 320px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+`;
 
-// const AdminEventPaginationComponent = ({
-//   currentPage,
-//   totalPages,
-//   handlePageChange,
-//   previousPage,
-//   nextPage,
-// }) => {
-//   return (
-//     <AdminEventPaginationContainer>
-//       <AdminEventPaginationButton
-//         disabled={currentPage === 1}
-//         onClick={() => handlePageChange(previousPage)}
-//       >
-//         이전
-//       </AdminEventPaginationButton>
-//       {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-//         (page) => (
-//           <AdminEventPagesBlock
-//             key={page}
-//             onClick={() => handlePageChange(page)}
-//             disabled={currentPage === page}
-//           >
-//             {page}
-//           </AdminEventPagesBlock>
-//         )
-//       )}
-//       <AdminEventPaginationButton
-//         disabled={currentPage === totalPages}
-//         onClick={() => handlePageChange(nextPage)}
-//       >
-//         다음
-//       </AdminEventPaginationButton>
-//     </AdminEventPaginationContainer>
-//   );
-// };
+const EventPageNumber = styled.div``;
 
-// export default AdminEventPaginationComponent;
+const buildLink = ({ page }) => {
+  const query = qs.stringify({ page });
+  return `/admin/event?${query}`;
+};
+
+const AdminEventPaginationComponent = ({ page, lastPage, userId }) => {
+  return (
+    <EventPaginationBlock>
+      <Button
+        disabled={page === 1}
+        to={page === 1 ? undefined : buildLink({ userId, page: page - 1 })}
+      >
+        이전
+      </Button>
+      <EventPageNumber>{page}</EventPageNumber>
+      <Button
+        disabled={page === lastPage}
+        to={
+          page === lastPage ? undefined : buildLink({ userId, page: page + 1 })
+        }
+      >
+        다음
+      </Button>
+    </EventPaginationBlock>
+  );
+};
+
+export default AdminEventPaginationComponent;

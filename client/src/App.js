@@ -25,6 +25,8 @@ import AdminCurrentMoviePage from "./pages/admin/AdminCurrentMoviePage";
 import AdminPostListPage from "./pages/admin/AdminPostListPage";
 import TicketPayPage from "./pages/TicketPayPage";
 // import AdminEventPage from "./pages/admin/AdminEventPage";
+import AdminEventPage from "./pages/admin/AdminEventPage";
+import AdminEventWritePage from "./pages/admin/AdminEventWritePage";
 
 const App = () => {
   return (
@@ -57,8 +59,8 @@ const App = () => {
       {/* 관리자페이지 */}
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/admin/currentmovie" element={<AdminCurrentMoviePage />} />
-      <Route path="/admin/postlist" element={<AdminPostListPage />} />
-      {/* <Route path="/admin/event" element={<AdminEventPage />} />  */}
+      <Route path="/admin/event" element={<AdminEventPage />} />
+      <Route path="/admin/event/write" element={<AdminEventWritePage />} />
     </Routes>
   );
 };

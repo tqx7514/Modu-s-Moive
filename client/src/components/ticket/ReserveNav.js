@@ -2,6 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "../../../node_modules/react-router-dom/dist/index";
+import { useSelector } from "react-redux";
 
 const NavReserveUl = styled.ul`
   width: 76px;
@@ -33,6 +34,7 @@ const NavReserveLi = styled.li`
   width: 76px;
   height: calc(100% / 4);
   padding-top: 80px;
+  border-right: 1px solid #666;
   border-bottom: 1px solid #666;
   background: #fff;
   list-style: none;
@@ -41,7 +43,7 @@ const NavReserveLi = styled.li`
   &:last-child {
     border-bottom: none;
   }
-  &:hover{
+  &:hover {
     ${NavReserveCont} {
       display: flex;
       align-items: center;
@@ -55,6 +57,7 @@ const NavReserveLi = styled.li`
       background: #ff243e;
       color: #fff;
       cursor: pointer;
+      border-right: none;
       &:hover {
         ${NavReserveCont} {
           display: flex;
@@ -65,7 +68,16 @@ const NavReserveLi = styled.li`
     `}
 `;
 
-const ReserveNav = ({ data, adult, teenager, senior, disabled, seat }) => {
+const ReserveNav = ({
+  data,
+  adult,
+  teenager,
+  senior,
+  disabled,
+  seat,
+  totalPrice,
+}) => {
+  const { user } = useSelector(({ user }) => user);
   const location = useLocation();
   const navigate = useNavigate();
   const timeContent =
@@ -73,22 +85,31 @@ const ReserveNav = ({ data, adult, teenager, senior, disabled, seat }) => {
       <ul>
         <li>{data.movie ? data.movie.movie_name : ""}</li>
         <li>{data && data.cinema}</li>
-        <li>{data && data.date}</li>
+        <li>
+          {data && data.date} {data && data.day ? `(${data.day})` : "(오늘)"}
+        </li>
         <li></li>
       </ul>
     ) : (
       <ul>
         <li>{data.time.movie_name}</li>
         <li>{data.time ? `${data.time.cinema} ${data.time.room}관` : ""}</li>
-        <li>{data.date}</li>
+        <li>
+          {data.date} {data && data.day ? `(${data.day})` : "(오늘)"}
+        </li>
         <li>{data.time ? `${data.time.start} ~ ${data.time.end}` : ""}</li>
       </ul>
     );
+
+  const seatContent = seat?.slice(0).join(", ");
+  const formatPrice = totalPrice?.toLocaleString();
+  const totalPriceNumber = parseInt(totalPrice, 10);
+  const formatTotalPrice = (totalPriceNumber - user.point).toLocaleString();
   return (
     <NavReserveUl>
-      <NavReserveLi 
+      <NavReserveLi
         active={String(location.pathname === "/ticket")}
-        onClick={() => navigate('/ticket')}
+        onClick={() => navigate("/ticket")}
       >
         01
         <br />
@@ -134,24 +155,32 @@ const ReserveNav = ({ data, adult, teenager, senior, disabled, seat }) => {
                 </>
               )}
             </li>
+            <li>{seatContent}</li>
+          </ul>
+        </NavReserveCont>
+      </NavReserveLi>
+      <NavReserveLi active={String(location.pathname === "/ticket/pay")}>
+        03
+        <br />
+        결제
+        <NavReserveCont>
+          <ul>
+            <li>{totalPrice && `티켓금액 ${formatPrice}원`}</li>
+            <li>할인금액 {user.point}원</li>
             <li>
-              {seat}
+              {
+                totalPrice && `총합계 ${formatTotalPrice}원`
+                // totalPrice와 user.point의 숫자를 뺀 결과를 출력
+              }
             </li>
           </ul>
         </NavReserveCont>
       </NavReserveLi>
       <NavReserveLi>
-        03 결제
-        <NavReserveCont>
-          <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-        </NavReserveCont>
+        04
+        <br />
+        결제완료
       </NavReserveLi>
-      <NavReserveLi>04 결제완료</NavReserveLi>
     </NavReserveUl>
   );
 };

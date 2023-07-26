@@ -79,10 +79,49 @@ const ModalViewSeat = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 50px;
-  div {
-    width: 100px;
-    height: 50px;
-    border: 1px solid;
+  ul {
+    li {
+      height: 5px;
+      position: relative;
+      margin-bottom: 2px;
+    }
+  
+    p {
+      display: none;
+    }
+  
+    span {
+      display: inline-block;
+      width: 4px;
+      height: 3px;
+      background: #000;
+      border-top-left-radius: 2px;
+      border-top-right-radius: 2px;
+      color: #000;
+      cursor: pointer;
+      text-indent: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      margin-top: 0;
+      margin-right: 3px;
+  
+      &.firstRoom {
+        &:nth-child(3) {
+          margin-right: 10px;
+        }
+        &:nth-child(14) {
+          margin-left: 10px;
+        }
+      }
+      &.selected {
+        background: #ff243e;
+        color: #fff;
+      }
+      &.unselected{
+        pointer-events: none;
+        background: url(/no_select.png);
+      }
+    }
   }
 `;
 
@@ -209,6 +248,7 @@ const StepFirstModal = ({ modal, setIsModal }) => {
   const [isLogin, setIslogin] = useState(false);
 
   const { data } = useSelector(({ stepfirst }) => stepfirst);
+  const { seat } = useSelector(({ stepsecond }) => stepsecond);
   const { user } = useSelector(({ user }) => ({ user: user.user }));
 
   const handleModal = () => {
@@ -218,6 +258,9 @@ const StepFirstModal = ({ modal, setIsModal }) => {
   const handleLinkClick = () => {
     setIslogin(true);
   };
+
+  const seatRow = ["A", "B", "C", "D", "E", "F"];
+  const seatCol = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
   return (
     <FirstModal className={modal === true ? "on" : ""}>
@@ -234,7 +277,28 @@ const StepFirstModal = ({ modal, setIsModal }) => {
           </ModalSeat>
           <span>SCREEN</span>
           <ModalViewSeat>
-            <div></div>
+            <ul>
+            {seatRow.map((row, rowIndex) => (
+              <li key={rowIndex}>
+                <p>{row}</p>
+                {seatCol.map((col, colIndex) => {
+                  const seatId = `${row}${col}`;
+                  let classes = "";
+                  if (data.time.room === 1) {
+                    classes += "firstRoom";
+                  }
+                  return (
+                    <span
+                      key={colIndex}
+                      className={classes.trim()}
+                    >
+                      {col}
+                    </span>
+                  );
+                })}
+              </li>
+            ))}
+            </ul>
           </ModalViewSeat>
           <ModalAge>
             <span

@@ -139,15 +139,8 @@ const SelectPerson = ({
 }) => {
   const {data, movie} = useSelector(({stepfirst}) => stepfirst);
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
-  const selectedMovie = movie.find((movieObj) => movieObj.movie_name === data.time.movie_name);  const selectedMovieImg = selectedMovie ? selectedMovie.img : null;
-console.log('pay??????????????????????', adultNumber.price)
-  // useEffect(() => {
-  //   number(0);
-  //   adultNumber(0);
-  //   teenagerNumber(0);
-  //   seniorNumber(0);
-  //   disabledNumber(0);
-  // }, []);
+  const selectedMovie = movie.find((movieObj) => movieObj.movie_name === data.time.movie_name);  
+
   const handleIncrease = (key) => {
     if (number >= 8) {
       alert('인원은 최대 8명까지 선택 가능합니다.');

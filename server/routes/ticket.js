@@ -1,8 +1,11 @@
 const express = require("express");
+const { cinemas, regions, movies, movietimes } = require("../models");
+const { Op } = require("sequelize");
+const cron = require("node-cron");
+
 const router = express.Router();
 
-const { cinemas, regions, movies, movietimes } = require("../models");
-
+// 지역 데이터 가져오기
 router.get("/region", async (req, res) => {
   try {
     const region = await regions.findAll({
@@ -20,6 +23,7 @@ router.get("/region", async (req, res) => {
   }
 });
 
+// 영화관 데이터 가져오기
 router.get("/cinema", async (req, res) => {
   try {
     const { grade } = req.query;
@@ -41,6 +45,7 @@ router.get("/cinema", async (req, res) => {
   }
 });
 
+// 영화 데이터 가져오기
 router.get("/movies", async (req, res) => {
   try {
     const movie = await movies.findAll({});
@@ -50,11 +55,50 @@ router.get("/movies", async (req, res) => {
   }
 });
 
+// 현재시간 지난 영화 스케줄 데이터 삭제
+const checkAndDeleteExpiredTimes = async () => {
+  try {
+    const currentDate = new Date();
+    const currentDateString = currentDate.toISOString().split("T")[0];
+
+    const expiredTimes = await movietimes.findAll({
+      where: {
+        [Op.or]: {
+          date: {
+            [Op.lt]: currentDateString,
+          },
+          [Op.and]: {
+            date: currentDateString,
+            start: {
+              [Op.lt]: currentDate.toTimeString().slice(0, 5),
+            },
+          },
+        },
+      },
+    });
+
+    if (expiredTimes.length > 0) {
+      for (const time of expiredTimes) {
+        await time.destroy();
+      }
+      console.log(`${expiredTimes.length}개의 레코드가 삭제되었습니다.`);
+    } else {
+      console.log("지난 시간을 지난 레코드가 없습니다.");
+    }
+  } catch (e) {
+    console.error("오류가 발생했습니다:", e);
+  }
+};
+
+cron.schedule("1 * * * *", () => {
+  checkAndDeleteExpiredTimes();
+});
+
+// 영화 스케줄 데이터 가져오기
 router.get("/times", async (req, res) => {
   try {
     const time = await movietimes.findAll({});
     res.status(200).json(time);
-    console.log(time)
   } catch (e) {
     console.error(e);
   }

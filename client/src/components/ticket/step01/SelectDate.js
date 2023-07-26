@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components';
 import MultipleItems from './Slider';
 import SelectTime from './SelectTime';
+import { useSelector } from 'react-redux';
 
 const StepDateTime = styled.div`
 width: 40%;
@@ -50,6 +51,9 @@ const DayItem = styled.div`
       color: #fff;
     }
   }
+  &.noSchedule{
+    color: #ccc;
+  }
 `;
 
 const DayDate = styled.h4`
@@ -77,9 +81,11 @@ const DayWeek = styled.p`
   font-size: 12px;
 `;
 
-const SelectDate = ({onDateData}) => {
+const SelectDate = ({onDateData, onDayData}) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isInitialRender, setIsInitialRender] = useState(true);
+
+  const {data, time} = useSelector(({stepfirst}) => stepfirst);
 
   const today = new Date();
   const currentMonth = today.getMonth();
@@ -93,18 +99,19 @@ const SelectDate = ({onDateData}) => {
     const year = date.getFullYear();
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
     const day = ('0' + date.getDate()).slice(-2);
-    const dayOfWeek = week[date.getDay()];
     return isInitialRender && date.getTime() === today.getTime()
-      ? `${year}-${month}-${day} (오늘)`
-      : `${year}-${month}-${day} (${dayOfWeek})`;
+      ? `${year}-${month}-${day}`
+      : `${year}-${month}-${day}`;
   };
   
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDayOfMonth = new Date(year, month, 1).getDay();
-
+  
   const handleDateClick = (date) => {
     setSelectedDate(date);
-    onDateData(formatDate(date))
+    const dayOfWeek = week[date.getDay()];
+    onDateData(formatDate(date));
+    onDayData(dayOfWeek);
   };
 
   const renderCalendar = () => {
@@ -121,16 +128,19 @@ const SelectDate = ({onDateData}) => {
         dayOfWeek === '일' ? `${daySelect} sunday` :
         dayOfWeek === '토' ? `${daySelect} satday` :
         daySelect;
-  
+      const timeList = time.filter((t) => t.date === formatDate(date))
+      const hasNoSchedule = timeList.length === 0;
       calendar.push(
         <DayItem 
           key={date.getTime()} 
-          className={`${dayClass}${i === today.getDate() && !selectedDate ? ' selected' : ''}`} 
+          className={`${dayClass}${i === today.getDate() && !selectedDate ? ' selected' : ''} ${hasNoSchedule ? ' noSchedule' : ''}`} 
           onClick={() => handleDateClick(date)}
         >
           <FirstMonth>{i === todayDate ? month + 1 + '월' : ''}</FirstMonth>
-          <DayDate className='date'>
-            {i}
+          <DayDate 
+            className={`date ${timeList.some(t => t.date === formatDate(date)) ? 'available' : ''}`}
+          >
+            {i}{console.log(i)}
           </DayDate>
           <DayWeek >
             {dayContent}
@@ -142,7 +152,7 @@ const SelectDate = ({onDateData}) => {
     // 다음 달의 날짜 출력
     const nextMonthFirstDay = new Date(year, month + 1, 1).getDay();
     
-    for (let i = 1; i <= 7 - nextMonthFirstDay; i++) {
+    for (let i = 1; i <= daysInMonth - nextMonthFirstDay; i++) {
       const date = new Date(year, month + 1, i);
       const dayOfWeek = week[(nextMonthFirstDay + i - 1) % 7];
       const dayContent = dayOfWeek;
@@ -153,15 +163,18 @@ const SelectDate = ({onDateData}) => {
         dayOfWeek === '토' ? `${daySelect} satday` :
         daySelect
       ;
+      const timeList = time.filter((t) => t.date === formatDate(date))
+      const hasNoSchedule = timeList.length === 0;
 
       const isFirstDayOfMonth = i === 1;
       const isNextMonthFirstDay = i === 1 && month < 11;
       const isFirstMonth = isFirstDayOfMonth || isNextMonthFirstDay;
+      
   
       calendar.push(
         <DayItem 
           key={date.getTime()} 
-          className={`${dayClass}`} 
+          className={`${dayClass} ${hasNoSchedule ? 'noSchedule' : ''}`} 
           onClick={() => handleDateClick(date)}
         >
         {isFirstMonth && <FirstMonth>{month + 2}월</FirstMonth>}
@@ -178,11 +191,10 @@ const SelectDate = ({onDateData}) => {
     <>
         <StepDateTime>
             <Title>
-              {selectedDate ? formatDate(selectedDate) : formatDate(today)}
+              {selectedDate ? `${formatDate(selectedDate)} (${data.day})` : `${formatDate(today)} (오늘)`}
             </Title>
             <Calendar>
               <MultipleItems Calendar={renderCalendar()}/>
-              {/* {renderCalendar()} */}
             </Calendar>
             <SelectTime/>
         </StepDateTime>

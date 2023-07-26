@@ -14,6 +14,7 @@ const ReserveWrap = styled.div`
     display: flex;
     width: 1280px;
     height: 870px;
+    background: #fff;
 `;
 
 const TicketWrap = ({children}) => {

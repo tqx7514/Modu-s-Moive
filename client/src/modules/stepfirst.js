@@ -22,6 +22,9 @@ const [READ_TIME, READ_TIME_SUCCESS, READ_TIME_FAILURE] =
 const [SET_TIME_DATA] = createRequestActionTypes("stepfirst/SET_TIME_DATA");
 
 const [SET_DATA] = createRequestActionTypes("stepfirst/SET_DATA");
+
+const RESET_DATE = 'stepfirst/RESET_DATE';
+
 // 액션 생성--------------------------------------------------------
 
 export const readRegion = createAction(READ_REGION);
@@ -55,6 +58,9 @@ export const setTimeData = createAction(SET_TIME_DATA, ({
 }));
 
 export const readTime = createAction(READ_TIME);
+
+export const resetDate = createAction(RESET_DATE);
+
 
 // 사가 함수--------------------------------------------------------
 
@@ -97,7 +103,7 @@ const initialState = {
   movie: [],
   date: "",
   time: [],
-  data: { cinema: "", movie: "", date: `${format}(오늘)`, time: {} },
+  data: { cinema: "", movie: "", date: `${format}`, day: "오늘", time: {} },
   error: null,
 };
 
@@ -171,9 +177,19 @@ const stepfirst = handleActions(
       ...state,
       time: action.payload,
     }),
+    // ----------------------------------------------------
     [READ_TIME_FAILURE]: (state, error) => ({
       ...state,
       error,
+    }),
+    // ----------------------------------------------------
+    [RESET_DATE]: (state) => ({
+      ...state,
+      data: {
+        ...state.data,
+        date: `${format}`,
+        day: '오늘',
+      }
     }),
   },
   initialState

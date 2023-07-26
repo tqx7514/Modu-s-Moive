@@ -87,16 +87,18 @@ const Seat = styled.div`
   }
 `;
 
-const SelectSeat = ({ onSelectSeat }) => {
+const SelectSeat = ({ 
+  onSelectSeat,
+  selectedSeats,
+  setSelectedSeats
+}) => {
   const seatRow = ["A", "B", "C", "D", "E", "F"];
   const seatCol = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
   const { data } = useSelector(({ stepfirst }) => stepfirst);
   const { number, seat } = useSelector(({ stepsecond }) => stepsecond);
 
-  console.log(seat)
-  
-  const [selectedSeats, setSelectedSeats] = useState([]);
+  // const [selectedSeats, setSelectedSeats] = useState([]);
 
   const handleSeatClick = (e, row, col) => {
     if (number === 0) {

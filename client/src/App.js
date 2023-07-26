@@ -23,6 +23,7 @@ import EventOtherPage from "./pages/EventOtherPage";
 import EventViewerPage from "./pages/EventViewerPage";
 import AdminCurrentMoviePage from "./pages/admin/AdminCurrentMoviePage";
 import AdminPostListPage from "./pages/admin/AdminPostListPage";
+import TicketPayPage from "./pages/TicketPayPage";
 // import AdminEventPage from "./pages/admin/AdminEventPage";
 
 const App = () => {
@@ -36,6 +37,7 @@ const App = () => {
       {/* 예매 페이지 */}
       <Route path="/ticket" element={<TicketMoviePage />} />
       <Route path="/ticket/PersonSeat" element={<TicketSeatPage />} />
+      <Route path="/ticket/Pay" element={<TicketPayPage />} />
       {/* -----------*/}
       <Route path="/currentmovie/detail/:id" element={<MoviedetailPage />} />
       <Route path="/cinema" element={<CinemaPage />} />

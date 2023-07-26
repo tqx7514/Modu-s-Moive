@@ -135,6 +135,20 @@ const SelectTime = () => {
   );
 
   const handleSelectTime = (item) => {
+    const currentTime = new Date();
+    const [startHour, startMinute] = item.start.split(":").map(Number);
+
+    // 현재 시간과 비교
+    if (
+      item.date < new Date().toISOString().split("T")[0] || // 현재 날짜가 item.date 보다 큰 경우
+      (item.date === new Date().toISOString().split("T")[0] &&
+        (currentTime.getHours() > startHour ||
+          (currentTime.getHours() === startHour &&
+            currentTime.getMinutes() >= startMinute)))
+    ) {
+      alert("현재 선택한 영화관/상영작을 선택할 수 없습니다.");
+      return;
+    }
     setSelectedTime(item.movietimes_num);
     onSelctedTime(
       item.cinema,

@@ -5,7 +5,6 @@ import { setData } from "../../../modules/stepfirst";
 
 const SelectMovieContainer = () => {
   const { movie, data } = useSelector(({ stepfirst }) => stepfirst);
-  console.log('movieeeeeeeeeeeeeeeee', movie)
 
   const dispatch = useDispatch();
 

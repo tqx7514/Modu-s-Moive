@@ -13,6 +13,8 @@ import { check, logout, tempSetUser } from "./modules/user";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist"; // persistReducer와 persistStore를 import
 
+
+
 const sagaMiddleware = createSagaMiddleware();
 
 const persistConfig = {

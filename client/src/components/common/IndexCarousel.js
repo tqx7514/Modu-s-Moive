@@ -12,7 +12,7 @@ const Imgcarousel = styled.div`
   height: 774px;
   width: 100%;
   z-index: 0;
-
+  
   .carousel_button {
     position: absolute;
     bottom: 98px;
@@ -49,6 +49,7 @@ const Imgcarousel = styled.div`
       background-color: #fff;
     }
   }
+
 `;
 
 const Pre = styled.div`

@@ -235,7 +235,6 @@ const Cinema = ({ cinema, region, mycinema, onCreate }) => {
             </ul>
           </AddrDetail>
         </Menu>
-        {/* {location.} */}
         <Title>
           {selectedCinema && <h1>{selectedCinema}</h1>}
           {selectedCinema === addr ? (

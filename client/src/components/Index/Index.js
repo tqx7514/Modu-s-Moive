@@ -219,6 +219,8 @@ const MainInfo = styled.div`
   }
 `;
 
+
+
 const Index = () => {
   const dispatch = useDispatch();
   const { currentmovielist } = useSelector((state) => state.movielist);

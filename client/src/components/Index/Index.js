@@ -31,10 +31,13 @@ const MainInfo = styled.div`
     padding: 16px 0;
     white-space: nowrap;
     overflow: hidden;
+    .padding_li{
+      padding-left: 13px;
+    }
     li {
       display: inline-block;
       vertical-align: middle;
-      padding-left: 13px;
+      padding-left: 37px;
     }
   }
   .btn_txt_more.ty2 {
@@ -43,7 +46,7 @@ const MainInfo = styled.div`
     top: 5px;
     background-position: right 3.5px;
     display: inline-block;
-    background: url("/arr_rg_6.png") no-repeat right 2px;
+    background: url("/arr_rg_6.png") no-repeat right 4px;
     border: 0 none;
     width: auto;
     padding: 0 10px 0 0;
@@ -83,24 +86,27 @@ const MainInfo = styled.div`
       margin-left: 11px;
       margin-bottom: 11px;
     }
+    img{
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 4px;
+    }
   }
 
   .img_w_01 {
     width: 183px;
     height: 250px;
     float: left;
-    border: 1px solid black;
   }
   .img_w_02 {
     width: 286px;
     height: 250px;
     float: left;
-    border: 1px solid black;
   }
   .img_w_03 {
     width: 284px;
     height: 511px;
-    border: 1px solid black;
   }
   .fl_r {
     float: right !important;
@@ -110,7 +116,6 @@ const MainInfo = styled.div`
     height: 250px;
     float: left;
     position: relative;
-    border: 1px solid black;
   }
   .main_count_wrap.premiere {
     margin-top: 15px;
@@ -126,21 +131,20 @@ const MainInfo = styled.div`
     margin: 0;
     padding: 0;
     display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 40px;
+    text-align: center;
     li {
-      display: list-item;
-      text-align: -webkit-match-parent;
+      display: inline-block;
+    }
+    img{
+      width: 100%;
+      padding: 10px;
     }
   }
   .Link_event {
     display: block;
     overflow: hidden;
     border-radius: 4px;
-    width: 319px;
+    width: 312px;
     text-decoration: none;
     cursor: pointer;
   }
@@ -238,14 +242,14 @@ const Index = () => {
         <div className="main_specialCinema">
           <div className="sec_tit">스페셜관</div>
           <ul className="special_wrap">
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-            <li>6</li>
-            <li>7</li>
-            <li>8</li>
+            <li className="padding_li"><Link><img src="/cd746f8b4a544f33988d6810ba2934cd.png" alt="샤롯데바로가기" /></Link></li>
+            <li><Link><img src="/0df5043330d7485b8081dc2d1bebaa3a.png" alt="수퍼플렉스바로가기" /></Link></li>
+            <li><Link><img src="/cf8b080e65254806a2bd54aa4324920b.png" alt="수퍼s바로가기" /></Link></li>
+            <li><Link><img src="/1ea3eb09cb8e44d2b18f4f0a8fb6bbfa.png" alt="수퍼4Ds바로가기" /></Link></li>
+            <li><Link><img src="/74093cf4217c4e89a582a24d5cf9dee2.png" alt="컬러리움바로가기" /></Link></li>
+            <li><Link><img src="/c97b800479e04c899e4f0cd28a491f99.png" alt="씨네컴포트바로가기" /></Link></li>
+            <li><Link><img src="/85b66189642e4a78af74e2fb7da75d29.png" alt="씨네패밀리바로가기" /></Link></li>
+            <li><Link><img src="/615a9be3c6ae432888a9ca8631ede4d9.png" alt="씨네커플바로가기" /></Link></li>            
           </ul>
           <button className="btn_txt_more ty2">더보기</button>
         </div>
@@ -253,27 +257,31 @@ const Index = () => {
           <div className="sec_tit">이벤트</div>
           <div className="event_wrap">
             <ul className="img_1st_wrap">
-              <li className="img_w_01">a</li>
-              <li className="img_w_01">a</li>
-              <li className="img_w_02">a</li>
-              <li className="fl_r img_w_03">a</li>
-              <li className="img_w_04">a</li>
-              <li className="img_w_01">a</li>
+              <li className="img_w_01"><Link><img src="277d7ea99fb64ad0a24047ead3ace37c.jpg" alt="이벤트1" /></Link></li>
+              <li className="img_w_01"><Link><img src="e01356685a7e49b8a36cd7ed59b1aef5.jpg" alt="이벤트1-2" /></Link></li>
+              <li className="img_w_02"><Link><img src="92b7d192d8fc45dcae1f2cf595ebcaf1.jpg" alt="이벤트2" /></Link></li>
+              <li className="fl_r img_w_03">
+                <Link>
+                  <img src="Hyundaicard_296511.jpg" alt="이벤트3" />
+                </Link>
+                </li>
+              <li className="img_w_04"><Link><img src="36ba33ccb534428e925fd50eae8451a3.jpg" alt="이벤트4" /></Link></li>
+              <li className="img_w_01"><Link><img src="1715d8b499034616ad99a9e392da5766.jpg" alt="이벤트1-3" /></Link></li>
             </ul>
           </div>
           <button className="btn_txt_more ty2">더보기</button>
         </div>
         <div className="main_count_wrap premiere">
-          <div className="sec_tit">시사회/무대인사</div>
+          <div className="sec_tit">제휴/할인</div>
           <ul className="premiere_wrap">
             <li>
-              <Link className="Link_event">1</Link>
+              <Link className="Link_event"><img src="/6cb00ba68c85451794a5cfd5a2504887.jpg" alt="제휴/할인1" /></Link>
             </li>
             <li>
-              <Link className="Link_event">1</Link>
+              <Link className="Link_event"><img src="/4948d0472fae41af9436256a084e8b39.jpg" alt="제휴/할인2" /></Link>
             </li>
             <li>
-              <Link className="Link_event">1</Link>
+              <Link className="Link_event"><img src="/9c8196fa83894fbdb69201f9d4c8fcf1.jpg" alt="제휴/할인3" /></Link>
             </li>
           </ul>
           <button className="btn_txt_more ty2">더보기</button>

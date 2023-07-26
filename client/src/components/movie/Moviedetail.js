@@ -6,6 +6,7 @@ import MovieVideoModal from "./MovieVideoModal";
 import { MdOutlineWatchLater, MdOutlineArrowRight } from "react-icons/md";
 import StarRating from "./StarRating";
 import CommentActionButtons from "./CommentActionButtons";
+import { Link } from "../../../node_modules/react-router-dom/dist/index";
 
 const DetailContainer = styled.div`
   display: block;
@@ -224,6 +225,30 @@ const Title = styled.div`
     align-items: center;
     justify-content: center;
   }
+  .txt_Info {
+        padding: 74px 0 23px;
+    color: #000;
+    font-size: 19px;
+    text-align: center;
+  }
+  .btn_col2{
+    width: 380px;
+    height: 50px;
+    margin-bottom: 35px;
+    line-height: 50px;
+    padding: 0 24px;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid #414141;
+    font-size: 14px;
+    color: #ffffff !important;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #414141;
+  }
 `;
 
 const Star = styled.div``
@@ -381,6 +406,7 @@ const MovieDetail = ({
   ownPost,
   loading,
   selectBtn,
+  userId
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -470,7 +496,7 @@ const changeDate = (d) => {
           <button 
             onClick={(e) => handleShowReviews(e)}
             className={selectBtn === "평점 및 관람평" && 'active'}
-          >평점 및 관람평</button>
+          >평점 및 관람평({commentlist.length})</button>
         </Clickevent>
         {showInfo && (
           <div>
@@ -481,7 +507,7 @@ const changeDate = (d) => {
                   <Genre>
                     <p>장르:</p>
                     {genres &&
-                      genres.map((genre) => <p key={genre.id}>{genre.name}</p>)}
+                      genres.map((genre) => <p key={genre.id}>{genre.name}&nbsp;</p>)}
                   </Genre>
                   <Director>
                   <p>감독:</p>
@@ -526,6 +552,7 @@ const changeDate = (d) => {
         )}
         {showReviews && (
           <Reviews>
+            {ownPost(userId) ? ( 
             <div className="comment">
               <Title>
                 <div className="starInfo">
@@ -556,6 +583,14 @@ const changeDate = (d) => {
                 </InputBox>
               </Title>
             </div>
+            ) : ( 
+              <div className="comment">
+              <Title>
+                  <div className="txt_Info">영화 관람 후 관람평 작성 시 L.POINT 50P 적립</div>
+                  <Link to={"/login"}><button className="btn_col2">관람평 작성</button></Link>
+              </Title>
+            </div>
+            )}
             <Comment>
               <div className="Comment1">
                 <div className="CommentHeader">

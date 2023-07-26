@@ -1,24 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 import Responsive from "./Responsive";
 import Button from "./Button";
 import LogoImage from "../../public/Logo.png";
+import { useLocation } from "../../../node_modules/react-router-dom/dist/index";
 
 const HeaderBlock = styled.div`
-  position: fixed;
+  position: absolute;
   width: 100%;
   background: white;
-  z-index: 9999;
+  z-index: 9999;    
+
+  &.main{
+    z-index: 2;
+    width: 100%;
+    height: 194px;
+    border-bottom: none;
+    background: -moz-linear-gradient(
+    top,
+    rgba(29, 29, 31, 1) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  background: -webkit-linear-gradient(
+    top,
+    rgba(29, 29, 31, 1) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  background: linear-gradient(
+    to bottom,
+    rgba(29, 29, 31, 1) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+    color: #fff;
+
+    .logoWrap{
+      color: #656565;
+    }
+  }
+`;
+
+const NavWrap = styled.div`
+  display: block;
+  width: 100%;
+  &.fixed{
+    position: fixed;
+    top: 0;
+    background: #fff;
+    color: #000;
+  }
 `;
 
 const Wrapper = styled(Responsive)`
   position: relative;
   width: 520px;
-  height: 3rem;
+  height: 55px;
   display: flex;
   align-items: center;
   justify-content: center;
+  
   .logo {
     font-size: 1.125rem;
     font-weight: 800;
@@ -30,7 +70,7 @@ const Wrapper = styled(Responsive)`
   }
 
   a{
-    position: relative;
+    position: sticky;
     display: block;
     height: 40px;
     padding: 0 24px 20px;
@@ -42,7 +82,7 @@ const Wrapper = styled(Responsive)`
   .border{
     position: absolute;
     left: 0;
-    bottom: -4px;
+    bottom: 3px;
     height: 2px;
     background: #ff1744;
     transition: .3s ease;
@@ -110,8 +150,6 @@ const Wrapper = styled(Responsive)`
     left: 426.46px;
     opacity: 1;
   }
-
- 
 `;
 
 
@@ -144,6 +182,24 @@ const Spacing = styled.div`
 
 const Spacer = styled.div`
   height: 150px;
+
+  &.main{
+    background: -moz-linear-gradient(
+    top,
+    rgba(29, 29, 31, 1) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  background: -webkit-linear-gradient(
+    top,
+    rgba(29, 29, 31, 1) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  background: linear-gradient(
+    to bottom,
+    rgba(29, 29, 31, 1) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  }
 `;
 
 const UserInfo = styled.div`
@@ -157,10 +213,24 @@ const UserHi = styled.div`
 
 
 const Header = ({ user, onLogout }) => {
+  const [isScrolled, setIsScrolled] = useState(null);
+
+  const scroll = () => {
+    if(window.scrollY > 102){
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', scroll);
+  })
+  const location = useLocation();
   return (
     <>
-      <HeaderBlock>
-        <LogoWrapper>
+      <HeaderBlock className={location.pathname === '/' ? 'main' : ''}>
+        <LogoWrapper className="logoWrap">
           <div>
             <a href="#">페이스북</a>
             <a href="#">유튜브</a>
@@ -186,41 +256,43 @@ const Header = ({ user, onLogout }) => {
             </div>
           )}
         </LogoWrapper>
-        <Wrapper>
-          <NavLink
-            to="/ticket"
-          >
-            예매
-          </NavLink>
-          <NavLink
-            to="/currentmovie"
-          >
-            영화
-          </NavLink>
-          <NavLink
-            to="/cinema"
-          >
-            영화관
-          </NavLink>
-          <NavLink
-            to="/event"
-          >
-            이벤트
-          </NavLink>
-          <NavLink
-            to="/postlist"
-          >
-            게시판
-          </NavLink>
-          <NavLink
-            to="/meet"
-          >
-            모임
-          </NavLink>
-          <div className="border"/>
-        </Wrapper>
+        <NavWrap className={isScrolled === true ? 'fixed' : ''}>
+          <Wrapper>
+            <NavLink
+              to="/ticket"
+            >
+              예매
+            </NavLink>
+            <NavLink
+              to="/currentmovie"
+            >
+              영화
+            </NavLink>
+            <NavLink
+              to="/cinema"
+            >
+              영화관
+            </NavLink>
+            <NavLink
+              to="/event"
+            >
+              이벤트
+            </NavLink>
+            <NavLink
+              to="/postlist"
+            >
+              게시판
+            </NavLink>
+            <NavLink
+              to="/meet"
+            >
+              모임
+            </NavLink>
+            <div className="border"/>
+          </Wrapper>
+        </NavWrap>
       </HeaderBlock>
-      <Spacer />
+      <Spacer/>
     </>
   );
 };

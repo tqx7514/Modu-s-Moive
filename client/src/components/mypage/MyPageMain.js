@@ -6,7 +6,7 @@ import { listEvents } from "../../modules/eventlist";
 import { useEffect, useState } from "react";
 import MyPageBottomInfo from "./MyPageBottomInfo";
 
-const MyPageMain = ({ user, loading }) => {
+const MyPageMain = ({ user, loading, viewcinema }) => {
   const dispatch = useDispatch();
   const events = useSelector((state) => ({
     eventlist: state.eventlist.event || [],
@@ -39,6 +39,7 @@ const MyPageMain = ({ user, loading }) => {
         user={user}
         loading={loading}
         eventlist={events.eventlist}
+        viewcinema={viewcinema}
       />
       <MyPageBottomInfo />
     </MyPageMainBlock>

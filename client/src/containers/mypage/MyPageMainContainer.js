@@ -2,12 +2,15 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import MyPageMain from "../../components/mypage/MyPageMain";
+import { viewCinema } from "../../modules/cinema";
 
 const MyPageMainContainer = () => {
-  const { user, loading } = useSelector(({ user, loading }) => ({
+  const { user, loading, viewcinema } = useSelector(({ user, loading, cinema }) => ({
     user: user.user,
     loading: loading["event/LIST_EVENTS"],
+    viewcinema: cinema.viewcinema,
   }));
+  // console.log("viewcinema======>", viewcinema);
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -27,9 +30,13 @@ const MyPageMainContainer = () => {
     checkUser();
   }, [user]);
 
+  useEffect(() => {
+    dispatch(viewCinema());
+  }, [dispatch]);  
+
   console.log("user", user, "loading", loading);
 
-  return <MyPageMain user={user} loading={loading} />;
+  return <MyPageMain user={user} loading={loading} viewcinema={viewcinema}/>;
 };
 
 export default MyPageMainContainer;

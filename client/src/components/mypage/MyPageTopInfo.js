@@ -1,7 +1,21 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
+import React, {useState} from "react";
+import MyCinemaModal from "./MyCinemaModal";
 
-const MyPageTopInfo = ({ user, loading, eventlist }) => {
+const MyPageTopInfo = ({ user, loading, eventlist, viewcinema }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedAddrDetail, setSelectedAddrDetail] = useState("");
+
+  const openModal = (addr) => {
+    setIsOpen(true);
+    setSelectedAddrDetail(addr);
+  };
+
+  const oncloseModal = () => {
+    setIsOpen(false);
+  };
+
   if (!user || eventlist.length === 0) {
     console.log("loading", eventlist.length, !user);
     return <div>로딩중</div>;
@@ -42,9 +56,13 @@ const MyPageTopInfo = ({ user, loading, eventlist }) => {
           <img src="/setup.png" alt="" />
         </LeftInfoFirst>
         <LeftInfoSecond>
-          <div>d</div>
-          <div>d</div>
-          <div>d</div>
+          {viewcinema.map((mycinema) => (
+            <div>
+            <Link to={`/cinema?${mycinema.addr}`}>
+              {mycinema.addr}
+            </Link>
+              </div>            
+          ))}
         </LeftInfoSecond>
         <LeftInfoThird>
           {eventlist.length === 0 ? (
@@ -60,6 +78,7 @@ const MyPageTopInfo = ({ user, loading, eventlist }) => {
           )}
         </LeftInfoThird>
       </LeftInfo>
+      {isOpen && <MyCinemaModal oncloseModal={oncloseModal} addr={selectedAddrDetail}/>}
     </MyPageTopInfoBlock>
   );
 };
@@ -117,8 +136,7 @@ const RightTopSecond = styled.div`
       cursor: pointer;
       border: 1px solid #333333;
       color: #eed4a9 !important;
-      text-align: centimport { Link } from 'react-router-dom';
-er;
+      text-align: center;
       vertical-align: middle;
       background-color: #333333;
       font-weight: bold;

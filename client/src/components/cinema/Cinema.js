@@ -3,6 +3,8 @@ import MainCarousel from "../common/MainCarousel";
 import CinemaModal from "./CinemaModal";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { useLocation } from "../../../node_modules/react-router-dom/dist/index";
 
 const CinemaContent = styled.div`
   width: 980px;
@@ -54,8 +56,9 @@ const Title = styled.div`
   display: flex;
   padding: 50px 0 0 0;
   margin-bottom: 34px;
+  align-items: center;
 
-  .btn_col4 {
+  .btn_col4.ty3 {
     height: 28px;
     line-height: 26px;
     padding: 0 14px;
@@ -65,11 +68,31 @@ const Title = styled.div`
     border: 1px solid #dddddd;
     font-size: 14px;
     color: #000000 !important;
+    cursor: pointer;
   }
 
   h1,
   button {
     margin-right: 10px;
+  }
+  .ico_heart {
+    display: inline-block;
+    width: 16px;
+    height: 18px;
+    background: url("/heart_15_off.png") no-repeat 50% 0;
+    background-color: transparent;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+
+  .ico_hearts {
+    display: inline-block;
+    width: 16px;
+    height: 18px;
+    background: url("/heart_15_on.png") no-repeat 50% 0;
+    background-color: transparent;
+    vertical-align: middle;
+    margin-right: 5px;
   }
 `;
 const Total = styled.div`
@@ -89,7 +112,7 @@ const Detail = styled.div`
 
 const Ment = styled.div`
   display: flex;
-  h4{
+  h4 {
     margin-right: 20px;
   }
 `;
@@ -113,21 +136,30 @@ const ModalTag = styled.div`
     margin-right: 10px;
   }
 `;
-const Cinema = ({ cinema, region }) => {
+
+const Selected = styled.div`
+  font-weight: bold;
+  font-size: 1rem;
+`;
+const Cinema = ({ cinema, region, mycinema, onCreate }) => {
   const { currentmovielist } = useSelector((state) => ({
     currentmovielist: state.movielist.currentmovielist,
     upcominglist: state.movielist.upcominglist,
   }));
+
   const cinemacarousel = currentmovielist.currentmovielist;
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCinemas, setSelectedCinemas] = useState([]);
   const [selectedAddrDetail, setSelectedAddrDetail] = useState("");
   const [selectedCinema, setSelectedCinema] = useState(null);
+  const location = useLocation();
   const openModal = () => {
     setIsOpen(true);
   };
-
+  const decodeQueryString = (query) => {
+    return decodeURIComponent(query);
+  };
   const oncloseModal = () => {
     setIsOpen(false);
   };
@@ -136,13 +168,36 @@ const Cinema = ({ cinema, region }) => {
     const cinemasWithMatchingGrade = cinema.filter((m) => m.grade === grade);
     setSelectedCinemas(cinemasWithMatchingGrade);
   };
-  console.log("setSelectedCinemas=============>", selectedAddrDetail);
+  console.log(
+    "setSelectedCinemas=============>",
+    decodeQueryString(location.search).substring(1)
+  );
 
   const handleCinemaClick = (addrDetail, cinema) => {
     setSelectedAddrDetail(addrDetail);
     setSelectedCinema(cinema);
   };
 
+  const addr = mycinema.map((m) => (
+    m.addr
+  ));
+  console.log(addr);
+
+  useEffect(() => {
+    const cinemaQuery = decodeQueryString(location.search).substring(1);
+
+    if (cinemaQuery) {
+      const a = cinema.filter((m) => m.cinema === cinemaQuery);
+      console.log("aaaaaaaaaaaaaaaaa", a[0]);
+      const cinemas = cinema.filter((m) => m.grade === a[0].grade);
+
+      setSelectedAddrDetail(a[0].addr_detail);
+      setSelectedCinema(a[0].cinema);
+      setSelectedCinemas(cinemas);
+    }
+  }, []);
+
+  console.log("asdfasdf", selectedCinemas);
   return (
     <div>
       <MainCarousel currentmovielist={cinemacarousel} />
@@ -153,28 +208,56 @@ const Cinema = ({ cinema, region }) => {
           </div>
           <Addr>
             <ul>
-              {region&&region.map((r) => (
-                <li key={r.id} onClick={() => handleRegionClick(r.grade)}>
-                  {r.region}
-                </li>
-              ))}
+              {region &&
+                region.map((r) => (
+                  <li key={r.id} onClick={() => handleRegionClick(r.grade)}>
+                    {r.region}
+                  </li>
+                ))}
             </ul>
           </Addr>
           <AddrDetail>
             <ul>
-            {selectedCinemas.map((m) => (
-            <li key={m.id} onClick={() => handleCinemaClick(m.addr_detail, m.cinema)}>
-              {m.cinema}
-            </li>
-          ))}
+              {selectedCinemas.map((m) => (
+                <li
+                  key={m.id}
+                  onClick={() => handleCinemaClick(m.addr_detail, m.cinema)}
+                >
+                  <Link to={`/cinema?${m.cinema}`}>
+                    {selectedCinema === m.cinema ? (
+                      <Selected>{m.cinema}</Selected>
+                    ) : (
+                      <div>{m.cinema}</div>
+                    )}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </AddrDetail>
         </Menu>
-
+        {/* {location.} */}
         <Title>
-        {selectedCinema && <h1>{selectedCinema}</h1>}
-          <button className="btn_col4">MY 영화관</button>
-          <button>단체/대관문의</button>
+          {selectedCinema && <h1>{selectedCinema}</h1>}
+          {selectedCinema === addr ? (
+            <button
+            className="btn_col4 ty3"
+            onClick={() => onCreate(selectedCinema, selectedAddrDetail)}
+          >
+            <span className="ico_heart">
+            </span>
+            MY 영화관
+          </button>
+          ) : (
+            <button
+            className="btn_col4 ty3"
+            onClick={() => onCreate(selectedCinema, selectedAddrDetail)}
+          >
+            <span className="ico_hearts">
+            </span>
+            MY 영화관
+          </button>
+          )}
+          <button className="btn_col4 ty3">단체/대관문의</button>
         </Title>
         <Total>
           <p>총 상영관 수</p>
@@ -182,20 +265,18 @@ const Cinema = ({ cinema, region }) => {
           <p>총 좌석수</p>
           <p>1,243석</p>
         </Total>
-        <Detail>
-        {selectedAddrDetail && <h4>{selectedAddrDetail}</h4>}
-        </Detail>
+        <Detail>{selectedAddrDetail && <h4>{selectedAddrDetail}</h4>}</Detail>
         <Ment>
           <h4>공지사항</h4>
           <p> BTS PTD ON STAGE-SEOUL LIVE VIEWING 관련 추가 안내</p>
         </Ment>
         <ModalTag>
           <button>
-            <img src="location_subway_40.png" />
+            <img src="/location_subway_40.png" />
             <span>대중교통 안내</span>
           </button>
           <button>
-            <img src="location_car_40.png" />
+            <img src="/location_car_40.png" />
             <span>자가용/주차안내</span>
           </button>
           <button onClick={openModal}>
@@ -204,7 +285,9 @@ const Cinema = ({ cinema, region }) => {
           </button>
         </ModalTag>
       </CinemaContent>
-      {selectedAddrDetail && isOpen && <CinemaModal oncloseModal={oncloseModal} cinema={selectedAddrDetail}/>}
+      {selectedAddrDetail && isOpen && (
+        <CinemaModal oncloseModal={oncloseModal} cinema={selectedAddrDetail} />
+      )}
     </div>
   );
 };

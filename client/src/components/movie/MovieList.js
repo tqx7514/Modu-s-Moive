@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import Button from "../common/Button";
-import { MdStarRate, BsStopwatch } from "react-icons/md";
+import { MdStarRate } from "react-icons/md";
 import { Link } from "react-router-dom";
 import MainCarousel from "../common/MainCarousel";
 

@@ -58,7 +58,7 @@ exports.myInquiry = async (req, res) => {
     res.status(400);
     return;
   }
-  const limit = 1;
+  const limit = 10;
   const offset = (page - 1) * limit;
   console.log("id======", userId, "page=======", page);
   try {
@@ -73,6 +73,35 @@ exports.myInquiry = async (req, res) => {
     const inquiryDataArray = inquiryList.map((inquiry) => inquiry.dataValues);
     console.log("토탈페이지", totalPages);
     res.status(200).json({ inquiryDataArray, totalPages });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
+
+exports.writeInquiry = async (req, res) => {
+  const { userId, classify, title, body, answer } = req.body;
+  console.log(
+    "userId",
+    userId,
+    "classify",
+    classify,
+    "title",
+    title,
+    "body",
+    body,
+    "answer",
+    answer
+  );
+
+  try {
+    const inquiry = await inquirys.create({
+      userId,
+      classify,
+      title,
+      body,
+      answer,
+    });
+    res.json(inquiry);
   } catch (error) {
     res.status(500).json({ msg: error });
   }

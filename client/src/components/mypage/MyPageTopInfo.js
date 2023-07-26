@@ -121,8 +121,7 @@ const RightTopSecond = styled.div`
       cursor: pointer;
       border: 1px solid #333333;
       color: #eed4a9 !important;
-      text-align: centimport { Link } from 'react-router-dom';
-er;
+      text-align: center;
       vertical-align: middle;
       background-color: #333333;
       font-weight: bold;

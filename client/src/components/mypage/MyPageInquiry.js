@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { BsArrowReturnRight } from "react-icons/bs";
 import MyPageInquiryPagination from "./MyPageInquiryPagination";
+import Button from "../common/Button";
 
 const MyPageInquiryBlock = styled.div`
   > .loading {
@@ -82,6 +83,16 @@ const InquiryContent = styled.div`
     color: gray;
   }
 `;
+const InquiryBlock = styled.div`
+  border: ${(props) => (props.clicked ? "1px solid black" : "none")};
+  border-radius: 12px;
+`;
+
+const ButtonBlock = styled.div`
+  display: flex;
+  justify-content: end;
+  margin: 1rem 1rem 0 0;
+`;
 
 const MyPageInquiry = ({
   myInquiry,
@@ -92,12 +103,15 @@ const MyPageInquiry = ({
   handleNextPage,
   handlePreviousPage,
   currentPage,
+  onWriteClick,
 }) => {
+  const [clickedIndex, setClickedIndex] = useState(null);
+  const [expandedInquiry, setExpandedInquiry] = useState({});
+
   const formatCreatedAt = (date) => {
     const formattedDate = new Date(date);
     const today = new Date();
     let formattedCreatedAt = "";
-
     // 오늘 날짜인 경우
     if (
       formattedDate.getFullYear() === today.getFullYear() &&
@@ -116,21 +130,49 @@ const MyPageInquiry = ({
 
     return formattedCreatedAt;
   };
-
-  // 상태 추가: 확장된 게시글을 저장하기 위한 객체
-  const [expandedInquiry, setExpandedInquiry] = useState({});
+  const formattedBody = (body) => {
+    return body.replaceAll("\n", "<br />");
+  };
 
   // 게시글 확장/축소 토글 함수
   const toggleExpandedInquiry = (inquiryNum) => {
-    setExpandedInquiry((prevState) => ({
-      ...prevState,
-      [inquiryNum]: !prevState[inquiryNum],
-    }));
+    // If the clicked inquiry is already expanded, collapse it
+    if (expandedInquiry[inquiryNum]) {
+      setExpandedInquiry((prevState) => ({
+        ...prevState,
+        [inquiryNum]: !prevState[inquiryNum],
+      }));
+      setClickedIndex(null); // Reset the clickedIndex
+    } else {
+      // If a different inquiry is already expanded, collapse it first
+      const expandedInquiryNums = Object.keys(expandedInquiry).filter(
+        (key) => expandedInquiry[key]
+      );
+
+      if (expandedInquiryNums.length > 0) {
+        const currentlyExpanded = expandedInquiryNums[0];
+        setExpandedInquiry((prevState) => ({
+          ...prevState,
+          [currentlyExpanded]: false,
+          [inquiryNum]: true,
+        }));
+        setClickedIndex(inquiryNum); // Set the clickedIndex to the clicked inquiry
+      } else {
+        // If no inquiry is expanded, simply expand the clicked one
+        setExpandedInquiry((prevState) => ({
+          ...prevState,
+          [inquiryNum]: true,
+        }));
+        setClickedIndex(inquiryNum); // Set the clickedIndex to the clicked inquiry
+      }
+    }
   };
-  const state = (inquiry) => {
-    if (inquiry === "") {
+
+  const state = (a) => {
+    if (a === "") {
       return false;
     } else {
+      console.log("답변", a === "");
       return true;
     }
   };
@@ -143,6 +185,9 @@ const MyPageInquiry = ({
         </div>
       ) : (
         <>
+          <ButtonBlock>
+            <Button onClick={onWriteClick}>1:1 문의하기</Button>
+          </ButtonBlock>
           <InquiryHeaderBlock>
             <InquiryHeaderItem width="10%">번호</InquiryHeaderItem>
             <InquiryHeaderItem width="15%">아이디</InquiryHeaderItem>
@@ -162,8 +207,9 @@ const MyPageInquiry = ({
           ) : (
             <div>
               {myInquiry.map((inquiry, index) => (
-                <div
+                <InquiryBlock
                   key={index}
+                  clicked={clickedIndex === inquiry.inquiryNum}
                   onClick={() => toggleExpandedInquiry(inquiry.inquiryNum)}
                   style={{ cursor: "pointer" }}
                 >
@@ -176,10 +222,15 @@ const MyPageInquiry = ({
                     </InquiryHeaderItem>
                     <InquiryHeaderItem width="50%">
                       <div>
-                        {inquiry.title}
+                        <h3>{inquiry.title}</h3>
 
                         {expandedInquiry[inquiry.inquiryNum] && (
-                          <div className="body">{inquiry.body}</div>
+                          <div
+                            className="body"
+                            dangerouslySetInnerHTML={{
+                              __html: formattedBody(inquiry.body),
+                            }}
+                          />
                         )}
                       </div>
                     </InquiryHeaderItem>
@@ -210,7 +261,7 @@ const MyPageInquiry = ({
                       </AnswerBlock>
                     </AnswerContent>
                   )}
-                </div>
+                </InquiryBlock>
               ))}
             </div>
           )}
@@ -229,7 +280,8 @@ const MyPageInquiry = ({
 const AnswerContent = styled.div`
   display: flex;
   padding: 0.5rem 0 0.5rem 0;
-  background-color: lightgray;
+  background-color: lightgreen;
+  border-radius: 12px;
   &:hover {
     color: gray;
   }

@@ -18,3 +18,21 @@ export const myInquiry = ({ id, page }) => {
     params: { page },
   });
 };
+
+export const writeInquiry = ({ userId, classify, title, body, answer }) => {
+  console.log(
+    "writeInquiry API========",
+    userId,
+    classify,
+    title,
+    body,
+    answer
+  );
+  return client.post("/mypage/inquiryWrite", {
+    userId,
+    classify,
+    title,
+    body,
+    answer,
+  });
+};

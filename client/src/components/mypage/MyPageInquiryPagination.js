@@ -25,24 +25,23 @@ const MyPageInquiryPagination = ({
   handlePreviousPage,
 }) => {
   const [page, setPage] = useState(1);
-  useEffect(() => {
-    setPage(currentPage);
-  }, []);
   const onNextPage = () => {
-    pagination(page + 1);
-    setPage(page + 1);
+    pagination(currentPage + 1);
+    handleNextPage();
   };
   const onPreviousPage = () => {
-    pagination(page - 1);
-    setPage(page - 1);
+    pagination(currentPage - 1);
+    handlePreviousPage();
   };
+  console.log("page2", page);
+
   return (
     <PaginationBlock>
-      <Button disabled={page === 1} onClick={onPreviousPage}>
+      <Button disabled={currentPage === 1} onClick={onPreviousPage}>
         이전
       </Button>
-      <PageNumber>{page}</PageNumber>
-      <Button disabled={page === lastPage} onClick={onNextPage}>
+      <PageNumber>{currentPage}</PageNumber>
+      <Button disabled={currentPage === lastPage} onClick={onNextPage}>
         다음
       </Button>
     </PaginationBlock>

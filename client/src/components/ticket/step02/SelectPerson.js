@@ -129,7 +129,7 @@ const PersonBtn = styled.div`
 `;
 
 const SelectPerson = ({
-  number,
+  // number,
   adultNumber,
   teenagerNumber,
   seniorNumber,
@@ -137,16 +137,22 @@ const SelectPerson = ({
   onIncrease, 
   onDecrease,
 }) => {
+<<<<<<< HEAD
   const {data, movie} = useSelector(({stepfirst}) => stepfirst);
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
   const selectedMovie = movie.find((movieObj) => movieObj.movie_name === data.time.movie_name);  
+=======
+  const {data} = useSelector(({stepfirst}) => stepfirst);
+  const {person} = useSelector(({stepsecond}) => stepsecond);
+  console.log('123123123123123',person)
+>>>>>>> fbb1014 (123)
 
-  const handleIncrease = (key) => {
-    if (number >= 8) {
-      alert('인원은 최대 8명까지 선택 가능합니다.');
-    } else {
-      onIncrease(key);
-    }
+  const handleIncrease = () => {
+    // if (number >= 8) {
+    //   alert('인원은 최대 8명까지 선택 가능합니다.');
+    // } else {
+      onIncrease();
+    // }
   };
   const handleDecrease = (key,number)=>{
     if(number<=0){
@@ -199,6 +205,7 @@ const SelectPerson = ({
           </MovieSubInfo>
         </MovieInfo>
         <PersonNum>
+<<<<<<< HEAD
           <div className='personBtn'>
             <p>성인</p>
             <PersonBtn>
@@ -231,6 +238,18 @@ const SelectPerson = ({
               <button onClick={() => handleIncrease("disabled")}>+</button>
             </PersonBtn>
           </div>
+=======
+          {Object.keys(person).map((p) => (
+            <div key={p}>
+              {person[p].name}
+              <div>
+                <button>-</button>
+                {person[p].number}
+                <button onClick={() => handleIncrease(p)}>+</button>
+              </div>
+            </div>
+          ))}
+>>>>>>> fbb1014 (123)
         </PersonNum>
       </PersonSelect>
     </SelectPersonWrap>

@@ -6,7 +6,7 @@ import * as postsAPI from "../../lib/api/posts";
 import { takeLatest } from "redux-saga/effects";
 
 const [ADMINLIST_POSTS, ADMINLIST_POSTS_SUCCESS, ADMINLIST_POSTS_FAILURE] =
-  createRequestActionTypes("posts/ADMINLIST_POST");
+  createRequestActionTypes("adminposts/ADMINLIST_POST");
 
 export const AdminListPost = createAction(
   ADMINLIST_POSTS,

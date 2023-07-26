@@ -1,17 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
-import { MdStarRate, BsStopwatch } from "react-icons/md";
+import { MdStarRate, MdOutlineWatchLater } from "react-icons/md";
 import Button from "../common/Button";
 
 const Imgcarousel = styled.div`
   background-color: black;
   position: static;
-  margin-top: -18px;
+  margin-top: 624px;
   margin-bottom: 70px;
+
+  .movie_title {
+    color: white;
+    width: 970px;
+    margin: 0 auto;
+    justify-content: right;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 12px;
+  }
 `;
 const Pre = styled.div`
   width: 19px;
@@ -135,8 +147,8 @@ const MovielistCarousel = ({ currentmovielist }) => {
     slidesToShow: 5,
     slidesToScroll: 1,
     speed: 500,
-    autoplay: true,
-    autoplaySpeed: 30000,
+    autoplay: false,
+    autoplaySpeed: 5000,
     nextArrow: (
       <NextTo>
         <img src="/arr_rg_31_wht.png" />
@@ -151,6 +163,10 @@ const MovielistCarousel = ({ currentmovielist }) => {
 
   return (
     <Imgcarousel>
+      <div className="movie_title">
+        <MdOutlineWatchLater />
+        &nbsp;07.25 24:40기준
+      </div>
       <Slidera {...settings}>
         {Array.isArray(currentmovie) &&
           currentmovie.map((item) => (

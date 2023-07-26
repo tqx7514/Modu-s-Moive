@@ -110,7 +110,7 @@ const DetailContainer = () => {
   };
 
 const ownPost = (id) =>{
-  return (userId&&userId) === (id)
+  return userId&&userId === id;
 }
   return (
     <Moviedetail
@@ -130,6 +130,7 @@ const ownPost = (id) =>{
       ownPost={ownPost}
       loading={loading}
       selectBtn={selectBtn}
+      userId={userId}
     />
   );
 };

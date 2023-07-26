@@ -6,7 +6,7 @@ import { listEvents } from "../../modules/eventlist";
 import { useEffect, useState } from "react";
 import MyPageBottomInfo from "./MyPageBottomInfo";
 
-const MyPageMain = ({ user, loading }) => {
+const MyPageMain = ({ user, loading, viewcinema }) => {
   const dispatch = useDispatch();
   const events = useSelector((state) => ({
     eventlist: state.eventlist.event || [],
@@ -28,19 +28,27 @@ const MyPageMain = ({ user, loading }) => {
   const handleInfoClick = () => {
     setCategory("Info");
   };
-
   useEffect(() => {
     dispatch(listEvents());
   }, [dispatch]);
-  console.log("eventlist", events);
   return (
     <MyPageMainBlock>
       <MyPageTopInfo
         user={user}
         loading={loading}
         eventlist={events.eventlist}
+        viewcinema={viewcinema}
+        handleInfoClick={handleInfoClick}
+        category={category}
       />
-      <MyPageBottomInfo />
+      <MyPageBottomInfo
+        handleTicketClick={handleTicketClick}
+        handleBoardClick={handleBoardClick}
+        handleMeetClick={handleMeetClick}
+        handleInquiryClick={handleInquiryClick}
+        handleInfoClick={handleInfoClick}
+        category={category}
+      />
     </MyPageMainBlock>
   );
 };

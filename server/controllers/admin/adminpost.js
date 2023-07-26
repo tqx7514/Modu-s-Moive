@@ -24,3 +24,34 @@ exports.adminpostlist = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.adminpostread = async (req, res, next) => {
+  console.log("ssssssssssssfsdfsdf");
+  const postNum = req.params.postNum;
+  console.log("adminpostread", postNum);
+  const post = await posts.findOne({
+    where: { postNum },
+  });
+  console.log("adminpostread", post);
+  if (!post) {
+    res.status(404).json({ message: "게시글이 존재하지 않습니다" });
+  }
+  res.json({ post });
+};
+
+exports.adminpostdelete = async (req, res, next) => {
+  const postNum = req.params.postNum;
+  try {
+    const deletedRows = await posts.destroy({
+      where: { postNum },
+    });
+    if (deletedRows === 0) {
+      res.status(404).json({ message: "존재하지 않는 게시물입니다." });
+      return;
+    }
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json(error);
+    next(error);
+  }
+};

@@ -129,3 +129,72 @@ exports.checkDuplicate = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.withdraw = async (req, res) => {
+  const { id } = req.body;
+  console.log("백 id", id);
+  try {
+    const deletedRows = await users.destroy({
+      where: { id },
+    });
+    if (deletedRows === 0) {
+      res.status(404).json({ msg: "회원이 존재하지않습니다" });
+    }
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+exports.checkPW = async (req, res) => {
+  const { id, password } = req.body;
+  console.log("id,pw", id, password);
+  try {
+    const userInfo = await users.findOne({ where: { id } });
+    const hash = await bcrypt.compare(password, userInfo.password);
+    if (!hash) {
+      res.status(401).json("비밀번호가 틀렸습니다");
+    } else {
+      res.status(200).json(userInfo);
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+exports.updateInfo = async (req, res) => {
+  const { id, pw, email, tel, age, gender } = req.body;
+  console.log(
+    "id, pw, email, tel, age, gender",
+    id,
+    pw,
+    email,
+    tel,
+    age,
+    gender
+  );
+  console.log('pw === ""', pw === "");
+  try {
+    const updateData = {
+      email,
+      tel,
+      age,
+      gender,
+    };
+    if (pw !== "") {
+      const hash = await bcrypt.hash(pw, 12);
+      updateData.password = hash;
+    }
+
+    const [updatedRows] = await users.update(updateData, {
+      where: { id },
+    });
+
+    const updatedUser = await users.findOne({
+      where: { id },
+    });
+    res.json(updatedUser);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};

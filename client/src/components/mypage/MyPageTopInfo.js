@@ -1,12 +1,31 @@
+import React, { useState } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
+import MyCinemaModal from "./MyCinemaModal";
 
-const MyPageTopInfo = ({ user, loading, eventlist }) => {
+const MyPageTopInfo = ({
+  user,
+  loading,
+  eventlist,
+  handleInfoClick,
+  category,
+  viewcinema,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedAddrDetail, setSelectedAddrDetail] = useState("");
+
   if (!user || eventlist.length === 0) {
-    console.log("loading", eventlist.length, !user);
     return <div>로딩중</div>;
   }
-  console.log("loading2", eventlist.length, !user);
+
+  const openModal = (addr) => {
+    setIsOpen(true);
+    setSelectedAddrDetail(addr);
+  };
+
+  const oncloseModal = () => {
+    setIsOpen(false);
+  };
 
   const randomIndex = Math.floor(Math.random() * eventlist.length);
   const userGrade =
@@ -18,7 +37,7 @@ const MyPageTopInfo = ({ user, loading, eventlist }) => {
         <RightInfoTop>
           <RightTopFirst>
             <UserGrade>{userGrade}</UserGrade>
-            <UserEdit>
+            <UserEdit onClick={handleInfoClick}>
               <img src="/edit_15.png" alt="" />
               편집
             </UserEdit>
@@ -42,9 +61,12 @@ const MyPageTopInfo = ({ user, loading, eventlist }) => {
           <img src="/setup.png" alt="" />
         </LeftInfoFirst>
         <LeftInfoSecond>
-          <div>d</div>
-          <div>d</div>
-          <div>d</div>
+          {viewcinema &&
+            viewcinema.map((mycinema) => (
+              <div>
+                <Link to={`/cinema?${mycinema.addr}`}>{mycinema.addr}</Link>
+              </div>
+            ))}
         </LeftInfoSecond>
         <LeftInfoThird>
           {eventlist.length === 0 ? (
@@ -60,6 +82,9 @@ const MyPageTopInfo = ({ user, loading, eventlist }) => {
           )}
         </LeftInfoThird>
       </LeftInfo>
+      {isOpen && (
+        <MyCinemaModal oncloseModal={oncloseModal} addr={selectedAddrDetail} />
+      )}
     </MyPageTopInfoBlock>
   );
 };
@@ -117,8 +142,7 @@ const RightTopSecond = styled.div`
       cursor: pointer;
       border: 1px solid #333333;
       color: #eed4a9 !important;
-      text-align: centimport { Link } from 'react-router-dom';
-er;
+      text-align: center;
       vertical-align: middle;
       background-color: #333333;
       font-weight: bold;

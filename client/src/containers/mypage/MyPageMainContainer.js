@@ -2,12 +2,17 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import MyPageMain from "../../components/mypage/MyPageMain";
+import { viewCinema } from "../../modules/cinema";
 
 const MyPageMainContainer = () => {
-  const { user, loading } = useSelector(({ user, loading }) => ({
-    user: user.user,
-    loading: loading["event/LIST_EVENTS"],
-  }));
+  const { user, loading, viewcinema } = useSelector(
+    ({ user, loading, cinema }) => ({
+      user: user.user,
+      loading: loading["event/LIST_EVENTS"],
+      viewcinema: cinema.viewcinema,
+    })
+  );
+  // console.log("viewcinema======>", viewcinema);
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -15,11 +20,11 @@ const MyPageMainContainer = () => {
   useEffect(() => {
     const checkUser = async () => {
       if (!user) {
-        console.log("!user입니다");
+        // console.log("!user입니다");
         alert("로그인 하십시오");
         navigate("/");
       } else if (user.id && user.id !== id) {
-        console.log("다른아이디로옴", user.id, id);
+        // console.log("다른아이디로옴", user.id, id);
         alert("본인이 아닙니다");
         navigate(`/mypage/${user.id}`);
       }
@@ -27,9 +32,11 @@ const MyPageMainContainer = () => {
     checkUser();
   }, [user]);
 
-  console.log("user", user, "loading", loading);
+  useEffect(() => {
+    dispatch(viewCinema());
+  }, [dispatch]);
 
-  return <MyPageMain user={user} loading={loading} />;
+  return <MyPageMain user={user} loading={loading} viewcinema={viewcinema} />;
 };
 
 export default MyPageMainContainer;

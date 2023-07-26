@@ -13,7 +13,9 @@ const postRouter = require("./routes/post");
 const eventRouter = require("./routes/event");
 const currentMovie = require("./routes/currentmovie");
 const cinemaRouter = require("./routes/cinema");
-// const adminEventRouter = require("./routes/admin/adminevent");
+const mypageRouter = require("./routes/mypage");
+const adminEventRouter = require("./routes/admin/adminevent");
+const adminPostRouter = require("./routes/admin/adminpost");
 
 const axios = require("axios");
 const mysql = require("mysql2");
@@ -52,13 +54,15 @@ app.use(
 
 app.use("/auth", authRouter);
 app.use("/ticket", ticketRouter);
-
 app.use("/post", postRouter);
 app.use("/event", eventRouter);
 app.use("/currentmovie", currentMovie);
 app.use("/meet", meetRouter);
 app.use("/cinema", cinemaRouter);
-// app.use("/admin/event/", adminEventRouter);
+app.use("/mypage", mypageRouter);
+app.use("/admin/event/", adminEventRouter);
+//관리자페이지
+app.use("/admin/post", adminPostRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

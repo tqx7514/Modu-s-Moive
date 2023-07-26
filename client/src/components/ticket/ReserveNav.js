@@ -104,7 +104,7 @@ const ReserveNav = ({
   const seatContent = seat?.slice(0).join(", ");
   const formatPrice = totalPrice?.toLocaleString();
   const totalPriceNumber = parseInt(totalPrice, 10);
-  const formatTotalPrice = (totalPriceNumber - user.point).toLocaleString();
+  // const formatTotalPrice = (totalPriceNumber - user.point).toLocaleString();
   return (
     <NavReserveUl>
       <NavReserveLi
@@ -166,10 +166,10 @@ const ReserveNav = ({
         <NavReserveCont>
           <ul>
             <li>{totalPrice && `티켓금액 ${formatPrice}원`}</li>
-            <li>할인금액 {user.point}원</li>
+            {/* <li>할인금액 {user.point}원</li> */}
             <li>
               {
-                totalPrice && `총합계 ${formatTotalPrice}원`
+                // totalPrice && `총합계 ${formatTotalPrice}원`
                 // totalPrice와 user.point의 숫자를 뺀 결과를 출력
               }
             </li>

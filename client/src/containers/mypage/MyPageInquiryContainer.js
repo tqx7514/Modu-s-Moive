@@ -5,6 +5,7 @@ import {
   changeField,
   initialize,
   inquiryList,
+  inquiryUnload,
   inquiryWrite,
 } from "../../modules/mypage";
 import MyPageInquiryWrite from "../../components/mypage/MyPageInquiryWrite";
@@ -62,6 +63,10 @@ const MyPageInquiryContainer = () => {
   };
   useEffect(() => {
     dispatch(inquiryList({ id, page }));
+    return () => {
+      dispatch(inquiryUnload());
+      // 클린업함수!!
+    };
   }, [dispatch]);
 
   const pagination = async (page) => {

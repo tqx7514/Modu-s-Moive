@@ -28,6 +28,7 @@ import AdminPostPage from "./pages/admin/AdminPostPage";
 // import AdminEventPage from "./pages/admin/AdminEventPage";
 import AdminEventPage from "./pages/admin/AdminEventPage";
 import AdminEventWritePage from "./pages/admin/AdminEventWritePage";
+import AdminInquiryPage from "./pages/admin/AdminInquiryPage";
 
 const App = () => {
   return (
@@ -64,6 +65,7 @@ const App = () => {
       <Route path="/admin/event/write" element={<AdminEventWritePage />} />
       <Route path="/admin/postlist" element={<AdminPostListPage />} />
       <Route path="/adminpost/detail/:postNum" element={<AdminPostPage />} />
+      <Route path="/admin/inquiry" element={<AdminInquiryPage />} />
       {/* <Route path="/admin/event" element={<AdminEventPage />} />  */}
     </Routes>
   );

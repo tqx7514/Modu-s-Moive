@@ -1,6 +1,6 @@
 import { styled, css } from "styled-components";
 import palette from "../../lib/styles/palette";
-import { changeField } from "../../modules/auth";
+import { ToastContainer, toast } from "react-toastify";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import { initialize } from "../../modules/mypage";
@@ -13,6 +13,14 @@ const MyPageInquiryWrite = ({
   onPublish,
 }) => {
   const dispatch = useDispatch();
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8080,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
+
   const onChangeClassify = (e) => {
     changeField({ key: "classify", value: e.target.value });
   };
@@ -27,6 +35,17 @@ const MyPageInquiryWrite = ({
     changeField({ key: "classify", value: "영화/예매" });
   }, []);
 
+  const handleValidation = () => {
+    if (write.title.length < 1) {
+      toast.error("제목을 입력해주세요", toastOptions);
+      return false;
+    } else if (write.body.length < 1) {
+      toast.error("내용을 입력해주세요", toastOptions);
+      return false;
+    }
+    return true;
+  };
+
   const handleCancelClick = () => {
     Swal.fire({
       text: "정말로 문의작성을 취소하시겠습니까?",
@@ -39,6 +58,11 @@ const MyPageInquiryWrite = ({
         onCancelClick();
       },
     });
+  };
+  const handlePublishClick = () => {
+    if (handleValidation()) {
+      onPublish();
+    }
   };
 
   return (
@@ -81,8 +105,9 @@ const MyPageInquiryWrite = ({
       <hr />
       <ButtonBlock>
         <CustomButton2 onClick={handleCancelClick}>취소</CustomButton2>
-        <CustomButton onClick={onPublish}>확인</CustomButton>
+        <CustomButton onClick={handlePublishClick}>확인</CustomButton>
       </ButtonBlock>
+      <ToastContainer />
     </MyPageInquiryWriteBlock>
   );
 };

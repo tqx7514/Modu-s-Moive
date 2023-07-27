@@ -2,19 +2,41 @@ import React, { useCallback } from 'react'
 import SelectPay from '../../../components/ticket/step03/SelectPay'
 import ReserveNavContainer from '../ReserveNavContainer'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDiscount } from '../../../modules/stepsecond'
+import { getDiscount, pay } from '../../../modules/stepsecond'
 
 const SelectPayContainer = () => {
-  const {discount} = useSelector(({stepsecond}) => stepsecond);
+  const {
+    number, 
+    person,
+    seat,
+    totalPrice,
+    discount,
+  } = useSelector(({stepsecond}) => stepsecond);
+  console.log('asdfasdf',discount)
+const {data} = useSelector(({stepfirst}) => stepfirst);
+const {user} = useSelector(({user}) => user);
 
   const dispatch = useDispatch();
   const OnDiscount = useCallback((inputPoint) => {
     dispatch(getDiscount(inputPoint));
   }, [dispatch]);
+
+  const onReservation = useCallback(() => {
+    dispatch(pay({
+      data,
+      number,
+      person,
+      seat,
+      totalPrice,
+      discount,
+      user
+    }));
+  }, [dispatch]);
+
   return (
     <>
         <ReserveNavContainer/>
-        <SelectPay OnDiscount={OnDiscount}/>
+        <SelectPay OnDiscount={OnDiscount} onReservation={onReservation}/>
     </>
   )
 }

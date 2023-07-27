@@ -1,5 +1,5 @@
 const express = require("express");
-const { cinemas, regions, movies, movietimes } = require("../models");
+const { cinemas, regions, movies, movietimes, reservations } = require("../models");
 const { Op } = require("sequelize");
 const cron = require("node-cron");
 
@@ -103,5 +103,36 @@ router.get("/times", async (req, res) => {
     console.error(e);
   }
 });
+
+router.post("/pay", async (req, res) => {
+  const {
+    data, 
+    person,
+    seat,
+    totalPrice, 
+    discount, 
+    user
+  } = req.body;
+  console.log('adultttttttttttttttttttttt', discount);
+  const personString = person.toString();
+  const seatString = seat.toString();
+  try{
+    const reservation = await reservations.create({
+      user_id: user.id,
+      movie_name: data.time.movie_name,
+      cinema: data.cinema,
+      date: data.date,
+      start: data.time.start,
+      end: data.time.end,
+      person: personString,
+      seat: seatString,
+      price: totalPrice,
+      discount: discount,
+    });
+    res.status(200).json('데이터 저장 완료');
+  } catch(e){
+    console.error(e);
+  }
+})
 
 module.exports = router;

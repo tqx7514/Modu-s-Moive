@@ -1,19 +1,26 @@
 import { createAction, handleActions } from "redux-actions";
+import createRequestSaga, { createRequestActionTypes } from "../lib/createRequestSaga";
+import * as payAPI from "../lib/api/ticket";
+import { takeLatest } from "redux-saga/effects";
+
 
 // 액션 타입--------------------------------------------------------
 
 const INCREASE = "stepsecond/INCREASE";
 const DECREASE = "stepsecond/DECREASE";
+const SET_PERSON = "stepsecond/SET_PERSON";
 const SET_SELECTED_SEAT = "stepsecond/SET_SELECTED_SEAT";
 const RESET_SEAT = "stepsecond/RESET_SEAT";
 const RESET_NUMBER = "stepsecond/RESET_NUMBER";
 const GET_TOTAL_PRICE = "stepsecond/GET_TOTAL_PRICE";
 const GET_DISCOUNT = "stepsecond/GET_DISCOUNT";
+const [PAY, PAY_SUCCESS, PAY_FAILURE] = createRequestActionTypes("stepsecond/PAY_SUCCESS");
 
 // 액션 생성--------------------------------------------------------
 
 export const increase = createAction(INCREASE, (key) => key);
 export const decrease = createAction(DECREASE, (key) => key);
+export const setPerson = createAction(SET_PERSON);
 export const setSelectedSeat = createAction(SET_SELECTED_SEAT);
 export const resetSeat = createAction(RESET_SEAT);
 export const resetNumber = createAction(RESET_NUMBER);
@@ -22,8 +29,18 @@ export const getTotalPrice = createAction(
   (totalPrice) => totalPrice
 );
 export const getDiscount = createAction(GET_DISCOUNT);
+export const pay = createAction(PAY, ({
+  data, number, person, seat, totalPrice, discount, user
+}) => ({
+  data, number, person, seat,totalPrice, discount, user
+}));
 
 // 사가 함수--------------------------------------------------------
+
+export const paySaga = createRequestSaga(PAY, payAPI.pay);
+export function* paymentSaga() {
+  yield takeLatest(PAY, paySaga);
+}
 
 // 초기 값--------------------------------------------------------
 
@@ -49,9 +66,11 @@ const initialState = {
     number: 0,
     price: 5000,
   },
+  person: null,
   seat: null,
   totalPrice: 0,
   discount: 0,
+
 };
 
 // 핸들 액션------------------------------------------------------
@@ -76,6 +95,13 @@ const stepsecond = handleActions(
         ...state[key],
         number: state[key].number > 0 ? state[key].number - 1 : 0,
       },
+    }),
+
+    // ----------------------------------------------------
+
+    [SET_PERSON]: (state, {payload: person}) => ({
+      ...state,
+      person,
     }),
 
     // ----------------------------------------------------
@@ -108,6 +134,16 @@ const stepsecond = handleActions(
     [GET_DISCOUNT]: (state, { payload: discount }) => ({
       ...state,
       discount: discount,
+    }),
+
+    // ----------------------------------------------------
+    
+    [PAY_SUCCESS]: (state,) => ({
+      ...state,
+    }),
+    [PAY_FAILURE]: (state, error) => ({
+      ...state,
+      error: error.payload,
     }),
 
     // ----------------------------------------------------

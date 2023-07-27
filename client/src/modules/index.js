@@ -20,7 +20,7 @@ import stepfirst, {
   movieReadSaga,
   timeSaga,
 } from "./stepfirst";
-import stepsecond from "./stepsecond";
+import stepsecond, {paymentSaga} from "./stepsecond";
 import meetwrite, { meetWriteSaga } from "./meetwrite";
 import meet, { meetSaga } from "./meet";
 import meetlist, { meetsSaga } from "./meetlist";
@@ -89,6 +89,7 @@ export function* rootSaga() {
     // readEventSaga(),
     adminEventListSaga(),
     eventWriteSaga(),
+    paymentSaga(),
   ]);
 }
 

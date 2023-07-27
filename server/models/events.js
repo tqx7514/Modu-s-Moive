@@ -27,17 +27,9 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    grade: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
     categoryId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'eventcategory',
-        key: 'categoryId'
-      }
+      type: DataTypes.STRING(10),
+      allowNull: false
     },
     view: {
       type: DataTypes.INTEGER,
@@ -62,13 +54,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "eventNum" },
-        ]
-      },
-      {
-        name: "events_ibfk_1",
-        using: "BTREE",
-        fields: [
-          { name: "categoryId" },
         ]
       },
       {

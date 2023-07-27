@@ -102,6 +102,12 @@ const AdminHeader = ({ user, onLogout }) => {
         </LogoWrapper>
         <Wrapper>
           <NavLink
+            to="/admin/user"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
+            유저 관리
+          </NavLink>
+          <NavLink
             to="/admin/currentmovie"
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >

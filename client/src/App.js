@@ -66,7 +66,7 @@ const App = () => {
       <Route path="/admin/event/write" element={<AdminEventWritePage />} />
       <Route path="/admin/postlist" element={<AdminPostListPage />} />
       <Route path="/adminpost/detail/:postNum" element={<AdminPostPage />} />
-      {/* <Route path="/admin/event" element={<AdminEventPage />} />  */}
+      <Route path="/admin/event" element={<AdminEventPage />} /> 
     </Routes>
   );
 };

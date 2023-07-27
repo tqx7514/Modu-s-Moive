@@ -5,95 +5,6 @@ import { BsArrowReturnRight } from "react-icons/bs";
 import MyPageInquiryPagination from "./MyPageInquiryPagination";
 import Button from "../common/Button";
 
-const MyPageInquiryBlock = styled.div`
-  > .loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 5rem;
-  }
-  > .message {
-    text-align: center;
-    margin-top: 1rem;
-    font-size: 1.5rem;
-  }
-`;
-
-const InquiryHeaderBlock = styled.div`
-  margin: 2rem 0 0 0;
-  padding: 1rem 0 1rem 0;
-  border-top: 1px solid lightgray;
-  border-bottom: 1px solid lightgray;
-  display: flex;
-`;
-const InquiryHeaderItem = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  ${({ width }) => width && `flex-basis: ${width};`}
-
-  > h4 {
-    margin-right: 2rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    ${({ wrapText }) =>
-      wrapText &&
-      css`
-        word-wrap: break-word;
-      `}
-  }
-
-  > div > .body {
-    margin-top: 1rem;
-  }
-
-  > .done {
-    border: 1px solid black;
-    border-radius: 52px;
-    width: 76px;
-    height: 33px;
-    font-size: 13px;
-    text-align: center;
-    line-height: 31px;
-    background-color: lightgreen;
-    font-weight: bold;
-    /* color: white; */
-  }
-  > .undone {
-    border: 1px solid black;
-    border-radius: 52px;
-    width: 76px;
-    height: 33px;
-    font-size: 13px;
-    text-align: center;
-    line-height: 31px;
-    background-color: lightpink;
-    font-weight: bold;
-    /* color: white; */
-  }
-`;
-
-const InquiryContent = styled.div`
-  display: flex;
-  padding: 0.5rem 0 0.5rem 0;
-
-  &:hover {
-    color: gray;
-  }
-`;
-const InquiryBlock = styled.div`
-  border: ${(props) => (props.clicked ? "1px solid black" : "none")};
-  border-radius: 12px;
-`;
-
-const ButtonBlock = styled.div`
-  display: flex;
-  justify-content: end;
-  margin: 1rem 1rem 0 0;
-`;
-
 const MyPageInquiry = ({
   myInquiry,
   user,
@@ -277,6 +188,96 @@ const MyPageInquiry = ({
     </MyPageInquiryBlock>
   );
 };
+
+const MyPageInquiryBlock = styled.div`
+  > .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5rem;
+  }
+  > .message {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+  }
+`;
+
+const InquiryHeaderBlock = styled.div`
+  margin: 2rem 0 0 0;
+  padding: 1rem 0 1rem 0;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  display: flex;
+`;
+const InquiryHeaderItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  ${({ width }) => width && `flex-basis: ${width};`}
+
+  > h4 {
+    margin-right: 2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    ${({ wrapText }) =>
+      wrapText &&
+      css`
+        word-wrap: break-word;
+      `}
+  }
+
+  > div > .body {
+    margin-top: 1rem;
+  }
+
+  > .done {
+    border: 1px solid black;
+    border-radius: 52px;
+    width: 76px;
+    height: 33px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 31px;
+    background-color: lightgreen;
+    font-weight: bold;
+    /* color: white; */
+  }
+  > .undone {
+    border: 1px solid black;
+    border-radius: 52px;
+    width: 76px;
+    height: 33px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 31px;
+    background-color: lightpink;
+    font-weight: bold;
+    /* color: white; */
+  }
+`;
+
+const InquiryContent = styled.div`
+  display: flex;
+  padding: 0.5rem 0 0.5rem 0;
+
+  &:hover {
+    color: gray;
+  }
+`;
+const InquiryBlock = styled.div`
+  border: ${(props) => (props.clicked ? "1px solid black" : "none")};
+  border-radius: 12px;
+`;
+
+const ButtonBlock = styled.div`
+  display: flex;
+  justify-content: end;
+  margin: 1rem 1rem 0 0;
+`;
+
 const AnswerContent = styled.div`
   display: flex;
   padding: 0.5rem 0 0.5rem 0;

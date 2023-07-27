@@ -15,7 +15,7 @@ const [
 export const initialize = createAction(INITIALIZE);
 export const adminInquiryList = createAction(
   ADMIN_INQUIRY_LIST,
-  (page) => page
+  ({ page, category }) => ({ page, category })
 );
 
 const adminInquiryListSaga = createRequestSaga(
@@ -30,16 +30,21 @@ export function* admininquirySaga() {
 const initialState = {
   inquiry: null,
   count: 0,
+  lastPage: 1,
   error: null,
 };
 
 const admininquiry = handleActions(
   {
     [INITIALIZE]: () => initialState,
-    [ADMIN_INQUIRY_LIST_SUCCESS]: (state, { payload: { inquiry, count } }) => ({
+    [ADMIN_INQUIRY_LIST_SUCCESS]: (
+      state,
+      { payload: { inquiry, count, lastPage } }
+    ) => ({
       ...state,
       inquiry,
       count,
+      lastPage,
       error: null,
     }),
     [ADMIN_INQUIRY_LIST_FAILURE]: (state, { payload: error }) => ({

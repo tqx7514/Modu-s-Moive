@@ -248,6 +248,8 @@ const CategoryBlock = styled.div`
 `;
 
 const AdminInquiryBlock = styled(Responsive)`
+  background-color: gray;
+  flex: 1;
   > .end {
     border-top: 1px solid lightgray;
     margin: 0.2rem 0 1rem 0;

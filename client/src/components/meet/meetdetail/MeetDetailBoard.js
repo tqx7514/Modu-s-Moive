@@ -178,6 +178,7 @@ const MeetBoardItem = ({
   onRemoveComment,
   onEditBoard,
   onEditComment,
+  isAdmin,
 }) => {
   const { meetboardNum, meet_Num, user_Id, body, grade, createdAt, updatedAt } =
     meetBoard;
@@ -270,7 +271,7 @@ const MeetBoardItem = ({
       {expandedId === meetboardNum && (
         <>
           <ModalBlock>
-            {ownPost(user_Id) && (
+            {(ownPost(user_Id) || isAdmin) && (
               <MeetDetailActionButtons
                 onEdit={onEditBoard}
                 onRemove={onRemoveBoard}
@@ -307,7 +308,7 @@ const MeetBoardItem = ({
                       {formattedCommentCreatedAt}
                     </CommentDetaillist>
                     <CommentDetaillist>
-                      {ownPost(comment.user_Id) && (
+                      {(ownPost(comment.user_Id) || isAdmin) && (
                         <MeetDetailActionButtons
                           onRemove={onRemoveComment}
                           type="댓글"
@@ -361,6 +362,7 @@ const MeetDetailBoard = ({
   onSubmitComment,
   onEditBoard,
   onEditComment,
+  isAdmin,
 }) => {
   return (
     <MeetBoardBlock>
@@ -399,6 +401,7 @@ const MeetDetailBoard = ({
                 onRemoveComment={onRemoveComment}
                 onEditBoard={onEditBoard}
                 onEditComment={onEditComment}
+                isAdmin={isAdmin}
               />
             ))}
           </MeetBoardListItem>

@@ -12,7 +12,7 @@ const MeetViewerBlock = styled(Responsive)`
   > hr {
     /* margin-bottom: 1rem; */
     border: none;
-    border-top: 1px solid lightslategray; /* 연한 회색으로 변경 */
+    border-top: 1px solid lightslategray;
   }
 `;
 const MeetHeaderBlock = styled.div`
@@ -85,6 +85,8 @@ const MeetViewer = ({
   actionButtons,
   joinButton,
   ownMeet,
+  isJoined,
+  isAdmin,
 }) => {
   const [category, setCategory] = useState("Home");
   const handleHomeClick = () => {
@@ -114,9 +116,7 @@ const MeetViewer = ({
 
   return (
     <MeetViewerBlock>
-      <MeetHeaderBlock>
-        <h2>모임</h2>
-      </MeetHeaderBlock>
+      <MeetHeaderBlock>{!isAdmin && <h2>모임</h2>}</MeetHeaderBlock>
       <hr />
       <MeetTitle>
         <div>
@@ -141,12 +141,15 @@ const MeetViewer = ({
         >
           게시판
         </div>
-        <div
-          style={category === "Chat" ? activeStyle : undefined}
-          onClick={handleChatClick}
-        >
-          채팅
-        </div>
+        {isJoined && (
+          <div
+            style={category === "Chat" ? activeStyle : undefined}
+            onClick={handleChatClick}
+          >
+            채팅
+          </div>
+        )}
+
         {ownMeet && (
           <div
             style={category === "Manage" ? activeStyle : undefined}
@@ -160,7 +163,7 @@ const MeetViewer = ({
       {category === "Home" && (
         <MeetDetailHome meet={meet} joinButton={joinButton} />
       )}
-      {category === "Board" && <MeetDetailBoardContainer />}
+      {category === "Board" && <MeetDetailBoardContainer isAdmin={isAdmin} />}
       {category === "Chat" && <MeetDetailChatContainer />}
       {category === "Manage" && <MeetDetailManageContainer />}
     </MeetViewerBlock>

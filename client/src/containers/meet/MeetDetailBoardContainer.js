@@ -21,7 +21,7 @@ import {
 } from "../../modules/meetcomment";
 import Swal from "sweetalert2";
 
-const MeetDetailBoardContainer = () => {
+const MeetDetailBoardContainer = ({ isAdmin }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -217,6 +217,7 @@ const MeetDetailBoardContainer = () => {
         onRemoveComment={onRemoveComment}
         onEditBoard={onEditBoard}
         onEditComment={onEditComment}
+        isAdmin={isAdmin}
       />
     </div>
   );

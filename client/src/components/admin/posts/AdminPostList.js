@@ -3,16 +3,18 @@ import palette from "../../../lib/styles/palette";
 import SubInfo from "../../common/SubInfo";
 import { Link } from "../../../../node_modules/react-router-dom/dist/index";
 import Responsive from "../../common/Responsive";
+import AdminTitle from "../../common/admin/AdminTitle";
 
 const AdminPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh; /* 화면 전체 높이를 차지하도록 설정 */
+  background: gray;
+  flex: 1;
+  min-height: 130vh;
 `;
 
-const AdminBody = styled.div`
+const AdminBody = styled(Responsive)`
   flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
-  background: gray;
 `;
 
 const AdminPostItemBlock = styled.div`
@@ -109,6 +111,12 @@ const AdminPostList = ({ posts, loading, error }) => {
   return (
     <AdminPageWrapper>
       <AdminBody>
+        <HeaderBlock>
+          <AdminTitle title="게시판관리" />
+          <div className="count">
+            게시글 총 <span>{posts.length}</span>개
+          </div>
+        </HeaderBlock>
         <AdminPostListBlock>
           {!loading && posts && (
             <div>
@@ -122,5 +130,20 @@ const AdminPostList = ({ posts, loading, error }) => {
     </AdminPageWrapper>
   );
 };
+
+const HeaderBlock = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 3rem 2rem 1rem 2rem;
+  border-bottom: 2px solid black;
+  align-items: center;
+  > div {
+    font-size: 1.4rem;
+    font-weight: bold;
+    > span {
+      color: #ee1c25;
+    }
+  }
+`;
 
 export default AdminPostList;

@@ -63,23 +63,19 @@ exports.meetlist = async (req, res) => {
   }
   const { tag, region } = req.query;
   const where = {};
-
   if (region) {
     where.region = region;
   }
-
   if (tag) {
     where.tags = {
       [Op.like]: `%${tag}%`,
     };
   }
-
-  console.log("where입니다", where);
-
+  // console.log("where입니다", where);
   const limit = 12;
   const offset = (page - 1) * limit;
   try {
-    console.log("page입니다", page);
+    // console.log("page입니다", page);
     const meet = await meets.findAll({
       nest: true,
       where,
@@ -87,7 +83,9 @@ exports.meetlist = async (req, res) => {
       limit,
       offset,
     });
-
+    const count = await meets.count({
+      where,
+    });
     const totalCount = await meets.count({ where }); // 총 항목 수 계산
     const totalPages = totalCount ? Math.ceil(totalCount / limit) : 1; // 총 페이지 수 계산
     const region = await regions.findAll({
@@ -104,6 +102,7 @@ exports.meetlist = async (req, res) => {
       meet,
       totalPages,
       regionArray,
+      count,
     });
   } catch (error) {
     res.status(500).json(error);

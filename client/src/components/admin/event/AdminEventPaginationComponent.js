@@ -11,7 +11,10 @@ const EventPaginationBlock = styled.div`
   margin-bottom: 3rem;
 `;
 
-const EventPageNumber = styled.div``;
+const EventPageBlock = styled.div`
+  display: block;
+  font-size: 2rem;
+`;
 
 const buildLink = ({ page }) => {
   const query = qs.stringify({ page });
@@ -19,6 +22,32 @@ const buildLink = ({ page }) => {
 };
 
 const AdminEventPaginationComponent = ({ page, lastPage, userId }) => {
+  const totalEventPages = lastPage;
+  const showEventPages = 10;
+
+  const getDisplayedEventPages = () => {
+    if (totalEventPages <= showEventPages) {
+      return Array.from({ length: totalEventPages }, (_, index) => index + 1);
+    }
+    const halfShowEventPages = Math.floor(showEventPages / 2);
+    let startEventPage = page - halfShowEventPages;
+    let endEventPage = page + halfShowEventPages;
+
+    if (startEventPage < 1) {
+      startEventPage = 1;
+      endEventPage = showEventPages;
+    }
+    if (endEventPage > totalEventPages) {
+      endEventPage = totalEventPages;
+      startEventPage = totalEventPages - showEventPages + 1;
+    }
+    return Array.from(
+      { length: endEventPage - startEventPage + 1 },
+      (_, index) => startEventPage + index
+    );
+  };
+  const displayedEventPages = getDisplayedEventPages();
+
   return (
     <EventPaginationBlock>
       <Button
@@ -27,7 +56,16 @@ const AdminEventPaginationComponent = ({ page, lastPage, userId }) => {
       >
         이전
       </Button>
-      <EventPageNumber>{page}</EventPageNumber>
+      {displayedEventPages.map((eventPageNum) => (
+        <EventPageBlock key={eventPageNum}>
+          <Button
+            to={buildLink({ userId, page: eventPageNum })}
+            disabled={page === eventPageNum}
+          >
+            {eventPageNum}
+          </Button>
+        </EventPageBlock>
+      ))}
       <Button
         disabled={page === lastPage}
         to={

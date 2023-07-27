@@ -19,7 +19,7 @@ export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   value,
 }));
 
-export const writeAdminEvent = createAction(
+export const writeEvent = createAction(
   WRITE_EVENT,
   ({
     eventNum,
@@ -47,7 +47,7 @@ export const setOriginalEvent = createAction(
   (adminevent) => adminevent
 );
 
-export const updateAdminEvent = createAction(
+export const updateEvent = createAction(
   UPDATE_EVENT,
   ({
     eventNum,
@@ -109,7 +109,7 @@ const admineventwrite = handleActions(
     }),
     [WRITE_EVENT_SUCCESS]: (state, { payload: adminevent }) => ({
       ...state,
-      adminevent,
+      adminevent: adminevent.newAdminEventWrite,
     }),
     [WRITE_EVENT_FAILURE]: (state, { payload: error }) => ({
       ...state,
@@ -123,7 +123,7 @@ const admineventwrite = handleActions(
       eventImg: adminevent.eventImg,
       startEventDate: adminevent.startEventDate,
       endEventDate: adminevent.endEventDate,
-      originalEventNum: adminevent.originalEventNum,
+      originalEventNum: adminevent.eventNum,
     }),
     [UPDATE_EVENT_SUCCESS]: (state, { payload: adminevent }) => ({
       ...state,

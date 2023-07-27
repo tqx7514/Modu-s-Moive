@@ -1,8 +1,6 @@
-const { Op } = require("sequelize");
-const { events, users } = require("../../models");
+const { events } = require("../../models");
 
 exports.adminEventWrite = async (req, res, next) => {
-  console.log("newAdminEventWrite===========================",adminEventWrite);
   const {
     categoryId,
     userId,
@@ -12,6 +10,14 @@ exports.adminEventWrite = async (req, res, next) => {
     startEventDate,
     endEventDate,
   } = req.body;
+
+  console.log("categoryId", categoryId);
+  console.log("userId", userId);
+  console.log("eventTitle", eventTitle);
+  console.log("eventContent", eventContent);
+  console.log("eventImg", eventImg);
+  console.log("startEventDate", startEventDate);
+  console.log("endEventDate", endEventDate);
 
   if (!categoryId || !eventTitle || !eventContent || !eventImg || !startEventDate || !endEventDate) {
     res.status(400).json({ message: "제목과 내용들을 입력해주세요." });
@@ -39,18 +45,17 @@ exports.adminEventWrite = async (req, res, next) => {
 
 exports.adminEventRead = async (req, res, next) => {
   const eventNum = req.params.eventNum;
-  const event = await events.findOne({
+  const adminevent = await events.findOne({
     where: { eventNum },
   });
-  if (!event) {
+  if (!adminevent) {
     res.status(404).json({ message: "게시글이 존재하지 않습니다." });
   }
-  res.json(event);
-  console.log("adminEventRead", event);
+  res.json(adminevent);
+  console.log("adminEventRead", adminevent);
 };
 
 exports.adminEventList = async (req, res) => {
-  // console.log("adminEventList페이지 백 page====", req.query.page);
   const page = parseInt(req.query.page || "1", 10);
   if (page < 1) {
     res.status(400);

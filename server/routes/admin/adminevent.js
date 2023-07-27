@@ -1,7 +1,7 @@
 const express = require("express");
 const {
   adminEventList,
-  // adminEventRead,
+  adminEventRead,
   adminEventWrite,
   adminEventUpdate,
   adminEventDelete,
@@ -13,7 +13,7 @@ const router = express.Router();
 
 //   /admin 생략해도 됨
 router.get("/list", adminEventList);
-// router.get("/:eventNum", adminEventRead);
+router.get("/:eventNum", adminEventRead);
 router.post("/write", adminEventWrite);
 router.delete("/:eventNum", adminEventDelete);
 router.patch("/:eventNum", adminEventUpdate);

@@ -84,7 +84,7 @@ const AdminEventListComponent = ({
   error,
   showWriteButton,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState(4);
+  const [selectedCategory, setSelectedCategory] = useState("전체");
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -108,7 +108,7 @@ const AdminEventListComponent = ({
             value={selectedCategory}
             onChange={(e) => handleCategorySelect(e.target.value)}
           >
-            <option value="4">전체</option>
+            <option value="전체">전체</option>
             <option value="영화">영화</option>
             <option value="제휴할인">제휴/할인</option>
             <option value="기타">기타</option>

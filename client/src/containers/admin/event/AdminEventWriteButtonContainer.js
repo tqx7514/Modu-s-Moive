@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  updateAdminEvent,
-  writeAdminEvent,
-} from "../../../modules/admin/admineventwrite";
+
 import AdminEventWriteButtonComponent from "../../../components/admin/event/AdminEventWriteButtonComponent";
+import { updateEvent, writeEvent } from "../../../modules/admin/admineventwrite";
 
 const AdminEventWriteButtonContainer = () => {
   const navigate = useNavigate();
@@ -21,7 +19,7 @@ const AdminEventWriteButtonContainer = () => {
     error,
     userId,
     originalEventNum,
-  } = useSelector(({ admineventwrite }) => ({
+  } = useSelector(({ admineventwrite, user }) => ({
     categoryId: admineventwrite.categoryId,
     eventTitle: admineventwrite.eventTitle,
     eventContent: admineventwrite.eventContent,
@@ -30,14 +28,13 @@ const AdminEventWriteButtonContainer = () => {
     endEventDate: admineventwrite.endEventDate,
     adminevent: admineventwrite.adminevent,
     error: admineventwrite.error,
-    userId: admineventwrite.userId,
+    userId: user.user && user.user.id,
     originalEventNum: admineventwrite.originalEventNum,
   }));
-
   const onPublish = () => {
     if (originalEventNum) {
       dispatch(
-        updateAdminEvent({
+        updateEvent({
           eventNum: originalEventNum,
           categoryId,
           eventTitle,
@@ -50,7 +47,7 @@ const AdminEventWriteButtonContainer = () => {
       return;
     } else {
       dispatch(
-        writeAdminEvent({
+        writeEvent({
           categoryId,
           eventTitle,
           eventContent,

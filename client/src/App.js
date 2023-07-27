@@ -30,6 +30,8 @@ import AdminEventPage from "./pages/admin/AdminEventPage";
 import AdminEventWritePage from "./pages/admin/AdminEventWritePage";
 import PayComplete from "./pages/PayComplete";
 import AdminInquiryPage from "./pages/admin/AdminInquiryPage";
+import AdminMeetPage from "./pages/admin/AdminMeetPage";
+import AdminUserPage from "./pages/admin/AdminUserPage";
 
 const App = () => {
   return (
@@ -62,6 +64,7 @@ const App = () => {
       <Route path="/event/other/:eventNum" element={<EventViewerPage />} />
       {/* 관리자페이지 */}
       <Route path="/admin" element={<AdminPage />} />
+      <Route path="/admin/user" element={<AdminUserPage />} />
       <Route path="/admin/currentmovie" element={<AdminCurrentMoviePage />} />
       <Route path="/admin/event" element={<AdminEventPage />} />
       <Route path="/admin/event/write" element={<AdminEventWritePage />} />
@@ -69,6 +72,7 @@ const App = () => {
       <Route path="/adminpost/detail/:postNum" element={<AdminPostPage />} />
       <Route path="/admin/event" element={<AdminEventPage />} />
       <Route path="/admin/inquiry" element={<AdminInquiryPage />} />
+      <Route path="/admin/meet" element={<AdminMeetPage />} />
       {/* <Route path="/admin/event" element={<AdminEventPage />} />  */}
     </Routes>
   );

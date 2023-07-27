@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import SelectPerson from '../../../components/ticket/step02/SelectPerson';
 import SelectSeat from '../../../components/ticket/step02/SelectSeat';
 import { useDispatch, useSelector } from 'react-redux';
-import { decrease, getTotalPrice, increase, resetNumber, resetSeat, setSelectedSeat } from '../../../modules/stepsecond';
+import { decrease, getTotalPrice, increase, resetNumber, resetSeat, setPerson, setSelectedSeat } from '../../../modules/stepsecond';
 import SelectPayBtn from '../../../components/ticket/step02/SelectPayBtn';
 
 const SelectPersonContiner = () => {
@@ -15,12 +15,14 @@ const SelectPersonContiner = () => {
     teenagerNumber,
     seniorNumber,
     disabledNumber,
+    person,
   } = useSelector(({stepsecond}) => ({
     number: stepsecond.number,
     adultNumber: stepsecond.adult,
     teenagerNumber: stepsecond.teenager,
     seniorNumber: stepsecond.senior,
     disabledNumber: stepsecond.disabled,
+    person: stepsecond.person
   }))
 
   const dispatch = useDispatch();
@@ -41,6 +43,24 @@ const SelectPersonContiner = () => {
     dispatch(setSelectedSeat(row, col));
   }, []);
 
+  useEffect(() => {
+    const person = [];
+    if (adultNumber.number > 0) {
+      person.push(`${adultNumber.name} ${adultNumber.number}`);
+    }
+    if (teenagerNumber.number > 0) {
+      person.push(`${teenagerNumber.name} ${teenagerNumber.number}`);
+    }
+    if (seniorNumber.number > 0) {
+      person.push(`${seniorNumber.name} ${seniorNumber.number}`);
+    }
+    if (disabledNumber.number > 0) {
+      person.push(`${disabledNumber.name} ${disabledNumber.number}`);
+    }
+
+    dispatch(setPerson(person))
+    console.log('personnnnnnnnnnnnnnn', person)
+  }, [dispatch, number]);
   
   useEffect(() => {
     const isSeatSelected = seat && seat.length === number;

@@ -157,6 +157,7 @@ const SelectPerson = ({
       onDecrease(key);
     }
   };
+  
   return (
     <SelectPersonWrap>
       <Title>

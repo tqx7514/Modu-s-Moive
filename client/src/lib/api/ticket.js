@@ -9,3 +9,22 @@ export const selectedRegion = async (grade) => {
 export const movies = async () => await client.get("/ticket/movies");
 
 export const times = async () => await client.get("/ticket/times");
+
+export const pay = async ({
+  data, 
+  number, 
+  person, 
+  seat, 
+  totalPrice, 
+  discount, 
+  user
+}) => await client.post("/ticket/pay", {
+  data, 
+  number, 
+  person, 
+  seat,
+  totalPrice, 
+  discount, 
+  user
+});
+

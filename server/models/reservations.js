@@ -38,6 +38,14 @@ module.exports = function(sequelize, DataTypes) {
     seat: {
       type: DataTypes.STRING(100),
       allowNull: false
+    },
+    price: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    discount: {
+      type: DataTypes.STRING(100),
+      allowNull: false
     }
   }, {
     sequelize,

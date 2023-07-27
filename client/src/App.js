@@ -28,6 +28,7 @@ import AdminPostPage from "./pages/admin/AdminPostPage";
 // import AdminEventPage from "./pages/admin/AdminEventPage";
 import AdminEventPage from "./pages/admin/AdminEventPage";
 import AdminEventWritePage from "./pages/admin/AdminEventWritePage";
+import PayComplete from "./pages/PayComplete";
 
 const App = () => {
   return (
@@ -39,8 +40,9 @@ const App = () => {
       <Route path="/currentmovie" element={<CurrentMoviePage />} />
       {/* 예매 페이지 */}
       <Route path="/ticket" element={<TicketMoviePage />} />
-      <Route path="/ticket/PersonSeat" element={<TicketSeatPage />} />
-      <Route path="/ticket/Pay" element={<TicketPayPage />} />
+      <Route path="/ticket/personSeat" element={<TicketSeatPage />} />
+      <Route path="/ticket/pay" element={<TicketPayPage />} />
+      <Route path="/ticket/payComplete" element={<PayComplete/>} />
       {/* -----------*/}
       <Route path="/currentmovie/detail/:id" element={<MoviedetailPage />} />
       <Route path="/cinema" element={<CinemaPage />} />

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import {MdCheckCircleOutline, MdCheckCircle} from "react-icons/md"
 
 const PayInfo = styled.div`
   width: 300px;
@@ -9,6 +10,12 @@ const PayInfo = styled.div`
 
   &.method {
     width: 490px;
+  }
+
+  &.payment{
+    position: relative;
+    width: 414px;
+    border-right: none;
   }
 `;
 
@@ -156,8 +163,8 @@ const Lpoint = styled.div`
   }
 `;
 
-const PointForm = styled.div`
-  .pointForm{
+const PointhtmlForm = styled.div`
+  .pointhtmlForm{
     padding: 20px;
     
     .usePoint{
@@ -220,6 +227,7 @@ const PointForm = styled.div`
     }
   }
 `;
+
 const EtcDiscount = styled.div`
   position: relative;
   margin-top: 20px;
@@ -234,7 +242,94 @@ const EtcDiscount = styled.div`
     border-radius: 5px;
   }
 `;
-const SelectPay = ({OnDiscount}) => {
+
+const SavePoint = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 30px;
+  border-bottom: 1px solid #ddd;
+
+  input[type='checkbox']{
+    display: none;
+    border-radius: 100%;
+  }
+
+  input[type='checkbox'] + label{
+    position: relative;
+    display: inline-block;
+    width: 120px;
+    height: 24px;
+    padding-left: 24px;
+  }
+
+  input[type='checkbox'] + label::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: url("/checked.png") 50% 50% no-repeat;
+  }
+
+  input[type='checkbox']:checked + label::after{
+    background: url("/checked.png") 50% 50% no-repeat;
+    background-color: #222;
+    border: 1px solid #222;
+  }
+
+
+  span{
+    width: 20px;
+    height: 20px;
+    font-size: 24px;
+  }
+`;
+
+const Payment = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #414141;
+  
+  div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:100%;
+    height: 50px;
+    padding: 20px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
+    color: #fff;
+
+    p{
+      font-size: 12px;
+    }
+
+    b{
+      span{
+        font-size: 11px;
+        font-weight: 400;
+      }
+    }
+  }
+
+  button{
+    width: 100%;
+    height: 55px;
+    background: #ff243e;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+  }
+`;
+
+const SelectPay = ({OnDiscount, onReservation}) => {
   const [selectTab, setSelctTab] = useState(null);
   const [inputPoint, setInputPoint] = useState(0);
 
@@ -245,9 +340,15 @@ const SelectPay = ({OnDiscount}) => {
     senior, 
     disabled, 
     seat, 
+    totalPrice,
+    discount
   } = useSelector(({ stepsecond }) => stepsecond);
 
   const {user} = useSelector(({user}) => user);
+
+  const htmlFormatPrice = totalPrice?.toLocaleString();
+  const totalPriceNumber = parseInt(totalPrice, 10);
+  const htmlFormatTotalPrice = (totalPriceNumber - `${discount ? discount : 0}`).toLocaleString();
 
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
 
@@ -263,6 +364,7 @@ const SelectPay = ({OnDiscount}) => {
     } else{
       setSelctTab(null)
       setInputPoint(0);
+      OnDiscount(0);
     }
   };
 
@@ -283,6 +385,10 @@ const SelectPay = ({OnDiscount}) => {
       OnDiscount(inputPoint);
     };
   };
+
+  useEffect(() => {
+    OnDiscount(0);
+  }, [])
   return (
     <>
       <PayInfo>
@@ -383,8 +489,8 @@ const SelectPay = ({OnDiscount}) => {
               >POINT 카드번호</button>
             </div>
             {selectTab === 'find' ? (
-              <PointForm >
-                <div className="pointForm">
+              <PointhtmlForm >
+                <div className="pointhtmlForm">
                   <div className="usePoint">
                     <input 
                       type="number" 
@@ -410,11 +516,11 @@ const SelectPay = ({OnDiscount}) => {
                   </div>
                   <p>L.POINT 이용안내<span>아이콘</span></p>
                 </div>
-              </PointForm>
+              </PointhtmlForm>
             ) 
             : selectTab === 'card' ? (
-              <PointForm >
-                <div className="pointForm">
+              <PointhtmlForm >
+                <div className="pointhtmlForm">
                   <div className="usePoint">
                     <input type="text" className="point" placeholder="카드 번호 입력" />
                     <button className="maxPoint">최대적용</button>
@@ -428,7 +534,7 @@ const SelectPay = ({OnDiscount}) => {
                   </div>
                   <p>L.POINT 이용안내<span>아이콘</span></p>
                 </div>
-              </PointForm>
+              </PointhtmlForm>
             ) : '' }
           </Lpoint>
           <EtcDiscount>
@@ -439,6 +545,42 @@ const SelectPay = ({OnDiscount}) => {
           </EtcDiscount>
         </PayMethod>
         <PayMethod>최종 결제수단</PayMethod>
+      </PayInfo>
+      <PayInfo className="payment">
+        <Title>결제하기</Title>
+        <SavePoint>
+          <div className="checkbox">
+            <input type="checkbox" name="" id="saveCheck"/>
+            <label htmlFor="saveCheck">
+              POINT 적립
+            </label>
+          </div>
+          <div>
+            <label htmlFor="idSave">
+              <input type="radio" name="howSave" id="idSave" checked/>
+              ID적립
+            </label>
+            <label htmlFor="cardSave">
+              <input type="radio" name="howSave" id="cardSave" />
+              카드번호 적립
+            </label>
+          </div>
+        </SavePoint>
+        <Payment>
+          <div>
+            <p>상품금액</p>
+            <b>{htmlFormatPrice}<span>원</span></b>
+          </div>
+          <div>
+            <p>할인금액</p>
+            <b><span>-</span> {discount} <span>원</span></b>
+          </div>
+          <div>
+            <p>결제금액</p>
+            <b>{htmlFormatTotalPrice}<span>원</span></b>
+          </div>
+          <button onClick={onReservation}>결제하기</button>
+        </Payment>
       </PayInfo>
     </>
   );

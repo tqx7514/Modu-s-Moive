@@ -35,6 +35,13 @@ const CinemaContainer = () => {
           showLoaderOnConfirm: true,
           preConfirm: () => {
                 dispatch(myCinema({selectedCinema, selectedAddrDetail, user}))
+                setTimeout(()=>{
+                  dispatch(readRegion());
+                  dispatch(readCinema());
+                  dispatch(viewCinema());
+                },200)
+
+              
           },
         }).then((res) => {
           if (res.isConfirmed) {
@@ -56,7 +63,14 @@ const CinemaContainer = () => {
           showLoaderOnConfirm: true,
           preConfirm: () => {
                 dispatch(DelmyCinema({selectedCinema, cinemaId}));
-                navigate("/cinnema")
+                setTimeout(()=>{
+                  dispatch(readRegion());
+                  dispatch(readCinema());
+                  dispatch(viewCinema());
+                },200)
+
+              
+                navigate("/cinema")
           },
         }).then((res) => {
           if (res.isConfirmed) {

@@ -31,11 +31,6 @@ const MyPageMainContainer = () => {
     };
     checkUser();
   }, [user]);
-
-  useEffect(() => {
-    dispatch(viewCinema());
-  }, [dispatch]);
-
   const ownPost = (id) =>{
     return user && user.id === id;
   }

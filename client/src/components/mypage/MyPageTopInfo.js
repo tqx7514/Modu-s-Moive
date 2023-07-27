@@ -13,6 +13,8 @@ const MyPageTopInfo = ({
   ownPost,
 }) => {
 
+  const mycinemas = viewcinema.filter((m)=>m.id===user.id)
+console.log('mycinemas=======================',mycinemas);
   const id = viewcinema.map((a) => a.id);
   const userId = id.find((a) => a === user.id);
   const [selectedAddrDetail, setSelectedAddrDetail] = useState("");
@@ -54,21 +56,25 @@ const MyPageTopInfo = ({
       <LeftInfo>
         <LeftInfoFirst>
           <div>MY 영화관</div>
+          <Link to={"/cinema"}>
           <img src="/setup.png" alt="" />
+          </Link>
         </LeftInfoFirst>
         <LeftInfoSecond>
-        {viewcinema &&
-          viewcinema.slice(0, 3).map((mycinema) => (
-            ownPost(userId) && (
+        {mycinemas &&
+          mycinemas.slice(0, 3).map((mycinema) => (
+            
             <div key={mycinema.id}>
               <Link to={`/cinema?${mycinema.addr}`}>{mycinema.addr}</Link>
             </div>
-          )))}
+          ))}
         </LeftInfoSecond>
         <LeftInfoThird>
           {eventlist.length === 0 ? (
             <LoadingBlock>
+
               <img src="/preloader_icon.gif" />
+              
             </LoadingBlock>
           ) : (
             <div>

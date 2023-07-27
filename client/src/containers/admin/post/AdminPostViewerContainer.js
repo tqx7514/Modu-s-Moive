@@ -5,10 +5,9 @@ import {
   AdminReadPost,
   AdminUnloadPost,
 } from "../../../modules/admin/adminpost";
-import AdminPostViewer from "../../../components/post/admin/AdminPostViewer";
 import PostActionButtons from "../../../components/post/PostActionButtons";
 import { AdminRemovePost } from "../../../lib/api/admin/adminposts";
-import { AdminListPost } from "../../../modules/admin/adminposts";
+import AdminPostViewer from "../../../components/admin/post/AdminPostViewer";
 
 const AdminPostViewerContainer = () => {
   const { postNum, name } = useParams();

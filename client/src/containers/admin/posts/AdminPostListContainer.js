@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom"; // Updated import
-import AdminPostList from "../../../components/posts/admin/AdminPostList";
-import { AdminListPost } from "../../../modules/admin/adminposts";
 import { listPosts } from "../../../modules/posts";
+import AdminPostList from "../../../components/admin/posts/AdminPostList";
 
 const AdminPostListContainer = () => {
   const { name } = useParams();

@@ -70,6 +70,8 @@ const MeetWriteActionButtonsContainer = () => {
       onPublish={onPublish}
       onCancel={onCancel}
       isEdit={!!originalMeetNum}
+      title={title}
+      body={body}
     />
   );
 };

@@ -222,6 +222,7 @@ const MyPageInfoEdit = ({ info, click }) => {
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
+  margin: 1rem 0 3rem 0;
 `;
 const Button2 = styled.div`
   color: #fff;

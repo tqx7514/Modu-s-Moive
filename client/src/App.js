@@ -29,6 +29,7 @@ import AdminPostPage from "./pages/admin/AdminPostPage";
 import AdminEventPage from "./pages/admin/AdminEventPage";
 import AdminEventWritePage from "./pages/admin/AdminEventWritePage";
 import PayComplete from "./pages/PayComplete";
+import AdminInquiryPage from "./pages/admin/AdminInquiryPage";
 
 const App = () => {
   return (
@@ -42,7 +43,7 @@ const App = () => {
       <Route path="/ticket" element={<TicketMoviePage />} />
       <Route path="/ticket/personSeat" element={<TicketSeatPage />} />
       <Route path="/ticket/pay" element={<TicketPayPage />} />
-      <Route path="/ticket/payComplete" element={<PayComplete/>} />
+      <Route path="/ticket/payComplete" element={<PayComplete />} />
       {/* -----------*/}
       <Route path="/currentmovie/detail/:id" element={<MoviedetailPage />} />
       <Route path="/cinema" element={<CinemaPage />} />
@@ -66,7 +67,9 @@ const App = () => {
       <Route path="/admin/event/write" element={<AdminEventWritePage />} />
       <Route path="/admin/postlist" element={<AdminPostListPage />} />
       <Route path="/adminpost/detail/:postNum" element={<AdminPostPage />} />
-      <Route path="/admin/event" element={<AdminEventPage />} /> 
+      <Route path="/admin/event" element={<AdminEventPage />} />
+      <Route path="/admin/inquiry" element={<AdminInquiryPage />} />
+      {/* <Route path="/admin/event" element={<AdminEventPage />} />  */}
     </Routes>
   );
 };

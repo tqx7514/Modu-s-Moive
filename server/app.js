@@ -60,9 +60,10 @@ app.use("/currentmovie", currentMovie);
 app.use("/meet", meetRouter);
 app.use("/cinema", cinemaRouter);
 app.use("/mypage", mypageRouter);
-app.use("/admin/event/", adminEventRouter);
+
 //관리자페이지
 app.use("/admin/post", adminPostRouter);
+app.use("/admin/event", adminEventRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

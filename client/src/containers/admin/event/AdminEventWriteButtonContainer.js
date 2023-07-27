@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-  updateEvent,
-  writeEvent,
+  updateAdminEvent,
+  writeAdminEvent,
 } from "../../../modules/admin/admineventwrite";
 import AdminEventWriteButtonComponent from "../../../components/admin/event/AdminEventWriteButtonComponent";
 
@@ -21,7 +21,7 @@ const AdminEventWriteButtonContainer = () => {
     error,
     userId,
     originalEventNum,
-  } = useSelector(({admineventwrite, user}) => ({
+  } = useSelector(({ admineventwrite }) => ({
     categoryId: admineventwrite.categoryId,
     eventTitle: admineventwrite.eventTitle,
     eventContent: admineventwrite.eventContent,
@@ -30,14 +30,14 @@ const AdminEventWriteButtonContainer = () => {
     endEventDate: admineventwrite.endEventDate,
     adminevent: admineventwrite.adminevent,
     error: admineventwrite.error,
-    userId: user.user?.id,
+    userId: admineventwrite.userId,
     originalEventNum: admineventwrite.originalEventNum,
   }));
 
   const onPublish = () => {
     if (originalEventNum) {
       dispatch(
-        updateEvent({
+        updateAdminEvent({
           eventNum: originalEventNum,
           categoryId,
           eventTitle,
@@ -50,7 +50,7 @@ const AdminEventWriteButtonContainer = () => {
       return;
     } else {
       dispatch(
-        writeEvent({
+        writeAdminEvent({
           categoryId,
           eventTitle,
           eventContent,
@@ -71,13 +71,12 @@ const AdminEventWriteButtonContainer = () => {
 
   useEffect(() => {
     if (adminevent && Object.keys(adminevent).length > 0) {
-      navigate("/admin/event");
+      navigate("/admin/event/list");
     }
     if (error) {
       console.log("AdminEventWriteButtonContainer Error", error);
     }
   }, [navigate, adminevent, error]);
-  console.log("ddddddddddddd", adminevent);
   return (
     <AdminEventWriteButtonComponent
       onPublish={onPublish}

@@ -19,7 +19,7 @@ export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   value,
 }));
 
-export const writeEvent = createAction(
+export const writeAdminEvent = createAction(
   WRITE_EVENT,
   ({
     eventNum,
@@ -47,7 +47,7 @@ export const setOriginalEvent = createAction(
   (adminevent) => adminevent
 );
 
-export const updateEvent = createAction(
+export const updateAdminEvent = createAction(
   UPDATE_EVENT,
   ({
     eventNum,
@@ -77,61 +77,65 @@ const updateEventSaga = createRequestSaga(
   admineventAPI.updateAdminEvent
 );
 
-export function* eventWriteSaga() {
+export function* adminEventWriteSaga() {
   yield takeLatest(WRITE_EVENT, writeEventSaga);
   yield takeLatest(UPDATE_EVENT, updateEventSaga);
 }
 
 const initialState = {
-  "categoryId": "",
-  "eventTitle": "",
-  "eventContent": "",
-  "eventImg": "",
-  "userId": "",
-  "adminevent": null,
-  "error": null,
-  "originalEventNum": null,
+  categoryId: "",
+  eventTitle: "",
+  eventContent: "",
+  eventImg: "",
+  userId: "",
+  startEventDate: "",
+  endEventDate: "",
+  adminevent: null,
+  error: null,
+  originalEventNum: null,
 };
 
-const admineventwrite = handleActions({
-  [INITIALIZE]: (state) => initialState,
-  [CHANGE_FIELD]: (state, { payload: { key, value } }) => ({
-    ...state,
-    [key]: value,
-  }),
-  [WRITE_EVENT]: (state) => ({
-    ...state,
-    adminevent: null,
-    error: null,
-  }),
-  [WRITE_EVENT_SUCCESS]: (state, { payload: adminevent }) => ({
-    ...state,
-    adminevent,
-  }),
-  [WRITE_EVENT_FAILURE]: (state, { payload: error }) => ({
-    ...state,
-    error,
-  }),
-  [SET_ORIGINAL_EVENT]: (state, { payload: adminevent }) => ({
-    ...state,
-    categoryId: adminevent.categoryId,
-    eventTitle: adminevent.eventTitle,
-    eventContent: JSON.parse(adminevent.eventContent),
-    eventImg: JSON.parse(adminevent.eventImg),
-    startEventDate: adminevent.startEventDate,
-    endEventDate: adminevent.endEventDate,
-    originalEventNum: adminevent.originalEventNum,
-  }),
-  [UPDATE_EVENT_SUCCESS]: (state, { payload: adminevent }) => ({
-    ...state,
-    adminevent,
-  }),
-  [UPDATE_EVENT_FAILURE]: (state, { payload: error }) => ({
-    ...state,
-    error,
-  }),
-},
-initialState
+const admineventwrite = handleActions(
+  {
+    [INITIALIZE]: (state) => initialState,
+    [CHANGE_FIELD]: (state, { payload: { key, value } }) => ({
+      ...state,
+      [key]: value,
+    }),
+    [WRITE_EVENT]: (state) => ({
+      ...state,
+      adminevent: null,
+      error: null,
+    }),
+    [WRITE_EVENT_SUCCESS]: (state, { payload: adminevent }) => ({
+      ...state,
+      adminevent,
+    }),
+    [WRITE_EVENT_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      error,
+    }),
+    [SET_ORIGINAL_EVENT]: (state, { payload: adminevent }) => ({
+      ...state,
+      categoryId: adminevent.categoryId,
+      eventTitle: adminevent.eventTitle,
+      eventContent: adminevent.eventContent,
+      eventImg: adminevent.eventImg,
+      startEventDate: adminevent.startEventDate,
+      endEventDate: adminevent.endEventDate,
+      originalEventNum: adminevent.originalEventNum,
+    }),
+    [UPDATE_EVENT_SUCCESS]: (state, { payload: adminevent }) => ({
+      ...state,
+      adminevent,
+    }),
+    [UPDATE_EVENT_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      error,
+    }),
+  },
+  initialState
 );
+
 
 export default admineventwrite;

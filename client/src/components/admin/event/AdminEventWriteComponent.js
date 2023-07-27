@@ -27,6 +27,7 @@ const AdminEventWriteComponent = ({
     };
 
     console.log("AdminEventWriteComponent:", eventData);
+    console.log("endeventdate!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", endEventDate);
   };
 
   return (

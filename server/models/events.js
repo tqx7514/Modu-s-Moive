@@ -33,7 +33,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     view: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      defaultValue: 0
     },
     startEventDate: {
       type: DataTypes.DATEONLY,

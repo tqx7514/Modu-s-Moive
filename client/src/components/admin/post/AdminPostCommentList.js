@@ -8,7 +8,7 @@ import SubInfo from "../../common/SubInfo";
 const AdminPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh; /* 화면 전체 높이를 차지하도록 설정 */
+  // height: 100vh; /* 화면 전체 높이를 차지하도록 설정 */
 `;
 
 const AdminBody = styled.div`
@@ -65,7 +65,7 @@ const AdminCommentItemBlockLine = styled.div`
 const AdminCommentItemButton = styled.button`
   background: none;
   border: none;
-  color: ${palette.gray[6]};
+  color: ${palette.gray[0]};
   font-size: 0.875rem;
   cursor: pointer;
 `;
@@ -115,13 +115,11 @@ const AdminPostCommentItem = ({ comment, onRemove, postNum, user }) => {
             <AdminCommentItemContent>
               <AdminCommentItemBlockLine>
                 <AdminUserId>{userId}</AdminUserId>
-                {user && user.id === userId && (
-                  <AdminCommentItemThirdLine>
-                    <AdminCommentItemButton onClick={handleDelete}>
-                      <FontAwesomeIcon icon={faTimes} />
-                    </AdminCommentItemButton>
-                  </AdminCommentItemThirdLine>
-                )}
+                <AdminCommentItemThirdLine>
+                  <AdminCommentItemButton onClick={handleDelete}>
+                    <FontAwesomeIcon icon={faTimes} />
+                  </AdminCommentItemButton>
+                </AdminCommentItemThirdLine>
               </AdminCommentItemBlockLine>
               <AdminCommentItemSecondLine>
                 <h2>{content}</h2>

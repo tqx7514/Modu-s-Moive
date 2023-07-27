@@ -5,9 +5,9 @@ import {
   AdminReadPost,
   AdminUnloadPost,
 } from "../../../modules/admin/adminpost";
-import PostActionButtons from "../../../components/post/PostActionButtons";
 import { AdminRemovePost } from "../../../lib/api/admin/adminposts";
 import AdminPostViewer from "../../../components/admin/post/AdminPostViewer";
+import AdminPostActionButtons from "../../../components/admin/post/AdminPostActionButtons";
 
 const AdminPostViewerContainer = () => {
   const { postNum, name } = useParams();
@@ -49,7 +49,7 @@ const AdminPostViewerContainer = () => {
       post={post}
       loading={loading}
       error={error}
-      actionButtons={<PostActionButtons onRemove={onRemove} />}
+      actionButtons={<AdminPostActionButtons onRemove={onRemove} />}
     />
   );
 };

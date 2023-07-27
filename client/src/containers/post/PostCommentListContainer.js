@@ -7,6 +7,7 @@ import {
   removePostComment,
   unloadPostComment,
 } from "../../modules/postcomment";
+import PostCommentActionButtons from "../../components/post/PostCommentActionButtons";
 
 const PostCommentListContainer = () => {
   const { postNum } = useParams();
@@ -35,8 +36,7 @@ const PostCommentListContainer = () => {
     }
   };
 
-  //   const ownPostComment =
-  // (user && user.id) === (postcomment && postcomment.userId);
+  const ownPostComment = (user && user.id) === (post && post.userId);
 
   return (
     <PostCommentList
@@ -45,6 +45,7 @@ const PostCommentListContainer = () => {
       onRemove={onRemove}
       postNum={postNum}
       postcomment={postcomment}
+      ownPostComment={ownPostComment}
     />
   );
 };

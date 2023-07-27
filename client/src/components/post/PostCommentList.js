@@ -11,6 +11,7 @@ import {
   writePostComment,
 } from "../../modules/postcomment";
 import Responsive from "../common/Responsive";
+import PostCommentActionButtons from "./PostCommentActionButtons";
 
 const PostCommentListBlock = styled(Responsive)`
   border: solid 1px black;
@@ -119,13 +120,15 @@ const formatDate = (dateString) => {
   return `${year}.${month}.${day}.`;
 };
 
-const PostCommentItem = ({ comment, onRemove, postNum, user }) => {
+const PostCommentItem = ({
+  comment,
+  onRemove,
+  postNum,
+  user,
+  ownPostComment,
+}) => {
   const { userId, commentNum, content, createdAt } = comment;
   const formattedDate = formatDate(createdAt);
-
-  const handleDelete = () => {
-    onRemove({ commentNum, postNum });
-  };
 
   return (
     <CommentItemBlock>
@@ -135,8 +138,14 @@ const PostCommentItem = ({ comment, onRemove, postNum, user }) => {
             <UserId>{userId}</UserId>
             {user && user.id === userId && (
               <CommentItemThirdLine>
-                <CommentItemButton onClick={handleDelete}>
-                  <FontAwesomeIcon icon={faTimes} />
+                <CommentItemButton>
+                  {ownPostComment && (
+                    <PostCommentActionButtons
+                      onRemove={onRemove}
+                      commentNum={commentNum}
+                      postNum={postNum}
+                    />
+                  )}
                 </CommentItemButton>
               </CommentItemThirdLine>
             )}
@@ -155,7 +164,14 @@ const PostCommentItem = ({ comment, onRemove, postNum, user }) => {
   );
 };
 
-const PostCommentList = ({ user, post, onRemove, postNum, postcomment }) => {
+const PostCommentList = ({
+  user,
+  post,
+  onRemove,
+  postNum,
+  postcomment,
+  ownPostComment,
+}) => {
   console.log("PostCommentList의 postcomment입니다.", postcomment);
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
@@ -202,6 +218,7 @@ const PostCommentList = ({ user, post, onRemove, postNum, postcomment }) => {
               onRemove={onRemove}
               postNum={postNum}
               postcomment={comment.userId}
+              ownPostComment={ownPostComment}
             />
           ))}
       </CommentListBlock>

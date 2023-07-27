@@ -4,6 +4,8 @@ import palette from "../../../lib/styles/palette";
 import SubInfo from "../../common/SubInfo";
 import Tags from "../../common/Tags";
 import React from "react";
+import AdminPostCommentList from "./AdminPostCommentList";
+import AdminPostCommentListContainer from "../../../containers/admin/post/AdminPostCommentListContainer";
 
 const AdminPageWrapper = styled.div`
   display: flex;
@@ -46,7 +48,7 @@ const AdminInfoItem = styled.div`
 
 const AdminPostContent = styled.div`
   font-size: 1.3125rem;
-  color: ${palette.gray[8]};
+  color: ${palette.gray[9]};
   margin-bottom: 5rem;
 `;
 
@@ -92,6 +94,7 @@ const AdminPostViewer = ({ post, error, loading, actionButtons, user }) => {
             </AdminPostHead>
             <AdminPostContent dangerouslySetInnerHTML={{ __html: body }} />
             <hr />
+            <AdminPostCommentListContainer />
           </AdminPostViewerBlock>
         </AdminBody>
       </AdminPageWrapper>

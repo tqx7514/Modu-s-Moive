@@ -1,12 +1,16 @@
 import { styled, css } from "styled-components";
 import AdminTitle from "../../common/admin/AdminTitle";
-import CustomButton from "../../common/CustomButton";
 import Responsive from "../../common/Responsive";
 import MyPageInquiryPagination from "../../mypage/MyPageInquiryPagination";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import AdminInquiryDetail from "./AdminInquiryDetail";
+import AdminInquiryDetailContainer from "../../../containers/admin/inquiry/AdminInquiryDetailContainer";
 
 const AdminInquiry = ({
   inquiry,
   count,
+  category,
   loading,
   onAllClick,
   onUndoneClick,
@@ -15,7 +19,11 @@ const AdminInquiry = ({
   currentPage,
   handleNextPage,
   handlePreviousPage,
+  detail,
+  handleDetailClick,
 }) => {
+  const [detailInq, setDetailInq] = useState(null);
+  console.log("카테고리리리리리", category === 1);
   const state = (a) => {
     if (a === "") {
       return false;
@@ -47,6 +55,12 @@ const AdminInquiry = ({
 
     return formattedCreatedAt;
   };
+
+  const onDetailClick = (num) => {
+    setDetailInq(num);
+    handleDetailClick();
+  };
+
   return (
     <AdminInquiryBlock>
       {loading ? (
@@ -61,50 +75,81 @@ const AdminInquiry = ({
               문의 총 <span>{count}</span>개
             </div>
           </HeaderBlock>
-          <CategoryBlock>
-            <button onClick={onAllClick}>전체 문의</button>
-            <button onClick={onUndoneClick}>처리중인 문의</button>
-            <button onClick={onDoneClick}>완료된 문의</button>
-          </CategoryBlock>
-          <InquiryHeaderBlock>
-            <InquiryHeaderItem width="10%">번호</InquiryHeaderItem>
-            <InquiryHeaderItem width="15%">아이디</InquiryHeaderItem>
-            <InquiryHeaderItem width="50%">제목</InquiryHeaderItem>
-            <InquiryHeaderItem width="13%">작성일</InquiryHeaderItem>
-            <InquiryHeaderItem width="7%">상태</InquiryHeaderItem>
-          </InquiryHeaderBlock>
-          <div>
-            {inquiry &&
-              inquiry.map((m, index) => (
-                <InquiryBlock key={index} style={{ cursor: "pointer" }}>
-                  <InquiryContent>
-                    <InquiryHeaderItem width="10%">
-                      {m.inquiryNum}
-                    </InquiryHeaderItem>
-                    <InquiryHeaderItem width="15%">
-                      {m.userId}
-                    </InquiryHeaderItem>
-                    <InquiryHeaderItem width="50%">{m.title}</InquiryHeaderItem>
-                    <InquiryHeaderItem width="13%">
-                      {formatCreatedAt(m.createdAt)}
-                    </InquiryHeaderItem>
-                    <InquiryHeaderItem width="7%">
-                      {state(m.answer) ? (
-                        <div className="done">답변완료</div>
-                      ) : (
-                        <div className="undone">처리중...</div>
-                      )}
-                    </InquiryHeaderItem>
-                  </InquiryContent>
-                </InquiryBlock>
-              ))}
-          </div>
-          <MyPageInquiryPagination
-            lastPage={lastPage}
-            currentPage={currentPage}
-            handleNextPage={handleNextPage}
-            handlePreviousPage={handlePreviousPage}
-          />
+          {detail ? (
+            <>
+              <CategoryBlock>
+                <Buttons onClick={handleDetailClick}>목록으로</Buttons>
+              </CategoryBlock>
+              <AdminInquiryDetailContainer
+                num={detailInq}
+                handleDetailClick={handleDetailClick}
+              />
+            </>
+          ) : (
+            <>
+              <CategoryBlock>
+                <Buttons onClick={onAllClick} category={category === 1}>
+                  전체 문의
+                </Buttons>
+                <Buttons onClick={onUndoneClick} category={category === 3}>
+                  처리중인 문의
+                </Buttons>
+                <Buttons onClick={onDoneClick} category={category === 2}>
+                  완료된 문의
+                </Buttons>
+              </CategoryBlock>
+              <InquiryHeaderBlock>
+                <InquiryHeaderItem width="5%">번호</InquiryHeaderItem>
+                <InquiryHeaderItem width="15%">아이디</InquiryHeaderItem>
+                <InquiryHeaderItem width="10%">분류</InquiryHeaderItem>
+                <InquiryHeaderItem width="45%">제목</InquiryHeaderItem>
+                <InquiryHeaderItem width="13%">작성일</InquiryHeaderItem>
+                <InquiryHeaderItem width="7%">상태</InquiryHeaderItem>
+              </InquiryHeaderBlock>
+              <div>
+                {inquiry &&
+                  inquiry.map((m, index) => (
+                    <InquiryBlock
+                      key={index}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => onDetailClick(m.inquiryNum)}
+                    >
+                      <InquiryContent>
+                        <InquiryHeaderItem width="5%">
+                          {m.inquiryNum}
+                        </InquiryHeaderItem>
+                        <InquiryHeaderItem width="15%">
+                          {m.userId}
+                        </InquiryHeaderItem>
+                        <InquiryHeaderItem width="10%">
+                          {m.classify}
+                        </InquiryHeaderItem>
+                        <InquiryHeaderItem width="45%">
+                          {m.title}
+                        </InquiryHeaderItem>
+                        <InquiryHeaderItem width="13%">
+                          {formatCreatedAt(m.createdAt)}
+                        </InquiryHeaderItem>
+                        <InquiryHeaderItem width="7%">
+                          {state(m.answer) ? (
+                            <div className="done">답변완료</div>
+                          ) : (
+                            <div className="undone">처리중...</div>
+                          )}
+                        </InquiryHeaderItem>
+                      </InquiryContent>
+                    </InquiryBlock>
+                  ))}
+              </div>
+              <div className="end"></div>
+              <MyPageInquiryPagination
+                lastPage={lastPage}
+                currentPage={currentPage}
+                handleNextPage={handleNextPage}
+                handlePreviousPage={handlePreviousPage}
+              />
+            </>
+          )}
         </>
       )}
     </AdminInquiryBlock>
@@ -170,36 +215,44 @@ const InquiryBlock = styled.div`
   border: ${(props) => (props.clicked ? "1px solid black" : "none")};
   border-radius: 12px;
 `;
-const CategoryBlock = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin: 1.5rem 2rem 0 0;
 
-  > button {
-    margin-right: 0.5rem;
-    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
-    min-height: 2rem;
-    min-width: 6rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #7fbb98;
-    color: darken(#7fbb98, 10%);
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
+const Buttons = styled.button`
+  margin-right: 0.5rem;
+  padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+  min-height: 2rem;
+  min-width: 6rem;
+  border: none;
+  border-radius: 5px;
+  background-color: gainsboro;
+  color: black;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
 
-    &:hover {
-      background: linear-gradient(
-        to bottom,
-        lighten(saturate(lighten(#7fbb98, 15%), 35%), 7%) 0%,
-        lighten(saturate(lighten(#7fbb98, 12%), 15%), 7%) 26%,
-        lighten(#7fbb98, 7%) 100%
-      );
-    }
+  ${(props) =>
+    props.category &&
+    css`
+      background-color: slategray;
+      color: lightgoldenrodyellow;
+    `}
+  &:hover {
+    background-color: slategray;
+    color: lightgoldenrodyellow;
   }
 `;
+const CategoryBlock = styled.div`
+  display: flex;
+  justify-content: end;
+  margin: 1.5rem 2rem 0 0;
+  align-items: center;
+`;
 
-const AdminInquiryBlock = styled(Responsive)``;
+const AdminInquiryBlock = styled(Responsive)`
+  > .end {
+    border-top: 1px solid lightgray;
+    margin: 0.2rem 0 1rem 0;
+  }
+`;
 
 const HeaderBlock = styled.div`
   display: flex;

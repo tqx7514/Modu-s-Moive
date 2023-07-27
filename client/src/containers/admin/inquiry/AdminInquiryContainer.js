@@ -20,6 +20,7 @@ const AdminInquiryContainer = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [category, setCategory] = useState(1);
+  const [detail, setDetail] = useState(false);
   useEffect(() => {
     dispatch(adminInquiryList({ page, category }));
     return () => {
@@ -29,18 +30,24 @@ const AdminInquiryContainer = () => {
 
   const handleAllClick = () => {
     setCategory(1);
+    setPage(1);
   };
   const handleUndoneClick = () => {
     setCategory(3);
+    setPage(1);
   };
   const handleDoneClick = () => {
     setCategory(2);
+    setPage(1);
   };
   const handleNextPage = () => {
     setPage(page + 1);
   };
   const handlePreviousPage = () => {
     setPage(page - 1);
+  };
+  const handleDetailClick = () => {
+    setDetail(!detail);
   };
   return (
     <AdminInquiryContainerBlock>
@@ -56,6 +63,8 @@ const AdminInquiryContainer = () => {
         currentPage={page}
         handleNextPage={handleNextPage}
         handlePreviousPage={handlePreviousPage}
+        detail={detail}
+        handleDetailClick={handleDetailClick}
       />
     </AdminInquiryContainerBlock>
   );

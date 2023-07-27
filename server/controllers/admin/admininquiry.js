@@ -42,3 +42,20 @@ exports.inquiryList = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+exports.updateAnswer = async (req, res) => {
+  const inquiryNum = req.params.inquiryNum;
+  const answer = req.body.answer;
+  console.log("req.params.inquiryNum==", inquiryNum);
+  console.log("req.body==", answer);
+  try {
+    const updateRow = await inquirys.update(
+      {
+        answer,
+      },
+      { where: { inquiryNum } }
+    );
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};

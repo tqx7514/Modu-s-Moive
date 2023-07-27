@@ -253,8 +253,7 @@ const CustomButton2 = styled.button`
   border: 1px solid #000000;
   font-size: 14px;
   color: #000000 !important;
-  text-align: centimport { useDispatch } from 'react-redux';
-er;
+  text-align: center;
   vertical-align: middle;
   background-color: #ffffff;
   text-decoration: none;

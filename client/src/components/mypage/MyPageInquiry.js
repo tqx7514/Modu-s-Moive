@@ -9,7 +9,6 @@ const MyPageInquiry = ({
   myInquiry,
   user,
   loading,
-  pagination,
   lastPage,
   handleNextPage,
   handlePreviousPage,
@@ -101,7 +100,7 @@ const MyPageInquiry = ({
           </ButtonBlock>
           <InquiryHeaderBlock>
             <InquiryHeaderItem width="10%">번호</InquiryHeaderItem>
-            <InquiryHeaderItem width="15%">아이디</InquiryHeaderItem>
+            <InquiryHeaderItem width="15%">분류</InquiryHeaderItem>
             <InquiryHeaderItem width="50%">제목</InquiryHeaderItem>
             <InquiryHeaderItem width="13%">작성일</InquiryHeaderItem>
             <InquiryHeaderItem width="7%">상태</InquiryHeaderItem>
@@ -129,7 +128,7 @@ const MyPageInquiry = ({
                       {inquiry.inquiryNum}
                     </InquiryHeaderItem>
                     <InquiryHeaderItem width="15%">
-                      {inquiry.userId}
+                      {inquiry.classify}
                     </InquiryHeaderItem>
                     <InquiryHeaderItem width="50%">
                       <div>
@@ -178,7 +177,6 @@ const MyPageInquiry = ({
           )}
           <MyPageInquiryPagination
             lastPage={lastPage}
-            pagination={pagination}
             currentPage={currentPage}
             handleNextPage={handleNextPage}
             handlePreviousPage={handlePreviousPage}

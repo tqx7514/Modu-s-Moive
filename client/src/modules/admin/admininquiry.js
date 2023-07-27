@@ -11,11 +11,20 @@ const [
   ADMIN_INQUIRY_LIST_SUCCESS,
   ADMIN_INQUIRY_LIST_FAILURE,
 ] = createRequestActionTypes("admininquiry/ADMIN_INQUIRY_LIST");
+const [UPDATE_ANSWER, UPDATE_ANSWER_SUCCESS, UPDATE_ANSWER_FAILURE] =
+  createRequestActionTypes("admininquiry/UPDATE_ANSWER");
 
 export const initialize = createAction(INITIALIZE);
 export const adminInquiryList = createAction(
   ADMIN_INQUIRY_LIST,
   ({ page, category }) => ({ page, category })
+);
+export const answerUpdate = createAction(
+  UPDATE_ANSWER,
+  ({ inquiryNum, answer }) => ({
+    inquiryNum,
+    answer,
+  })
 );
 
 const adminInquiryListSaga = createRequestSaga(
@@ -23,8 +32,14 @@ const adminInquiryListSaga = createRequestSaga(
   adminInquiryAPI.adminInquiryList
 );
 
+const answerUpdateSaga = createRequestSaga(
+  UPDATE_ANSWER,
+  adminInquiryAPI.updateAnswer
+);
+
 export function* admininquirySaga() {
   yield takeLatest(ADMIN_INQUIRY_LIST, adminInquiryListSaga);
+  yield takeLatest(UPDATE_ANSWER, answerUpdateSaga);
 }
 
 const initialState = {
@@ -48,6 +63,14 @@ const admininquiry = handleActions(
       error: null,
     }),
     [ADMIN_INQUIRY_LIST_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      error,
+    }),
+    [UPDATE_ANSWER_SUCCESS]: (state, { payload: inquiry }) => ({
+      ...state,
+      inquiry,
+    }),
+    [UPDATE_ANSWER_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,
     }),

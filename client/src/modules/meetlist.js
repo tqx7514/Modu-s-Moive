@@ -23,6 +23,7 @@ export function* meetsSaga() {
 const initialState = {
   meets: null,
   error: null,
+  count: 0,
   lastPage: 1,
   regions: null,
 };
@@ -34,6 +35,7 @@ const meetlist = handleActions(
       meets: meets.meet,
       lastPage: meets.totalPages,
       regions: meets.regionArray,
+      count: meets.count,
       error: null,
     }),
     [MEET_LIST_FAILURE]: (state, { payload: error }) => ({

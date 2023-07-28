@@ -12,7 +12,7 @@ const MeetViewerBlock = styled(Responsive)`
   > hr {
     /* margin-bottom: 1rem; */
     border: none;
-    border-top: 1px solid lightslategray; /* 연한 회색으로 변경 */
+    border-top: 1px solid lightslategray;
   }
 `;
 const MeetHeaderBlock = styled.div`
@@ -31,6 +31,19 @@ const MeetTitle = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
 
+  > div {
+    margin: 0 1rem 0 1rem;
+  }
+`;
+const AdminMeetTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: darkgray;
+  height: 5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: red;
   > div {
     margin: 0 1rem 0 1rem;
   }
@@ -74,6 +87,44 @@ const Category = styled.div`
     }
   }
 `;
+
+const AdminCategory = styled.div`
+  display: flex;
+  background-color: black;
+  color: red;
+  justify-content: space-between;
+  padding-bottom: 0.3rem;
+  padding-top: 1rem;
+  font-weight: bold;
+
+  > div {
+    /* display: inline-block; */
+    flex: 1;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    padding-bottom: 0.8rem;
+    /* height: 100%; */
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: black;
+      visibility: hidden;
+      transition: all 0.2s ease-in-out;
+    }
+
+    &:hover:after,
+    &.active:after {
+      visibility: visible;
+      transform: scaleX(1);
+    }
+  }
+`;
 const activeStyle = {
   fontWeight: "bold",
 };
@@ -85,6 +136,8 @@ const MeetViewer = ({
   actionButtons,
   joinButton,
   ownMeet,
+  isJoined,
+  isAdmin,
 }) => {
   const [category, setCategory] = useState("Home");
   const handleHomeClick = () => {
@@ -114,53 +167,105 @@ const MeetViewer = ({
 
   return (
     <MeetViewerBlock>
-      <MeetHeaderBlock>
-        <h2>모임</h2>
-      </MeetHeaderBlock>
+      <MeetHeaderBlock>{!isAdmin && <h2>모임</h2>}</MeetHeaderBlock>
       <hr />
-      <MeetTitle>
-        <div>
-          <span style={{ margin: "0 1rem 0 1rem", alignItems: "center" }}>
-            <GrGroup />
-          </span>
-          {title}
-        </div>
-        <div>{actionButtons}</div>
-      </MeetTitle>
-      <hr />
-      <Category>
-        <div
-          style={category === "Home" ? activeStyle : undefined}
-          onClick={handleHomeClick}
-        >
-          홈
-        </div>
-        <div
-          style={category === "Board" ? activeStyle : undefined}
-          onClick={handleBoardClick}
-        >
-          게시판
-        </div>
-        <div
-          style={category === "Chat" ? activeStyle : undefined}
-          onClick={handleChatClick}
-        >
-          채팅
-        </div>
-        {ownMeet && (
-          <div
-            style={category === "Manage" ? activeStyle : undefined}
-            onClick={handleManageClick}
-          >
-            회원관리
+      {isAdmin ? (
+        <AdminMeetTitle>
+          <div>
+            <span style={{ margin: "0 1rem 0 1rem", alignItems: "center" }}>
+              <GrGroup />
+            </span>
+            {title}
           </div>
-        )}
-      </Category>
+          <div>{actionButtons}</div>
+        </AdminMeetTitle>
+      ) : (
+        <MeetTitle>
+          <div>
+            <span style={{ margin: "0 1rem 0 1rem", alignItems: "center" }}>
+              <GrGroup />
+            </span>
+            {title}
+          </div>
+          <div>{actionButtons}</div>
+        </MeetTitle>
+      )}
+
+      <hr />
+      {isAdmin ? (
+        <AdminCategory>
+          <div
+            style={category === "Home" ? activeStyle : undefined}
+            onClick={handleHomeClick}
+          >
+            홈
+          </div>
+          {isJoined && (
+            <div
+              style={category === "Board" ? activeStyle : undefined}
+              onClick={handleBoardClick}
+            >
+              게시판
+            </div>
+          )}
+          {isJoined && (
+            <div
+              style={category === "Chat" ? activeStyle : undefined}
+              onClick={handleChatClick}
+            >
+              채팅
+            </div>
+          )}
+
+          {ownMeet && (
+            <div
+              style={category === "Manage" ? activeStyle : undefined}
+              onClick={handleManageClick}
+            >
+              회원관리
+            </div>
+          )}
+        </AdminCategory>
+      ) : (
+        <Category>
+          <div
+            style={category === "Home" ? activeStyle : undefined}
+            onClick={handleHomeClick}
+          >
+            홈
+          </div>
+          {isJoined && (
+            <div
+              style={category === "Board" ? activeStyle : undefined}
+              onClick={handleBoardClick}
+            >
+              게시판
+            </div>
+          )}
+          {isJoined && (
+            <div
+              style={category === "Chat" ? activeStyle : undefined}
+              onClick={handleChatClick}
+            >
+              채팅
+            </div>
+          )}
+
+          {ownMeet && (
+            <div
+              style={category === "Manage" ? activeStyle : undefined}
+              onClick={handleManageClick}
+            >
+              회원관리
+            </div>
+          )}
+        </Category>
+      )}
       <hr />
       {category === "Home" && (
         <MeetDetailHome meet={meet} joinButton={joinButton} />
       )}
-      {category === "Board" && <MeetDetailBoardContainer />}
+      {category === "Board" && <MeetDetailBoardContainer isAdmin={isAdmin} />}
       {category === "Chat" && <MeetDetailChatContainer />}
       {category === "Manage" && <MeetDetailManageContainer />}
     </MeetViewerBlock>

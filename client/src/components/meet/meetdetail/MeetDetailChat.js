@@ -37,8 +37,13 @@ const MeetDetailChat = ({ user, meet }) => {
   }, [msg]);
 
   useEffect(() => {
-    const interval = setInterval(getMessages, 2000); // 0.1초마다 getMessages 호출
     down();
+    if (!loading) {
+      setTimeout(() => {
+        down();
+      }, 100);
+    }
+    const interval = setInterval(getMessages, 2000); // 0.1초마다 getMessages 호출
     return () => {
       clearInterval(interval); // 컴포넌트가 언마운트되면 interval을 정리(cleanup)
     };

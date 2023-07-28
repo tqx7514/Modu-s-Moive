@@ -12,13 +12,14 @@ const MeetListContainer = () => {
   // const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
-  const { meets, error, loading, user, regions } = useSelector(
+  const { meets, error, loading, user, regions, count } = useSelector(
     ({ meetlist, loading, user }) => ({
       meets: meetlist.meets,
       error: meetlist.error,
       loading: loading["meetlist/MEET_LIST"],
       regions: meetlist.regions,
       user: user.user,
+      count: meetlist.count,
     })
   );
   useEffect(() => {
@@ -46,6 +47,7 @@ const MeetListContainer = () => {
       showWriteButton={user}
       regions={regions}
       user={user}
+      counts={count}
     />
   );
 };

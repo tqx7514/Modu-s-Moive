@@ -33,11 +33,19 @@ const RegionBlock = styled.div`
   }
 `;
 
-const MeetSubInfo = ({ region, publishedDate, hasMarginTop, views }) => {
+const MeetSubInfo = ({
+  region,
+  publishedDate,
+  hasMarginTop,
+  views,
+  setSelectedRegion,
+}) => {
   return (
     <MeetSubInfoBlock hasMarginTop={hasMarginTop}>
       <Link to={`/meet?region=${region}`}>
-        <RegionBlock>{region}</RegionBlock>
+        <RegionBlock onClick={() => setSelectedRegion(region)}>
+          {region}
+        </RegionBlock>
       </Link>
       <span>{new Date(publishedDate).toLocaleDateString()}</span>
     </MeetSubInfoBlock>

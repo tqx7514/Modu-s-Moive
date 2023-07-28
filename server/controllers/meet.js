@@ -63,23 +63,19 @@ exports.meetlist = async (req, res) => {
   }
   const { tag, region } = req.query;
   const where = {};
-
   if (region) {
     where.region = region;
   }
-
   if (tag) {
     where.tags = {
       [Op.like]: `%${tag}%`,
     };
   }
-
-  console.log("where입니다", where);
-
+  // console.log("where입니다", where);
   const limit = 12;
   const offset = (page - 1) * limit;
   try {
-    console.log("page입니다", page);
+    // console.log("page입니다", page);
     const meet = await meets.findAll({
       nest: true,
       where,
@@ -87,7 +83,9 @@ exports.meetlist = async (req, res) => {
       limit,
       offset,
     });
-
+    const count = await meets.count({
+      where,
+    });
     const totalCount = await meets.count({ where }); // 총 항목 수 계산
     const totalPages = totalCount ? Math.ceil(totalCount / limit) : 1; // 총 페이지 수 계산
     const region = await regions.findAll({
@@ -99,11 +97,52 @@ exports.meetlist = async (req, res) => {
       },
     });
     const regionArray = ["전국", ...region.map((item) => item.region)];
-    // console.log("지역입니다", regionArray);
+
+    for (const item of meet) {
+      const num = item.meetNum;
+      // console.log("num=======", item.dataValues);
+      try {
+        const boards = await meetboards.findAll({
+          where: {
+            meet_Num: num,
+          },
+          order: [["updatedAt", "DESC"]],
+        });
+        const comments = await meetmessages.findAll({
+          where: {
+            meetNum: num,
+          },
+          order: [["updatedAt", "DESC"]],
+        });
+        if (comments.length > 0 && boards.length > 0) {
+          const mostRecentComment = comments[0].updatedAt;
+          const mostRecentBoard = boards[0].updatedAt;
+          item.dataValues.mostRecent =
+            mostRecentComment > mostRecentBoard
+              ? mostRecentComment
+              : mostRecentBoard;
+          // console.log("채팅최근", mostRecentComment);
+          // console.log("제일최근날짜", mostRecentBoard);
+        } else if (comments.length > 0) {
+          item.dataValues.mostRecent = comments[0].updatedAt;
+          // console.log("채팅최근", item.dataValues.mostRecent);
+        } else if (boards.length > 0) {
+          item.dataValues.mostRecent = boards[0].updatedAt;
+          // console.log("제일최근날짜", item.dataValues.mostRecent);
+        } else {
+          item.dataValues.mostRecent = item.updatedAt;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    console.log("아아아아", meet);
+
     res.json({
       meet,
       totalPages,
       regionArray,
+      count,
     });
   } catch (error) {
     res.status(500).json(error);

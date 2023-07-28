@@ -7,6 +7,7 @@ export const readMeet = (meetNum) => {
   return client.get(`/meet/detail/${meetNum}`);
 };
 export const Meetlist = ({ tag, region, page }) => {
+  console.log("dsdfasfsadf", tag, region, page);
   return client.get(`/meet/list`, {
     params: { tag, region, page },
   });

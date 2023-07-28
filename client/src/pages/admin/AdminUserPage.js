@@ -1,11 +1,12 @@
 import React from "react";
 import AdminHeaderContainer from "../../containers/common/admin/AdminHeaderContainer";
+import AdminUserListContainer from "../../containers/admin/user/AdminUserListContainer";
 
 const AdminUserPage = () => {
   return (
     <div>
       <AdminHeaderContainer />
-      유저관리페이지 구현중
+      <AdminUserListContainer/>
     </div>
   );
 };

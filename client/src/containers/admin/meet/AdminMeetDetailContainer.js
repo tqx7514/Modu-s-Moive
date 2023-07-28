@@ -5,6 +5,8 @@ import { readMeet, unloadMeet } from "../../../modules/meet";
 import MeetViewer from "../../../components/meet/MeetViewer";
 import MeetDetailActionButtons from "../../../components/meet/meetdetail/MeetDetailActionButtons";
 import Button from "../../../components/common/Button";
+import { removeMeet } from "../../../lib/api/meet";
+import { meetList } from "../../../modules/meetlist";
 
 const AdminMeetDetailContainer = ({ meetNum, handleDetailClick }) => {
   const dispatch = useDispatch();
@@ -21,6 +23,18 @@ const AdminMeetDetailContainer = ({ meetNum, handleDetailClick }) => {
     };
   }, [dispatch, meetNum]);
 
+  const onRemove = async () => {
+    try {
+      await removeMeet(meetNum);
+      setTimeout(() => {
+        dispatch(meetList({ tag: null, region: null, page: 1 }));
+        handleDetailClick();
+      }, 200);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const func = () => {
     console.log("함수");
   };
@@ -31,7 +45,12 @@ const AdminMeetDetailContainer = ({ meetNum, handleDetailClick }) => {
       error={error}
       ownMeet={true}
       actionButtons={
-        <MeetDetailActionButtons type="모임" onEdit={func} onRemove={func} />
+        <MeetDetailActionButtons
+          type="모임"
+          onEdit={func}
+          onRemove={onRemove}
+          isAdmin={true}
+        />
       }
       joinButton={null}
       isJoined={true}

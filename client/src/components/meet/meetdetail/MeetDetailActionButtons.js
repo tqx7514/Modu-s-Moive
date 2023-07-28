@@ -42,6 +42,7 @@ const MeetDetailActionButtons = ({
   num2,
   meetBoard,
   comments,
+  isAdmin,
 }) => {
   const [modal, setModal] = useState(false);
   const onRemoveClick = () => {
@@ -68,7 +69,7 @@ const MeetDetailActionButtons = ({
   return (
     <>
       <MeetActionButtonsBlock>
-        {onEdit && (
+        {onEdit && !isAdmin && (
           <ActionButton
             onClick={onEdit}
             data-body={meetBoard && meetBoard.body}

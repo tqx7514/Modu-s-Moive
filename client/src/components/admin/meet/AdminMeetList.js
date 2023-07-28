@@ -135,7 +135,9 @@ const AdminMeetList = ({
                         <MeetHeaderItem width="20%">
                           {formatCreatedAt(meet.createdAt)}
                         </MeetHeaderItem>
-                        <MeetHeaderItem width="20%">최근활동일</MeetHeaderItem>
+                        <MeetHeaderItem width="20%">
+                          {formatCreatedAt(meet.mostRecent)}
+                        </MeetHeaderItem>
                       </MeetContent>
                     </MeetBlock>
                   ))}

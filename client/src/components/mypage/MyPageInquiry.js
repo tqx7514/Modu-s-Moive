@@ -156,7 +156,9 @@ const MyPageInquiry = ({
                     </InquiryHeaderItem>
                   </InquiryContent>
                   {expandedInquiry[inquiry.inquiryNum] && (
-                    <AnswerContent>
+                    <AnswerContent
+                      className={state(inquiry.answer) ? "" : "false"}
+                    >
                       <AnswerBlock width="10%"></AnswerBlock>
                       <AnswerBlock width="15%">
                         <BsArrowReturnRight />
@@ -170,7 +172,7 @@ const MyPageInquiry = ({
                             }}
                           />
                         ) : (
-                          <div>답변 준비중입니다</div>
+                          <div className="unAnswer">답변 준비중입니다</div>
                         )}
                       </AnswerBlock>
                     </AnswerContent>
@@ -288,6 +290,9 @@ const AnswerContent = styled.div`
   &:hover {
     color: gray;
   }
+  &.false {
+    background-color: lightpink;
+  }
 `;
 const AnswerBlock = styled.div`
   display: flex;
@@ -297,4 +302,5 @@ const AnswerBlock = styled.div`
   justify-content: center;
   ${({ width }) => width && `flex-basis: ${width};`}
 `;
+
 export default MyPageInquiry;

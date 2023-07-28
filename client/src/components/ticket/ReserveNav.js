@@ -70,10 +70,7 @@ const NavReserveLi = styled.li`
 
 const ReserveNav = ({
   data,
-  adult,
-  teenager,
-  senior,
-  disabled,
+  person,
   seat,
   totalPrice,
 }) => {
@@ -124,37 +121,7 @@ const ReserveNav = ({
         <NavReserveCont>
           <ul>
             <li>
-              {adult.number > 0 && (
-                <>
-                  {adult.name}
-                  {adult.number}
-                  {teenager.number > 0 ||
-                  senior.number > 0 ||
-                  disabled.number > 0
-                    ? ", "
-                    : ""}
-                </>
-              )}
-              {teenager.number > 0 && (
-                <>
-                  {teenager.name}
-                  {teenager.number}
-                  {senior.number > 0 || disabled.number > 0 ? ", " : ""}
-                </>
-              )}
-              {senior.number > 0 && (
-                <>
-                  {senior.name}
-                  {senior.number}
-                  {disabled.number > 0 ? ", " : ""}
-                </>
-              )}
-              {disabled.number > 0 && (
-                <>
-                  {disabled.name}
-                  {disabled.number}
-                </>
-              )}
+              {person}
             </li>
             <li>{seatContent}</li>
           </ul>
@@ -176,7 +143,7 @@ const ReserveNav = ({
           </ul>
         </NavReserveCont>
       </NavReserveLi>
-      <NavReserveLi>
+      <NavReserveLi active={String(location.pathname === "/ticket/payComplete")}>
         04
         <br />
         결제완료

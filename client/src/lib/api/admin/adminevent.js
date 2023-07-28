@@ -42,7 +42,7 @@ export const updateAdminEvent = async ({
   startEventDate,
   endEventDate,
 }) =>
-  client.patch(`/admin/event/${eventNum}`, {
+  client.patch(`/admin/event/detail/${eventNum}`, {
     eventNum,
     categoryId,
     eventTitle,

@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-  updateAdminEvent,
-  writeAdminEvent,
+  updateEvent,
+  writeEvent,
 } from "../../../modules/admin/admineventwrite";
 import AdminEventWriteButtonComponent from "../../../components/admin/event/AdminEventWriteButtonComponent";
 
@@ -17,27 +17,27 @@ const AdminEventWriteButtonContainer = () => {
     eventImg,
     startEventDate,
     endEventDate,
-    adminevent,
+    event,
     error,
     userId,
     originalEventNum,
-  } = useSelector(({ admineventwrite }) => ({
+  } = useSelector(({admineventwrite, user}) => ({
     categoryId: admineventwrite.categoryId,
     eventTitle: admineventwrite.eventTitle,
     eventContent: admineventwrite.eventContent,
     eventImg: admineventwrite.eventImg,
     startEventDate: admineventwrite.startEventDate,
     endEventDate: admineventwrite.endEventDate,
-    adminevent: admineventwrite.adminevent,
+    event: admineventwrite.event,
     error: admineventwrite.error,
-    userId: admineventwrite.userId,
+    userId: user.user && user.user.id,
     originalEventNum: admineventwrite.originalEventNum,
   }));
 
   const onPublish = () => {
     if (originalEventNum) {
       dispatch(
-        updateAdminEvent({
+        updateEvent({
           eventNum: originalEventNum,
           categoryId,
           eventTitle,
@@ -50,7 +50,7 @@ const AdminEventWriteButtonContainer = () => {
       return;
     } else {
       dispatch(
-        writeAdminEvent({
+        writeEvent({
           categoryId,
           eventTitle,
           eventContent,
@@ -70,13 +70,13 @@ const AdminEventWriteButtonContainer = () => {
   const isEdit = !!originalEventNum;
 
   useEffect(() => {
-    if (adminevent && Object.keys(adminevent).length > 0) {
-      navigate("/admin/event/list");
+    if (Object.keys(event).length > 0) {
+      navigate("/admin/event");
     }
     if (error) {
       console.log("AdminEventWriteButtonContainer Error", error);
     }
-  }, [navigate, adminevent, error]);
+  }, [navigate, event, error]);
   return (
     <AdminEventWriteButtonComponent
       onPublish={onPublish}

@@ -2,7 +2,6 @@ const { Op } = require("sequelize");
 const { events, users } = require("../../models");
 
 exports.adminEventWrite = async (req, res, next) => {
-  console.log("newAdminEventWrite===========================",adminEventWrite);
   const {
     categoryId,
     userId,
@@ -19,12 +18,14 @@ exports.adminEventWrite = async (req, res, next) => {
   }
 
   try {
+    const eventImgString = JSON.stringify(eventImg);
+    const eventContentString = JSON.stringify(eventContent);
     const newAdminEventWrite = await events.create({
       categoryId,
       userId,
       eventTitle,
-      eventContent,
-      eventImg,
+      eventContent: eventContentString,
+      eventImg: eventImgString,
       startEventDate,
       endEventDate,
     });
@@ -34,7 +35,6 @@ exports.adminEventWrite = async (req, res, next) => {
     res.status(500).json(error);
     next(error);
   }
-  
 };
 
 exports.adminEventRead = async (req, res, next) => {
@@ -90,6 +90,8 @@ exports.adminEventUpdate = async (req, res, next) => {
   } = req.body;
 
   try {
+    const eventImgString = JSON.stringify(eventImg);
+    const eventContentString = JSON.stringify(eventContent);
     const existingEvent = await events.findOne({
       where: { eventNum },
     });
@@ -99,17 +101,14 @@ exports.adminEventUpdate = async (req, res, next) => {
       return;
     }
 
-    const updatedAt = new Date();
-
     const [updateEventRows] = await events.update(
       {
         categoryId,
         eventTitle,
-        eventContent,
-        eventImg,
+        eventContent: eventContentString,
+        eventImg: eventImgString,
         startEventDate,
         endEventDate,
-        updatedAt,
       },
       {
         where: { eventNum },

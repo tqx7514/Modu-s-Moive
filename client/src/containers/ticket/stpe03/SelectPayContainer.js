@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react'
-import SelectPay from '../../../components/ticket/step03/SelectPay'
-import ReserveNavContainer from '../ReserveNavContainer'
-import { useDispatch, useSelector } from 'react-redux'
-import { getDiscount, pay } from '../../../modules/stepsecond'
+import React, { useCallback } from 'react';
+import SelectPay from '../../../components/ticket/step03/SelectPay';
+import ReserveNavContainer from '../ReserveNavContainer';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDiscount, pay } from '../../../modules/stepsecond';
 
 const SelectPayContainer = () => {
   const {
@@ -12,7 +12,6 @@ const SelectPayContainer = () => {
     totalPrice,
     discount,
   } = useSelector(({stepsecond}) => stepsecond);
-  console.log('asdfasdf',discount)
 const {data} = useSelector(({stepfirst}) => stepfirst);
 const {user} = useSelector(({user}) => user);
 
@@ -31,7 +30,8 @@ const {user} = useSelector(({user}) => user);
       discount,
       user
     }));
-  }, [dispatch]);
+
+  }, [dispatch, data, number, person, seat, totalPrice, discount, user]);
 
   return (
     <>

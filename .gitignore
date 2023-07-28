@@ -1,7 +1,0 @@
-client/node_modules/
-client/yarn.lock
-server/node_modules/
-server/yarn.lock
-client/.idea
-server/.idea
-server/orm.js

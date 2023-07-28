@@ -191,6 +191,7 @@ const stepfirst = handleActions(
         day: '오늘',
       }
     }),
+    // ----------------------------------------------------
   },
   initialState
 );

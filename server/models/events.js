@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     userId: {
       type: DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'users',
         key: 'id'
@@ -33,16 +33,16 @@ module.exports = function(sequelize, DataTypes) {
     },
     view: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       defaultValue: 0
     },
     startEventDate: {
       type: DataTypes.DATEONLY,
-      allowNull: true
+      allowNull: false
     },
     endEventDate: {
       type: DataTypes.DATEONLY,
-      allowNull: true
+      allowNull: false
     }
   }, {
     sequelize,

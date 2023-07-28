@@ -20,7 +20,9 @@ import stepfirst, {
   movieReadSaga,
   timeSaga,
 } from "./stepfirst";
-import stepsecond, { paymentSaga } from "./stepsecond";
+import stepsecond, {
+  paymentSaga,
+} from "./stepsecond";
 import meetwrite, { meetWriteSaga } from "./meetwrite";
 import meet, { meetSaga } from "./meet";
 import meetlist, { meetsSaga } from "./meetlist";
@@ -29,9 +31,9 @@ import cinema, { cinemaSaga } from "./cinema";
 import meetboard, { meetBoardSaga } from "./meetboard";
 // import adminevent, { readEventSaga } from "./admin/adminevent";
 import admineventlist, { adminEventListSaga } from "./admin/admineventlist";
-import admineventwrite, { adminEventWriteSaga } from "./admin/admineventwrite";
+import admineventwrite, { eventWriteSaga } from "./admin/admineventwrite";
+// import admineventwrite, { eventWriteSaga } from "./admin/admineventwrite";
 import mypage, { mypageSaga } from "./mypage";
-import admininquiry, { admininquirySaga } from "./admin/admininquiry";
 
 const rootReducer = combineReducers({
   auth,
@@ -59,7 +61,6 @@ const rootReducer = combineReducers({
   // adminevent,
   admineventlist,
   admineventwrite,
-  admininquiry,
 });
 
 export function* rootSaga() {
@@ -89,9 +90,8 @@ export function* rootSaga() {
     adminPostSaga(),
     // readEventSaga(),
     adminEventListSaga(),
+    eventWriteSaga(),
     paymentSaga(),
-    adminEventWriteSaga(),
-    admininquirySaga(),
   ]);
 }
 

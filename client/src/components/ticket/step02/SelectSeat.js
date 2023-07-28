@@ -84,6 +84,10 @@ const Seat = styled.div`
       pointer-events: none;
       background: url(/no_select.png);
     }
+    &.disabled{
+      background: #333;
+      cursor: default;
+    }
   }
 `;
 
@@ -96,9 +100,42 @@ const SelectSeat = ({
   const seatCol = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
   const { data } = useSelector(({ stepfirst }) => stepfirst);
-  const { number, seat } = useSelector(({ stepsecond }) => stepsecond);
+  const { number, seat, reservation } = useSelector(({ stepsecond }) => stepsecond);
 
-  // const [selectedSeats, setSelectedSeats] = useState([]);
+
+  const findMatchingReservation = () => {
+    if (!data || !data.date || !data.time) {
+      return null;
+    }
+  
+    const matchingReservation = reservation?.filter((item) => {
+      return (
+        item.cinema === data.cinema &&
+        item.movie_name === data.time.movie_name &&
+        item.date === data.date &&
+        item.start === data.time.start &&
+        item.room === data.time.room
+      );
+    });
+  
+    return matchingReservation;
+  };
+  
+  const matchingReservation = findMatchingReservation();
+  console.log((seatRow.length * seatCol.length) - matchingReservation.length)
+
+  const isSeatDisabled = (row, col) => {
+    if (!matchingReservation) {
+      return false;
+    }
+
+    const seatId = `${row}${col}`;
+    const isDisabled = matchingReservation.some((item) => {
+      return item.seat.includes(seatId);
+    });
+
+    return isDisabled;
+  };
 
   const handleSeatClick = (e, row, col) => {
     if (number === 0) {
@@ -108,10 +145,14 @@ const SelectSeat = ({
 
     const seatId = `${row}${col}`;
     const isSelected = selectedSeats.includes(seatId);
+    const isDisabled = isSeatDisabled(row, col);
+    if(isDisabled){
+      return;
+    }
 
     if (isSelected) {
       setSelectedSeats((prevSelectedSeats) =>
-        prevSelectedSeats.filter((seat) => seat !== seatId)
+        prevSelectedSeats?.filter((seat) => seat !== seatId)
       );
     } else {
       if (selectedSeats.length < number) {
@@ -152,7 +193,10 @@ const SelectSeat = ({
                     classes += "unselected ";
                   }
                   if (data.time.room === 1) {
-                    classes += "firstRoom";
+                    classes += "firstRoom ";
+                  }
+                  if (isSeatDisabled(row, col)) {
+                    classes += "disabled ";
                   }
                   return (
                     <span

@@ -3,7 +3,6 @@ import createRequestSaga, { createRequestActionTypes } from "../lib/createReques
 import * as payAPI from "../lib/api/ticket";
 import { takeLatest } from "redux-saga/effects";
 
-
 // 액션 타입--------------------------------------------------------
 
 const INCREASE = "stepsecond/INCREASE";
@@ -15,6 +14,12 @@ const RESET_NUMBER = "stepsecond/RESET_NUMBER";
 const GET_TOTAL_PRICE = "stepsecond/GET_TOTAL_PRICE";
 const GET_DISCOUNT = "stepsecond/GET_DISCOUNT";
 const [PAY, PAY_SUCCESS, PAY_FAILURE] = createRequestActionTypes("stepsecond/PAY_SUCCESS");
+const [
+  GET_USING_SEAT, 
+  GET_USING_SEAT_SUCCESS, 
+  GET_USING_SEAT_FAILURE
+] = createRequestActionTypes('stepsecond/GET_USING_SEAT'); 
+const RESET_DATA = "stepsecond/RESET_DATA";
 
 // 액션 생성--------------------------------------------------------
 
@@ -34,13 +39,21 @@ export const pay = createAction(PAY, ({
 }) => ({
   data, number, person, seat,totalPrice, discount, user
 }));
+export const getUsingSeat = createAction(GET_USING_SEAT);
+export const resetData = createAction(RESET_DATA);
 
 // 사가 함수--------------------------------------------------------
 
 export const paySaga = createRequestSaga(PAY, payAPI.pay);
+export const usingSeatSaga = createRequestSaga(GET_USING_SEAT, payAPI.seat);
+
 export function* paymentSaga() {
   yield takeLatest(PAY, paySaga);
+  yield takeLatest(GET_USING_SEAT, usingSeatSaga);
 }
+
+
+
 
 // 초기 값--------------------------------------------------------
 
@@ -69,8 +82,8 @@ const initialState = {
   person: null,
   seat: null,
   totalPrice: 0,
-  discount: 0,
-
+  discount: "",
+  reservation: [],
 };
 
 // 핸들 액션------------------------------------------------------
@@ -113,7 +126,7 @@ const stepsecond = handleActions(
 
     // ----------------------------------------------------
 
-    [RESET_SEAT]: (state, action) => ({
+    [RESET_SEAT]: (state) => ({
       ...state,
       seat: null,
     }),
@@ -142,6 +155,17 @@ const stepsecond = handleActions(
       ...state,
     }),
     [PAY_FAILURE]: (state, error) => ({
+      ...state,
+      error: error.payload,
+    }),
+
+    // ----------------------------------------------------
+    
+    [GET_USING_SEAT_SUCCESS]: (state, action) => ({
+      ...state,
+      reservation: action.payload,
+    }),
+    [GET_USING_SEAT_FAILURE]: (state, error) => ({
       ...state,
       error: error.payload,
     }),

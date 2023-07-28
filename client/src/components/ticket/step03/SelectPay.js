@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import {MdCheckCircleOutline, MdCheckCircle} from "react-icons/md"
+import { Link } from "../../../../node_modules/react-router-dom/dist/index";
 
 const PayInfo = styled.div`
   width: 300px;
@@ -19,7 +20,7 @@ const PayInfo = styled.div`
   }
 `;
 
-const Title = styled.div`
+export const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -267,16 +268,17 @@ const SavePoint = styled.div`
     content: '';
     position: absolute;
     left: 0;
-    top: 0;
-    width: 24px;
-    height: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
     border: 1px solid #ddd;
     border-radius: 100%;
-    background: url("/checked.png") 50% 50% no-repeat;
+    background: url("/check2.png") 50% 50% no-repeat;
   }
 
   input[type='checkbox']:checked + label::after{
-    background: url("/checked.png") 50% 50% no-repeat;
+    background: url("/check2.png") 50% 50% no-repeat;
     background-color: #222;
     border: 1px solid #222;
   }
@@ -318,11 +320,14 @@ const Payment = styled.div`
     }
   }
 
-  button{
+  a{
+    display: block;
     width: 100%;
     height: 55px;
+    padding-top:13px;
     background: #ff243e;
     border: none;
+    text-align: center;
     color: #fff;
     font-size: 18px;
     cursor: pointer;
@@ -330,8 +335,8 @@ const Payment = styled.div`
 `;
 
 const SelectPay = ({OnDiscount, onReservation}) => {
-  const [selectTab, setSelctTab] = useState(null);
-  const [inputPoint, setInputPoint] = useState(0);
+  const [selectTab, setSelctTab] = useState(0);
+  const [inputPoint, setInputPoint] = useState("");
 
   const { data, movie } = useSelector(({ stepfirst }) => stepfirst);
   const { 
@@ -362,8 +367,8 @@ const SelectPay = ({OnDiscount, onReservation}) => {
     } else if(type === 'card'){
       setSelctTab(type)
     } else{
-      setSelctTab(null)
-      setInputPoint(0);
+      setSelctTab(0)
+      setInputPoint("");
       OnDiscount(0);
     }
   };
@@ -378,6 +383,11 @@ const SelectPay = ({OnDiscount, onReservation}) => {
   };
 
   const handleDiscount = (e) => {
+    if(inputPoint % 100 !== 0){
+      alert("100단위로 입력하세요.");
+      return;
+    };
+
     if(inputPoint > user.point){
       e.preventDefault();
       alert('보유한 포인트를 초과할 수 없습니다.');
@@ -386,9 +396,6 @@ const SelectPay = ({OnDiscount, onReservation}) => {
     };
   };
 
-  useEffect(() => {
-    OnDiscount(0);
-  }, [])
   return (
     <>
       <PayInfo>
@@ -507,7 +514,7 @@ const SelectPay = ({OnDiscount, onReservation}) => {
                   <div className="confirmBtn">
                     <button 
                       className="cancle"
-                      onClick={() => handleSelectTab(null)}
+                      onClick={() => handleSelectTab(0)}
                     >취소</button>
                     <button 
                       className="confirm"
@@ -528,7 +535,7 @@ const SelectPay = ({OnDiscount, onReservation}) => {
                   <div className="confirmBtn">
                     <button 
                       className="cancle"
-                      onClick={() => handleSelectTab(null)}
+                      onClick={() => handleSelectTab(0)}
                     >취소</button>
                     <button className="confirm">적용</button>
                   </div>
@@ -579,7 +586,7 @@ const SelectPay = ({OnDiscount, onReservation}) => {
             <p>결제금액</p>
             <b>{htmlFormatTotalPrice}<span>원</span></b>
           </div>
-          <button onClick={onReservation}>결제하기</button>
+          <Link to="/ticket/payComplete" onClick={onReservation}>결제하기</Link>
         </Payment>
       </PayInfo>
     </>

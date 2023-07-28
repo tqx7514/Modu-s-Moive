@@ -113,13 +113,8 @@ const ModalViewSeat = styled.div`
           margin-left: 10px;
         }
       }
-      &.selected {
-        background: #ff243e;
-        color: #fff;
-      }
-      &.unselected{
-        pointer-events: none;
-        background: url(/no_select.png);
+      &.disabled{
+        background: #ddd;
       }
     }
   }
@@ -248,7 +243,7 @@ const StepFirstModal = ({ modal, setIsModal }) => {
   const [isLogin, setIslogin] = useState(false);
 
   const { data } = useSelector(({ stepfirst }) => stepfirst);
-  const { seat } = useSelector(({ stepsecond }) => stepsecond);
+  const { seat, reservation } = useSelector(({ stepsecond }) => stepsecond);
   const { user } = useSelector(({ user }) => ({ user: user.user }));
 
   const handleModal = () => {
@@ -258,6 +253,39 @@ const StepFirstModal = ({ modal, setIsModal }) => {
   const handleLinkClick = () => {
     setIslogin(true);
   };
+
+  const findMatchingReservation = () => {
+    if (!data || !data.date || !data.time) {
+      return null;
+    }
+  
+    const matchingReservation = reservation?.filter((item) => {
+      return (
+        item.cinema === data.cinema &&
+        item.movie_name === data.time.movie_name &&
+        item.date === data.date &&
+        item.start === data.time.start &&
+        item.room === data.time.room
+      );
+    });
+  
+    return matchingReservation;
+  };
+
+  const isSeatDisabled = (row, col) => {
+    if (!matchingReservation) {
+      return false;
+    }
+
+    const seatId = `${row}${col}`;
+    const isDisabled = matchingReservation.some((item) => {
+      return item.seat.includes(seatId);
+    });
+
+    return isDisabled;
+  };
+  
+  const matchingReservation = findMatchingReservation();
 
   const seatRow = ["A", "B", "C", "D", "E", "F"];
   const seatCol = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
@@ -285,7 +313,10 @@ const StepFirstModal = ({ modal, setIsModal }) => {
                   const seatId = `${row}${col}`;
                   let classes = "";
                   if (data.time.room === 1) {
-                    classes += "firstRoom";
+                    classes += "firstRoom ";
+                  }
+                  if (isSeatDisabled(row, col)) {
+                    classes += "disabled ";
                   }
                   return (
                     <span

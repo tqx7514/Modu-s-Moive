@@ -36,11 +36,7 @@ const MyPageMainContainer = () => {
     dispatch(viewCinema());
   }, [dispatch]);
 
-  const ownPost = (id) =>{
-    return user && user.id === id;
-  }
-
-  return <MyPageMain user={user} loading={loading} viewcinema={viewcinema} ownPost={ownPost}/>;
+  return <MyPageMain user={user} loading={loading} viewcinema={viewcinema} />;
 };
 
 export default MyPageMainContainer;

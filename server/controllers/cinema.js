@@ -42,23 +42,3 @@ exports.viewCinema = async(req, res) => {
         res.status(500).json(error);
     }
 }
-
-exports.MyCinemaDel = async(req, res) => {
-    const {selectedCinema, cinemaId} = req.query
-    try{
-        const mycinemaDel = await mycinema.destroy({
-            where: {addr: selectedCinema,
-                    id: cinemaId,
-            }
-        });
-        if (mycinemaDel === 0) {
-            res.status(404).json({ message: "관람평이 존재하지 않습니다" });
-            return;
-          }
-          const cinema = await cinemas.findAll({});
-      
-          res.status(200).json({ cinema });
-    } catch (error) {
-        res.status(500).json(error);
-    }
-};

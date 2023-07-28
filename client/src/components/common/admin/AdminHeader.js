@@ -105,43 +105,37 @@ const AdminHeader = ({ user, onLogout }) => {
             to="/admin/currentmovie"
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            영화 관리
+            상영중인 영화
           </NavLink>
           <NavLink
-            to="/admin/#"
+            to="/ticket"
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            예매 관리
+            예매
           </NavLink>
           <NavLink
-            to="/admin/#"
+            to="/cinema"
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            영화관 관리
+            영화관 위치
           </NavLink>
           <NavLink
             to="/admin/event"
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            이벤트 관리
+            EVENT관리
           </NavLink>
           <NavLink
             to="/admin/postlist"
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            게시판 관리
+            게시판
           </NavLink>
           <NavLink
-            to="/admin/meet"
+            to="/gathering"
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            모임 관리
-          </NavLink>
-          <NavLink
-            to="/admin/inquiry"
-            style={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            문의 관리
+            모임
           </NavLink>
         </Wrapper>
       </HeaderBlock>

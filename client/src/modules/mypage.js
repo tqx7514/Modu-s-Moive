@@ -10,10 +10,8 @@ const INITIALIZE = "mypage/INITIALIZE";
 const CHANGE_FIELD = "mypage/CHANGE_FIELD";
 const [INQUIRY_LIST, INQUIRY_LIST_SUCCESS, INQUIRY_LIST_FAILURE] =
   createRequestActionTypes("mypage/INQUIRY_LIST");
-
 const [INQUIRY_WRITE, INQUIRY_WRITE_SUCCESS, INQUIRY_WRITE_FAILURE] =
   createRequestActionTypes("mypage/INQUIRY_WRITE");
-const INQUIRY_UNLOAD = "mypage/INQUIRY_UNLOAD";
 
 export const initialize = createAction(INITIALIZE);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
@@ -34,7 +32,6 @@ export const inquiryWrite = createAction(
     answer,
   })
 );
-export const inquiryUnload = createAction(INQUIRY_UNLOAD);
 
 const inquiryListSaga = createRequestSaga(INQUIRY_LIST, myPageAPI.myInquiry);
 const inquiryWriteSaga = createRequestSaga(
@@ -98,11 +95,6 @@ const mypage = handleActions(
     [INQUIRY_WRITE_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,
-    }),
-    [INQUIRY_UNLOAD]: (state) => ({
-      ...state,
-      error: null,
-      inquiry: initialState.inquiry,
     }),
   },
   initialState

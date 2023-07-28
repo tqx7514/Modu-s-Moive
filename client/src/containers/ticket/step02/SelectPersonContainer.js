@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import SelectPerson from '../../../components/ticket/step02/SelectPerson';
 import SelectSeat from '../../../components/ticket/step02/SelectSeat';
 import { useDispatch, useSelector } from 'react-redux';
-import { decrease, getTotalPrice, increase, resetNumber, resetSeat, setPerson, setSelectedSeat } from '../../../modules/stepsecond';
+import { decrease, getTotalPrice, getUsingSeat, increase, resetNumber, resetSeat, setPerson, setSelectedSeat } from '../../../modules/stepsecond';
 import SelectPayBtn from '../../../components/ticket/step02/SelectPayBtn';
 
 const SelectPersonContiner = () => {
@@ -16,13 +16,15 @@ const SelectPersonContiner = () => {
     seniorNumber,
     disabledNumber,
     person,
+    reservation,
   } = useSelector(({stepsecond}) => ({
     number: stepsecond.number,
     adultNumber: stepsecond.adult,
     teenagerNumber: stepsecond.teenager,
     seniorNumber: stepsecond.senior,
     disabledNumber: stepsecond.disabled,
-    person: stepsecond.person
+    person: stepsecond.person,
+    reservation: stepsecond,
   }))
 
   const dispatch = useDispatch();
@@ -59,7 +61,6 @@ const SelectPersonContiner = () => {
     }
 
     dispatch(setPerson(person))
-    console.log('personnnnnnnnnnnnnnn', person)
   }, [dispatch, number]);
   
   useEffect(() => {
@@ -81,6 +82,7 @@ const SelectPersonContiner = () => {
   
   useEffect(() => {
     dispatch(resetNumber());
+    dispatch(getUsingSeat());
   }, [dispatch]);
 
   return (

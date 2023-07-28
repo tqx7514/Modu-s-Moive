@@ -78,7 +78,7 @@ const EventPromoteCompots = ({ events }) => {
     }
   });
 
-  const filteredEvents = sortedEvents.filter((e) => e.categoryId === "제휴할인");
+  const filteredEvents = sortedEvents.filter((e) => e.categoryId === 2);
 
   return (
     <EventPromoteContentBlock>

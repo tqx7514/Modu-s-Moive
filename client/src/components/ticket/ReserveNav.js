@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "../../../node_modules/react-router-dom/dist/index";
 import { useSelector } from "react-redux";
+import classNames from "../../../node_modules/classnames/index";
 
 const NavReserveUl = styled.ul`
   width: 76px;
@@ -66,14 +67,15 @@ const NavReserveLi = styled.li`
         }
       }
     `}
+  &.prev{
+    background: #333;
+    color: #fff;
+  }
 `;
 
 const ReserveNav = ({
   data,
-  adult,
-  teenager,
-  senior,
-  disabled,
+  person,
   seat,
   totalPrice,
 }) => {
@@ -81,6 +83,27 @@ const ReserveNav = ({
   const { user } = useSelector(({ user }) => user);
   const location = useLocation();
   const navigate = useNavigate();
+
+  const currentPath = location.pathname;
+
+  // 각 단계에 대한 경로 설정
+  const stepPaths = ["/ticket", "/ticket/PersonSeat", "/ticket/pay", "/ticket/payComplete"];
+
+  // 현재 단계 계산 (activeStep)
+  const activeStep = stepPaths.findIndex((stepPath) => currentPath === stepPath) + 1;
+
+  // 이전 단계들을 추적하는 배열 (prevSteps)
+  const [prevSteps, setPrevSteps] = useState([]);
+
+  // activeStep이 변경될 때마다 prevSteps 업데이트
+  useEffect(() => {
+    if (activeStep > 1) {
+      setPrevSteps(Array.from({ length: activeStep - 1 }, (_, index) => index + 1));
+    } else {
+      setPrevSteps([]);
+    }
+  }, [activeStep]);
+
   const timeContent =
     data.time.cinema === undefined ? (
       <ul>
@@ -110,6 +133,7 @@ const ReserveNav = ({
     <NavReserveUl>
       <NavReserveLi
         active={String(location.pathname === "/ticket")}
+        className={classNames({ active: activeStep === 1, prev: prevSteps.includes(1) })}
         onClick={() => navigate("/ticket")}
       >
         01
@@ -117,50 +141,32 @@ const ReserveNav = ({
         상영시간
         <NavReserveCont>{timeContent}</NavReserveCont>
       </NavReserveLi>
-      <NavReserveLi active={String(location.pathname === "/ticket/PersonSeat")}>
+      <NavReserveLi 
+        active={String(location.pathname === "/ticket/PersonSeat")}
+        className={classNames({ active: activeStep === 2, prev: prevSteps.includes(2) })}
+        onClick={() => {
+          navigate("/ticket/PersonSeat");
+        }}
+      >
         02
         <br />
         인원/좌석
         <NavReserveCont>
           <ul>
             <li>
-              {adult.number > 0 && (
-                <>
-                  {adult.name}
-                  {adult.number}
-                  {teenager.number > 0 ||
-                  senior.number > 0 ||
-                  disabled.number > 0
-                    ? ", "
-                    : ""}
-                </>
-              )}
-              {teenager.number > 0 && (
-                <>
-                  {teenager.name}
-                  {teenager.number}
-                  {senior.number > 0 || disabled.number > 0 ? ", " : ""}
-                </>
-              )}
-              {senior.number > 0 && (
-                <>
-                  {senior.name}
-                  {senior.number}
-                  {disabled.number > 0 ? ", " : ""}
-                </>
-              )}
-              {disabled.number > 0 && (
-                <>
-                  {disabled.name}
-                  {disabled.number}
-                </>
-              )}
+              {person}
             </li>
-            <li>{seatContent}</li>
+            <li>{seatContent && seatContent}</li>
           </ul>
         </NavReserveCont>
       </NavReserveLi>
-      <NavReserveLi active={String(location.pathname === "/ticket/pay")}>
+      <NavReserveLi 
+        active={String(location.pathname === "/ticket/pay")}
+        className={classNames({ active: activeStep === 3, prev: prevSteps.includes(3) })}
+        onClick={() => {
+          navigate("/ticket/pay");
+        }}
+      >
         03
         <br />
         결제
@@ -176,7 +182,13 @@ const ReserveNav = ({
           </ul>
         </NavReserveCont>
       </NavReserveLi>
-      <NavReserveLi>
+      <NavReserveLi 
+        active={String(location.pathname === "/ticket/payComplete")}
+        className={classNames({ active: activeStep === 4, prev: prevSteps.includes(4) })}
+        onClick={() => {
+          navigate("/ticket/payComplete");
+        }}
+      >
         04
         <br />
         결제완료

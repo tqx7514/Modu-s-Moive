@@ -42,7 +42,9 @@ const RegionSelect = styled.select`
 `;
 
 const Editor = ({ title, body, onChangeField, selectedRegion, regiondata }) => {
+  console.log("ssssssssssssss", regiondata);
   const newRegionData = regiondata.filter((item) => item !== "전국");
+  console.log("newRegion", newRegionData);
   const quillElement = useRef(null);
   const quillInstance = useRef(null);
   const [region, setRegion] = useState("");

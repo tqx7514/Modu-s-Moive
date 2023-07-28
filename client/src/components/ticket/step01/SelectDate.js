@@ -140,7 +140,7 @@ const SelectDate = ({onDateData, onDayData}) => {
           <DayDate 
             className={`date ${timeList.some(t => t.date === formatDate(date)) ? 'available' : ''}`}
           >
-            {i}{console.log(i)}
+            {i}
           </DayDate>
           <DayWeek >
             {dayContent}

@@ -10,18 +10,22 @@ const MyPageTopInfo = ({
   handleInfoClick,
   category,
   viewcinema,
-  ownPost,
 }) => {
-
-  const id = viewcinema.map((a) => a.id);
-  const userId = id.find((a) => a === user.id);
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedAddrDetail, setSelectedAddrDetail] = useState("");
 
   if (!user || eventlist.length === 0) {
     return <div>로딩중</div>;
   }
-  console.log("viewcinema-========>", viewcinema);
-  console.log("user=======>", userId)
+
+  const openModal = (addr) => {
+    setIsOpen(true);
+    setSelectedAddrDetail(addr);
+  };
+
+  const oncloseModal = () => {
+    setIsOpen(false);
+  };
 
   const randomIndex = Math.floor(Math.random() * eventlist.length);
   const userGrade =
@@ -57,13 +61,12 @@ const MyPageTopInfo = ({
           <img src="/setup.png" alt="" />
         </LeftInfoFirst>
         <LeftInfoSecond>
-        {viewcinema &&
-          viewcinema.slice(0, 3).map((mycinema) => (
-            ownPost(userId) && (
-            <div key={mycinema.id}>
-              <Link to={`/cinema?${mycinema.addr}`}>{mycinema.addr}</Link>
-            </div>
-          )))}
+          {viewcinema &&
+            viewcinema.map((mycinema) => (
+              <div>
+                <Link to={`/cinema?${mycinema.addr}`}>{mycinema.addr}</Link>
+              </div>
+            ))}
         </LeftInfoSecond>
         <LeftInfoThird>
           {eventlist.length === 0 ? (
@@ -79,6 +82,9 @@ const MyPageTopInfo = ({
           )}
         </LeftInfoThird>
       </LeftInfo>
+      {isOpen && (
+        <MyCinemaModal oncloseModal={oncloseModal} addr={selectedAddrDetail} />
+      )}
     </MyPageTopInfoBlock>
   );
 };

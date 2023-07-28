@@ -81,7 +81,7 @@ const EventOtherCompots = ({ events }) => {
     }
   });
 
-  const filteredEvents = sortedEvents.filter((e) => e.categoryId === "기타");
+  const filteredEvents = sortedEvents.filter((e) => e.categoryId === 3);
 
   return (
     <EventOtherContentBlock>

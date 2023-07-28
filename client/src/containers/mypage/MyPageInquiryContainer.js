@@ -5,7 +5,6 @@ import {
   changeField,
   initialize,
   inquiryList,
-  inquiryUnload,
   inquiryWrite,
 } from "../../modules/mypage";
 import MyPageInquiryWrite from "../../components/mypage/MyPageInquiryWrite";
@@ -62,21 +61,17 @@ const MyPageInquiryContainer = () => {
     });
   };
   useEffect(() => {
-    dispatch(inquiryList({ id, page: currentPage }));
-    return () => {
-      dispatch(inquiryUnload());
-      // 클린업함수!!
-    };
-  }, [id, currentPage]);
+    dispatch(inquiryList({ id, page }));
+  }, [dispatch]);
 
-  // const pagination = async (page) => {
-  //   try {
-  //     console.log("pages============", page);
-  //     dispatch(inquiryList({ id, page }));
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const pagination = async (page) => {
+    try {
+      console.log("pages============", page);
+      dispatch(inquiryList({ id, page }));
+    } catch (error) {
+      console.error(error);
+    }
+  };
   useEffect(() => {
     return () => {
       dispatch(initialize());
@@ -100,6 +95,7 @@ const MyPageInquiryContainer = () => {
           myInquiry={inquiry}
           user={user}
           loading={loading}
+          pagination={pagination}
           lastPage={lastPage}
           handleNextPage={handleNextPage}
           handlePreviousPage={handlePreviousPage}

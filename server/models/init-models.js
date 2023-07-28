@@ -1,6 +1,5 @@
 var DataTypes = require("sequelize").DataTypes;
 var _cinemas = require("./cinemas");
-var _cinemas1 = require("./cinemas1");
 var _events = require("./events");
 var _inquirys = require("./inquirys");
 var _meetboards = require("./meetboards");
@@ -17,12 +16,10 @@ var _postcomments = require("./postcomments");
 var _posts = require("./posts");
 var _regions = require("./regions");
 var _reservations = require("./reservations");
-var _tickets = require("./tickets");
 var _users = require("./users");
 
 function initModels(sequelize) {
   var cinemas = _cinemas(sequelize, DataTypes);
-  var cinemas1 = _cinemas1(sequelize, DataTypes);
   var events = _events(sequelize, DataTypes);
   var inquirys = _inquirys(sequelize, DataTypes);
   var meetboards = _meetboards(sequelize, DataTypes);
@@ -39,7 +36,6 @@ function initModels(sequelize) {
   var posts = _posts(sequelize, DataTypes);
   var regions = _regions(sequelize, DataTypes);
   var reservations = _reservations(sequelize, DataTypes);
-  var tickets = _tickets(sequelize, DataTypes);
   var users = _users(sequelize, DataTypes);
 
   movietimes.belongsTo(cinemas, { as: "movietimes_num_cinema", foreignKey: "movietimes_num"});
@@ -81,7 +77,6 @@ function initModels(sequelize) {
 
   return {
     cinemas,
-    cinemas1,
     events,
     inquirys,
     meetboards,
@@ -98,7 +93,6 @@ function initModels(sequelize) {
     posts,
     regions,
     reservations,
-    tickets,
     users,
   };
 }

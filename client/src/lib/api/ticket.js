@@ -28,3 +28,4 @@ export const pay = async ({
   user
 });
 
+export const seat = async () => await client.get("/ticket/seat");

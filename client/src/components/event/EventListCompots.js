@@ -106,7 +106,7 @@ const EventListCompots = ({ events }) => {
         {sortedEvents && sortedEvents.length > 0 && (
           <EventItemBlock className="eventmovieitem">
             {sortedEvents
-              .filter((e) => e.categoryId === "영화")
+              .filter((e) => e.categoryId === 1)
               .slice(0, 3)
               .map((e) => (
                 <div key={e.eventNum}>
@@ -137,7 +137,7 @@ const EventListCompots = ({ events }) => {
         {sortedEvents && sortedEvents.length > 0 && (
           <EventItemBlock className="eventpromoteitem">
             {sortedEvents
-              .filter((e) => e.categoryId === "제휴할인")
+              .filter((e) => e.categoryId === 2)
               .slice(0, 3)
               .map((e) => (
                 <div key={e.eventNum}>
@@ -168,7 +168,7 @@ const EventListCompots = ({ events }) => {
         {sortedEvents && sortedEvents.length > 0 && (
           <EventItemBlock className="eventotheritem">
             {sortedEvents
-              .filter((e) => e.categoryId === "기타")
+              .filter((e) => e.categoryId === 3)
               .slice(0, 3)
               .map((e) => (
                 <div key={e.eventNum}>

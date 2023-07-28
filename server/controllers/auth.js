@@ -31,7 +31,7 @@ exports.register = async (req, res, next) => {
           grade: newUser.grade,
           gender: newUser.gender,
           point: newUser.point,
-          meet: null,
+          meet: [],
         },
         process.env.ACCESS_SECRET,
         {

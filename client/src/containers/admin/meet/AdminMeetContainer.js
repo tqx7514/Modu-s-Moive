@@ -24,7 +24,6 @@ const AdminMeetContainer = () => {
   const [tag, setTag] = useState(null);
   const [region, setRegion] = useState(null);
   const [detail, setDetail] = useState(false);
-  const [lastDate, setLastDate] = useState(null);
 
   useEffect(() => {
     if (user) {

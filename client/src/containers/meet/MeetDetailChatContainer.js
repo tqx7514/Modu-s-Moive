@@ -14,7 +14,7 @@ const MeetDetailChatContainer = () => {
     meet: meet.meet,
   }));
   const navigate = useNavigate();
-  const socket = useRef();
+  // const socket = useRef();
   // const [currentChat, setCurrentChat] = useState(undefined);
   const [currentUser, setCurrentUser] = useState(undefined);
 
@@ -37,7 +37,7 @@ const MeetDetailChatContainer = () => {
         ) : (
           <>
             <MeetDetailMember user={user} chatusers={meet.user} />
-            <MeetDetailChat user={user} meet={meet} socket={socket} />
+            <MeetDetailChat user={user} meet={meet} />
           </>
         )}
       </div>

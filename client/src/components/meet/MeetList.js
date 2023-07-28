@@ -1,11 +1,11 @@
 import { styled } from "styled-components";
 import Button from "../common/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import MeetSubInfo from "../common/MeetSubInfo";
 import MeetTags from "../common/MeetTags";
 import { faPerson, faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Responsive from "../common/Responsive";
 
 const MeetListBlock = styled(Responsive)`
@@ -148,7 +148,7 @@ const Container = styled.div`
 //   cursor: pointer;
 // `;
 
-const MeetItem = ({ meet, user_Id, user_meet }) => {
+const MeetItem = ({ meet, user_Id, user_meet, setSelectedRegion }) => {
   const { createdAt, tags, title, meetNum, region, views, count, userId } =
     meet;
   const tagsArray = Array.isArray(tags) ? tags : JSON.parse(tags);
@@ -160,6 +160,7 @@ const MeetItem = ({ meet, user_Id, user_meet }) => {
           region={region}
           publishedDate={new Date(createdAt)}
           views={views}
+          setSelectedRegion={setSelectedRegion}
         />
         <IconBlock>
           <DataBlock>
@@ -184,8 +185,17 @@ const MeetList = ({
   showWriteButton,
   regions,
   user,
+  counts,
 }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedRegion, setSelectedRegion] = useState("전국");
+  useEffect(() => {
+    const tag = searchParams.get("tag");
+    const region = searchParams.get("region");
+    if (region) {
+      setSelectedRegion(region);
+    }
+  }, []);
   const navigate = useNavigate();
   if (error) {
     return <MeetListBlock>에러 발생했습니다</MeetListBlock>;
@@ -221,7 +231,11 @@ const MeetList = ({
                 </div>
               ))}
           </RegionsBlock>
-          {/* {selectedRegion}의 모임 : 총 {meets && meets.length}개 입니다. */}
+          <CountMessage>
+            {selectedRegion}의 모임 : 총 <span>{counts && counts}</span>개
+            입니다.
+          </CountMessage>
+
           {!loading && meets && (
             <MeetListItem>
               {meets.map((meet) => (
@@ -230,6 +244,7 @@ const MeetList = ({
                   key={meet && meet.meetNum}
                   user_Id={user && user.id}
                   user_meet={user && user.meet}
+                  setSelectedRegion={setSelectedRegion}
                 />
               ))}
             </MeetListItem>
@@ -239,5 +254,21 @@ const MeetList = ({
     </>
   );
 };
+
+const CountMessage = styled.div`
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: end;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+  align-items: center;
+
+  > span {
+    margin-left: 0.3rem;
+    color: red;
+    font-size: 1.5rem;
+  }
+`;
 
 export default MeetList;

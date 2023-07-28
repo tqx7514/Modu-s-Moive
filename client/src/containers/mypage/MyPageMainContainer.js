@@ -32,11 +32,18 @@ const MyPageMainContainer = () => {
     checkUser();
   }, [user]);
 
-  useEffect(() => {
-    dispatch(viewCinema());
-  }, [dispatch]);
+  const ownPost = (id) => {
+    return user && user.id === id;
+  };
 
-  return <MyPageMain user={user} loading={loading} viewcinema={viewcinema} />;
+  return (
+    <MyPageMain
+      user={user}
+      loading={loading}
+      viewcinema={viewcinema}
+      ownPost={ownPost}
+    />
+  );
 };
 
 export default MyPageMainContainer;

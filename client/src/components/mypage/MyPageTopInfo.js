@@ -11,7 +11,10 @@ const MyPageTopInfo = ({
   category,
   viewcinema,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const mycinemas = viewcinema.filter((m) => m.id === user.id);
+  console.log("mycinemas=======================", mycinemas);
+  const id = viewcinema.map((a) => a.id);
+  const userId = id.find((a) => a === user.id);
   const [selectedAddrDetail, setSelectedAddrDetail] = useState("");
 
   if (!user || eventlist.length === 0) {
@@ -58,12 +61,14 @@ const MyPageTopInfo = ({
       <LeftInfo>
         <LeftInfoFirst>
           <div>MY 영화관</div>
-          <img src="/setup.png" alt="" />
+          <Link to={"/cinema"}>
+            <img src="/setup.png" alt="" />
+          </Link>
         </LeftInfoFirst>
         <LeftInfoSecond>
-          {viewcinema &&
-            viewcinema.map((mycinema) => (
-              <div>
+          {mycinemas &&
+            mycinemas.slice(0, 3).map((mycinema) => (
+              <div key={mycinema.id}>
                 <Link to={`/cinema?${mycinema.addr}`}>{mycinema.addr}</Link>
               </div>
             ))}
@@ -82,9 +87,6 @@ const MyPageTopInfo = ({
           )}
         </LeftInfoThird>
       </LeftInfo>
-      {isOpen && (
-        <MyCinemaModal oncloseModal={oncloseModal} addr={selectedAddrDetail} />
-      )}
     </MyPageTopInfoBlock>
   );
 };

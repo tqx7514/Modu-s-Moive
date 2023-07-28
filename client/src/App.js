@@ -28,6 +28,8 @@ import AdminPostPage from "./pages/admin/AdminPostPage";
 // import AdminEventPage from "./pages/admin/AdminEventPage";
 import AdminEventPage from "./pages/admin/AdminEventPage";
 import AdminEventWritePage from "./pages/admin/AdminEventWritePage";
+import AdminMeetPage from "./pages/admin/AdminMeetPage";
+import AdminUserPage from "./pages/admin/AdminUserPage";
 import PayCompletePage from "./pages/PayCompletePage";
 
 const App = () => {
@@ -42,7 +44,7 @@ const App = () => {
       <Route path="/ticket" element={<TicketMoviePage />} />
       <Route path="/ticket/personSeat" element={<TicketSeatPage />} />
       <Route path="/ticket/pay" element={<TicketPayPage />} />
-      <Route path="/ticket/payComplete" element={<PayCompletePage/>} />
+      <Route path="/ticket/payComplete" element={<PayCompletePage />} />
       {/* -----------*/}
       <Route path="/currentmovie/detail/:id" element={<MoviedetailPage />} />
       <Route path="/cinema" element={<CinemaPage />} />
@@ -61,11 +63,14 @@ const App = () => {
       <Route path="/event/other/:eventNum" element={<EventViewerPage />} />
       {/* 관리자페이지 */}
       <Route path="/admin" element={<AdminPage />} />
+      <Route path="/admin/user" element={<AdminUserPage />} />
       <Route path="/admin/currentmovie" element={<AdminCurrentMoviePage />} />
       <Route path="/admin/event" element={<AdminEventPage />} />
       <Route path="/admin/event/write" element={<AdminEventWritePage />} />
       <Route path="/admin/postlist" element={<AdminPostListPage />} />
       <Route path="/adminpost/detail/:postNum" element={<AdminPostPage />} />
+      <Route path="/admin/event" element={<AdminEventPage />} />
+      <Route path="/admin/meet" element={<AdminMeetPage />} />
       {/* <Route path="/admin/event" element={<AdminEventPage />} />  */}
     </Routes>
   );

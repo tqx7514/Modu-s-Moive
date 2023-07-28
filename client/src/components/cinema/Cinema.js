@@ -141,18 +141,39 @@ const Selected = styled.div`
   font-weight: bold;
   font-size: 1rem;
 `;
-const Cinema = ({ cinema, region, mycinema, onCreate }) => {
+const Cinema = ({
+  cinema,
+  region,
+  mycinema,
+  onCreate,
+  onDelete,
+  user,
+  ownPost,
+}) => {
+  console.log("cinema=================", cinema);
   const { currentmovielist } = useSelector((state) => ({
     currentmovielist: state.movielist.currentmovielist,
     upcominglist: state.movielist.upcominglist,
   }));
 
   const cinemacarousel = currentmovielist.currentmovielist;
+  // const mycinemas = mycinema && mycinema.viewcinema;
+  const addr = mycinema && mycinema.map((m) => m.addr);
+  const id = mycinema && mycinema.map((m) => m.id);
+  const myId = mycinema.filter((my) => my.id === user);
+  const cinemaId = id && id.find((a) => a === user);
+  console.log("mycinema========>", mycinema);
+  console.log("mycinema.Id=====>", cinemaId);
+  console.log("Id=====>", id);
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCinemas, setSelectedCinemas] = useState([]);
   const [selectedAddrDetail, setSelectedAddrDetail] = useState("");
   const [selectedCinema, setSelectedCinema] = useState(null);
+  const mycinemas = mycinema.filter((m) => user === m.id);
+
+  console.log("ㄴㅇㄹ나ㅣㅇ런아ㅣ러ㅏㅣㄴㅇ러ㅏㅣㄴ어라ㅣ", mycinemas);
+
   const location = useLocation();
   const openModal = () => {
     setIsOpen(true);
@@ -165,7 +186,8 @@ const Cinema = ({ cinema, region, mycinema, onCreate }) => {
   };
 
   const handleRegionClick = (grade) => {
-    const cinemasWithMatchingGrade = cinema.filter((m) => m.grade === grade);
+    const cinemasWithMatchingGrade =
+      cinema && cinema.filter((m) => m.grade === grade);
     setSelectedCinemas(cinemasWithMatchingGrade);
   };
   console.log(
@@ -178,15 +200,12 @@ const Cinema = ({ cinema, region, mycinema, onCreate }) => {
     setSelectedCinema(cinema);
   };
 
-  const addr = mycinema && mycinema.map((m) => m.addr);
-  console.log(addr);
-
   useEffect(() => {
     const cinemaQuery = decodeQueryString(location.search).substring(1);
 
     if (cinemaQuery) {
-      const a = cinema.filter((m) => m.cinema === cinemaQuery);
-      console.log("aaaaaaaaaaaaaaaaa", a[0]);
+      const a = cinema && cinema.filter((m) => m.cinema === cinemaQuery);
+      console.log("aaaaaaaaaaaaaaaaa", user);
       const cinemas = cinema.filter((m) => m.grade === a[0].grade);
 
       setSelectedAddrDetail(a[0].addr_detail);
@@ -194,6 +213,65 @@ const Cinema = ({ cinema, region, mycinema, onCreate }) => {
       setSelectedCinemas(cinemas);
     }
   }, []);
+
+  const renderButton = (cinemaId) => {
+    const count = mycinemas.filter((m) => m.addr === cinemaId);
+    console.log("갯수ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ", count.length);
+    if (count.length > 0) {
+      return (
+        <button
+          className="btn_col4 ty3"
+          onClick={() => onDelete(selectedCinema, user)}
+        >
+          <span className="ico_hearts"></span>
+          MY 영화관
+        </button>
+      );
+    } else {
+      return (
+        <button
+          className="btn_col4 ty3"
+          onClick={() => onCreate(selectedCinema, selectedAddrDetail)}
+        >
+          <span className="ico_heart"></span>
+          MY 영화관
+        </button>
+      );
+    }
+    // if (ownPost(cinemaId)) {
+    //   if (addr && addr.find((item) => selectedCinema === item) && myId) {
+    //     return (
+    //       <button
+    //         className="btn_col4 ty3"
+    //         onClick={() => onDelete(selectedCinema, cinemaId)}
+    //       >
+    //         <span className="ico_hearts"></span>
+    //         MY 영화관
+    //       </button>
+    //     );
+    //   } else {
+    //     return (
+    //       <button
+    //         className="btn_col4 ty3"
+    //         onClick={() => onCreate(selectedCinema, selectedAddrDetail)}
+    //       >
+    //         <span className="ico_heart"></span>
+    //         MY 영화관
+    //       </button>
+    //     );
+    //   }
+    // } else {
+    //   return (
+    //     <button
+    //       className="btn_col4 ty3"
+    //       onClick={() => onCreate(selectedCinema, selectedAddrDetail)}
+    //     >
+    //       <span className="ico_heart"></span>
+    //       MY 영화관
+    //     </button>
+    //   );
+    // }
+  };
 
   console.log("asdfasdf", selectedCinemas);
   return (
@@ -235,23 +313,7 @@ const Cinema = ({ cinema, region, mycinema, onCreate }) => {
         </Menu>
         <Title>
           {selectedCinema && <h1>{selectedCinema}</h1>}
-          {selectedCinema === addr ? (
-            <button
-              className="btn_col4 ty3"
-              onClick={() => onCreate(selectedCinema, selectedAddrDetail)}
-            >
-              <span className="ico_heart"></span>
-              MY 영화관
-            </button>
-          ) : (
-            <button
-              className="btn_col4 ty3"
-              onClick={() => onCreate(selectedCinema, selectedAddrDetail)}
-            >
-              <span className="ico_hearts"></span>
-              MY 영화관
-            </button>
-          )}
+          {renderButton(selectedCinema)}
           <button className="btn_col4 ty3">단체/대관문의</button>
         </Title>
         <Total>

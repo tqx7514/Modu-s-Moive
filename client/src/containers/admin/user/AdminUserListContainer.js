@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
-import { userList, userDel, initialize } from "../../../modules/admin/adminuser";
+import { userList, userDel, updateGrade, initialize } from "../../../modules/admin/adminuser";
 import Adminuser from "../../../components/admin/users/Adminuser";
 import Swal from "sweetalert2";
 

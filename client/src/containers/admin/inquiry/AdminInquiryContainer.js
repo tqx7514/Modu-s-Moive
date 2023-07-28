@@ -49,6 +49,8 @@ const AdminInquiryContainer = () => {
   const handleDetailClick = () => {
     setDetail(!detail);
   };
+
+  
   return (
     <AdminInquiryContainerBlock>
       <AdminInquiry

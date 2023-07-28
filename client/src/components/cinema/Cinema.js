@@ -171,6 +171,7 @@ const Cinema = ({
   const [selectedAddrDetail, setSelectedAddrDetail] = useState("");
   const [selectedCinema, setSelectedCinema] = useState(null);
   const mycinemas = mycinema.filter((m) => user === m.id);
+  console.log('아아아아아아아아아아',selectedCinema);
 
   console.log("ㄴㅇㄹ나ㅣㅇ런아ㅣ러ㅏㅣㄴㅇ러ㅏㅣㄴ어라ㅣ", mycinemas);
 
@@ -311,6 +312,8 @@ const Cinema = ({
             </ul>
           </AddrDetail>
         </Menu>
+        {selectedCinema!==null && (
+          <>
         <Title>
           {selectedCinema && <h1>{selectedCinema}</h1>}
           {renderButton(selectedCinema)}
@@ -341,6 +344,10 @@ const Cinema = ({
             <span>지도보기</span>
           </button>
         </ModalTag>
+        </>
+        )}
+        
+
       </CinemaContent>
       {selectedAddrDetail && isOpen && (
         <CinemaModal oncloseModal={oncloseModal} cinema={selectedAddrDetail} />

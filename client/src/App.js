@@ -31,6 +31,7 @@ import AdminMeetPage from "./pages/admin/AdminMeetPage";
 import AdminUserPage from "./pages/admin/AdminUserPage";
 import PayCompletePage from "./pages/PayCompletePage";
 import AdminEventViewPage from "./pages/admin/AdminEventViewPage";
+import AdminInquiryPage from "./pages/admin/AdminInquiryPage";
 
 const App = () => {
   return (
@@ -74,8 +75,8 @@ const App = () => {
       <Route path="/admin/postlist" element={<AdminPostListPage />} />
       <Route path="/adminpost/detail/:postNum" element={<AdminPostPage />} />
       <Route path="/admin/event" element={<AdminEventPage />} />
+      <Route path="/admin/inquiry" element={<AdminInquiryPage />} />
       <Route path="/admin/meet" element={<AdminMeetPage />} />
-      {/* <Route path="/admin/event" element={<AdminEventPage />} />  */}
     </Routes>
   );
 };

@@ -21,15 +21,6 @@ const MyPageTopInfo = ({
     return <div>로딩중</div>;
   }
 
-  const openModal = (addr) => {
-    setIsOpen(true);
-    setSelectedAddrDetail(addr);
-  };
-
-  const oncloseModal = () => {
-    setIsOpen(false);
-  };
-
   const randomIndex = Math.floor(Math.random() * eventlist.length);
   const userGrade =
     user.grade === 0 ? "일반" : user.grade === 1 ? "VIP" : "관리자";

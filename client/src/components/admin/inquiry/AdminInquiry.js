@@ -1,11 +1,12 @@
 import { styled, css } from "styled-components";
-import Responsive from "../../common/Responsive";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import MyPageInquiryPagination from "../../mypage/MyPageInquiryPagination";
 import AdminTitle from "../../common/admin/AdminTitle";
+import Responsive from "../../common/Responsive";
+import MyPageInquiryPagination from "../../mypage/MyPageInquiryPagination";
+import { useState } from "react";
+import AdminInquiryDetailContainer from "../../../containers/admin/inquiry/AdminInquiryDetailContainer";
 
-const Adminuser = ({
+const AdminInquiry = ({
+  inquiry,
   count,
   category,
   loading,
@@ -18,10 +19,6 @@ const Adminuser = ({
   handlePreviousPage,
   detail,
   handleDetailClick,
-  userlist,
-  onDelete,
-  handleGradeUpClick,
-  handleGradeDownClick,
 }) => {
   const [detailInq, setDetailInq] = useState(null);
   console.log("카테고리리리리리", category === 1);
@@ -71,85 +68,71 @@ const Adminuser = ({
       ) : (
         <>
           <HeaderBlock>
-            <AdminTitle title="유저 관리" />
+            <AdminTitle title="문의관리" />
+            <div className="count">
+              문의 총 <span>{count}</span>개
+            </div>
           </HeaderBlock>
           {detail ? (
             <>
               <CategoryBlock>
                 <Buttons onClick={handleDetailClick}>목록으로</Buttons>
               </CategoryBlock>
+              <AdminInquiryDetailContainer
+                num={detailInq}
+                handleDetailClick={handleDetailClick}
+              />
             </>
           ) : (
             <>
+              <CategoryBlock>
+                <Buttons onClick={onAllClick} category={category === 1}>
+                  전체 문의
+                </Buttons>
+                <Buttons onClick={onUndoneClick} category={category === 3}>
+                  처리중인 문의
+                </Buttons>
+                <Buttons onClick={onDoneClick} category={category === 2}>
+                  완료된 문의
+                </Buttons>
+              </CategoryBlock>
               <InquiryHeaderBlock>
                 <InquiryHeaderItem width="5%">번호</InquiryHeaderItem>
-                <InquiryHeaderItem width="20%">아이디</InquiryHeaderItem>
-                <InquiryHeaderItem width="15%">이름</InquiryHeaderItem>
-                <InquiryHeaderItem width="30%">email</InquiryHeaderItem>
-                <InquiryHeaderItem width="30%">전화번호</InquiryHeaderItem>
-                <InquiryHeaderItem width="10%">나이</InquiryHeaderItem>
-                <InquiryHeaderItem width="7%">성별</InquiryHeaderItem>
-                <InquiryHeaderItem width="13%">Point</InquiryHeaderItem>
-                <InquiryHeaderItem width="15%">등급</InquiryHeaderItem>
-                <InquiryHeaderItem width="10%">등급관리</InquiryHeaderItem>
-                <InquiryHeaderItem width="7%">삭제</InquiryHeaderItem>
+                <InquiryHeaderItem width="15%">아이디</InquiryHeaderItem>
+                <InquiryHeaderItem width="10%">분류</InquiryHeaderItem>
+                <InquiryHeaderItem width="45%">제목</InquiryHeaderItem>
+                <InquiryHeaderItem width="13%">작성일</InquiryHeaderItem>
+                <InquiryHeaderItem width="7%">상태</InquiryHeaderItem>
               </InquiryHeaderBlock>
               <div>
-                {userlist &&
-                  userlist.map((m) => (
-                    <InquiryBlock>
+                {inquiry &&
+                  inquiry.map((m, index) => (
+                    <InquiryBlock
+                      key={index}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => onDetailClick(m.inquiryNum)}
+                    >
                       <InquiryContent>
                         <InquiryHeaderItem width="5%">
-                          {m.userNum}
-                        </InquiryHeaderItem>
-                        <InquiryHeaderItem width="20%">
-                          {m.id}
+                          {m.inquiryNum}
                         </InquiryHeaderItem>
                         <InquiryHeaderItem width="15%">
-                          {m.name}
-                        </InquiryHeaderItem>
-                        <InquiryHeaderItem width="30%">
-                          {m.email}
-                        </InquiryHeaderItem>
-                        <InquiryHeaderItem width="30%">
-                          {m.tel}
+                          {m.userId}
                         </InquiryHeaderItem>
                         <InquiryHeaderItem width="10%">
-                          {m.age}
+                          {m.classify}
                         </InquiryHeaderItem>
-                        <InquiryHeaderItem width="7%">
-                          {m.gender}
+                        <InquiryHeaderItem width="45%">
+                          {m.title}
                         </InquiryHeaderItem>
                         <InquiryHeaderItem width="13%">
-                          {m.point}
-                        </InquiryHeaderItem>
-                        <InquiryHeaderItem width="15%">
-                          {m.grade === 2
-                            ? "관리자"
-                            : m.grade === 1
-                            ? "VIP"
-                            : m.grade === 0
-                            ? "일반유저"
-                            : ""}
-                        </InquiryHeaderItem>
-                        <InquiryHeaderItem width="10%">
-                          {m.grade === 0 ? (
-                            <button onClick={() => handleGradeUpClick(m.grade)}>
-                              등급업
-                            </button>
-                          ) : m.grade === 1 ? (
-                            <button
-                              onClick={() => handleGradeDownClick(m.grade)}
-                            >
-                              등급다운
-                            </button>
-                          ) : (
-                            ""
-                          )}
+                          {formatCreatedAt(m.createdAt)}
                         </InquiryHeaderItem>
                         <InquiryHeaderItem width="7%">
-                          {m.grade !== 2 && (
-                            <button onClick={() => onDelete(m.id)}>삭제</button>
+                          {state(m.answer) ? (
+                            <div className="done">답변완료</div>
+                          ) : (
+                            <div className="undone">처리중...</div>
                           )}
                         </InquiryHeaderItem>
                       </InquiryContent>
@@ -264,7 +247,7 @@ const CategoryBlock = styled.div`
 
 const AdminInquiryBlock = styled(Responsive)`
   background-color: gray;
-  height: 130vh;
+  flex: 1;
   > .end {
     border-top: 1px solid lightgray;
     margin: 0.2rem 0 1rem 0;
@@ -288,5 +271,9 @@ const HeaderBlock = styled.div`
 const InquiryContent = styled.div`
   display: flex;
   padding: 0.5rem 0 0.5rem 0;
+
+  &:hover {
+    color: white;
+  }
 `;
-export default Adminuser;
+export default AdminInquiry;

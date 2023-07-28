@@ -16,7 +16,7 @@ const cinemaRouter = require("./routes/cinema");
 const mypageRouter = require("./routes/mypage");
 const adminEventRouter = require("./routes/admin/adminevent");
 const adminPostRouter = require("./routes/admin/adminpost");
-// const adminInquiryRouter = require("./routes/admin/admininquiry");
+const adminInquiryRouter = require("./routes/admin/admininquiry");
 const adminUser = require("./routes/admin/adminuser");
 
 const axios = require("axios");
@@ -66,7 +66,7 @@ app.use("/admin/event/", adminEventRouter);
 //관리자페이지
 app.use("/admin/post", adminPostRouter);
 app.use("/admin/event", adminEventRouter);
-// app.use("/admin/inquiry", adminInquiryRouter);
+app.use("/admin/inquiry", adminInquiryRouter);
 app.use("/admin/user", adminUser);
 
 // catch 404 and forward to error handler

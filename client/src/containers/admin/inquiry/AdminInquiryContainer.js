@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import AdminInquiry from "../../../components/admin/inquiry/AdminInquiry";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+
+import AdminInquiry from "../../../components/admin/inquiry/AdminInquiry";
 import {
   adminInquiryList,
   initialize,
@@ -50,7 +51,6 @@ const AdminInquiryContainer = () => {
     setDetail(!detail);
   };
 
-  
   return (
     <AdminInquiryContainerBlock>
       <AdminInquiry

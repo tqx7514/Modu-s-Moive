@@ -2,7 +2,8 @@ import React, { useCallback } from 'react';
 import SelectPay from '../../../components/ticket/step03/SelectPay';
 import ReserveNavContainer from '../ReserveNavContainer';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDiscount, pay } from '../../../modules/stepsecond';
+import { getDiscount, getTotalPrice, pay, setPerson, setSelectedSeat } from '../../../modules/stepsecond';
+import { setData } from '../../../modules/stepfirst';
 
 const SelectPayContainer = () => {
   const {
@@ -30,6 +31,12 @@ const {user} = useSelector(({user}) => user);
       discount,
       user
     }));
+    dispatch(setData({key: "cinema", value: ""}));
+    dispatch(setData({key: "time", value: ""}));
+    dispatch(setPerson(''));
+    dispatch(setSelectedSeat(null));
+    discount(getTotalPrice(''))
+    dispatch(OnDiscount(''))
 
   }, [dispatch, data, number, person, seat, totalPrice, discount, user]);
 

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "../../../../node_modules/react-router-dom/dist/index";
+import { getUsingSeat } from "../../../modules/stepsecond";
 
 const FirstModal = styled.div`
   position: fixed;
@@ -243,7 +244,10 @@ const StepFirstModal = ({ modal, setIsModal }) => {
   const [isLogin, setIslogin] = useState(false);
 
   const { data } = useSelector(({ stepfirst }) => stepfirst);
-  const { seat, reservation } = useSelector(({ stepsecond }) => stepsecond);
+  const { seat, reservation } = useSelector(({ stepsecond }) => ({
+    seat: stepsecond,
+    reservation: stepsecond.reservation,
+  }));
   const { user } = useSelector(({ user }) => ({ user: user.user }));
 
   const handleModal = () => {
@@ -289,6 +293,12 @@ const StepFirstModal = ({ modal, setIsModal }) => {
 
   const seatRow = ["A", "B", "C", "D", "E", "F"];
   const seatCol = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUsingSeat());
+  }, [dispatch]);
+  
 
   return (
     <FirstModal className={modal === true ? "on" : ""}>

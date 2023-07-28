@@ -101,6 +101,7 @@ const SelectSeat = ({
 
   const { data } = useSelector(({ stepfirst }) => stepfirst);
   const { number, seat, reservation } = useSelector(({ stepsecond }) => stepsecond);
+  console.log(reservation)
 
 
   const findMatchingReservation = () => {
@@ -122,7 +123,6 @@ const SelectSeat = ({
   };
   
   const matchingReservation = findMatchingReservation();
-  console.log((seatRow.length * seatCol.length) - matchingReservation.length)
 
   const isSeatDisabled = (row, col) => {
     if (!matchingReservation) {

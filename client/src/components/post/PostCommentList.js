@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 import SubInfo from "../common/SubInfo";
 import palette from "../../lib/styles/palette";
 import { useDispatch } from "react-redux";
@@ -14,7 +14,7 @@ import Responsive from "../common/Responsive";
 import PostCommentActionButtons from "./PostCommentActionButtons";
 
 const PostCommentListBlock = styled(Responsive)`
-  border: solid 1px black;
+  // border: solid 1px black;
   padding: 1rem;
   margin-top: 3rem;
 `;
@@ -46,7 +46,8 @@ const CommentButton = styled.button`
 const CommentItemBlock = styled.div`
   display: flex;
   align-items: center;
-  border: solid 1px black;
+  border: none;
+  border-bottom: 1px solid black;
   padding: 1rem;
   margin-bottom: 1rem;
 `;
@@ -68,6 +69,7 @@ const CommentItemThirdLine = styled.div`
   align-items: center;
   justify-content: flex-end;
   flex: 1;
+  margin-top: 1rem;
 `;
 
 const CommentItemContent = styled.div`
@@ -109,7 +111,7 @@ const PublishedDate = styled(SubInfo)`
 
 const CommentListBlock = styled.div`
   margin-top: 2rem;
-  border-bottom: 1px solid black;
+  // border-bottom: 1px solid black;
 `;
 
 const formatDate = (dateString) => {
@@ -139,13 +141,11 @@ const PostCommentItem = ({
             {user && user.id === userId && (
               <CommentItemThirdLine>
                 <CommentItemButton>
-                  {ownPostComment && (
-                    <PostCommentActionButtons
-                      onRemove={onRemove}
-                      commentNum={commentNum}
-                      postNum={postNum}
-                    />
-                  )}
+                  <PostCommentActionButtons
+                    onRemove={onRemove}
+                    commentNum={commentNum}
+                    postNum={postNum}
+                  />
                 </CommentItemButton>
               </CommentItemThirdLine>
             )}

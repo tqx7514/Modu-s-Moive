@@ -13,7 +13,7 @@ const router = express.Router();
 
 //   /admin 생략해도 됨
 router.get("/list", adminEventList);
-router.get("/:eventNum", adminEventRead);
+router.get("/detail/:eventNum", adminEventRead);
 router.post("/write", adminEventWrite);
 router.delete("/:eventNum", adminEventDelete);
 router.patch("/:eventNum", adminEventUpdate);

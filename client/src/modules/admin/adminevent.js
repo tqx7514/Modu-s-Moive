@@ -11,18 +11,16 @@ const UNLOAD_EVENT = "adminevent/UNLOAD_EVENT";
 
 export const readEvent = createAction(READ_EVENT, (eventNum) => eventNum);
 export const unloadEvent = createAction(UNLOAD_EVENT);
-console.log("readEvent =====================> ", readEvent)
 
-const readEventsSaga = createRequestSaga(
-  READ_EVENT,
-  admineventAPI.readAdminEvent
-);
+const readEventsSaga = createRequestSaga(READ_EVENT, (eventNum) => {
+  return admineventAPI.readAdminEvent(eventNum);
+});
 export function* readEventSaga() {
   yield takeLatest(READ_EVENT, readEventsSaga);
 }
 
 const initialState = {
-  adminevent: null,
+  adminevent: [],
   error: null,
 };
 

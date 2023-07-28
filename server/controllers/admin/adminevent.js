@@ -1,5 +1,4 @@
-const { Op } = require("sequelize");
-const { events, users } = require("../../models");
+const { events } = require("../../models");
 
 exports.adminEventWrite = async (req, res, next) => {
   const {
@@ -12,20 +11,33 @@ exports.adminEventWrite = async (req, res, next) => {
     endEventDate,
   } = req.body;
 
-  if (!categoryId || !eventTitle || !eventContent || !eventImg || !startEventDate || !endEventDate) {
+  console.log("categoryId", categoryId);
+  console.log("userId", userId);
+  console.log("eventTitle", eventTitle);
+  console.log("eventContent", eventContent);
+  console.log("eventImg", eventImg);
+  console.log("startEventDate", startEventDate);
+  console.log("endEventDate", endEventDate);
+
+  if (
+    !categoryId ||
+    !eventTitle ||
+    !eventContent ||
+    !eventImg ||
+    !startEventDate ||
+    !endEventDate
+  ) {
     res.status(400).json({ message: "제목과 내용들을 입력해주세요." });
     return;
   }
 
   try {
-    const eventImgString = JSON.stringify(eventImg);
-    const eventContentString = JSON.stringify(eventContent);
     const newAdminEventWrite = await events.create({
       categoryId,
       userId,
       eventTitle,
-      eventContent: eventContentString,
-      eventImg: eventImgString,
+      eventContent,
+      eventImg,
       startEventDate,
       endEventDate,
     });
@@ -39,18 +51,17 @@ exports.adminEventWrite = async (req, res, next) => {
 
 exports.adminEventRead = async (req, res, next) => {
   const eventNum = req.params.eventNum;
-  const event = await events.findOne({
+  const adminevent = await events.findOne({
     where: { eventNum },
   });
-  if (!event) {
+  if (!adminevent) {
     res.status(404).json({ message: "게시글이 존재하지 않습니다." });
   }
-  res.json(event);
-  console.log("adminEventRead", event);
+  res.json(adminevent);
+  console.log("adminEventRead", adminevent);
 };
 
 exports.adminEventList = async (req, res) => {
-  // console.log("adminEventList페이지 백 page====", req.query.page);
   const page = parseInt(req.query.page || "1", 10);
   if (page < 1) {
     res.status(400);
@@ -90,8 +101,6 @@ exports.adminEventUpdate = async (req, res, next) => {
   } = req.body;
 
   try {
-    const eventImgString = JSON.stringify(eventImg);
-    const eventContentString = JSON.stringify(eventContent);
     const existingEvent = await events.findOne({
       where: { eventNum },
     });
@@ -101,14 +110,17 @@ exports.adminEventUpdate = async (req, res, next) => {
       return;
     }
 
+    const updatedAt = new Date();
+
     const [updateEventRows] = await events.update(
       {
         categoryId,
         eventTitle,
-        eventContent: eventContentString,
-        eventImg: eventImgString,
+        eventContent,
+        eventImg,
         startEventDate,
         endEventDate,
+        updatedAt,
       },
       {
         where: { eventNum },

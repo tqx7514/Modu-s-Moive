@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { 
-    getEvents,
-    GetMovieEvents,
-    GetPromoteEvents,
-    GetOtherEvents,
-    GetEventDetail,
+const {
+  getEvents,
+  GetMovieEvents,
+  GetPromoteEvents,
+  GetOtherEvents,
+  GetEventDetail,
 } = require("../controllers/event");
 
 // 이벤트 메인페이지

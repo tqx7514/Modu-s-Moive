@@ -17,8 +17,7 @@ const AdminEventItemTitleWrapper = styled.div`
   align-items: center;
 `;
 
-const AdminEventItem = styled.p`
-`;
+const AdminEventItem = styled.b``;
 
 const AdminEventListTitleComponent = () => {
   return (

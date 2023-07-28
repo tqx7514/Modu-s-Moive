@@ -14,10 +14,10 @@ const AdminEventViewerContainer = () => {
   const { eventNum } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { event, error, loading, user } = useSelector(
-    ({ event, loading, user }) => ({
-      event: event.event,
-      error: event.error,
+  const { adminevent, error, loading, user } = useSelector(
+    ({ adminevent, loading, user }) => ({
+      adminevent: adminevent?.adminevent,
+      error: adminevent?.error,
       loading: loading["adminevent/READ_EVENT"],
       user: user.user,
     })
@@ -30,9 +30,9 @@ const AdminEventViewerContainer = () => {
   }, [dispatch, eventNum]);
 
   const onEdit = () => {
-    dispatch(setOriginalEvent(event));
+    dispatch(setOriginalEvent(adminevent));
     navigate("admin/write");
-    console.log("EventViewerContainer onEdit Error", event);
+    console.log("EventViewerContainer onEdit Error", adminevent);
   };
 
   const onRemove = async () => {
@@ -44,12 +44,12 @@ const AdminEventViewerContainer = () => {
     }
   };
 
-  const ownEvent = (user && user.id) === (event && event.userId);
+  const ownEvent = (user && user.id) === (adminevent && adminevent.userId);
 
   return (
     <AdminEventViewerComponent
       user={user}
-      event={event}
+      adminevent={adminevent}
       loading={loading}
       error={error}
       actionButtons={

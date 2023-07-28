@@ -7,7 +7,7 @@ import { adminEventList } from "../../../modules/admin/admineventlist";
 const AdminEventListContainer = () => {
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
-  
+
   const { admineventlist, error, loading, user } = useSelector(
     ({ admineventlist, loading, user }) => ({
       admineventlist: admineventlist.admineventlist,
@@ -21,7 +21,6 @@ const AdminEventListContainer = () => {
     const page = parseInt(searchParams.get("page"), 10) || 1;
     dispatch(adminEventList({ page }));
   }, [dispatch, searchParams]);
-  
 
   return (
     <>

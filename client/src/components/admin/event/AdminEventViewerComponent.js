@@ -36,15 +36,24 @@ const AdminEventViewerContent = styled.div`
   margin-bottom: 5rem;
 
   img {
-    max-width: 980px;
-    max-height: 1215px;
-    width: auto;
+    max-width: 100%;
     height: auto;
   }
 `;
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getDate()).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+  return `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
+};
+
 const AdminEventViewerComponent = ({
-  event,
+  adminevent,
   error,
   loading,
   actionButtons,
@@ -59,7 +68,7 @@ const AdminEventViewerComponent = ({
     }
     return <AdminEventViewerBlock>오류 발생</AdminEventViewerBlock>;
   }
-  if (loading || !event) {
+  if (loading || !adminevent) {
     return null;
   }
 
@@ -72,7 +81,9 @@ const AdminEventViewerComponent = ({
     createdAt,
     updatedAt,
     view,
-  } = event;
+  } = adminevent;
+  const formattedDate = formatDate(createdAt);
+  const formattedUpdateDate = formatDate(updatedAt);
 
   return (
     <>
@@ -88,8 +99,10 @@ const AdminEventViewerComponent = ({
             <AdminEventInfoItem>
               이벤트 종료일: {endEventDate}
             </AdminEventInfoItem>
-            <AdminEventInfoItem>등록일: {createdAt}</AdminEventInfoItem>
-            <AdminEventInfoItem>수정일: {updatedAt}</AdminEventInfoItem>
+            <AdminEventInfoItem>등록일: {formattedDate}</AdminEventInfoItem>
+            <AdminEventInfoItem>
+              수정일: {formattedUpdateDate}
+            </AdminEventInfoItem>
           </AdminEventViewerInfoWrapper>
           {actionButtons}
           <AdminEventViewerContent

@@ -21,17 +21,17 @@ export function* adminEventListSaga() {
 }
 
 const initialState = {
-  admineventlist: [],
+  admineventlist: null,
   error: null,
   lastPage: 1,
 };
 
 const admineventlist = handleActions(
   {
-    [ADMINEVENT_LIST_SUCCESS]: (state, { payload: eventlist }) => ({
+    [ADMINEVENT_LIST_SUCCESS]: (state, { payload: admineventlist }) => ({
       ...state,
-      admineventlist: eventlist.admineventlist,
-      lastPage: eventlist.totalPages,
+      admineventlist: admineventlist.admineventlist,
+      lastPage: admineventlist.totalPages,
     }),
     [ADMINEVENT_LIST_FAILURE]: (state, { payload: error }) => ({
       ...state,

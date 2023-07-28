@@ -48,7 +48,7 @@ const ShowMoreButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #ECECEC;
+  border: 1px solid #ececec;
   margin: 10px 0px 10px 0px;
 `;
 
@@ -82,7 +82,7 @@ const EventMovieCompots = ({ events }) => {
     }
   });
 
-  const filteredEvents = sortedEvents.filter((e) => e.categoryId === 1);
+  const filteredEvents = sortedEvents.filter((e) => e.categoryId === "영화");
 
   return (
     <EventMovieContentBlock>

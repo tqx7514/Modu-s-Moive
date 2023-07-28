@@ -47,7 +47,7 @@ const ShowMoreButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #ECECEC;
+  border: 1px solid #ececec;
   margin: 10px 0px 10px 0px;
 `;
 
@@ -81,7 +81,7 @@ const EventOtherCompots = ({ events }) => {
     }
   });
 
-  const filteredEvents = sortedEvents.filter((e) => e.categoryId === 3);
+  const filteredEvents = sortedEvents.filter((e) => e.categoryId === "기타");
 
   return (
     <EventOtherContentBlock>

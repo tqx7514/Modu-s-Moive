@@ -30,7 +30,7 @@ import cinema, { cinemaSaga } from "./cinema";
 import meetboard, { meetBoardSaga } from "./meetboard";
 import adminevent, { readEventSaga } from "./admin/adminevent";
 import admineventlist, { adminEventListSaga } from "./admin/admineventlist";
-import admineventwrite, { eventWriteSaga } from "./admin/admineventwrite";
+import admineventwrite, { adminEventWriteSaga } from "./admin/admineventwrite";
 import mypage, { mypageSaga } from "./mypage";
 
 const rootReducer = combineReducers({
@@ -56,7 +56,7 @@ const rootReducer = combineReducers({
   mypage,
   adminposts,
   adminPost,
-  // adminevent,
+  adminevent,
   admineventlist,
   admineventwrite,
   // adminquiry,
@@ -90,7 +90,7 @@ export function* rootSaga() {
     adminPostSaga(),
     readEventSaga(),
     adminEventListSaga(),
-    eventWriteSaga(),
+    adminEventWriteSaga(),
     paymentSaga(),
     // admininquirySaga(),
     adminuserSaga(),

@@ -1,26 +1,38 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect, useCallback } from "react";
-import { readRegion, readCinema, myCinema } from "../../modules/cinema";
+import {
+  readRegion,
+  readCinema,
+  myCinema,
+  DelmyCinema,
+  viewCinema,
+} from "../../modules/cinema";
 import Cinema from "../../components/cinema/Cinema";
+import { useNavigate } from "../../../node_modules/react-router-dom/dist/index";
+import Swal from "sweetalert2";
 
 const CinemaContainer = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { region, cinema, user, viewcinema } = useSelector(
-    ({ cinema, user }) => ({
+    ({ cinema, user, loading }) => ({
       region: cinema.region,
       cinema: cinema.cinema,
-      user: user.user.id,
+      user: user.user && user.user.id,
       viewcinema: cinema.viewcinema,
     })
   );
   console.log("cinemas======>", cinema);
   console.log("regions======>", region);
   console.log("viewcinema", viewcinema);
+  console.log("user", user);
 
   useEffect(() => {
     dispatch(readRegion());
     dispatch(readCinema());
+    dispatch(viewCinema());
   }, [dispatch]);
+
   const onCreate = async (selectedCinema, selectedAddrDetail) => {
     Swal.fire({
       title: "MY영화관",
@@ -84,7 +96,10 @@ const CinemaContainer = () => {
       cinema={cinema}
       region={region}
       mycinema={viewcinema}
+      user={user}
       onCreate={onCreate}
+      onDelete={onDelete}
+      ownPost={ownPost}
     />
   );
 };

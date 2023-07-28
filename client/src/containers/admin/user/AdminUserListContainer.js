@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
-import { userList, userDel, updateGrade, initialize } from "../../../modules/admin/adminuser";
+import { userList, userDel, initialize } from "../../../modules/admin/adminuser";
 import Adminuser from "../../../components/admin/users/Adminuser";
 import Swal from "sweetalert2";
+import { usergrade } from "../../../lib/api/admin/adminuser";
 
 const AdminUserListContainer = () => {
   const dispatch = useDispatch();
-  const { userlists, count, loading, lastPage } = useSelector(
+  const { userlists, userlist, count, loading, lastPage } = useSelector(
     ({ adminuser, loading }) => ({
       userlists: adminuser.userlists,
       count: adminuser.count,
@@ -16,7 +17,7 @@ const AdminUserListContainer = () => {
     })
   );
 
-  console.log("userlist===================+>", userlists);
+  console.log("userlist===================+>", userlist);
 
   const [page, setPage] = useState(1);
   const [category, setCategory] = useState(1);
@@ -74,6 +75,20 @@ const AdminUserListContainer = () => {
       }
     });
   };
+  
+  const handleGradeUpClick = (grade) => {
+    console.log('handleGradeUpClick',grade);
+    // dispatch(
+    //   updateGrade(grade)
+    // );
+  };
+
+  const handleGradeDownClick = (grade) => {
+    console.log('handleDownClick',grade);
+    // dispatch(
+    //   updateGrade(grade)
+    // );
+  };
 
   return (
     <Adminuser
@@ -91,6 +106,8 @@ const AdminUserListContainer = () => {
       handlePreviousPage={handlePreviousPage}
       detail={detail}
       handleDetailClick={handleDetailClick}
+      handleGradeUpClick={handleGradeUpClick}
+      handleGradeDownClick={handleGradeDownClick}
     />
   );
 };

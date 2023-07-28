@@ -20,6 +20,8 @@ const Adminuser = ({
   handleDetailClick,
   userlist,
   onDelete,
+  handleGradeUpClick,
+  handleGradeDownClick,
 }) => {
   const [detailInq, setDetailInq] = useState(null);
   console.log("카테고리리리리리", category === 1);
@@ -58,23 +60,6 @@ const Adminuser = ({
   const onDetailClick = (num) => {
     setDetailInq(num);
     handleDetailClick();
-  };
-
-  const handleGradeUpClick = (userNum) => {
-    setUserlist((prevUserlist) => {
-      return prevUserlist.map((user) =>
-        user.userNum === userNum ? { ...user, grade: user.grade + 1 } : user
-      );
-    });
-  };
-
-  // 등급다운 버튼 클릭 시 'm.grade'가 -1이 되는 이벤트 핸들러
-  const handleGradeDownClick = (userNum) => {
-    setUserlist((prevUserlist) => {
-      return prevUserlist.map((user) =>
-        user.userNum === userNum ? { ...user, grade: user.grade - 1 } : user
-      );
-    });
   };
 
 
@@ -149,14 +134,17 @@ const Adminuser = ({
                             : ""}
                         </InquiryHeaderItem>
                         <InquiryHeaderItem width="10%">
-                          {m. grade === 0 ? (
-                          <button onClick={() => handleGradeUpClick(m.userNum)}>등급업</button>
-                          ) : m.grade === 1 ?(<button onClick={() => handleGradeDownClick(m.userNum)}>등급다운</button>)
+                          {m.grade === 0 ? (
+                          <button onClick={() =>handleGradeUpClick(m.grade)}>등급업</button>
+                          ) : m.grade === 1 ?(<button onClick={() => handleGradeDownClick(m.grade)}>등급다운</button>)
                           : ('')
                           }
                         </InquiryHeaderItem>
                         <InquiryHeaderItem width="7%">
-                          <button onClick={() => onDelete(m.id)}>삭제</button>
+                          {(m.grade !== 2)&&(
+                            <button onClick={() => onDelete(m.id)}>삭제</button>
+
+                          )}
                         </InquiryHeaderItem>
                       </InquiryContent>
                     </InquiryBlock>

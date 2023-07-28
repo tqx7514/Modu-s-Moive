@@ -1,42 +1,42 @@
 import { takeLatest } from "redux-saga/effects";
-import { createAction, handleActions } from "redux-actions";
 import createRequestSaga, {
   createRequestActionTypes,
 } from "../../lib/createRequestSaga";
 import * as userAPI from "../../lib/api/admin/adminuser";
+import { createAction, handleActions } from "redux-actions";
 
 const INITIALIZE = "admin/INITIALIZE";
 const [
     USER_LIST,
     USER_LIST_SUCCESS,
-    USER_LIST_FAUIRE,
+    USER_LIST_FAILURE,
 ] = createRequestActionTypes("/admin/USER_LIST");
 
 const [
     USER_DEL,
     USER_DEL_SUCCESS,
-    USER_DEL_FAIURE,
+    USER_DEL_FAILURE,
 ] = createRequestActionTypes("/admin/USER_DEL");
 
-const {
-    UPDATE_GRADE,
-    UPDATE_GRADE_SUCCESS,
-    UPDATE_GRADE_FAIURE,
-} = createRequestActionTypes("/admin/UPDATE_GRADE");
+// const {
+//     UPDATE_GRADE,
+//     UPDATE_GRADE_SUCCESS,
+//     UPDATE_GRADE_FAILURE,
+// } = createRequestActionTypes("/admin/UPDATE_GRADE");
 
 export const initialize = createAction(INITIALIZE);
 export const userList = createAction(USER_LIST, ({page, category}) => ({page, category}));
 export const userDel = createAction(USER_DEL, ({id}) => ({id}));
-export const updateGrade = createAction(UPDATE_GRADE);
+// export const updateGrade = createAction(UPDATE_GRADE, (grade) => (grade));
 
 const userListSaga = createRequestSaga(USER_LIST, userAPI.userlist);
 const userDelSaga = createRequestSaga(USER_DEL, userAPI.userdelete);
-const updateGradeSaga = createRequestSaga(UPDATE_GRADE, userAPI.usergrade);
+// const updateGradeSaga = createRequestSaga(UPDATE_GRADE, userAPI.usergrade);
 
 export function* adminuserSaga() {
     yield takeLatest(USER_LIST, userListSaga);
     yield takeLatest(USER_DEL, userDelSaga);
-    yield takeLatest(UPDATE_GRADE, updateGradeSaga);
+    // yield takeLatest(UPDATE_GRADE, updateGradeSaga);
 }
 
 const initialState = {
@@ -56,7 +56,7 @@ const adminuser = handleActions(
             lastPage,
             error: null,
         }),
-        [USER_LIST_FAUIRE]: (state, {payload: error}) => ({
+        [USER_LIST_FAILURE]: (state, {payload: error}) => ({
             ...state,
             error,
         }),
@@ -64,18 +64,18 @@ const adminuser = handleActions(
             ...state,
             userlist,
         }),
-        [USER_DEL_FAIURE]: (state, {payload: error}) => ({
+        [USER_DEL_FAILURE]: (state, {payload: error}) => ({
             ...state,
             error,
         }),
-        [UPDATE_GRADE_SUCCESS]: (state, {payload: userlist}) => ({
-            ...state,
-            userlist,
-        }),
-        [UPDATE_GRADE_FAIURE]: (state, {payload: error}) => ({
-            ...state,
-            error,
-        })
+        // [UPDATE_GRADE_SUCCESS]: (state, {payload: userlist}) => ({
+        //     ...state,
+        //     userlist,
+        // }),
+        // [UPDATE_GRADE_FAILURE]: (state, {payload: error}) => ({
+        //     ...state,
+        //     error,
+        // })
     },
     initialState,
 );

@@ -3,7 +3,7 @@ import AdminHeaderContainer from "../../containers/common/admin/AdminHeaderConta
 import AdminPostViewerContainer from "../../containers/admin/post/AdminPostViewerContainer";
 import AdminPostCommentListContainer from "../../containers/admin/post/AdminPostCommentListContainer";
 
-const AdminPostViewerPage = () => {
+const AdminPostPage = () => {
   return (
     <div>
       <AdminHeaderContainer />
@@ -13,4 +13,4 @@ const AdminPostViewerPage = () => {
   );
 };
 
-export default AdminPostViewerPage;
+export default AdminPostPage;

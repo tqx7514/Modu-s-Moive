@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AdminHeaderContainer from "../../containers/common/admin/AdminHeaderContainer";
-import { useNavigate } from "react-router-dom";
 import Responsive from "../../containers/common/Responsive";
 
 const AdminPageWrapper = styled.div`
@@ -18,15 +16,6 @@ const AdminBody = styled(Responsive)`
 `;
 
 const AdminPage = () => {
-  const { user } = useSelector(({ user }) => ({ user: user.user }));
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (user.grade < 2) {
-      // console.log(user.grade);
-      alert("관리자도 아닌새끼가 어딜?");
-      navigate("/");
-    }
-  }, [user]);
   return (
     <AdminPageWrapper>
       <AdminHeaderContainer />

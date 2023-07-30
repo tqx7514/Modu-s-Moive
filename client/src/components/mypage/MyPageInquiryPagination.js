@@ -19,21 +19,16 @@ const PageNumber = styled.div`
 
 const MyPageInquiryPagination = ({
   lastPage,
-  pagination,
   currentPage,
   handleNextPage,
   handlePreviousPage,
 }) => {
-  const [page, setPage] = useState(1);
   const onNextPage = () => {
-    pagination(currentPage + 1);
     handleNextPage();
   };
   const onPreviousPage = () => {
-    pagination(currentPage - 1);
     handlePreviousPage();
   };
-  console.log("page2", page);
 
   return (
     <PaginationBlock>

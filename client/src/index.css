@@ -1,3 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap");
+
+@font-face {
+  font-family: "TTTtangsbudaejjigaeB";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/TTTtangsbudaejjigaeB.woff2")
+    format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "TTangsMedium";
+  src: url("./fonts/땅스부대찌개\ Medium.ttf");
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -37,6 +51,20 @@ code {
     monospace;
 }
 
-ul, ol, dl{
+ul,
+ol,
+dl {
   list-style: none;
+}
+
+::-webkit-scrollbar-track {
+  background: #e0e0e0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-track:hover {
+  background: #555;
 }

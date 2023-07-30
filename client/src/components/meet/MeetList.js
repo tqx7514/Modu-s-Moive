@@ -52,6 +52,10 @@ const MeetItemBlock = styled.div`
   &:hover {
     background-color: pink;
   }
+
+  > a > h2 {
+    font-family: "TTTtangsbudaejjigaeB";
+  }
 `;
 
 const MeetListItem = styled.div`
@@ -84,6 +88,9 @@ const MeetHeaderBlock = styled.div`
   justify-content: space-between;
   margin-top: 2rem;
   margin-bottom: 2rem;
+  > h2 {
+    font-family: "TTTtangsbudaejjigaeB";
+  }
 `;
 
 const RegionsBlock = styled.div`

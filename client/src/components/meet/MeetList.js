@@ -154,25 +154,48 @@ const MeetItem = ({ meet, user_Id, user_meet, setSelectedRegion }) => {
   const tagsArray = Array.isArray(tags) ? tags : JSON.parse(tags);
   return (
     <MeetItemBlock meetNum={meetNum} user_meet={user_meet}>
-      <Link to={`/meet/detail/${meetNum}`}>
-        <h2>{title}</h2>
-        <MeetSubInfo
-          region={region}
-          publishedDate={new Date(createdAt)}
-          views={views}
-          setSelectedRegion={setSelectedRegion}
-        />
-        <IconBlock>
-          <DataBlock>
-            <FontAwesomeIcon icon={faPerson} className="icon" />
-            {count}
-          </DataBlock>
-          <DataBlock>
-            <FontAwesomeIcon icon={faEye} className="icon" />
-            {views}
-          </DataBlock>
-        </IconBlock>
-      </Link>
+      {user_Id ? (
+        <Link to={`/meet/detail/${meetNum}`}>
+          <h2>{title}</h2>
+          <MeetSubInfo
+            region={region}
+            publishedDate={new Date(createdAt)}
+            views={views}
+            setSelectedRegion={setSelectedRegion}
+          />
+          <IconBlock>
+            <DataBlock>
+              <FontAwesomeIcon icon={faPerson} className="icon" />
+              {count}
+            </DataBlock>
+            <DataBlock>
+              <FontAwesomeIcon icon={faEye} className="icon" />
+              {views}
+            </DataBlock>
+          </IconBlock>
+        </Link>
+      ) : (
+        <>
+          <h2>{title}</h2>
+          <MeetSubInfo
+            region={region}
+            publishedDate={new Date(createdAt)}
+            views={views}
+            setSelectedRegion={setSelectedRegion}
+          />
+          <IconBlock>
+            <DataBlock>
+              <FontAwesomeIcon icon={faPerson} className="icon" />
+              {count}
+            </DataBlock>
+            <DataBlock>
+              <FontAwesomeIcon icon={faEye} className="icon" />
+              {views}
+            </DataBlock>
+          </IconBlock>
+        </>
+      )}
+
       <MeetTags tags={tagsArray} />
     </MeetItemBlock>
   );

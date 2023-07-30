@@ -75,7 +75,7 @@ const BtnShareImage = styled.img`
 `;
 
 const EventViewerCompots = ({ eventpost }) => {
-  const eventDetail = eventpost.eventDetail;
+  const eventDetail = eventpost && eventpost.eventDetail;
   const { eventNum } = useParams();
   const [eventData, setEventData] = useState(null);
   const navigate = useNavigate();

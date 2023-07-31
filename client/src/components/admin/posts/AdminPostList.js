@@ -5,7 +5,60 @@ import { Link } from "../../../../node_modules/react-router-dom/dist/index";
 import Responsive from "../../common/Responsive";
 import AdminTitle from "../../common/admin/AdminTitle";
 
-const AdminPageWrapper = styled.div`
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}.${month}.${day}.`;
+};
+
+const AdminPostItem = ({ post }) => {
+  const { createdAt, userId, title, postNum, views } = post;
+  const limitedTitle = title.length > 10 ? `${title.slice(0, 10)}...` : title;
+  const formattedViews = views > 999 ? "999+" : views;
+  const limitedUserId = userId.length > 6 ? `${userId.slice(0, 6)}..` : userId;
+  const formattedDate = formatDate(createdAt);
+
+  return (
+    <AdminPostItemBlock>
+      <AdminPostItemContent>
+        <PublishedDate username={formattedDate} />
+        <h2>
+          <Link to={`/adminpost/detail/${postNum}`}>{limitedTitle}</Link>
+        </h2>
+        <UserId username={limitedUserId} />
+        <Views>{formattedViews}</Views>
+      </AdminPostItemContent>
+    </AdminPostItemBlock>
+  );
+};
+
+const AdminPostList = ({ posts, loading, error }) => {
+  return (
+    <AdminPostListContainerBlock>
+      <AdminBody>
+        <HeaderBlock>
+          <AdminTitle title="게시판관리" />
+          <div className="count">
+            게시글 총 <span>{posts.length}</span>개
+          </div>
+        </HeaderBlock>
+        <AdminPostListBlock>
+          {!loading && posts && (
+            <div>
+              {posts.map((post) => (
+                <AdminPostItem post={post} key={post.postNum} />
+              ))}
+            </div>
+          )}
+        </AdminPostListBlock>
+      </AdminBody>
+    </AdminPostListContainerBlock>
+  );
+};
+
+const AdminPostListContainerBlock = styled.div`
   display: flex;
   flex-direction: column;
   background: gray;
@@ -13,7 +66,7 @@ const AdminPageWrapper = styled.div`
   min-height: 130vh;
 `;
 
-const AdminBody = styled(Responsive)`
+const AdminBody = styled.div`
   flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
 `;
 
@@ -77,66 +130,13 @@ const Views = styled.b`
   width: 4rem;
   text-align: right;
 `;
-
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}.${month}.${day}.`;
-};
-
-const AdminPostItem = ({ post }) => {
-  const { createdAt, userId, title, postNum, views } = post;
-  const limitedTitle = title.length > 10 ? `${title.slice(0, 10)}...` : title;
-  const formattedViews = views > 999 ? "999+" : views;
-  const limitedUserId = userId.length > 6 ? `${userId.slice(0, 6)}..` : userId;
-  const formattedDate = formatDate(createdAt);
-
-  return (
-    <AdminPostItemBlock>
-      <AdminPostItemContent>
-        <PublishedDate username={formattedDate} />
-        <h2>
-          <Link to={`/adminpost/detail/${postNum}`}>{limitedTitle}</Link>
-        </h2>
-        <UserId username={limitedUserId} />
-        <Views>{formattedViews}</Views>
-      </AdminPostItemContent>
-    </AdminPostItemBlock>
-  );
-};
-
-const AdminPostList = ({ posts, loading, error }) => {
-  return (
-    <AdminPageWrapper>
-      <AdminBody>
-        <HeaderBlock>
-          <AdminTitle title="게시판관리" />
-          <div className="count">
-            게시글 총 <span>{posts.length}</span>개
-          </div>
-        </HeaderBlock>
-        <AdminPostListBlock>
-          {!loading && posts && (
-            <div>
-              {posts.map((post) => (
-                <AdminPostItem post={post} key={post.postNum} />
-              ))}
-            </div>
-          )}
-        </AdminPostListBlock>
-      </AdminBody>
-    </AdminPageWrapper>
-  );
-};
-
 const HeaderBlock = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 3rem 2rem 1rem 2rem;
   border-bottom: 2px solid black;
   align-items: center;
+  width: 100%;
   > div {
     font-size: 1.4rem;
     font-weight: bold;

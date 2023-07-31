@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom"; // Updated import
-import { AdminListPost } from "../../../modules/admin/adminposts";
 import { listPosts } from "../../../modules/posts";
 import AdminPostList from "../../../components/admin/posts/AdminPostList";
+import styled from "styled-components";
+import AdminPostChart from "../../../components/admin/posts/AdminPostChart";
 
 const AdminPostListContainer = () => {
   const { name } = useParams();
@@ -30,10 +31,24 @@ const AdminPostListContainer = () => {
   }, [dispatch, name]);
 
   return (
-    <>
-      <AdminPostList loading={loading} error={error} posts={posts} />
-    </>
+    <AdminPostListContainerBlock>
+      <AdminBlock>
+        <AdminPostList loading={loading} error={error} posts={posts} />
+      </AdminBlock>
+      <AdminBlock>
+        <AdminPostChart />
+      </AdminBlock>
+    </AdminPostListContainerBlock>
   );
 };
+const AdminPostListContainerBlock = styled.div`
+  display: flex;
+  background-color: gray;
+  height: 130vh;
+`;
+const AdminBlock = styled.div`
+  padding-left: 10px;
+  width: 50%;
+`;
 
 export default AdminPostListContainer;

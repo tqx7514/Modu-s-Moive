@@ -37,7 +37,7 @@ app.use(cookieParser());
 //   password: "edurootroot",
 //   database: "ModoosMovie",
 // });
-
+console.log("s");
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(

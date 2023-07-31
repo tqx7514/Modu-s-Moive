@@ -145,7 +145,7 @@ exports.regionData = async (req, res) => {
       });
       meetData.push({ region: regionItem, count: meetDataForRegion.count });
     }
-
+    console.log("s");
     res.json(meetData);
   } catch (error) {
     res.status(500).json(error);

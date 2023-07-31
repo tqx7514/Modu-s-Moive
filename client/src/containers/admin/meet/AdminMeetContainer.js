@@ -6,6 +6,7 @@ import { styled } from "styled-components";
 import { check, tempSetUser } from "../../../modules/user";
 import { initialize } from "../../../modules/meetwrite";
 import { meetList } from "../../../modules/meetlist";
+import AdminMeetChart from "../../../components/admin/meet/AdminMeetChart";
 
 const AdminMeetContainer = () => {
   const dispatch = useDispatch();
@@ -56,30 +57,40 @@ const AdminMeetContainer = () => {
   };
   return (
     <AdminMeetContainerBlock>
-      <AdminMeetList
-        loading={loading}
-        error={error}
-        meets={meets}
-        regions={regions}
-        user={user}
-        page={page}
-        tag={tag}
-        region={region}
-        count={count}
-        handleRegionClick={handleRegionClick}
-        handleNextPage={handleNextPage}
-        handlePreviousPage={handlePreviousPage}
-        handleDetailClick={handleDetailClick}
-        detail={detail}
-        lastPage={lastPage}
-      />
+      <AdminBlock>
+        <AdminMeetList
+          loading={loading}
+          error={error}
+          meets={meets}
+          regions={regions}
+          user={user}
+          page={page}
+          tag={tag}
+          region={region}
+          count={count}
+          handleRegionClick={handleRegionClick}
+          handleNextPage={handleNextPage}
+          handlePreviousPage={handlePreviousPage}
+          handleDetailClick={handleDetailClick}
+          detail={detail}
+          lastPage={lastPage}
+        />
+      </AdminBlock>
+      <AdminBlock>
+        <AdminMeetChart />
+      </AdminBlock>
     </AdminMeetContainerBlock>
   );
 };
 
 const AdminMeetContainerBlock = styled.div`
+  display: flex;
   background-color: gray;
   height: 130vh;
+`;
+const AdminBlock = styled.div`
+  padding-left: 10px;
+  width: 50%;
 `;
 
 export default AdminMeetContainer;

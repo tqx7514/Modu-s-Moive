@@ -136,7 +136,7 @@ exports.meetlist = async (req, res) => {
         console.error(error);
       }
     }
-    console.log("아아아아", meet);
+    // console.log("아아아아", meet);
 
     res.json({
       meet,

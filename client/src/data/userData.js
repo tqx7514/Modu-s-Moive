@@ -1,5 +1,3 @@
-import { userGender } from "../lib/api/admin/adminchart";
-
 export const userDataGender = ({ a, b }) => [
   {
     id: "남자",

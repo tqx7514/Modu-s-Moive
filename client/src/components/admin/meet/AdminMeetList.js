@@ -156,7 +156,7 @@ const AdminMeetList = ({
     </AdminMeetListBlock>
   );
 };
-const AdminMeetListBlock = styled(Responsive)`
+const AdminMeetListBlock = styled.div`
   > .end {
     border-top: 1px solid lightgray;
     margin: 0.2rem 0 1rem 0;

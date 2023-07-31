@@ -4,6 +4,7 @@ import EventPromoteContainer from "../containers/event/EventPromoteContainer";
 import Footer from "../components/common/Footer";
 
 const EventPromotePage = () => {
+  console.log("아아");
   return (
     <div>
       <HeaderContainer />

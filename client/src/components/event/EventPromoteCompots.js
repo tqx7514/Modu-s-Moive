@@ -1,157 +1,118 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-// import {
-//   eventlist,
-//   eventmovielist,
-//   eventotherlist,
-//   eventpromotelist,
-//   eventview,
-// } from "../../lib/api/event";
-import Button from "../common/Button";
 import EventCategory from "./EventCategory";
-import { eventPost } from "../../modules/eventpost";
-import { useDispatch } from "react-redux";
 
-const EventViewerBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const EventPromoteInfoBlock = styled.div`
+  text-align: center;
+  font-size: 12px;
+  .textdate {
+    margin-bottom: 10px;
+  }
 `;
 
-const EventTitle = styled.h2`
-  display: flex;
+const EventPromoteItemBlock = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1.2rem;
   justify-content: center;
 `;
 
-const EventDate = styled.p`
-  display: flex;
-  justify-content: center;
-`;
-
-const EventCount = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-`;
-
-const EventTopBlock = styled.div`
+const EventPromoteContainerBlock = styled.div`
   width: 980px;
-`;
-
-const EventItemBlock = styled.div`
-  display: block;
-`;
-
-const EventButtonBlock = styled.div`
-  display: flex;
   justify-content: center;
-  margin: 10px 0px 10px 0px;
-  width: 100%;
-  max-width: 980px;
-
-  .gobackBtn {
-    font-weight: normal;
-    width: 100px;
-    height: 40px;
-    margin-right: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+  h2 {
+    margin-bottom: 10px;
+    font-size: 20px;
   }
 `;
 
-const EventShareButton = styled.button`
+const EventPromoteContentBlock = styled.div`
   display: flex;
-  width: 100px;
-  margin-left: 10px;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 980px;
+  margin: 0 auto;
   align-items: center;
-  justify-content: center;
-  background: #ffffff;
+  box-sizing: border-box;
 `;
 
-const BtnShareImage = styled.img`
-  margin-right: 4px;
+const ShowMoreButton = styled.div`
+  font-size: 16px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+  border: 1px solid #ececec;
+  margin: 10px 0 10px 0;
 `;
 
-const EventViewerCompots = ({ eventpost }) => {
-  const eventDetail = eventpost && eventpost.eventDetail;
-  const { eventNum } = useParams();
-  const [eventData, setEventData] = useState(null);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+const DownArrowImage = styled.img`
+  width: 10px;
+  height: 10px;
+  margin-left: 4px;
+  align-items: center;
+`;
 
-  useEffect(() => {
-    const fetchEventData = async () => {
-      try {
-        // let response = null;
-        // if (eventNum.startsWith("event")) {
-        //   response = await eventlist(eventNum);
-        // } else if (eventNum.startsWith("movie")) {
-        //   response = await eventmovielist(eventNum);
-        // } else if (eventNum.startsWith("promote")) {
-        //   response = await eventpromotelist(eventNum);
-        // } else if (eventNum.startsWith("other")) {
-        //   response = await eventotherlist(eventNum);
-        // }
-        // if (response && response.data) {
-        //   setEventData(response.data);
-        // } else {
-        //   setEventData(null);
-        // }
-        dispatch(eventPost(eventNum));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchEventData();
-  }, [eventNum]);
+const EventPromoteCompots = ({ events }) => {
+  const eventlist = events.eventlist;
+  const [visibleCount, setVisibleCount] = useState(9);
 
-  const handleGoback = () => {
-    navigate(-1);
+  const handleShowMore = () => {
+    setVisibleCount(visibleCount + 9);
   };
 
-  const handleShare = () => {
-    const url = window.location.href;
-    navigator.clipboard.writeText(url);
-    alert("링크가 복사되었습니다");
-  };
+  const sortedEvents = eventlist.sort((a, b) => {
+    const startDateA = new Date(a.startEventDate).getTime();
+    const startDateB = new Date(b.startEventDate).getTime();
+    const endDateA = new Date(a.endEventDate).getTime();
+    const endDateB = new Date(b.endEventDate).getTime();
 
-  if (!eventDetail) {
-    return null;
-  }
+    if (startDateA !== startDateB) {
+      return startDateB - startDateA;
+    } else if (endDateA !== endDateB) {
+      return endDateB - endDateA;
+    } else {
+      return b.eventNum - a.eventNum;
+    }
+  });
+
+  const filteredEvents = sortedEvents.filter(
+    (e) => e.categoryId === "제휴할인"
+  );
 
   return (
-    <EventViewerBlock>
+    <EventPromoteContentBlock>
       <EventCategory />
-      <EventTopBlock>
-        <EventTitle>{eventDetail.eventTitle}</EventTitle>
-        <EventDate>
-          {eventDetail.startEventDate} ~ {eventDetail.endEventDate}
-        </EventDate>
-        <EventCount>
-          {eventDetail.view !== null && (
-            <p>조회수: {eventDetail.view !== null ? eventDetail.view : 0}</p>
-          )}
-        </EventCount>
-      </EventTopBlock>
-      <EventItemBlock>
-        <img src={eventDetail.eventContent} alt={eventDetail.eventTitle} />
-      </EventItemBlock>
-      <EventButtonBlock>
-        <Button className="gobackBtn" onClick={handleGoback}>
-          목록보기
-        </Button>
-        {!eventData ? (
-          <EventShareButton onClick={handleShare}>
-            <BtnShareImage src="../../btn_icon_share.svg" /> 공유하기
-          </EventShareButton>
-        ) : (
-          <Button onClick={() => navigate("/")}>홈페이지로 이동</Button>
+      <EventPromoteContainerBlock className="eventpromotecontainer">
+        <h2>제휴/할인</h2>
+        {filteredEvents && filteredEvents.length > 0 && (
+          <EventPromoteItemBlock className="eventpromoteitem">
+            {filteredEvents.slice(0, visibleCount).map((e) => (
+              <div key={e.eventNum}>
+                <Link to={`/event/promote/${e.eventNum}`}>
+                  <img src={e.eventImg} alt={e.eventTitle} />
+                  <EventPromoteInfoBlock>
+                    <p>{e.eventTitle}</p>
+                    <p className="textdate">
+                      {e.startEventDate} ~ {e.endEventDate}
+                    </p>
+                  </EventPromoteInfoBlock>
+                </Link>
+              </div>
+            ))}
+          </EventPromoteItemBlock>
         )}
-      </EventButtonBlock>
-    </EventViewerBlock>
+        {visibleCount < filteredEvents.length && (
+          <ShowMoreButton onClick={handleShowMore}>
+            더보기
+            <DownArrowImage src="../../arrow_down.png" />
+          </ShowMoreButton>
+        )}
+      </EventPromoteContainerBlock>
+    </EventPromoteContentBlock>
   );
 };
 
-export default EventViewerCompots;
+export default EventPromoteCompots;

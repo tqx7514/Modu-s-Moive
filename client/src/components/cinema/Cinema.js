@@ -216,7 +216,7 @@ const Cinema = ({
   }, []);
 
   const renderButton = (cinemaId) => {
-    const count = mycinemas.filter((m) => m.addr === cinemaId);
+    const count = mycinemas && mycinemas.filter((m) => m.addr === cinemaId);
     console.log("갯수ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ", count.length);
     if (count.length > 0) {
       return (

@@ -8,6 +8,7 @@ import {
   adminInquiryList,
   initialize,
 } from "../../../modules/admin/admininquiry";
+import AdminInquiryChart from "../../../components/admin/inquiry/AdminInquiryChart";
 
 const AdminInquiryContainer = () => {
   const { inquiry, count, loading, lastPage } = useSelector(
@@ -53,27 +54,37 @@ const AdminInquiryContainer = () => {
 
   return (
     <AdminInquiryContainerBlock>
-      <AdminInquiry
-        inquiry={inquiry}
-        count={count}
-        loading={loading}
-        category={category}
-        onAllClick={handleAllClick}
-        onUndoneClick={handleUndoneClick}
-        onDoneClick={handleDoneClick}
-        lastPage={lastPage}
-        currentPage={page}
-        handleNextPage={handleNextPage}
-        handlePreviousPage={handlePreviousPage}
-        detail={detail}
-        handleDetailClick={handleDetailClick}
-      />
+      <AdminBlock>
+        <AdminInquiry
+          inquiry={inquiry}
+          count={count}
+          loading={loading}
+          category={category}
+          onAllClick={handleAllClick}
+          onUndoneClick={handleUndoneClick}
+          onDoneClick={handleDoneClick}
+          lastPage={lastPage}
+          currentPage={page}
+          handleNextPage={handleNextPage}
+          handlePreviousPage={handlePreviousPage}
+          detail={detail}
+          handleDetailClick={handleDetailClick}
+        />
+      </AdminBlock>
+      <AdminBlock>
+        <AdminInquiryChart />
+      </AdminBlock>
     </AdminInquiryContainerBlock>
   );
 };
 const AdminInquiryContainerBlock = styled.div`
+  display: flex;
   background-color: gray;
   height: 130vh;
+`;
+const AdminBlock = styled.div`
+  padding-left: 10px;
+  width: 50%;
 `;
 
 export default AdminInquiryContainer;

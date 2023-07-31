@@ -4,6 +4,10 @@ export const userGender = () => {
   return client.get("/admin/chart/user/gender");
 };
 
+export const userAge = () => {
+  return client.get("/admin/chart/user/age");
+};
+
 export const inquiryCategory = () => {
   return client.get("/admin/chart/inquiry/category");
 };

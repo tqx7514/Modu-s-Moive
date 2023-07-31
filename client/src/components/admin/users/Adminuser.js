@@ -268,7 +268,7 @@ const CategoryBlock = styled.div`
   align-items: center;
 `;
 
-const AdminInquiryBlock = styled(Responsive)`
+const AdminInquiryBlock = styled.div`
   background-color: gray;
   height: 130vh;
   > .end {
@@ -283,6 +283,8 @@ const HeaderBlock = styled.div`
   padding: 3rem 2rem 1rem 2rem;
   border-bottom: 2px solid black;
   align-items: center;
+  width: 100%;
+
   > div {
     font-size: 1.4rem;
     font-weight: bold;

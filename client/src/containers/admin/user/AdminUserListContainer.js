@@ -1,9 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
-import { userList, userDel, initialize } from "../../../modules/admin/adminuser";
+import {
+  userList,
+  userDel,
+  initialize,
+} from "../../../modules/admin/adminuser";
 import Adminuser from "../../../components/admin/users/Adminuser";
 import Swal from "sweetalert2";
 import { usergrade } from "../../../lib/api/admin/adminuser";
+import styled from "styled-components";
+import AdminUserGenderChart from "../../../components/admin/users/AdminUserGenderChart";
+import AdminUserAgeChart from "../../../components/admin/users/AdminUserAgeChart";
 
 const AdminUserListContainer = () => {
   const dispatch = useDispatch();
@@ -75,41 +82,59 @@ const AdminUserListContainer = () => {
       }
     });
   };
-  
+
   const handleGradeUpClick = (grade) => {
-    console.log('handleGradeUpClick',grade);
+    console.log("handleGradeUpClick", grade);
     // dispatch(
     //   updateGrade(grade)
     // );
   };
 
   const handleGradeDownClick = (grade) => {
-    console.log('handleDownClick',grade);
+    console.log("handleDownClick", grade);
     // dispatch(
     //   updateGrade(grade)
     // );
   };
 
   return (
-    <Adminuser
-      userlist={userlists}
-      onDelete={onDelete}
-      count={count}
-      loading={loading}
-      category={category}
-      onAllClick={handleAllClick}
-      onUndoneClick={handleUndoneClick}
-      onDoneClick={handleDoneClick}
-      lastPage={lastPage}
-      currentPage={page}
-      handleNextPage={handleNextPage}
-      handlePreviousPage={handlePreviousPage}
-      detail={detail}
-      handleDetailClick={handleDetailClick}
-      handleGradeUpClick={handleGradeUpClick}
-      handleGradeDownClick={handleGradeDownClick}
-    />
+    <AdminInquiryContainerBlock>
+      <AdminBlock>
+        <Adminuser
+          userlist={userlists}
+          onDelete={onDelete}
+          count={count}
+          loading={loading}
+          category={category}
+          onAllClick={handleAllClick}
+          onUndoneClick={handleUndoneClick}
+          onDoneClick={handleDoneClick}
+          lastPage={lastPage}
+          currentPage={page}
+          handleNextPage={handleNextPage}
+          handlePreviousPage={handlePreviousPage}
+          detail={detail}
+          handleDetailClick={handleDetailClick}
+          handleGradeUpClick={handleGradeUpClick}
+          handleGradeDownClick={handleGradeDownClick}
+        />
+      </AdminBlock>
+      <AdminBlock>
+        <AdminUserGenderChart />
+        <AdminUserAgeChart />
+      </AdminBlock>
+    </AdminInquiryContainerBlock>
   );
 };
+
+const AdminInquiryContainerBlock = styled.div`
+  display: flex;
+  background-color: gray;
+  height: 130vh;
+`;
+const AdminBlock = styled.div`
+  padding-left: 10px;
+  width: 50%;
+`;
 
 export default AdminUserListContainer;

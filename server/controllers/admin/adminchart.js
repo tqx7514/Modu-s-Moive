@@ -13,7 +13,73 @@ exports.genderData = async (req, res) => {
     console.log(manData.count, womanData.count);
     res.json({ Mcount: manData.count, Wcount: womanData.count });
   } catch (error) {
-    res.json(error);
+    res.status(500).json(error);
+  }
+};
+
+exports.ageData = async (req, res) => {
+  console.log("백age");
+  try {
+    const underTwentyCount = await users.count({
+      where: {
+        age: {
+          [Op.lt]: 20,
+        },
+      },
+    });
+
+    const twentiesCount = await users.count({
+      where: {
+        age: {
+          [Op.between]: [20, 29],
+        },
+      },
+    });
+
+    const thirtiesCount = await users.count({
+      where: {
+        age: {
+          [Op.between]: [30, 39],
+        },
+      },
+    });
+
+    const fortiesCount = await users.count({
+      where: {
+        age: {
+          [Op.between]: [40, 49],
+        },
+      },
+    });
+
+    const fiftiesCount = await users.count({
+      where: {
+        age: {
+          [Op.between]: [50, 59],
+        },
+      },
+    });
+
+    const overSixtiesCount = await users.count({
+      where: {
+        age: {
+          [Op.gte]: 60,
+        },
+      },
+    });
+
+    const ageDataArray = [
+      underTwentyCount,
+      twentiesCount,
+      thirtiesCount,
+      fortiesCount,
+      fiftiesCount,
+      overSixtiesCount,
+    ];
+    console.log("결과===============", ageDataArray);
+    res.json(ageDataArray);
+  } catch (error) {
+    res.status(500).json(error);
   }
 };
 
@@ -161,7 +227,6 @@ exports.dateData = async (req, res) => {
     const dateData = [];
     let cumulativeCount = 0;
 
-    // 일주일 간의 날짜를 순회하며 해당 날짜의 데이터 개수를 구합니다.
     for (
       let date = oneWeekAgo;
       date <= today;

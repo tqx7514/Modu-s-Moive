@@ -248,8 +248,13 @@ exports.dateData = async (req, res) => {
         cumulativeCount,
       });
     }
-    console.log("ssssssssssssssssssss", dateData);
 
+    if (dateData.length > 7) {
+      // 만약 dateData.length가 7보다 크다면, dateData[0]을 제외한 1~7번째 요소만 유지
+      dateData.splice(0, dateData.length - 7);
+    }
+
+    console.log("ssssssssssssssssssss", dateData);
     res.json(dateData);
   } catch (error) {
     res.status(500).json(error);

@@ -23,12 +23,15 @@ const AdminInquiryContainer = () => {
   const [page, setPage] = useState(1);
   const [category, setCategory] = useState(1);
   const [detail, setDetail] = useState(false);
+  const [sort, setSort] = useState({ field: "createdAt", order: 1 });
+  const [classify, setClassify] = useState(null);
+
   useEffect(() => {
-    dispatch(adminInquiryList({ page, category }));
+    dispatch(adminInquiryList({ page, category, sort, classify }));
     return () => {
       dispatch(initialize());
     };
-  }, [page, category]);
+  }, [page, category, sort, classify]);
 
   const handleAllClick = () => {
     setCategory(1);
@@ -51,6 +54,23 @@ const AdminInquiryContainer = () => {
   const handleDetailClick = () => {
     setDetail(!detail);
   };
+  const changeSort = (field) => {
+    if (sort.field === field) {
+      setSort({ ...sort, order: sort.order * -1 });
+    } else {
+      setSort({ field: field, order: 1 });
+    }
+  };
+
+  const onClassifyClick = (e, num) => {
+    // e.preventDefault();
+    e.stopPropagation();
+    if (classify === null) {
+      setClassify(num);
+    } else {
+      setClassify(null);
+    }
+  };
 
   return (
     <AdminInquiryContainerBlock>
@@ -69,6 +89,10 @@ const AdminInquiryContainer = () => {
           handlePreviousPage={handlePreviousPage}
           detail={detail}
           handleDetailClick={handleDetailClick}
+          sort={sort}
+          changeSort={changeSort}
+          classify={classify}
+          onClassifyClick={onClassifyClick}
         />
       </AdminBlock>
       <AdminBlock>

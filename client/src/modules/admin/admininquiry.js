@@ -17,7 +17,7 @@ const [UPDATE_ANSWER, UPDATE_ANSWER_SUCCESS, UPDATE_ANSWER_FAILURE] =
 export const initialize = createAction(INITIALIZE);
 export const adminInquiryList = createAction(
   ADMIN_INQUIRY_LIST,
-  ({ page, category }) => ({ page, category })
+  ({ page, category, sort, classify }) => ({ page, category, sort, classify })
 );
 export const answerUpdate = createAction(
   UPDATE_ANSWER,

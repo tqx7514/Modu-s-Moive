@@ -1,6 +1,5 @@
 import { styled, css } from "styled-components";
 import AdminTitle from "../../common/admin/AdminTitle";
-import Responsive from "../../common/Responsive";
 import MyPageInquiryPagination from "../../mypage/MyPageInquiryPagination";
 import { useState } from "react";
 import AdminInquiryDetailContainer from "../../../containers/admin/inquiry/AdminInquiryDetailContainer";
@@ -19,9 +18,13 @@ const AdminInquiry = ({
   handlePreviousPage,
   detail,
   handleDetailClick,
+  sort,
+  changeSort,
+  classify,
+  onClassifyClick,
 }) => {
   const [detailInq, setDetailInq] = useState(null);
-  console.log("카테고리리리리리", category === 1);
+  // console.log("카테고리리리리리", category === 1);
   const state = (a) => {
     if (a === "") {
       return false;
@@ -58,6 +61,9 @@ const AdminInquiry = ({
     setDetailInq(num);
     handleDetailClick();
   };
+  const filteredInquiry = classify
+    ? inquiry && inquiry.filter((m) => m.classify === classify)
+    : inquiry && inquiry;
 
   return (
     <AdminInquiryBlock>
@@ -99,9 +105,13 @@ const AdminInquiry = ({
               <InquiryHeaderBlock>
                 <InquiryHeaderItem width="5%">번호</InquiryHeaderItem>
                 <InquiryHeaderItem width="15%">아이디</InquiryHeaderItem>
-                <InquiryHeaderItem width="10%">분류</InquiryHeaderItem>
+                <InquiryHeaderItem width="10%">
+                  <div onClick={() => changeSort("classify")}>분류</div>
+                </InquiryHeaderItem>
                 <InquiryHeaderItem width="45%">제목</InquiryHeaderItem>
-                <InquiryHeaderItem width="13%">작성일</InquiryHeaderItem>
+                <InquiryHeaderItem width="13%">
+                  <div onClick={() => changeSort("createdAt")}>작성일</div>
+                </InquiryHeaderItem>
                 <InquiryHeaderItem width="7%">상태</InquiryHeaderItem>
               </InquiryHeaderBlock>
               <div>
@@ -120,7 +130,9 @@ const AdminInquiry = ({
                           {m.userId}
                         </InquiryHeaderItem>
                         <InquiryHeaderItem width="10%">
-                          {m.classify}
+                          <div onClick={(e) => onClassifyClick(e, m.classify)}>
+                            {m.classify}
+                          </div>
                         </InquiryHeaderItem>
                         <InquiryHeaderItem width="45%">
                           {m.title}
@@ -130,9 +142,9 @@ const AdminInquiry = ({
                         </InquiryHeaderItem>
                         <InquiryHeaderItem width="7%">
                           {state(m.answer) ? (
-                            <div className="done">답변완료</div>
+                            <span className="done">답변완료</span>
                           ) : (
-                            <div className="undone">처리중...</div>
+                            <span className="undone">처리중...</span>
                           )}
                         </InquiryHeaderItem>
                       </InquiryContent>
@@ -165,9 +177,18 @@ const InquiryHeaderItem = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  ${({ width }) => width && `flex-basis: ${width};`}
+  /* border: 1px solid black; */
 
-  > h4 {
+  > div {
+    cursor: pointer;
+    &:hover {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+  }
+
+  ${({ width }) => width && `flex-basis: ${width};`} >
+    h4 {
     margin-right: 2rem;
     white-space: nowrap;
     overflow: hidden;

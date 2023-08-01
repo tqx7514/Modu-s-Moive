@@ -6,7 +6,7 @@ const AdminUserPage = () => {
   return (
     <div>
       <AdminHeaderContainer />
-      <AdminUserListContainer/>
+      <AdminUserListContainer />
     </div>
   );
 };

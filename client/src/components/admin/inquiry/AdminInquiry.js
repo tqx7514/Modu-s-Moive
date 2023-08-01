@@ -245,8 +245,8 @@ const CategoryBlock = styled.div`
   align-items: center;
 `;
 
-const AdminInquiryBlock = styled(Responsive)`
-  background-color: gray;
+const AdminInquiryBlock = styled.div`
+  /* background-color: gray; */
   flex: 1;
   > .end {
     border-top: 1px solid lightgray;

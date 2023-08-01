@@ -10,7 +10,10 @@ import {
   changeField,
   readComment,
   removeComment,
-  updateComment
+  updateComment,
+  createLike,
+  delLike,
+  movieDetailLike,
 } from "../../modules/moviedetail";
 
 const DetailContainer = () => {
@@ -27,6 +30,8 @@ const DetailContainer = () => {
     commentError,
     commentlist,
     loading,
+    movieLike,
+    like,
   } = useSelector((state) => ({
     moviedetail: state.moviedetail.moviedetail,
     userId: state.user.user && state.user.user.id,
@@ -36,12 +41,16 @@ const DetailContainer = () => {
     comment: state.moviedetail.comment,
     commentError: state.moviedetail.commentError,
     commentlist: state.moviedetail.commentlist,
-    loading:state.loading["moviedetail/DETAIL_POST"]
+    loading:state.loading["moviedetail/DETAIL_POST"],
+    movieLike: state.moviedetail.movieLike,
+    like: state.moviedetail.like,
   }));
   console.log("moviedetail===========>", moviedetail);
   const [showInfo, setShowInfo] = useState(true);
   const [showReviews, setShowReviews] = useState(false);
   const [selectBtn, setSelectBtn] = useState(null);
+  const [isLiked, setIsLiked] = useState(false);
+
 
   const handleBtn = (e) => {
     setSelectBtn(e.target.textContent);
@@ -63,7 +72,9 @@ const DetailContainer = () => {
   useEffect(() => {
     dispatch(readDetail(id));
     dispatch(readComment(id));
+    dispatch(movieDetailLike());
   }, [dispatch, id]);
+
 
   const onPublish = useCallback(() => {
     dispatch(commentWrite({ content, userId, movie_id, star }));
@@ -109,9 +120,22 @@ const DetailContainer = () => {
     dispatch(updateComment({commentNum, movie_id, editContent, rating}));
   };
 
+  const handleClickUpLike = (mc_num, id ) => {
+    setIsLiked(true);
+    console.log("handleClickUpLike", mc_num, id );
+    dispatch(createLike(mc_num, id));
+  };
+
+  const handleClickDownLike = (mc_num, id) => {
+    setIsLiked(false);
+    // console.log("handleClickDownLike", mc_num, id)
+    // dispatch(delLike(mc_num, id));
+  }; 
+
 const ownPost = (id) =>{
-  return userId&&userId === id;
+  return userId && userId === id;
 }
+
   return (
     <Moviedetail
       moviedetail={moviedetail}
@@ -131,6 +155,10 @@ const ownPost = (id) =>{
       loading={loading}
       selectBtn={selectBtn}
       userId={userId}
+      isLiked={isLiked}
+      handleClickUpLike={handleClickUpLike}
+      handleClickDownLike={handleClickDownLike}
+      like={like}
     />
   );
 };

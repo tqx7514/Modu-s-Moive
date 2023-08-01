@@ -35,8 +35,6 @@ const {user} = useSelector(({user}) => user);
     dispatch(setData({key: "time", value: ""}));
     dispatch(setPerson(''));
     dispatch(setSelectedSeat(null));
-    discount(getTotalPrice(''))
-    dispatch(OnDiscount(''))
 
   }, [dispatch, data, number, person, seat, totalPrice, discount, user]);
 

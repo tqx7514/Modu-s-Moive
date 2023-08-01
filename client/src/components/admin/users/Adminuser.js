@@ -63,111 +63,117 @@ const Adminuser = ({
   };
 
   return (
-    <AdminInquiryBlock>
-      {loading ? (
-        <div className="loading">
-          <img src="/preloader_icon.gif" alt="" />
-        </div>
-      ) : (
-        <>
-          <HeaderBlock>
-            <AdminTitle title="유저 관리" />
-          </HeaderBlock>
-          {detail ? (
-            <>
-              <CategoryBlock>
-                <Buttons onClick={handleDetailClick}>목록으로</Buttons>
-              </CategoryBlock>
-            </>
-          ) : (
-            <>
-              <InquiryHeaderBlock>
-                <InquiryHeaderItem width="5%">번호</InquiryHeaderItem>
-                <InquiryHeaderItem width="20%">아이디</InquiryHeaderItem>
-                <InquiryHeaderItem width="15%">이름</InquiryHeaderItem>
-                <InquiryHeaderItem width="30%">email</InquiryHeaderItem>
-                <InquiryHeaderItem width="30%">전화번호</InquiryHeaderItem>
-                <InquiryHeaderItem width="10%">나이</InquiryHeaderItem>
-                <InquiryHeaderItem width="7%">성별</InquiryHeaderItem>
-                <InquiryHeaderItem width="13%">Point</InquiryHeaderItem>
-                <InquiryHeaderItem width="15%">등급</InquiryHeaderItem>
-                <InquiryHeaderItem width="10%">등급관리</InquiryHeaderItem>
-                <InquiryHeaderItem width="7%">삭제</InquiryHeaderItem>
-              </InquiryHeaderBlock>
-              <div>
-                {userlist &&
-                  userlist.map((m) => (
-                    <InquiryBlock>
-                      <InquiryContent>
-                        <InquiryHeaderItem width="5%">
-                          {m.userNum}
-                        </InquiryHeaderItem>
-                        <InquiryHeaderItem width="20%">
-                          {m.id}
-                        </InquiryHeaderItem>
-                        <InquiryHeaderItem width="15%">
-                          {m.name}
-                        </InquiryHeaderItem>
-                        <InquiryHeaderItem width="30%">
-                          {m.email}
-                        </InquiryHeaderItem>
-                        <InquiryHeaderItem width="30%">
-                          {m.tel}
-                        </InquiryHeaderItem>
-                        <InquiryHeaderItem width="10%">
-                          {m.age}
-                        </InquiryHeaderItem>
-                        <InquiryHeaderItem width="7%">
-                          {m.gender}
-                        </InquiryHeaderItem>
-                        <InquiryHeaderItem width="13%">
-                          {m.point}
-                        </InquiryHeaderItem>
-                        <InquiryHeaderItem width="15%">
-                          {m.grade === 2
-                            ? "관리자"
-                            : m.grade === 1
-                            ? "VIP"
-                            : m.grade === 0
-                            ? "일반유저"
-                            : ""}
-                        </InquiryHeaderItem>
-                        <InquiryHeaderItem width="10%">
-                          {m.grade === 0 ? (
-                            <button onClick={() => handleGradeUpClick(m.grade)}>
-                              등급업
-                            </button>
-                          ) : m.grade === 1 ? (
-                            <button
-                              onClick={() => handleGradeDownClick(m.grade)}
-                            >
-                              등급다운
-                            </button>
-                          ) : (
-                            ""
-                          )}
-                        </InquiryHeaderItem>
-                        <InquiryHeaderItem width="7%">
-                          {m.grade !== 2 && (
-                            <button onClick={() => onDelete(m.id)}>삭제</button>
-                          )}
-                        </InquiryHeaderItem>
-                      </InquiryContent>
-                    </InquiryBlock>
-                  ))}
-              </div>
-              <div className="end"></div>
-              <MyPageInquiryPagination
-                lastPage={lastPage}
-                currentPage={currentPage}
-                handleNextPage={handleNextPage}
-                handlePreviousPage={handlePreviousPage}
-              />
-            </>
-          )}
-        </>
-      )}
-    </AdminInquiryBlock>
+    <div style={{ background: "gray" }}>
+      <AdminInquiryBlock>
+        {loading ? (
+          <div className="loading">
+            <img src="/preloader_icon.gif" alt="" />
+          </div>
+        ) : (
+          <>
+            <HeaderBlock>
+              <AdminTitle title="유저 관리" />
+            </HeaderBlock>
+            {detail ? (
+              <>
+                <CategoryBlock>
+                  <Buttons onClick={handleDetailClick}>목록으로</Buttons>
+                </CategoryBlock>
+              </>
+            ) : (
+              <>
+                <InquiryHeaderBlock>
+                  <InquiryHeaderItem width="5%">번호</InquiryHeaderItem>
+                  <InquiryHeaderItem width="20%">아이디</InquiryHeaderItem>
+                  <InquiryHeaderItem width="15%">이름</InquiryHeaderItem>
+                  <InquiryHeaderItem width="30%">email</InquiryHeaderItem>
+                  <InquiryHeaderItem width="30%">전화번호</InquiryHeaderItem>
+                  <InquiryHeaderItem width="10%">나이</InquiryHeaderItem>
+                  <InquiryHeaderItem width="7%">성별</InquiryHeaderItem>
+                  <InquiryHeaderItem width="13%">Point</InquiryHeaderItem>
+                  <InquiryHeaderItem width="15%">등급</InquiryHeaderItem>
+                  <InquiryHeaderItem width="10%">등급관리</InquiryHeaderItem>
+                  <InquiryHeaderItem width="7%">삭제</InquiryHeaderItem>
+                </InquiryHeaderBlock>
+                <div>
+                  {userlist &&
+                    userlist.map((m) => (
+                      <InquiryBlock>
+                        <InquiryContent>
+                          <InquiryHeaderItem width="5%">
+                            {m.userNum}
+                          </InquiryHeaderItem>
+                          <InquiryHeaderItem width="20%">
+                            {m.id}
+                          </InquiryHeaderItem>
+                          <InquiryHeaderItem width="15%">
+                            {m.name}
+                          </InquiryHeaderItem>
+                          <InquiryHeaderItem width="30%">
+                            {m.email}
+                          </InquiryHeaderItem>
+                          <InquiryHeaderItem width="30%">
+                            {m.tel}
+                          </InquiryHeaderItem>
+                          <InquiryHeaderItem width="10%">
+                            {m.age}
+                          </InquiryHeaderItem>
+                          <InquiryHeaderItem width="7%">
+                            {m.gender}
+                          </InquiryHeaderItem>
+                          <InquiryHeaderItem width="13%">
+                            {m.point}
+                          </InquiryHeaderItem>
+                          <InquiryHeaderItem width="15%">
+                            {m.grade === 2
+                              ? "관리자"
+                              : m.grade === 1
+                              ? "VIP"
+                              : m.grade === 0
+                              ? "일반유저"
+                              : ""}
+                          </InquiryHeaderItem>
+                          <InquiryHeaderItem width="10%">
+                            {m.grade === 0 ? (
+                              <button
+                                onClick={() => handleGradeUpClick(m.grade)}
+                              >
+                                등급업
+                              </button>
+                            ) : m.grade === 1 ? (
+                              <button
+                                onClick={() => handleGradeDownClick(m.grade)}
+                              >
+                                등급다운
+                              </button>
+                            ) : (
+                              ""
+                            )}
+                          </InquiryHeaderItem>
+                          <InquiryHeaderItem width="7%">
+                            {m.grade !== 2 && (
+                              <button onClick={() => onDelete(m.id)}>
+                                삭제
+                              </button>
+                            )}
+                          </InquiryHeaderItem>
+                        </InquiryContent>
+                      </InquiryBlock>
+                    ))}
+                </div>
+                <div className="end"></div>
+                <MyPageInquiryPagination
+                  lastPage={lastPage}
+                  currentPage={currentPage}
+                  handleNextPage={handleNextPage}
+                  handlePreviousPage={handlePreviousPage}
+                />
+              </>
+            )}
+          </>
+        )}
+      </AdminInquiryBlock>
+    </div>
   );
 };
 const InquiryHeaderBlock = styled.div`

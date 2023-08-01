@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AdminHeaderContainer from "../../containers/common/admin/AdminHeaderContainer";
-import { useNavigate } from "react-router-dom";
 import Responsive from "../../containers/common/Responsive";
+import AdminMainContainer from "../../containers/admin/main/AdminMainContainer";
 
 const AdminPageWrapper = styled.div`
   display: flex;
@@ -12,25 +11,21 @@ const AdminPageWrapper = styled.div`
   background: gray;
 `;
 
-const AdminBody = styled(Responsive)`
-  flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
-  background: gray;
+const AdminBody = styled.div`
+  /* background: gray; */
 `;
 
 const AdminPage = () => {
-  const { user } = useSelector(({ user }) => ({ user: user.user }));
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (user.grade < 2) {
-      // console.log(user.grade);
-      alert("관리자도 아닌새끼가 어딜?");
-      navigate("/");
-    }
-  }, [user]);
   return (
     <AdminPageWrapper>
       <AdminHeaderContainer />
-      <AdminBody>관리자 페이지</AdminBody>
+      {/* <AdminBody>관리자 페이지</AdminBody>
+      <Box height="25vh">
+        <PieChart data={data} />
+      </Box> */}
+      {/* <AdminBody> */}
+      <AdminMainContainer />
+      {/* </AdminBody> */}
     </AdminPageWrapper>
   );
 };

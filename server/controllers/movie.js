@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { moviecomments, users, movies } = require("../models");
+const { moviecomments, users, movies, movieLike } = require("../models");
 
 exports.List = async (req, res) => {
   try {
@@ -166,6 +166,46 @@ exports.AdminRemove = async (req, res) => {
     });
 
     res.status(200).json({ currentmovielist });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+exports.DetailLike = async (req, res) => {
+  console.log("like=========>", req.body);
+  const {mc_num, id} = req.body;
+  try{
+    const Detaillike = await movieLike.create(
+      {
+        mc_num: mc_num,
+        id: id,
+      }
+    );
+    res.status(200).json({Detaillike});
+  } catch(error) {
+    res.status(500).json(error);
+  }
+}
+
+exports.LikeDel = async (req, res) => {
+  const {mc_num, id} = req.query;
+  try{
+    const likeDel = await movieLike.destroy({
+      where: {mc_num,id},
+    });
+
+    const movielike = movieLike.findAll({
+    })
+    res.status(200).json(movielike);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+exports.Like = async (req, res) => {
+  try{
+    const like = await movieLike.findAll({});
+    res.status(200).json(like);
   } catch (error) {
     res.status(500).json(error);
   }

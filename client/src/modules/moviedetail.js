@@ -24,6 +24,15 @@ const [UPDATE_COMMENT, UPDATE_COMMENT_SUCCESS, UPDATE_COMMENT_FAIURE] =
 const [REMOVE_COMMENT, REMOVE_COMMENT_SUCCESS, REMOVE_COMMENT_FAIURE] =
   createRequestActionTypes("moviedetail/REMOVE_COMMENT");
 
+const [CREATE_LIKE, CREATE_LIKE_SUCCESS, CREATE_LIKE_FAILURE] =
+  createRequestActionTypes("moviedetail/CREATE_LIKE");
+
+const [DEL_LIKE, DEL_LIKE_SUCCESS, DEL_LIKE_FAILURE] = 
+  createRequestActionTypes("moviedetail/DEL_LIKE");
+
+const [LIKE, LIKE_SUCCESS, LIKE_FAILURE] =
+  createRequestActionTypes("moviedetail/LIKE");
+
 export const readDetail = createAction(DETAIL_POST, (id) => id);
 export const initialize = createAction(INITIALIZE);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
@@ -42,11 +51,21 @@ export const updateComment = createAction(UPDATE_COMMENT, ({
     commentNum, movie_id, editContent, rating
 }));
 
+export const createLike = createAction(CREATE_LIKE, (mc_num, id) => ({
+  mc_num, id
+}));
+
 export const removeComment = 
   createAction(
   REMOVE_COMMENT,
   ({commentNum,movie_id}) => ({commentNum,movie_id})
 );
+
+export const delLike = createAction(DEL_LIKE, (mc_num, id) => ({
+  mc_num, id
+}));
+
+export const movieDetailLike = createAction(LIKE);
 
 const readDetailSaga = createRequestSaga(DETAIL_POST, movieAPI.moviedetail);
 const readCommentSaga = createRequestSaga(READ_COMMENT, movieAPI.moviedetail);
@@ -56,6 +75,9 @@ const commentWriteSaga = createRequestSaga(
 );
 const updateCommentSaga = createRequestSaga(UPDATE_COMMENT, movieAPI.updateComment);
 const removeCommentSaga = createRequestSaga(REMOVE_COMMENT, movieAPI.removeComment);
+const createLikeSaga = createRequestSaga(CREATE_LIKE, movieAPI.createlike);
+const delLikeSaga = createRequestSaga(DEL_LIKE, movieAPI.DelLike);
+const likeSaga = createRequestSaga(LIKE, movieAPI.Like);
 
 export function* moviedetailSaga() {
   yield takeLatest(DETAIL_POST, readDetailSaga);
@@ -63,10 +85,15 @@ export function* moviedetailSaga() {
   yield takeLatest(READ_COMMENT, readCommentSaga);
   yield takeLatest(UPDATE_COMMENT, updateCommentSaga);
   yield takeLatest(REMOVE_COMMENT, removeCommentSaga);
+  yield takeLatest(CREATE_LIKE, createLikeSaga);
+  yield takeLatest(DEL_LIKE, delLikeSaga);
+  yield takeLatest(LIKE, likeSaga);
 }
 
 const initialState = {
   moviedetail: [],
+  movielike: null,
+  like: null,
   error: null,
   content: "",
   star: "",
@@ -127,6 +154,30 @@ const moviedetail = handleActions(
       commentlist:commentlist.commentlist,
     }),
     [REMOVE_COMMENT_FAIURE]: (state, {payload: error}) => ({
+      ...state,
+      error,
+    }),
+    [CREATE_LIKE_SUCCESS]: (state, {payload: Detaillike}) => ({
+      ...state,
+      Detaillike: Detaillike.Detaillike,
+    }),
+    [CREATE_LIKE_FAILURE]: (state, {payload: error}) => ({
+      ...state,
+      error
+    }),
+    [DEL_LIKE_SUCCESS]: (state, {payload: movielike}) => ({
+      ...state,
+      movielike: movielike.movielike,
+    }),
+    [DEL_LIKE_FAILURE]: (state, {payload: error}) => ({
+      ...state,
+      error,
+    }),
+    [LIKE_SUCCESS]: (state, {payload: like}) => ({
+      ...state,
+      like,
+    }),
+    [LIKE_FAILURE]: (state, {payload: error}) => ({
       ...state,
       error,
     }),

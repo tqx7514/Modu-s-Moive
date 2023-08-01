@@ -111,7 +111,7 @@ const MeetViewerContainer = () => {
 
   const ownMeet = (user && user.id) === (meet && meet.userId);
   const isLogined = user !== null;
-  const isJoined = user && user.meet.includes(meet && meet.meetNum);
+  const isJoined = user.meet && user.meet.includes(meet && meet.meetNum);
   return (
     <MeetViewer
       meet={meet}

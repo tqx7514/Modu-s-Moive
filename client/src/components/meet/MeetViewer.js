@@ -33,6 +33,7 @@ const MeetTitle = styled.div`
 
   > div {
     margin: 0 1rem 0 1rem;
+    font-family: "TTTtangsbudaejjigaeB";
   }
 `;
 const AdminMeetTitle = styled.div`
@@ -46,6 +47,7 @@ const AdminMeetTitle = styled.div`
   color: red;
   > div {
     margin: 0 1rem 0 1rem;
+    font-family: "TTTtangsbudaejjigaeB";
   }
 `;
 

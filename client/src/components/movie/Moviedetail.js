@@ -51,7 +51,7 @@ const MovieInfo1 = styled.div`
 const MovieInfo2 = styled.div`
   display: flex;
   margin-top: 50px;
-  .btn_trailer{
+  .btn_trailer {
     box-sizing: border-box;
     height: 40px;
     line-height: 38px;
@@ -94,7 +94,7 @@ const MovieInfo2 = styled.div`
     font: 0 auto;
     text-indent: -9999999em;
   }
-  .btn_icon_share{
+  .btn_icon_share {
     align-items: center;
     box-sizing: border-box;
     width: 40px;
@@ -109,7 +109,7 @@ const MovieInfo2 = styled.div`
     margin-left: 10px;
     cursor: pointer;
   }
-  .icon_share{
+  .icon_share {
     display: inline-block;
     width: 24px;
     height: 24px;
@@ -151,7 +151,7 @@ const Clickevent = styled.div`
     font-size: 30px;
     border-bottom: 1px solid #ccc;
 
-    &.active{
+    &.active {
       border-bottom: 1px solid #000;
     }
   }
@@ -226,12 +226,12 @@ const Title = styled.div`
     justify-content: center;
   }
   .txt_Info {
-        padding: 74px 0 23px;
+    padding: 74px 0 23px;
     color: #000;
     font-size: 19px;
     text-align: center;
   }
-  .btn_col2{
+  .btn_col2 {
     width: 380px;
     height: 50px;
     margin-bottom: 35px;
@@ -251,9 +251,7 @@ const Title = styled.div`
   }
 `;
 
-const Star = styled.div``
-;
-
+const Star = styled.div``;
 const InputBox = styled.div`
   height: 119px;
   margin-bottom: 20px;
@@ -378,11 +376,11 @@ const ReviewTopInfo = styled.div`
     padding: 5px;
     cursor: pointer;
   }
-  button{
+  button {
     background-color: white;
     border: none;
   }
-  img{
+  img {
     width: 15px;
     height: 15px;
   }
@@ -406,35 +404,41 @@ const MovieDetail = ({
   ownPost,
   loading,
   selectBtn,
-  userId
+  userId,
+  isLiked,
+  handleClickUpLike,
+  handleClickDownLike,
+  like,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  if (moviedetail.length===0) {
-    console.log('아앙아아아아아');
-    return 
-      (<img src="/loader.gif" alt="" />)
+  console.log("sdafasdfadsf", userId);
+  if (moviedetail.length === 0) {
+    console.log("아앙아아아아아");
+    return;
+    <img src="/loader.gif" alt="" />;
   }
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
 
-  console.log('m무비디테일ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ',moviedetail);
+  console.log("m무비디테일ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ", moviedetail);
 
-const genres = moviedetail.genres;
-const images = moviedetail.images.posters;
-const videos = moviedetail.videos.results;
-const credits = moviedetail.credits.cast;
-const credit = moviedetail.credits.crew;
-console.log("moviedetailcomponents", moviedetail);
+  console.log("like================>", like);
 
-const changeDate = (d) => {
-  const date = new Date(d);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  const result = `${year}-${month}-${day}`;
+  const genres = moviedetail.genres;
+  const images = moviedetail.images.posters;
+  const videos = moviedetail.videos.results;
+  const credits = moviedetail.credits.cast;
+  const credit = moviedetail.credits.crew;
+  console.log("moviedetailcomponents", moviedetail);
 
-  return result;
-};
+  const changeDate = (d) => {
+    const date = new Date(d);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const result = `${year}-${month}-${day}`;
+
+    return result;
+  };
 
   const openModal = () => {
     setIsOpen(true);
@@ -449,7 +453,7 @@ const changeDate = (d) => {
   };
 
   return (
-<DetailContainer>
+    <DetailContainer>
       <div>
         <DetailContent>
           <DetailTop>
@@ -476,7 +480,7 @@ const changeDate = (d) => {
                 <button className="btn_icon_wish">
                   <span className="icon_wishheart"></span>
                   3,749
-                  </button>
+                </button>
                 <button className="btn_icon_share">
                   <span className="icon_share"></span>
                 </button>
@@ -489,14 +493,18 @@ const changeDate = (d) => {
           </DetailTop>
         </DetailContent>
         <Clickevent>
-          <button 
+          <button
             onClick={(e) => handleShowInfo(e)}
-            className={selectBtn === "영화정보" && 'active'}
-          >영화정보</button>
-          <button 
+            className={selectBtn === "영화정보" && "active"}
+          >
+            영화정보
+          </button>
+          <button
             onClick={(e) => handleShowReviews(e)}
-            className={selectBtn === "평점 및 관람평" && 'active'}
-          >평점 및 관람평({commentlist.length})</button>
+            className={selectBtn === "평점 및 관람평" && "active"}
+          >
+            평점 및 관람평({commentlist && commentlist.length})
+          </button>
         </Clickevent>
         {showInfo && (
           <div>
@@ -507,10 +515,12 @@ const changeDate = (d) => {
                   <Genre>
                     <p>장르:</p>
                     {genres &&
-                      genres.map((genre) => <p key={genre.id}>{genre.name}&nbsp;</p>)}
+                      genres.map((genre) => (
+                        <p key={genre.id}>{genre.name}&nbsp;</p>
+                      ))}
                   </Genre>
                   <Director>
-                  <p>감독:</p>
+                    <p>감독:</p>
                     {credit &&
                       credit.map((credit) => {
                         if (credit.job === "Director") {
@@ -521,7 +531,7 @@ const changeDate = (d) => {
                   </Director>
                   <Talent>
                     <ul>
-                    <p>출연진:</p>
+                      <p>출연진:</p>
                       {credits &&
                         credits.map((credit) => (
                           <li key={credit.id}>
@@ -545,51 +555,56 @@ const changeDate = (d) => {
               </Video>
               <Image>
                 <h1>스틸컷({images && images.length})</h1>
-                <ImageCarousel images={ images && images} />
+                <ImageCarousel images={images && images} />
               </Image>
             </VideoImageInfo>
           </div>
         )}
         {showReviews && (
           <Reviews>
-            {ownPost(userId) ? ( 
-            <div className="comment">
-              <Title>
-                <div className="starInfo">
-                  <div className="starInfo1">
-                    <Star>
-                      <StarRating
-                        onRate={handleRate}
-                        star={star}
-                        onChangestar={onChangestar}
-                      />
-                    </Star>
-                  </div>
-                  <div>영화 관람 후 관람평 작성 시 L.POINT 50P 적립</div>
-                </div>
-                <InputBox>
-                  <div className="review-write-box">
-                    <textarea
-                      onChange={onChangecontent}sdfsdfsdfdfsdfsdf
-                      value={content}
-                      maxLength={220}
-                      placeholder="평점 및 영화 관람평을 작성해 주세요. (최소 10글자 이상)"
-                    ></textarea>
-                    <span>
-                      <strong>{content.length}</strong>/<em>220</em>
-                    </span>
-                  </div>
-                  <button onClick={onPublish}>관람평 작성</button>
-                </InputBox>
-              </Title>
-            </div>
-            ) : ( 
+            {ownPost(userId) ? (
               <div className="comment">
-              <Title>
-                  <div className="txt_Info">영화 관람 후 관람평 작성 시 L.POINT 50P 적립</div>
-                  <Link to={"/login"}><button className="btn_col2">관람평 작성</button></Link>
-              </Title>
-            </div>
+                <Title>
+                  <div className="starInfo">
+                    <div className="starInfo1">
+                      <Star>
+                        <StarRating
+                          onRate={handleRate}
+                          star={star}
+                          onChangestar={onChangestar}
+                        />
+                      </Star>
+                    </div>
+                    <div>영화 관람 후 관람평 작성 시 L.POINT 50P 적립</div>
+                  </div>
+                  <InputBox>
+                    <div className="review-write-box">
+                      <textarea
+                        onChange={onChangecontent}
+                        sdfsdfsdfdfsdfsdf
+                        value={content}
+                        maxLength={220}
+                        placeholder="평점 및 영화 관람평을 작성해 주세요. (최소 10글자 이상)"
+                      ></textarea>
+                      <span>
+                        <strong>{content.length}</strong>/<em>220</em>
+                      </span>
+                    </div>
+                    <button onClick={onPublish}>관람평 작성</button>
+                  </InputBox>
+                </Title>
+              </div>
+            ) : (
+              <div className="comment">
+                <Title>
+                  <div className="txt_Info">
+                    영화 관람 후 관람평 작성 시 L.POINT 50P 적립
+                  </div>
+                  <Link to={"/login"}>
+                    <button className="btn_col2">관람평 작성</button>
+                  </Link>
+                </Title>
+              </div>
             )}
             <Comment>
               <div className="Comment1">
@@ -639,26 +654,41 @@ const changeDate = (d) => {
                         </span>
                         <ReviewTopInfo>
                           <span>{comment.id}</span>
-                          <span>{changeDate(comment.createdAt)}</span>
-                          <button className="btn_good"><img src="/ic_review_good.png"/>0</button>
+                          <span>{changeDate(comment.createdAt)}</span> 
+                          <button
+                            className="btn_good"
+                            onClick={
+                               isLiked ? () => handleClickDownLike( userId) : () => handleClickUpLike(comment.mc_num, userId)
+                            }
+                          >
+                            <img
+                              src={
+                               isLiked
+                                  ? "/ic_review_goodred_on.png"
+                                  : "/ic_review_good.png"
+                              }
+                            />
+                          </button> 
                         </ReviewTopInfo>
                         <div>{comment.content}</div>
                         <div>
-                          {ownPost(comment.id) &&
-                        <CommentActionButtons
-                          onRemove={onRemove}
-                          onEdit={onEdit}
-                          commentNum={comment.mc_num}
-                          content={comment.content}
-                          star={comment.star}
-                          onChangestar={onChangestar}
-                          onRate={handleRate}
-                        />
-                      }
+                          {ownPost(comment.id) && (
+                            <CommentActionButtons
+                              onRemove={onRemove}
+                              onEdit={onEdit}
+                              commentNum={comment.mc_num}
+                              content={comment.content}
+                              star={comment.star}
+                              onChangestar={onChangestar}
+                              onRate={handleRate}
+                            />
+                          )}
+                          
                         </div>
                       </li>
                     ))}
                 </ReviewComent>
+                
               </div>
             </Comment>
           </Reviews>
@@ -668,7 +698,7 @@ const changeDate = (d) => {
         <MovieVideoModal oncloseModal={oncloseModal} videos={videos} />
       )}
     </DetailContainer>
-    )}
-  
+  );
+};
 
 export default MovieDetail;

@@ -160,7 +160,7 @@ const Cinema = ({
   // const mycinemas = mycinema && mycinema.viewcinema;
   const addr = mycinema && mycinema.map((m) => m.addr);
   const id = mycinema && mycinema.map((m) => m.id);
-  const myId = mycinema.filter((my) => my.id === user);
+  const myId = mycinema && mycinema?.filter((my) => my.id === user && user);
   const cinemaId = id && id.find((a) => a === user);
   console.log("mycinema========>", mycinema);
   console.log("mycinema.Id=====>", cinemaId);
@@ -170,8 +170,9 @@ const Cinema = ({
   const [selectedCinemas, setSelectedCinemas] = useState([]);
   const [selectedAddrDetail, setSelectedAddrDetail] = useState("");
   const [selectedCinema, setSelectedCinema] = useState(null);
-  const mycinemas = mycinema.filter((m) => user === m.id);
+
   console.log('아아아아아아아아아아',selectedCinema);
+  const mycinemas = mycinema && mycinema?.filter((m) => user && user === m.id);
 
   console.log("ㄴㅇㄹ나ㅣㅇ런아ㅣ러ㅏㅣㄴㅇ러ㅏㅣㄴ어라ㅣ", mycinemas);
 
@@ -216,7 +217,8 @@ const Cinema = ({
   }, []);
 
   const renderButton = (cinemaId) => {
-    const count = mycinemas && mycinemas.filter((m) => m.addr === cinemaId);
+
+    const count = mycinemas && mycinemas?.filter((m) => m.addr === cinemaId);
     console.log("갯수ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ", count.length);
     if (count.length > 0) {
       return (
@@ -312,42 +314,42 @@ const Cinema = ({
             </ul>
           </AddrDetail>
         </Menu>
-        {selectedCinema!==null && (
+        {selectedCinema !== null && (
           <>
-        <Title>
-          {selectedCinema && <h1>{selectedCinema}</h1>}
-          {renderButton(selectedCinema)}
-          <button className="btn_col4 ty3">단체/대관문의</button>
-        </Title>
-        <Total>
-          <p>총 상영관 수</p>
-          <p>7개관</p>
-          <p>총 좌석수</p>
-          <p>1,243석</p>
-        </Total>
-        <Detail>{selectedAddrDetail && <h4>{selectedAddrDetail}</h4>}</Detail>
-        <Ment>
-          <h4>공지사항</h4>
-          <p> BTS PTD ON STAGE-SEOUL LIVE VIEWING 관련 추가 안내</p>
-        </Ment>
-        <ModalTag>
-          <button>
-            <img src="/location_subway_40.png" />
-            <span>대중교통 안내</span>
-          </button>
-          <button>
-            <img src="/location_car_40.png" />
-            <span>자가용/주차안내</span>
-          </button>
-          <button onClick={openModal}>
-            <img src="/location_map_40.png" />
-            <span>지도보기</span>
-          </button>
-        </ModalTag>
-        </>
+            <Title>
+              {selectedCinema && <h1>{selectedCinema}</h1>}
+              {renderButton(selectedCinema)}
+              <button className="btn_col4 ty3">단체/대관문의</button>
+            </Title>
+            <Total>
+              <p>총 상영관 수</p>
+              <p>7개관</p>
+              <p>총 좌석수</p>
+              <p>1,243석</p>
+            </Total>
+            <Detail>
+              {selectedAddrDetail && <h4>{selectedAddrDetail}</h4>}
+            </Detail>
+            <Ment>
+              <h4>공지사항</h4>
+              <p> BTS PTD ON STAGE-SEOUL LIVE VIEWING 관련 추가 안내</p>
+            </Ment>
+            <ModalTag>
+              <button>
+                <img src="/location_subway_40.png" />
+                <span>대중교통 안내</span>
+              </button>
+              <button>
+                <img src="/location_car_40.png" />
+                <span>자가용/주차안내</span>
+              </button>
+              <button onClick={openModal}>
+                <img src="/location_map_40.png" />
+                <span>지도보기</span>
+              </button>
+            </ModalTag>
+          </>
         )}
-        
-
       </CinemaContent>
       {selectedAddrDetail && isOpen && (
         <CinemaModal oncloseModal={oncloseModal} cinema={selectedAddrDetail} />

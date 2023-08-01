@@ -17,7 +17,8 @@ const mypageRouter = require("./routes/mypage");
 const adminEventRouter = require("./routes/admin/adminevent");
 const adminPostRouter = require("./routes/admin/adminpost");
 const adminInquiryRouter = require("./routes/admin/admininquiry");
-const adminUser = require("./routes/admin/adminuser");
+const adminUserRouter = require("./routes/admin/adminuser");
+const adminChartRouter = require("./routes/admin/adminchart");
 
 const axios = require("axios");
 const mysql = require("mysql2");
@@ -49,7 +50,7 @@ app.use(
       "http://192.168.10.211:3000",
       "http://192.168.10.95:3000",
     ],
-    methods: ["GET", "POST", "OPTIONS", "PATCH", "DELETE"],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
   })
 );
@@ -67,7 +68,8 @@ app.use("/admin/event/", adminEventRouter);
 app.use("/admin/post", adminPostRouter);
 app.use("/admin/event", adminEventRouter);
 app.use("/admin/inquiry", adminInquiryRouter);
-app.use("/admin/user", adminUser);
+app.use("/admin/user", adminUserRouter);
+app.use("/admin/chart", adminChartRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -4,20 +4,23 @@
     "password": "edurootroot",
     "database": "ModoosMovie",
     "host": "192.168.10.104",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "timezone": "-09:00"
   },
   "test": {
     "username": "CarCarO2",
     "password": "edurootroot",
     "database": "ModoosMovie",
     "host": "192.168.10.104",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "timezone": "-09:00"
   },
   "production": {
     "username": "CarCarO2",
     "password": "edurootroot",
     "database": "ModoosMovie",
     "host": "192.168.10.104",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "timezone": "-09:00"
   }
 }

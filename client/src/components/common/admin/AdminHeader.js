@@ -8,37 +8,45 @@ import LogoImage from "../../../public/Logo.png";
 const HeaderBlock = styled.div`
   position: fixed;
   width: 100%;
-  background: lightgray;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
 `;
 
 const Wrapper = styled(Responsive)`
-  height: 3rem;
+  position: fixed;
+  left: 0;
+  top: 50px;
+  height: 100%;
+  width: 280px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  .logo {
-    font-size: 1.125rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-  }
-  .right {
-    display: flex;
-    align-items: center;
+  background: #555;
+  box-shadow: 0px 2px 4px rgba(0,0,0, .08);
+  padding: 0;
+
+  
+  a{
+    display: block;
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255, .3);
+    color: #eee;
   }
 `;
 
 const LogoWrapper = styled(Responsive)`
-  height: 6rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  width: 100%;
+  height: 50px;
+  margin: 0 !important;
   .logo {
     font-size: 1.125rem;
     font-weight: 800;
     letter-spacing: 2px;
+    margin-left: 50px;
   }
   .right {
+    float: right;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -46,8 +54,8 @@ const LogoWrapper = styled(Responsive)`
 `;
 
 const Logo = styled.img`
-  height: 5rem;
-  margin-top: 0.6rem;
+  height: 40px;
+  margin-top: 5px;
 `;
 
 const Spacing = styled.div`
@@ -68,8 +76,8 @@ const UserHi = styled.div`
 `;
 
 const activeStyle = {
-  color: "green",
-  fontSize: 21,
+  color: "#fff",
+  fontSize: 18,
   fontWeight: "bold",
 };
 
@@ -100,6 +108,7 @@ const AdminHeader = ({ user, onLogout }) => {
             </div>
           )}
         </LogoWrapper>
+      </HeaderBlock>
         <Wrapper>
           <NavLink
             to="/admin/user"
@@ -114,10 +123,10 @@ const AdminHeader = ({ user, onLogout }) => {
             영화 관리
           </NavLink>
           <NavLink
-            to="/admin/#"
+            to="/admin/movietime"
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            예매 관리
+            상영스케줄 관리
           </NavLink>
           <NavLink
             to="/admin/#"
@@ -150,8 +159,6 @@ const AdminHeader = ({ user, onLogout }) => {
             문의 관리
           </NavLink>
         </Wrapper>
-      </HeaderBlock>
-      <Spacer />
     </>
   );
 };

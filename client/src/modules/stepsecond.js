@@ -1,7 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import createRequestSaga, { createRequestActionTypes } from "../lib/createRequestSaga";
 import * as payAPI from "../lib/api/ticket";
-import { takeLatest } from "redux-saga/effects";
+import { takeLatest, put } from "redux-saga/effects";
 
 // 액션 타입--------------------------------------------------------
 
@@ -82,7 +82,7 @@ const initialState = {
   person: null,
   seat: null,
   totalPrice: 0,
-  discount: "",
+  discount: 0,
   reservation: [],
 };
 

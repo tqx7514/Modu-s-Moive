@@ -349,11 +349,13 @@ const SelectPay = ({OnDiscount, onReservation}) => {
     discount
   } = useSelector(({ stepsecond }) => stepsecond);
 
+
+  console.log('asdfasfasdfas', inputPoint, 'asdfasdf', totalPrice)
   const {user} = useSelector(({user}) => user);
 
-  const htmlFormatPrice = totalPrice?.toLocaleString();
+  const formatPrice = totalPrice?.toLocaleString();
   const totalPriceNumber = parseInt(totalPrice, 10);
-  const htmlFormatTotalPrice = (totalPriceNumber - `${discount ? discount : 0}`).toLocaleString();
+  const formatTotalPrice = (totalPriceNumber - `${discount ? discount : 0}`).toLocaleString();
 
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
 
@@ -379,7 +381,11 @@ const SelectPay = ({OnDiscount, onReservation}) => {
   };
 
   const handleAllPoint = () => {
-    setInputPoint(user.point);
+    if(user.point > totalPrice){
+      setInputPoint(totalPrice);
+    } else{
+      setInputPoint(user.point);
+    }
   };
 
   const handleDiscount = (e) => {
@@ -389,11 +395,17 @@ const SelectPay = ({OnDiscount, onReservation}) => {
     };
 
     if(inputPoint > user.point){
-      e.preventDefault();
       alert('보유한 포인트를 초과할 수 없습니다.');
-    } else{
-      OnDiscount(inputPoint);
+      return;
+    }
+
+    if(inputPoint > totalPrice){
+      alert('상품 금액을 초과할 수 없습니다.');
+      return;
     };
+    
+
+    OnDiscount(inputPoint)
   };
 
   return (
@@ -576,7 +588,7 @@ const SelectPay = ({OnDiscount, onReservation}) => {
         <Payment>
           <div>
             <p>상품금액</p>
-            <b>{htmlFormatPrice}<span>원</span></b>
+            <b>{formatPrice}<span>원</span></b>
           </div>
           <div>
             <p>할인금액</p>
@@ -584,7 +596,7 @@ const SelectPay = ({OnDiscount, onReservation}) => {
           </div>
           <div>
             <p>결제금액</p>
-            <b>{htmlFormatTotalPrice}<span>원</span></b>
+            <b>{formatTotalPrice}<span>원</span></b>
           </div>
           <Link to="/ticket/payComplete" onClick={onReservation}>결제하기</Link>
         </Payment>

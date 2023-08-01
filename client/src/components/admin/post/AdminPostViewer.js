@@ -13,7 +13,7 @@ const AdminPageWrapper = styled.div`
 
 const AdminBody = styled.div`
   flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
-  background: gray;
+  /* background: gray; */
 `;
 
 const AdminPostViewerBlock = styled(Responsive)`

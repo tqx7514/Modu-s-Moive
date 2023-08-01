@@ -32,7 +32,6 @@ const AdminEventViewerContainer = () => {
   const onEdit = () => {
     dispatch(setOriginalEvent(adminevent));
     navigate("admin/write");
-    console.log("EventViewerContainer onEdit Error", adminevent);
   };
 
   const onRemove = async () => {
@@ -40,7 +39,7 @@ const AdminEventViewerContainer = () => {
       await removeAdminEvent(eventNum);
       navigate("/admin/event/list");
     } catch (e) {
-      console.log("EventViewerContainer onRemove Error", e);
+      console.error(error);
     }
   };
 

@@ -129,12 +129,13 @@ const AdminUserListContainer = () => {
 
 const AdminInquiryContainerBlock = styled.div`
   display: flex;
-  background-color: gray;
+  /* background-color: gray; */
   height: 130vh;
 `;
 const AdminBlock = styled.div`
   padding-left: 10px;
   width: 50%;
+  height: 100vh;
 `;
 
 export default AdminUserListContainer;

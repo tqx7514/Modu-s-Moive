@@ -103,7 +103,7 @@ const AdminInquiryContainer = () => {
 };
 const AdminInquiryContainerBlock = styled.div`
   display: flex;
-  background-color: gray;
+  /* background-color: gray; */
   height: 130vh;
 `;
 const AdminBlock = styled.div`

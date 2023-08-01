@@ -63,7 +63,7 @@ const Adminuser = ({
   };
 
   return (
-    <div style={{ background: "gray" }}>
+    <div>
       <AdminInquiryBlock>
         {loading ? (
           <div className="loading">
@@ -269,8 +269,8 @@ const CategoryBlock = styled.div`
 `;
 
 const AdminInquiryBlock = styled.div`
-  background-color: gray;
-  height: 130vh;
+  /* background-color: gray; */
+  /* height: 160vh; */
   > .end {
     border-top: 1px solid lightgray;
     margin: 0.2rem 0 1rem 0;

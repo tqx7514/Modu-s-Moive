@@ -76,21 +76,26 @@ const AdminMeetContainer = () => {
           lastPage={lastPage}
         />
       </AdminBlock>
-      <AdminBlock>
+      <AdminBlock2>
         <AdminMeetChart />
-      </AdminBlock>
+      </AdminBlock2>
     </AdminMeetContainerBlock>
   );
 };
 
 const AdminMeetContainerBlock = styled.div`
   display: flex;
-  background-color: gray;
+  /* background-color: gray; */
   height: 130vh;
+  justify-content: space-between;
 `;
 const AdminBlock = styled.div`
   padding-left: 10px;
-  width: 50%;
+  width: 60%;
+`;
+const AdminBlock2 = styled.div`
+  padding-left: 10px;
+  width: 30%;
 `;
 
 export default AdminMeetContainer;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Responsive from "../../common/Responsive";
 import palette from "../../../lib/styles/palette";
 
-const AdminEventViewerBlock = styled(Responsive)`
+const AdminEventViewerBlock = styled.div`
   margin-top: 4rem;
 `;
 

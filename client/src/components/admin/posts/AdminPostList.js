@@ -61,7 +61,7 @@ const AdminPostList = ({ posts, loading, error }) => {
 const AdminPostListContainerBlock = styled.div`
   display: flex;
   flex-direction: column;
-  background: gray;
+  /* background: gray; */
   flex: 1;
   min-height: 130vh;
 `;
@@ -106,7 +106,7 @@ const AdminPostItemContent = styled.div`
   }
 `;
 
-const AdminPostListBlock = styled(Responsive)`
+const AdminPostListBlock = styled.div`
   margin-top: 3rem;
 `;
 

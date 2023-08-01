@@ -1,12 +1,15 @@
 import React from "react";
 import AdminCurrentMovieContainer from "../../containers/admin/AdminCurrentMovieContainer";
 import AdminHeaderContainer from "../../containers/common/admin/AdminHeaderContainer";
+import { AdminBody } from "./AdminMovieTimePage";
 
 const CurrentMoviePage = () => {
   return (
     <div>
       <AdminHeaderContainer />
-      <AdminCurrentMovieContainer />
+      <AdminBody>
+        <AdminCurrentMovieContainer />
+      </AdminBody>
     </div>
   );
 };

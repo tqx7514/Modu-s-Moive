@@ -26,9 +26,9 @@ const AdminMainContainer = () => {
   const genderData = userDataGender({ a: Mcount, b: Wcount });
   return (
     <div>
-      <Box height="40vh">
+      {/* <Box height="40vh">
         <PieChart data={genderData} />
-      </Box>
+      </Box> */}
     </div>
   );
 };

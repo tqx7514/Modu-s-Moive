@@ -3,13 +3,15 @@ import { Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import WritePage from "./pages/WritePage";
-import TicketMoviePage from "./pages/TicketMoviePage";
 import CinemaPage from "./pages/CinemaPage";
 import EventPage from "./pages/EventPage";
 import PostListPage from "./pages/PostListPage";
 import MeetListPage from "./pages/MeetListPage";
 import MainPage from "./pages/MainPage";
+import TicketMoviePage from "./pages/TicketMoviePage";
 import TicketSeatPage from "./pages/TicketSeatPage";
+import TicketPayPage from "./pages/TicketPayPage";
+import PayCompletePage from "./pages/PayCompletePage";
 import MoviedetailPage from "./pages/MoviedetailPage";
 import CurrentMoviePage from "./pages/CurrentMoviePage";
 import PostPage from "./pages/PostPage";
@@ -23,15 +25,14 @@ import EventOtherPage from "./pages/EventOtherPage";
 import EventViewerPage from "./pages/EventViewerPage";
 import AdminCurrentMoviePage from "./pages/admin/AdminCurrentMoviePage";
 import AdminPostListPage from "./pages/admin/AdminPostListPage";
-import TicketPayPage from "./pages/TicketPayPage";
 import AdminPostPage from "./pages/admin/AdminPostPage";
 import AdminEventPage from "./pages/admin/AdminEventPage";
 import AdminEventWritePage from "./pages/admin/AdminEventWritePage";
 import AdminMeetPage from "./pages/admin/AdminMeetPage";
 import AdminUserPage from "./pages/admin/AdminUserPage";
-import PayCompletePage from "./pages/PayCompletePage";
 import AdminEventViewPage from "./pages/admin/AdminEventViewPage";
 import AdminInquiryPage from "./pages/admin/AdminInquiryPage";
+import AdminMovieTimePage from "./pages/admin/AdminMovieTimePage";
 
 const App = () => {
   return (
@@ -77,6 +78,7 @@ const App = () => {
       <Route path="/admin/event" element={<AdminEventPage />} />
       <Route path="/admin/inquiry" element={<AdminInquiryPage />} />
       <Route path="/admin/meet" element={<AdminMeetPage />} />
+      <Route path="/admin/movietime" element={<AdminMovieTimePage />} />
     </Routes>
   );
 };

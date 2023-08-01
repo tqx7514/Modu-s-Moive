@@ -1,12 +1,15 @@
 import React from "react";
 import AdminHeaderContainer from "../../containers/common/admin/AdminHeaderContainer";
 import AdminEventViewerContainer from "../../containers/admin/event/AdminEventViewerContainer";
+import { AdminBody } from "./AdminMovieTimePage";
 
 const AdminEventViewPage = () => {
   return (
     <div>
       <AdminHeaderContainer />
-      <AdminEventViewerContainer />
+      <AdminBody>
+        <AdminEventViewerContainer />
+      </AdminBody>
     </div>
   );
 };

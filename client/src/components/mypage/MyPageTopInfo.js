@@ -11,10 +11,10 @@ const MyPageTopInfo = ({
   category,
   viewcinema,
 }) => {
-  const mycinemas = viewcinema.filter((m) => m.id === user.id);
+  const mycinemas = viewcinema && viewcinema.filter((m) => m.id === user.id);
   console.log("mycinemas=======================", mycinemas);
-  const id = viewcinema.map((a) => a.id);
-  const userId = id.find((a) => a === user.id);
+  const id = viewcinema && viewcinema.map((a) => a.id);
+  const userId = id && id.find((a) => a === user.id);
   const [selectedAddrDetail, setSelectedAddrDetail] = useState("");
 
   if (!user || eventlist.length === 0) {

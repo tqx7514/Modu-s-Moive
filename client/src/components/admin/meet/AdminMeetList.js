@@ -71,10 +71,12 @@ const AdminMeetList = ({
               <CategoryBlock2>
                 <Buttons onClick={handleDetailClick}>목록으로</Buttons>
               </CategoryBlock2>
-              <AdminMeetDetailContainer
-                meetNum={meetNum}
-                handleDetailClick={handleDetailClick}
-              />
+              <Detail>
+                <AdminMeetDetailContainer
+                  meetNum={meetNum}
+                  handleDetailClick={handleDetailClick}
+                />
+              </Detail>
             </>
           ) : (
             <>
@@ -281,5 +283,11 @@ const MeetContent = styled.div`
   &:hover {
     color: white;
   }
+`;
+
+const Detail = styled.div`
+  /* width: 100%; */
+  /* flex: ; */
+  display: flex;
 `;
 export default AdminMeetList;

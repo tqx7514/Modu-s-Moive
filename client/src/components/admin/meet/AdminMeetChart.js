@@ -27,7 +27,7 @@ const AdminMeetChart = () => {
       <ChartBlock>
         <AdminChartTitle title="지역별 모임" />
       </ChartBlock>
-      <Box height="40vh">
+      <Box height="100vh">
         <PieChart data={datas} />
       </Box>
     </AdminMeetChartBlock>

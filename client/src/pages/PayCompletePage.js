@@ -6,7 +6,7 @@ import ReserveNavContainer from '../containers/ticket/ReserveNavContainer';
 import styled from 'styled-components';
 import { Title } from '../components/ticket/step03/SelectPay';
 import { useSelector } from 'react-redux';
-import {MdPayment} from 'react-icons/md';
+import PayCompContainer from '../containers/ticket/stpe03/PayCompContainer';
 
 
 const PayComp = styled.div`
@@ -34,7 +34,7 @@ const PayCompletePage = () => {
         <PayComp>
           <Title>결제완료</Title>
           <CompleteWrap>
-            <h3><MdPayment/></h3>
+            <PayCompContainer/>
           </CompleteWrap>
         </PayComp>
       </TicketWrap>

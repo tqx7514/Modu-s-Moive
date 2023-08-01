@@ -7,6 +7,7 @@ var _meetcomments = require("./meetcomments");
 var _meetmessages = require("./meetmessages");
 var _meets = require("./meets");
 var _meetusers = require("./meetusers");
+var _movieLike = require("./movieLike");
 var _moviecomments = require("./moviecomments");
 var _moviereviews = require("./moviereviews");
 var _movies = require("./movies");
@@ -27,6 +28,7 @@ function initModels(sequelize) {
   var meetmessages = _meetmessages(sequelize, DataTypes);
   var meets = _meets(sequelize, DataTypes);
   var meetusers = _meetusers(sequelize, DataTypes);
+  var movieLike = _movieLike(sequelize, DataTypes);
   var moviecomments = _moviecomments(sequelize, DataTypes);
   var moviereviews = _moviereviews(sequelize, DataTypes);
   var movies = _movies(sequelize, DataTypes);
@@ -50,6 +52,8 @@ function initModels(sequelize) {
   meets.hasMany(meetmessages, { as: "meetmessages", foreignKey: "meetNum"});
   meetusers.belongsTo(meets, { as: "meet_MeetNum_meet", foreignKey: "meet_MeetNum"});
   meets.hasMany(meetusers, { as: "meetusers", foreignKey: "meet_MeetNum"});
+  movieLike.belongsTo(moviecomments, { as: "mc_num_moviecomment", foreignKey: "mc_num"});
+  moviecomments.hasMany(movieLike, { as: "movieLikes", foreignKey: "mc_num"});
   moviecomments.belongsTo(movies, { as: "movie", foreignKey: "movie_id"});
   movies.hasMany(moviecomments, { as: "moviecomments", foreignKey: "movie_id"});
   postcomments.belongsTo(posts, { as: "postNum_post", foreignKey: "postNum"});
@@ -84,6 +88,7 @@ function initModels(sequelize) {
     meetmessages,
     meets,
     meetusers,
+    movieLike,
     moviecomments,
     moviereviews,
     movies,

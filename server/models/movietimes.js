@@ -15,6 +15,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(100),
       allowNull: false
     },
+    room: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    seat: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     movie_name: {
       type: DataTypes.STRING(100),
       allowNull: false
@@ -37,14 +45,6 @@ module.exports = function(sequelize, DataTypes) {
     },
     end: {
       type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    seat: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    room: {
-      type: DataTypes.INTEGER,
       allowNull: false
     },
     date: {

@@ -170,6 +170,8 @@ const Cinema = ({
   const [selectedCinemas, setSelectedCinemas] = useState([]);
   const [selectedAddrDetail, setSelectedAddrDetail] = useState("");
   const [selectedCinema, setSelectedCinema] = useState(null);
+
+  console.log('아아아아아아아아아아',selectedCinema);
   const mycinemas = mycinema && mycinema?.filter((m) => user && user === m.id);
 
   console.log("ㄴㅇㄹ나ㅣㅇ런아ㅣ러ㅏㅣㄴㅇ러ㅏㅣㄴ어라ㅣ", mycinemas);
@@ -215,6 +217,7 @@ const Cinema = ({
   }, []);
 
   const renderButton = (cinemaId) => {
+
     const count = mycinemas && mycinemas?.filter((m) => m.addr === cinemaId);
     console.log("갯수ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ", count.length);
     if (count.length > 0) {

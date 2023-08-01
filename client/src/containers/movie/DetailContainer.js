@@ -128,8 +128,8 @@ const DetailContainer = () => {
 
   const handleClickDownLike = (mc_num, id) => {
     setIsLiked(false);
-    // console.log("handleClickDownLike", mc_num, id)
-    // dispatch(delLike(mc_num, id));
+    console.log("handleClickDownLike", mc_num, id)
+    dispatch(delLike(mc_num, id));
   }; 
 
 const ownPost = (id) =>{

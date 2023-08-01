@@ -411,17 +411,13 @@ const MovieDetail = ({
   like,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  console.log("sdafasdfadsf", userId);
+  
   if (moviedetail.length === 0) {
     console.log("아앙아아아아아");
     return;
     <img src="/loader.gif" alt="" />;
   }
   const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
-
-  console.log("m무비디테일ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ", moviedetail);
-
-  console.log("like================>", like);
 
   const genres = moviedetail.genres;
   const images = moviedetail.images.posters;
@@ -450,6 +446,31 @@ const MovieDetail = ({
   const handleRate = (rating) => {
     console.log("별점:", rating);
     // 여기에 별점을 처리하는 로직을 추가하세요.
+  };
+
+  const renderLikeButton = (commentNum) => {
+    const likedComment = like.find((item) => item.mc_num === commentNum);
+    console.log("likedComment", likedComment)
+
+    if (likedComment && likedComment.mc_num === commentNum ) {
+      return (
+        <button
+          className="btn_good"
+          onClick={() => handleClickDownLike(commentNum, userId)}
+        >
+          <img src="/ic_review_goodred_on.png" />
+        </button>
+      );
+    } else {
+      return (
+        <button
+          className="btn_good"
+          onClick={() => handleClickUpLike(commentNum, userId)}
+        >
+          <img src="/ic_review_good.png" />
+        </button>
+      );
+    }
   };
 
   return (
@@ -655,20 +676,7 @@ const MovieDetail = ({
                         <ReviewTopInfo>
                           <span>{comment.id}</span>
                           <span>{changeDate(comment.createdAt)}</span> 
-                          <button
-                            className="btn_good"
-                            onClick={
-                               isLiked ? () => handleClickDownLike( userId) : () => handleClickUpLike(comment.mc_num, userId)
-                            }
-                          >
-                            <img
-                              src={
-                               isLiked
-                                  ? "/ic_review_goodred_on.png"
-                                  : "/ic_review_good.png"
-                              }
-                            />
-                          </button> 
+                          {renderLikeButton(comment.mc_num)}
                         </ReviewTopInfo>
                         <div>{comment.content}</div>
                         <div>

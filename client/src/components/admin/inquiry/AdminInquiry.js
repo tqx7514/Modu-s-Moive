@@ -105,10 +105,10 @@ const AdminInquiry = ({
               <InquiryHeaderBlock>
                 <InquiryHeaderItem width="5%">번호</InquiryHeaderItem>
                 <InquiryHeaderItem width="15%">아이디</InquiryHeaderItem>
-                <InquiryHeaderItem width="10%">
+                <InquiryHeaderItem width="15%">
                   <div onClick={() => changeSort("classify")}>분류</div>
                 </InquiryHeaderItem>
-                <InquiryHeaderItem width="45%">제목</InquiryHeaderItem>
+                <InquiryHeaderItem width="40%">제목</InquiryHeaderItem>
                 <InquiryHeaderItem width="13%">
                   <div onClick={() => changeSort("createdAt")}>작성일</div>
                 </InquiryHeaderItem>
@@ -129,12 +129,12 @@ const AdminInquiry = ({
                         <InquiryHeaderItem width="15%">
                           {m.userId}
                         </InquiryHeaderItem>
-                        <InquiryHeaderItem width="10%">
+                        <InquiryHeaderItem width="15%">
                           <div onClick={(e) => onClassifyClick(e, m.classify)}>
                             {m.classify}
                           </div>
                         </InquiryHeaderItem>
-                        <InquiryHeaderItem width="45%">
+                        <InquiryHeaderItem width="40%">
                           {m.title}
                         </InquiryHeaderItem>
                         <InquiryHeaderItem width="13%">
@@ -177,6 +177,9 @@ const InquiryHeaderItem = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   /* border: 1px solid black; */
 
   > div {
@@ -294,7 +297,7 @@ const InquiryContent = styled.div`
   padding: 0.5rem 0 0.5rem 0;
 
   &:hover {
-    color: white;
+    font-weight: bold;
   }
 `;
 export default AdminInquiry;

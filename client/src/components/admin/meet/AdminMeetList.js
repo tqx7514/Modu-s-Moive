@@ -21,6 +21,8 @@ const AdminMeetList = ({
   handleDetailClick,
   detail,
   lastPage,
+  sort,
+  changeSort,
 }) => {
   const [meetNum, setMeetNum] = useState(null);
 
@@ -103,12 +105,26 @@ const AdminMeetList = ({
               </CategoryBlock>
               <MeetHeaderBlock>
                 <MeetHeaderItem width="5%">번호</MeetHeaderItem>
-                <MeetHeaderItem width="20%">모임명</MeetHeaderItem>
-                <MeetHeaderItem width="15%">모임장</MeetHeaderItem>
-                <MeetHeaderItem width="10%">가입자수</MeetHeaderItem>
-                <MeetHeaderItem width="10%">지역</MeetHeaderItem>
-                <MeetHeaderItem width="20%">생성일</MeetHeaderItem>
-                <MeetHeaderItem width="20%">최근활동일</MeetHeaderItem>
+                <MeetHeaderItem width="25%">
+                  <div onClick={() => changeSort("title")}>모임명</div>
+                </MeetHeaderItem>
+                <MeetHeaderItem width="15%">
+                  <div onClick={() => changeSort("userId")}>모임장</div>
+                </MeetHeaderItem>
+                <MeetHeaderItem width="10%">
+                  <div onClick={() => changeSort("count")}>가입자 수</div>
+                </MeetHeaderItem>
+                <MeetHeaderItem width="20%">
+                  <div onClick={() => changeSort("region")}>지역</div>
+                </MeetHeaderItem>
+                <MeetHeaderItem width="12.5%">
+                  <div onClick={() => changeSort("createdAt")}>생성일</div>
+                </MeetHeaderItem>
+                <MeetHeaderItem width="12.5%">
+                  <div onClick={() => changeSort("mostRecent")}>
+                    최근 활동일
+                  </div>
+                </MeetHeaderItem>
               </MeetHeaderBlock>
               <div>
                 {meets &&
@@ -122,7 +138,7 @@ const AdminMeetList = ({
                         <MeetHeaderItem width="5%">
                           {meet.meetNum}
                         </MeetHeaderItem>
-                        <MeetHeaderItem width="20%">
+                        <MeetHeaderItem width="25%">
                           {meet.title}
                         </MeetHeaderItem>
                         <MeetHeaderItem width="15%">
@@ -131,13 +147,13 @@ const AdminMeetList = ({
                         <MeetHeaderItem width="10%">
                           {meet.count}
                         </MeetHeaderItem>
-                        <MeetHeaderItem width="10%">
+                        <MeetHeaderItem width="20%">
                           {meet.region}
                         </MeetHeaderItem>
-                        <MeetHeaderItem width="20%">
+                        <MeetHeaderItem width="12.5%">
                           {formatCreatedAt(meet.createdAt)}
                         </MeetHeaderItem>
-                        <MeetHeaderItem width="20%">
+                        <MeetHeaderItem width="12.5%">
                           {formatCreatedAt(meet.mostRecent)}
                         </MeetHeaderItem>
                       </MeetContent>
@@ -228,6 +244,13 @@ const MeetHeaderItem = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+  > div {
+    cursor: pointer;
+    &:hover {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+  }
   ${({ width }) => width && `flex-basis: ${width};`}
 
   > h4 {
@@ -281,7 +304,8 @@ const MeetContent = styled.div`
   padding: 0.5rem 0 0.5rem 0;
 
   &:hover {
-    color: white;
+    /* color: white; */
+    font-weight: bold;
   }
 `;
 

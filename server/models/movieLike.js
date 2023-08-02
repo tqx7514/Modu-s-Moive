@@ -22,6 +22,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'movieLike',
+    hasTrigger: true,
     timestamps: false,
     indexes: [
       {

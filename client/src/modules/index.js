@@ -33,6 +33,7 @@ import admineventlist, { adminEventListSaga } from "./admin/admineventlist";
 import admineventwrite, { adminEventWriteSaga } from "./admin/admineventwrite";
 import mypage, { mypageSaga } from "./mypage";
 import admininquiry, { admininquirySaga } from "./admin/admininquiry";
+import adminschedule, {scheduleSaga} from "./admin/adminschedule";
 
 const rootReducer = combineReducers({
   auth,
@@ -62,6 +63,7 @@ const rootReducer = combineReducers({
   admineventwrite,
   admininquiry,
   adminuser,
+  adminschedule,
 });
 
 export function* rootSaga() {
@@ -95,6 +97,7 @@ export function* rootSaga() {
     paymentSaga(),
     admininquirySaga(),
     adminuserSaga(),
+    scheduleSaga(),
   ]);
 }
 

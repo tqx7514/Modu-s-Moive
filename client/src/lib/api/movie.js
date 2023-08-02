@@ -37,10 +37,10 @@ export const updateComment = ({ commentNum,movie_id, editContent, rating}) => {
   });
 };
 
-export const createlike = ({mc_num, id}) => {
-  console.log('createlike===>', mc_num, id);
+export const createlike = ({mc_num, userid}) => {
+  console.log('createlike===>', mc_num, userid);
   return client.post(`/currentmovie/detail/like`, {
-    mc_num, id
+    mc_num, userid
   });
 };
 
@@ -55,9 +55,9 @@ export const adminRemove = ({movie_num}) => {
   return client.delete('/currentmovie/admin/remove', {params: {movie_num}});
 }
 
-export const DelLike = ({mc_num, id}) => {
-  console.log("DelLike==========>", mc_num, id)
-  return client.delete('currentmovie/detail/like/delete', {params: {mc_num, id}});
+export const DelLike = ({mc_num, userid}) => {
+  console.log("DelLike==========>", mc_num, userid)
+  return client.delete('currentmovie/detail/like/delete', {params: {mc_num, userid}});
 }
 
 export const Like = () => {

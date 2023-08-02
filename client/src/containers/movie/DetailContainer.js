@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState,  } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "../../../node_modules/react-router-dom/dist/index";
@@ -41,7 +41,7 @@ const DetailContainer = () => {
     comment: state.moviedetail.comment,
     commentError: state.moviedetail.commentError,
     commentlist: state.moviedetail.commentlist,
-    loading:state.loading["moviedetail/DETAIL_POST"],
+    loading: state.loading["moviedetail/DETAIL_POST"],
     movieLike: state.moviedetail.movieLike,
     like: state.moviedetail.like,
   }));
@@ -51,30 +51,28 @@ const DetailContainer = () => {
   const [selectBtn, setSelectBtn] = useState(null);
   const [isLiked, setIsLiked] = useState(false);
 
-
   const handleBtn = (e) => {
     setSelectBtn(e.target.textContent);
-  }
+  };
 
   const handleShowInfo = (e) => {
     setShowInfo(true);
     setShowReviews(false);
-    handleBtn(e)
-    console.log('btn????????????????', selectBtn);
+    handleBtn(e);
+    console.log("btn????????????????", selectBtn);
   };
 
   const handleShowReviews = (e) => {
     setShowInfo(false);
     setShowReviews(true);
-    handleBtn(e)
+    handleBtn(e);
   };
 
   useEffect(() => {
     dispatch(readDetail(id));
     dispatch(readComment(id));
-    dispatch(movieDetailLike());
+    // dispatch(movieDetailLike());
   }, [dispatch, id]);
-
 
   const onPublish = useCallback(() => {
     dispatch(commentWrite({ content, userId, movie_id, star }));
@@ -111,30 +109,38 @@ const DetailContainer = () => {
 
   const onRemove = async (commentNum) => {
     try {
-      await dispatch(removeComment({commentNum,movie_id}));
+      await dispatch(removeComment({ commentNum, movie_id }));
     } catch (e) {
       console.log(e);
     }
-  };  
+  };
   const onEdit = (commentNum, editContent, rating) => {
-    dispatch(updateComment({commentNum, movie_id, editContent, rating}));
+    dispatch(updateComment({ commentNum, movie_id, editContent, rating }));
   };
 
-  const handleClickUpLike = (mc_num, id ) => {
+  const handleClickUpLike = (mc_num, userid) => {
     setIsLiked(true);
-    console.log("handleClickUpLike", mc_num, id );
-    dispatch(createLike(mc_num, id));
+    console.log("handleClickUpLike", mc_num, userid);
+    dispatch(createLike(mc_num, userid));
+    dispatch(readComment(id));
+    setTimeout(() => {
+      dispatch(movieDetailLike());
+    }, 100);
   };
 
-  const handleClickDownLike = (mc_num, id) => {
+  const handleClickDownLike = (mc_num, userid) => {
     setIsLiked(false);
-    console.log("handleClickDownLike", mc_num, id)
-    dispatch(delLike(mc_num, id));
-  }; 
+    console.log("handleClickDownLike", mc_num, userid);
+    dispatch(delLike(mc_num, userid));
+    dispatch(readComment(id));
+    setTimeout(() => {
+      dispatch(movieDetailLike());
+    }, 100);
+  };
 
-const ownPost = (id) =>{
-  return userId && userId === id;
-}
+  const ownPost = (id) => {
+    return userId && userId === id;
+  };
 
   return (
     <Moviedetail
@@ -149,7 +155,7 @@ const ownPost = (id) =>{
       onChangecontent={onChangecontent}
       onChangestar={onChangestar}
       commentlist={commentlist}
-      onRemove = {onRemove}
+      onRemove={onRemove}
       onEdit={onEdit}
       ownPost={ownPost}
       loading={loading}

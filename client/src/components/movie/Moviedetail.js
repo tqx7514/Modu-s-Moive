@@ -448,17 +448,32 @@ const MovieDetail = ({
     // 여기에 별점을 처리하는 로직을 추가하세요.
   };
 
-  const renderLikeButton = (commentNum) => {
-    const likedComment = like.find((item) => item.mc_num === commentNum);
-    console.log("likedComment", likedComment)
+  const renderLikeButton = (commentNum, likes) => {
+    // const likedComment = like && like.find((item) => item.mc_num === commentNum);
+    // const likedUser = like && like?.filter((m) => m.id === userId);
+    const liked = like && like.filter((m) => m.id === userId);
+  
+    // console.log("likedComment", likedComment);
+    // console.log("likedUser", likedUser);
+    console.log("liked", liked);
+  
+    const hasLiked = liked.find((f) => f.mc_num === commentNum);
+    console.log("hasLiked", hasLiked);
+    console.log("commentnum", commentNum);
+  //   const likedComments = like && like.filter((item) => item.mc_num === commentNum);
+  // const likedUser = like && like?.filter((m) => m.id === userId);
 
-    if (likedComment && likedComment.mc_num === commentNum ) {
+  // 현재 사용자가 해당 댓글에 좋아요를 눌렀는지 확인합니다.
+  // const hasLike = hasLiked.length > 0;
+  
+    if (hasLiked) {
       return (
         <button
           className="btn_good"
           onClick={() => handleClickDownLike(commentNum, userId)}
         >
           <img src="/ic_review_goodred_on.png" />
+          {likes}
         </button>
       );
     } else {
@@ -468,10 +483,12 @@ const MovieDetail = ({
           onClick={() => handleClickUpLike(commentNum, userId)}
         >
           <img src="/ic_review_good.png" />
+          {likes}
         </button>
       );
     }
   };
+  
 
   return (
     <DetailContainer>
@@ -676,7 +693,7 @@ const MovieDetail = ({
                         <ReviewTopInfo>
                           <span>{comment.id}</span>
                           <span>{changeDate(comment.createdAt)}</span> 
-                          {renderLikeButton(comment.mc_num)}
+                          {renderLikeButton(comment.mc_num, comment.likes)}
                         </ReviewTopInfo>
                         <div>{comment.content}</div>
                         <div>

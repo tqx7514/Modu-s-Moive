@@ -129,7 +129,7 @@ const AdminHeader = ({ user, onLogout }) => {
             상영스케줄 관리
           </NavLink>
           <NavLink
-            to="/admin/#"
+            to="/admin/cinema"
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
             영화관 관리

@@ -173,12 +173,12 @@ exports.AdminRemove = async (req, res) => {
 
 exports.DetailLike = async (req, res) => {
   console.log("like=========>", req.body);
-  const {mc_num, id} = req.body;
+  const {mc_num, userid} = req.body;
   try{
     const Detaillike = await movieLike.create(
       {
         mc_num: mc_num,
-        id: id,
+        id: userid,
       }
     );
     res.status(200).json({Detaillike});
@@ -188,10 +188,12 @@ exports.DetailLike = async (req, res) => {
 }
 
 exports.LikeDel = async (req, res) => {
-  const {mc_num, id} = req.query;
+  const {mc_num, userid} = req.query;
   try{
     const likeDel = await movieLike.destroy({
-      where: {mc_num,id},
+      where: {
+        mc_num,
+        id: userid}
     });
 
     const movielike = movieLike.findAll({

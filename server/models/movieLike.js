@@ -17,11 +17,12 @@ module.exports = function(sequelize, DataTypes) {
     },
     id: {
       type: DataTypes.STRING(100),
-      allowNull: true
+      allowNull: false
     }
   }, {
     sequelize,
     tableName: 'movieLike',
+    hasTrigger: true,
     timestamps: false,
     indexes: [
       {

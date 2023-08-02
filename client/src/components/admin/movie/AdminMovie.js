@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import Button from "../../common/Button";
-import { MdStarRate, BsStopwatch } from "react-icons/md";
+import { MdStarRate } from "react-icons/md";
 import { Link } from "react-router-dom";
-import AdminCarousel from "../../common/AdminCarousel";
 
-const AdminMovieInfo = styled.div`
-  background-color: gray;
-`;
+const AdminMovieInfo = styled.div``;
 
 const AppContainer = styled.div`
-  display: flex;
+  /* display: flex; */
   flex-wrap: wrap;
   justify-content: center;
   width: 980px;
@@ -46,28 +43,6 @@ const activeStyle = {
   borderBottom: "2px solid black",
   display: "inline-block",
 };
-
-const Sort = styled.div`
-  display: flex;
-  margin-left: auto;
-
-  button {
-    background-color: white;
-    cursor: pointer;
-    border: none;
-    font-size: 13px;
-  }
-
-  button span {
-    color: #495057;
-    border-right: 1px solid black;
-    padding: 0 13px;
-  }
-
-  .span {
-    border: none;
-  }
-`;
 
 const MovieBlock = styled.div`
   width: 184px;
@@ -131,6 +106,132 @@ const Movieimg = styled.div`
   }
 `;
 
+const InquiryHeaderBlock = styled.div`
+  margin: 2rem 0 0 0;
+  padding: 1rem 0 1rem 0;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  display: flex;
+`;
+const InquiryHeaderItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  img {
+    width: 100px;
+    height: 100px;
+  }
+  ${({ width }) => width && `flex-basis: ${width};`}
+
+  > h4 {
+    margin-right: 2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    ${({ wrapText }) =>
+      wrapText &&
+      css`
+        word-wrap: break-word;
+      `}
+  }
+
+  > div > .body {
+    margin-top: 1rem;
+  }
+
+  > .done {
+    border: 1px solid black;
+    border-radius: 52px;
+    width: 76px;
+    height: 33px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 31px;
+    background-color: lightgreen;
+    font-weight: bold;
+    /* color: white; */
+  }
+  > .undone {
+    border: 1px solid black;
+    border-radius: 52px;
+    width: 76px;
+    height: 33px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 31px;
+    background-color: lightpink;
+    font-weight: bold;
+    /* color: white; */
+  }
+`;
+
+const InquiryBlock = styled.div`
+  border: ${(props) => (props.clicked ? "1px solid black" : "none")};
+  border-radius: 12px;
+`;
+
+const Buttons = styled.button`
+  margin-right: 0.5rem;
+  padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+  min-height: 2rem;
+  min-width: 6rem;
+  border: none;
+  border-radius: 5px;
+  background-color: gainsboro;
+  color: black;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+
+  ${(props) =>
+    props.category &&
+    css`
+      background-color: slategray;
+      color: lightgoldenrodyellow;
+    `}
+  &:hover {
+    background-color: slategray;
+    color: lightgoldenrodyellow;
+  }
+`;
+const CategoryBlock = styled.div`
+  display: flex;
+  justify-content: end;
+  margin: 1.5rem 2rem 0 0;
+  align-items: center;
+`;
+
+const AdminInquiryBlock = styled.div`
+  /* background-color: gray; */
+  /* height: 160vh; */
+  > .end {
+    border-top: 1px solid lightgray;
+    margin: 0.2rem 0 1rem 0;
+  }
+`;
+
+const HeaderBlock = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 3rem 2rem 1rem 2rem;
+  border-bottom: 2px solid black;
+  align-items: center;
+  width: 100%;
+
+  > div {
+    font-size: 1.4rem;
+    font-weight: bold;
+    > span {
+      color: #ee1c25;
+    }
+  }
+`;
+const InquiryContent = styled.div`
+  display: flex;
+  padding: 0.5rem 0 0.5rem 0;
+`;
+
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280";
 
 const AdminMovie = ({
@@ -138,22 +239,16 @@ const AdminMovie = ({
   handleCurrentMovies,
   handleUpcomingMovies,
   handleUpcomingMovie,
-  handleSortByPopularity,
-  handleSortByStar,
-  handleSortByCount,
   onEdit,
   onRemove,
   currentType,
 }) => {
-
   const handleRemove = (movie_num) => {
-    // 여기서 삭제 버튼을 눌렀을 때 처리할 로직을 구현합니다.
     onRemove(movie_num);
   };
 
   return (
     <AdminMovieInfo>
-      <AdminCarousel movielist={movielist} />
       <ChangePost>
         <Changebutton>
           <button
@@ -175,140 +270,155 @@ const AdminMovie = ({
             상영 예정작
           </button>
         </Changebutton>
-        <Sort>
-          <button onClick={handleSortByPopularity}>
-            <span>흥행도순</span>
-          </button>
-
-          <button onClick={handleSortByStar}>
-            <span>평점순</span>
-          </button>
-
-          <button onClick={handleSortByCount}>
-            <span>관람평 많은순</span>
-          </button>
-
-          <button>
-            <span className="span">보고싶어요순</span>
-          </button>
-        </Sort>
       </ChangePost>
       <AppContainer>
-        {currentType === "currentmovielist" &&
-          Array.isArray(movielist) &&
-          movielist.map((item) => (
-            <div className="movie-poster" key={item.movie_id}>
-              <MovieBlock>
-                <img src={IMG_BASE_URL + item.img} alt="영화포스터" />
-                {true && (
-                  <Movieimg className="movieImg">
+          <div>
+          {currentType === "currentmovielist" ? (
+            <InquiryHeaderBlock>
+            <InquiryHeaderItem width="15%">무비번호</InquiryHeaderItem>
+            <InquiryHeaderItem width="20%">이미지</InquiryHeaderItem>
+            <InquiryHeaderItem width="20%">무비아이디</InquiryHeaderItem>
+            <InquiryHeaderItem width="35%">무비이름</InquiryHeaderItem>
+            <InquiryHeaderItem width="10%">예매</InquiryHeaderItem>
+            <InquiryHeaderItem width="10%">별점</InquiryHeaderItem>
+            <InquiryHeaderItem width="10%">인기</InquiryHeaderItem>
+            <InquiryHeaderItem width="10%">연령</InquiryHeaderItem>
+            <InquiryHeaderItem width="10%">삭제</InquiryHeaderItem>
+          </InquiryHeaderBlock>
+          ) : (
+            <InquiryHeaderBlock>
+            <InquiryHeaderItem width="20%">이미지</InquiryHeaderItem>
+            <InquiryHeaderItem width="20%">무비아이디</InquiryHeaderItem>
+            <InquiryHeaderItem width="35%">무비이름</InquiryHeaderItem>
+            <InquiryHeaderItem width="10%">예매</InquiryHeaderItem>
+            <InquiryHeaderItem width="10%">별점</InquiryHeaderItem>
+            <InquiryHeaderItem width="10%">인기</InquiryHeaderItem>
+            <InquiryHeaderItem width="10%">추가</InquiryHeaderItem>
+          </InquiryHeaderBlock>
+          )}
+            {currentType === "currentmovielist" &&
+              Array.isArray(movielist) &&
+              movielist.map((item) => (
+                <InquiryBlock>
+                  <InquiryContent>
+                    <InquiryHeaderItem width="15%">
+                      {item.movie_num}
+                    </InquiryHeaderItem>
+                    <InquiryHeaderItem width="20%">
+                      <img src={IMG_BASE_URL + item.img} />
+                    </InquiryHeaderItem>
+                    <InquiryHeaderItem width="20%">
+                      {item.movie_id}
+                    </InquiryHeaderItem>
+                    <InquiryHeaderItem width="35%">
+                      {item.movie_name}
+                    </InquiryHeaderItem>
+                    <InquiryHeaderItem width="10%">
+                      {item.tiketing}
+                    </InquiryHeaderItem>
+                    <InquiryHeaderItem width="10%">
+                      {item.star}
+                    </InquiryHeaderItem>
+                    <InquiryHeaderItem width="10%">
+                      {item.popularity}
+                    </InquiryHeaderItem>
+                    <InquiryHeaderItem width="10%">
+                      {item.age}
+                    </InquiryHeaderItem>
+                    <InquiryHeaderItem width="10%">
+                      <button>삭제</button>
+                    </InquiryHeaderItem>
+                  </InquiryContent>
+                </InquiryBlock>
+              ))}
+          </div>
+          <div className="end"></div>
+          {/* <MyPageInquiryPagination
+                  lastPage={lastPage}
+                  currentPage={currentPage}
+                  handleNextPage={handleNextPage}
+                  handlePreviousPage={handlePreviousPage}
+                /> */}
+          <div>
+            {currentType === "movielist" &&
+              Array.isArray(movielist) &&
+              movielist.map((item) => (
+                <InquiryBlock>
+                <InquiryContent>
+                  <InquiryHeaderItem width="20%">
+                    <img src={IMG_BASE_URL + item.poster_path} />
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="20%">
+                    {item.id}
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="35%">
+                    {item.title}
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="10%">
+                    {item.popularity}
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="10%">
+                    {item.vote_average}
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="10%">
+                    {item.vote_count}
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="10%">
+                    <button>등록</button>
+                  </InquiryHeaderItem>
+                </InquiryContent>
+              </InquiryBlock>
+              ))}
+          </div>
+          <div className="end"></div>
+          {/* <MyPageInquiryPagination
+              lastPage={lastPage}
+              currentPage={currentPage}
+              handleNextPage={handleNextPage}
+              handlePreviousPage={handlePreviousPage}
+            /> */}
+          {currentType === "upcoming" &&
+            Array.isArray(movielist) &&
+            movielist.map((item) => (
+              <div className="movie-poster" key={item.id}>
+                <MovieBlock>
+                  <img src={IMG_BASE_URL + item.poster_path} alt="영화포스터" />
+                  {true && (
+                    <Movieimg className="movieImg">
+                      <div>
+                        <Link to={"/ticket"}>
+                          <Button>예매하기</Button>
+                        </Link>
+                        <Link to={`/currentmovie/detail/${item.id}`}>
+                          <Button>상세정보</Button>
+                        </Link>
+                      </div>
+                    </Movieimg>
+                  )}
+                  <MovieInfo>
+                    <h4>{item.title}</h4>
+                    <MdStarRate />
+                    <span>{item.vote_average}</span>
                     <div>
-                      <Link to={"/ticket"}>
-                        <Button>예매하기</Button>
-                      </Link>
-                      <Link to={`/currentmovie/detail/${item.movie_id}`}>
-                        <Button>상세정보</Button>
-                      </Link>
-                    </div>
-                  </Movieimg>
-                )}
-                <MovieInfo>
-                  <h4>{item.movie_name}</h4>
-                  <MdStarRate />
-                  <span>{item.star}</span>
-                  <div>
-                  <button onClick={() => handleRemove(item.movie_num)}>
-                      삭제하기
+                      <button
+                        onClick={() =>
+                          onEdit({
+                            title: item.title,
+                            vote_count: item.vote_count,
+                            vote_average: item.vote_average,
+                            popularity: item.popularity,
+                            id: item.id,
+                            poster_path: item.poster_path,
+                          })
+                        }
+                      >
+                        추가하기
                       </button>
-                  </div>
-                </MovieInfo>
-              </MovieBlock>
-            </div>
-          ))}
-        {currentType === "movielist" &&
-          Array.isArray(movielist) &&
-          movielist.map((item) => (
-            <div className="movie-poster" key={item.id}>
-              <MovieBlock>
-                <img src={IMG_BASE_URL + item.poster_path} alt="영화포스터" />
-                {true && (
-                  <Movieimg className="movieImg">
-                    <div>
-                      <Link to={"/ticket"}>
-                        <Button>예매하기</Button>
-                      </Link>
-                      <Link to={`/currentmovie/detail/${item.id}`}>
-                        <Button>상세정보</Button>
-                      </Link>
                     </div>
-                  </Movieimg>
-                )}
-                <MovieInfo>
-                  <h4>{item.title}</h4>
-                  <MdStarRate />
-                  <span>{item.vote_average}</span>
-                  <div>
-                    <button
-                      onClick={() =>
-                        onEdit({
-                          title: item.title,
-                          vote_count: item.vote_count,
-                          vote_average: item.vote_average,
-                          popularity: item.popularity,
-                          id: item.id,
-                          poster_path: item.poster_path,
-                        })
-                      }
-                    >
-                      추가하기
-                    </button>
-                  </div>
-                </MovieInfo>
-              </MovieBlock>
-            </div>
-          ))}
-        {currentType === "upcoming" &&
-          Array.isArray(movielist) &&
-          movielist.map((item) => (
-            <div className="movie-poster" key={item.id}>
-              <MovieBlock>
-                <img src={IMG_BASE_URL + item.poster_path} alt="영화포스터" />
-                {true && (
-                  <Movieimg className="movieImg">
-                    <div>
-                      <Link to={"/ticket"}>
-                        <Button>예매하기</Button>
-                      </Link>
-                      <Link to={`/currentmovie/detail/${item.id}`}>
-                        <Button>상세정보</Button>
-                      </Link>
-                    </div>
-                  </Movieimg>
-                )}
-                <MovieInfo>
-                  <h4>{item.title}</h4>
-                  <MdStarRate />
-                  <span>{item.vote_average}</span>
-                  <div>
-                    <button
-                      onClick={() =>
-                        onEdit({
-                          title: item.title,
-                          vote_count: item.vote_count,
-                          vote_average: item.vote_average,
-                          popularity: item.popularity,
-                          id: item.id,
-                          poster_path: item.poster_path,
-                        })
-                      }
-                    >
-                      추가하기
-                    </button>
-                  </div>
-                </MovieInfo>
-              </MovieBlock>
-            </div>
-          ))}
+                  </MovieInfo>
+                </MovieBlock>
+              </div>
+            ))}
       </AppContainer>
     </AdminMovieInfo>
   );

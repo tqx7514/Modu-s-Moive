@@ -1,5 +1,5 @@
 import React from "react";
-import AdminCurrentMovieContainer from "../../containers/admin/AdminCurrentMovieContainer";
+import AdminCurrentMovieContainer from "../../containers/admin/movie/AdminCurrentMovieContainer"
 import AdminHeaderContainer from "../../containers/common/admin/AdminHeaderContainer";
 import { AdminBody } from "./AdminMovieTimePage";
 

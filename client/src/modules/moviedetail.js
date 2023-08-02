@@ -51,8 +51,8 @@ export const updateComment = createAction(UPDATE_COMMENT, ({
     commentNum, movie_id, editContent, rating
 }));
 
-export const createLike = createAction(CREATE_LIKE, (mc_num, id) => ({
-  mc_num, id
+export const createLike = createAction(CREATE_LIKE, (mc_num, userid) => ({
+  mc_num, userid
 }));
 
 export const removeComment = 
@@ -61,8 +61,8 @@ export const removeComment =
   ({commentNum,movie_id}) => ({commentNum,movie_id})
 );
 
-export const delLike = createAction(DEL_LIKE, (mc_num, id) => ({
-  mc_num, id
+export const delLike = createAction(DEL_LIKE, (mc_num, userid) => ({
+  mc_num, userid
 }));
 
 export const movieDetailLike = createAction(LIKE);

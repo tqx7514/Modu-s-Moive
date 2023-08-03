@@ -39,7 +39,7 @@ const AdminUserAgeChartBlock = styled.div`
 const ChartBlock = styled.div`
   display: flex;
   justify-content: center;
-  margin: 3rem 0 0 1rem;
+  margin: 2rem 0 0 1rem;
 `;
 
 export default AdminUserAgeChart;

@@ -24,9 +24,9 @@ const AdminPostItem = ({ post }) => {
     <AdminPostItemBlock>
       <AdminPostItemContent>
         <PublishedDate username={formattedDate} />
-        <h2>
+        <h3>
           <Link to={`/adminpost/detail/${postNum}`}>{limitedTitle}</Link>
-        </h2>
+        </h3>
         <UserId username={limitedUserId} />
         <Views>{formattedViews}</Views>
       </AdminPostItemContent>
@@ -133,7 +133,7 @@ const Views = styled.b`
 const HeaderBlock = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 3rem 2rem 1rem 2rem;
+  padding: 0rem 2rem 1rem 2rem;
   border-bottom: 2px solid black;
   align-items: center;
   width: 100%;

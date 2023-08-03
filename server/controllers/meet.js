@@ -61,7 +61,9 @@ exports.meetlist = async (req, res) => {
     res.status(400);
     return;
   }
-  const { tag, region } = req.query;
+  const { tag, region, sort } = req.query;
+  console.log("아아아아아", tag, region, sort);
+
   const where = {};
   if (region) {
     where.region = region;
@@ -71,11 +73,10 @@ exports.meetlist = async (req, res) => {
       [Op.like]: `%${tag}%`,
     };
   }
-  // console.log("where입니다", where);
+
   const limit = 12;
   const offset = (page - 1) * limit;
   try {
-    // console.log("page입니다", page);
     const meet = await meets.findAll({
       nest: true,
       where,
@@ -86,8 +87,8 @@ exports.meetlist = async (req, res) => {
     const count = await meets.count({
       where,
     });
-    const totalCount = await meets.count({ where }); // 총 항목 수 계산
-    const totalPages = totalCount ? Math.ceil(totalCount / limit) : 1; // 총 페이지 수 계산
+    const totalCount = await meets.count({ where });
+    const totalPages = totalCount ? Math.ceil(totalCount / limit) : 1;
     const region = await regions.findAll({
       attributes: ["region"],
       where: {
@@ -98,9 +99,9 @@ exports.meetlist = async (req, res) => {
     });
     const regionArray = ["전국", ...region.map((item) => item.region)];
 
+    // mostRecent를 정의
     for (const item of meet) {
       const num = item.meetNum;
-      // console.log("num=======", item.dataValues);
       try {
         const boards = await meetboards.findAll({
           where: {
@@ -121,25 +122,41 @@ exports.meetlist = async (req, res) => {
             mostRecentComment > mostRecentBoard
               ? mostRecentComment
               : mostRecentBoard;
-          // console.log("채팅최근", mostRecentComment);
-          // console.log("제일최근날짜", mostRecentBoard);
         } else if (comments.length > 0) {
           item.dataValues.mostRecent = comments[0].updatedAt;
-          // console.log("채팅최근", item.dataValues.mostRecent);
         } else if (boards.length > 0) {
           item.dataValues.mostRecent = boards[0].updatedAt;
-          // console.log("제일최근날짜", item.dataValues.mostRecent);
         } else {
-          item.dataValues.mostRecent = item.updatedAt;
+          item.dataValues.mostRecent = item.createdAt;
         }
       } catch (error) {
         console.error(error);
       }
     }
-    // console.log("아아아아", meet);
+
+    const fieldAttribute = {
+      createdAt: "createdAt",
+      title: "title",
+      userId: "userId",
+      count: "count",
+      region: "region",
+      mostRecent: "mostRecent",
+    }[sort.field];
+
+    const orderedMeet = meet.sort((a, b) => {
+      const [aValue, bValue] = [
+        a.dataValues[fieldAttribute],
+        b.dataValues[fieldAttribute],
+      ];
+      if (parseInt(sort.order) === -1) {
+        return aValue > bValue ? 1 : -1;
+      } else {
+        return aValue < bValue ? 1 : -1;
+      }
+    });
 
     res.json({
-      meet,
+      meet: orderedMeet,
       totalPages,
       regionArray,
       count,

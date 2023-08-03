@@ -8,7 +8,7 @@ import { GrGroup } from "react-icons/gr";
 import MeetDetailManageContainer from "../../containers/meet/MeetDetailManageContainer";
 
 const MeetViewerBlock = styled(Responsive)`
-  margin-top: 3rem;
+  /* margin-top: 1rem; */
   > hr {
     /* margin-bottom: 1rem; */
     border: none;

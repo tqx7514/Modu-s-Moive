@@ -35,9 +35,9 @@ const AdminPostListContainer = () => {
       <AdminBlock>
         <AdminPostList loading={loading} error={error} posts={posts} />
       </AdminBlock>
-      <AdminBlock>
+      <AdminBlock2>
         <AdminPostChart />
-      </AdminBlock>
+      </AdminBlock2>
     </AdminPostListContainerBlock>
   );
 };
@@ -48,7 +48,11 @@ const AdminPostListContainerBlock = styled.div`
 `;
 const AdminBlock = styled.div`
   padding-left: 10px;
-  width: 50%;
+  width: 60%;
+`;
+const AdminBlock2 = styled.div`
+  padding-left: 10px;
+  width: 40%;
 `;
 
 export default AdminPostListContainer;

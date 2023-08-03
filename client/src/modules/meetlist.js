@@ -9,11 +9,15 @@ import { handleActions } from "redux-actions";
 const [MEET_LIST, MEET_LIST_SUCCESS, MEET_LIST_FAILURE] =
   createRequestActionTypes("meetlist/MEET_LIST");
 
-export const meetList = createAction(MEET_LIST, ({ tag, region, page }) => ({
-  tag,
-  region,
-  page,
-}));
+export const meetList = createAction(
+  MEET_LIST,
+  ({ tag, region, page, sort }) => ({
+    tag,
+    region,
+    page,
+    sort,
+  })
+);
 
 const meetListSaga = createRequestSaga(MEET_LIST, meetAPI.Meetlist);
 export function* meetsSaga() {

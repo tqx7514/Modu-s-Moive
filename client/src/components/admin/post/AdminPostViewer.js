@@ -92,7 +92,6 @@ const AdminPostViewer = ({ post, error, loading, actionButtons, user }) => {
             </AdminPostHead>
             <AdminPostContent dangerouslySetInnerHTML={{ __html: body }} />
             <hr />
-            {/* <AdminPostCommentListContainer /> */}
           </AdminPostViewerBlock>
         </AdminBody>
       </AdminPageWrapper>

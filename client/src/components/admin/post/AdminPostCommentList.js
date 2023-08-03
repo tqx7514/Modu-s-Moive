@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 import palette from "../../../lib/styles/palette";
 import Responsive from "../../common/Responsive";
 import SubInfo from "../../common/SubInfo";
+import PostCommentActionButtons from "../../post/PostCommentActionButtons";
 
 const AdminPageWrapper = styled.div`
   display: flex;
@@ -13,13 +14,13 @@ const AdminPageWrapper = styled.div`
 
 const AdminBody = styled.div`
   flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
-  background: gray;
+  // background: gray;
 `;
 
 const AdminPostCommentListBlock = styled(Responsive)`
-  border: solid 1px black;
+  // border: solid 1px black;
   padding: 1rem;
-  margin-top: 3rem;
+  // margin-top: 3rem;
 `;
 
 const AdminCommentItemBlock = styled.div`
@@ -64,6 +65,7 @@ const AdminCommentItemBlockLine = styled.div`
 
 const AdminCommentItemButton = styled.button`
   background: none;
+  margin-top: 1rem;
   border: none;
   color: ${palette.gray[0]};
   font-size: 0.875rem;
@@ -102,10 +104,13 @@ const formatDate = (dateString) => {
 const AdminPostCommentItem = ({ comment, onRemove, postNum, user }) => {
   const { userId, commentNum, content, createdAt } = comment;
   const formattedDate = formatDate(createdAt);
-
-  const handleDelete = () => {
-    onRemove({ commentNum, postNum });
-  };
+  // console.log(
+  // "AdminPostCommentListComponent의 AdminPostCommentItem의 comment입니다.",
+  // comment
+  // );
+  // const handleDelete = () => {
+  //   onRemove({ commentNum, postNum });
+  // };
 
   return (
     <AdminPageWrapper>
@@ -116,8 +121,12 @@ const AdminPostCommentItem = ({ comment, onRemove, postNum, user }) => {
               <AdminCommentItemBlockLine>
                 <AdminUserId>{userId}</AdminUserId>
                 <AdminCommentItemThirdLine>
-                  <AdminCommentItemButton onClick={handleDelete}>
-                    <FontAwesomeIcon icon={faTimes} />
+                  <AdminCommentItemButton>
+                    <PostCommentActionButtons
+                      onRemove={onRemove}
+                      commentNum={commentNum}
+                      postNum={postNum}
+                    />
                   </AdminCommentItemButton>
                 </AdminCommentItemThirdLine>
               </AdminCommentItemBlockLine>

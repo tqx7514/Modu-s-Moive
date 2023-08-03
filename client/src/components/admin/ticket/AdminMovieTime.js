@@ -17,7 +17,7 @@ const Add = styled.button`
   display: block;
   height: 30px;
   padding: 5px 15px;
-  background: none;
+  background: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 12px;
@@ -45,6 +45,15 @@ const Table = styled.table`
     padding: 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
+    background: #fff;
+
+    button{
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 2px 5px;
+      cursor: pointer;
+    }
   }
 `;
 const AddModal = styled.div`

@@ -5,6 +5,7 @@ import { selectedRegion } from "../../../modules/stepfirst";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
+import { AdminBottomRightBlock } from "../main/AdminBottomRight";
 
 const TitleUpload = styled.div`
   display: flex;
@@ -47,7 +48,7 @@ const Table = styled.table`
     border-bottom: 1px solid #ddd;
     background: #fff;
 
-    button{
+    button {
       background: #fff;
       border: 1px solid #ddd;
       border-radius: 5px;
@@ -65,7 +66,7 @@ const AddModal = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.3);
 
-  &.on{
+  &.on {
     display: block;
   }
 
@@ -138,16 +139,16 @@ const ModalBtn = styled.div`
 `;
 
 const PageBtn = styled.div`
-display: flex;
-justify-content: center;
+  display: flex;
+  justify-content: center;
   align-items: center;
   margin-top: 30px;
 
-  .paging{
-    button{
+  .paging {
+    button {
     }
   }
-  button{
+  button {
     padding: 5px;
     margin: 0 10px;
     background: #fff;
@@ -155,7 +156,7 @@ justify-content: center;
     border-radius: 5px;
     cursor: pointer;
 
-    &.active{
+    &.active {
       background: #888;
       color: #fff;
     }
@@ -170,16 +171,17 @@ const AdminMovieTime = ({
   onCloseModal,
   formatDate,
   onSubmit,
-  onDelete
+  onDelete,
 }) => {
   const [regionSelect, setRegionSelect] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // 한 페이지에 보여질 아이템 수
 
-  const { time, data, region, cinema, movie } = useSelector(({ stepfirst }) => stepfirst);
-  const {schedule} = useSelector(({adminschedule}) => adminschedule)
+  const { time, data, region, cinema, movie } = useSelector(
+    ({ stepfirst }) => stepfirst
+  );
+  const { schedule } = useSelector(({ adminschedule }) => adminschedule);
   const dispatch = useDispatch();
-  
 
   const handleChangeRegion = (e) => {
     dispatch(selectedRegion(e.target.value));
@@ -191,15 +193,17 @@ const AdminMovieTime = ({
   };
 
   const totalPages = Math.ceil(time.length / itemsPerPage);
-  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const itemsToShow = time.slice(startIndex, endIndex);
 
-
   return (
-    <div>
+    <AdminBottomRightBlock>
       <TitleUpload>
         <Title>상영스케줄 관리</Title>
         <Add onClick={onModal}>추가</Add>
@@ -236,7 +240,9 @@ const AdminMovieTime = ({
               <td>{item.end}</td>
               <td>{item.date}</td>
               <td>
-                <button onClick={() => onDelete(item.movietimes_num)}>삭제</button>
+                <button onClick={() => onDelete(item.movietimes_num)}>
+                  삭제
+                </button>
               </td>
             </tr>
           ))}
@@ -269,7 +275,7 @@ const AdminMovieTime = ({
         </button>
       </PageBtn>
 
-      <AddModal className={onAddModal === true && 'on'}>
+      <AddModal className={onAddModal === true && "on"}>
         <div className="modalWrap">
           <div className="modalInner">
             <ul>
@@ -285,7 +291,11 @@ const AdminMovieTime = ({
                         </option>
                       ))}
                   </select>
-                  <select onChange={(e) => onSetSchedule({key:"cinema",value:e.target.value})}>
+                  <select
+                    onChange={(e) =>
+                      onSetSchedule({ key: "cinema", value: e.target.value })
+                    }
+                  >
                     <option defaultValue="">영화관</option>
                     {regionSelect &&
                       cinema.map((cine) => (
@@ -301,14 +311,20 @@ const AdminMovieTime = ({
                 <div className="inputWrap">
                   <input
                     type="number"
-                    onChange={(e) => onSetSchedule({key:'seat',value:e.target.value})}
+                    onChange={(e) =>
+                      onSetSchedule({ key: "seat", value: e.target.value })
+                    }
                   />
                 </div>
               </li>
               <li>
                 <p>상영관</p>
                 <div className="inputWrap">
-                  <select onChange={(e) => onSetSchedule({key:'room',value:e.target.value})}>
+                  <select
+                    onChange={(e) =>
+                      onSetSchedule({ key: "room", value: e.target.value })
+                    }
+                  >
                     <option defaultValue="">상영관선택</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -318,7 +334,11 @@ const AdminMovieTime = ({
               <li>
                 <p>영화제목</p>
                 <div className="inputWrap">
-                  <select onChange={(e) => onSetSchedule({key:'movie',value:e.target.value})}>
+                  <select
+                    onChange={(e) =>
+                      onSetSchedule({ key: "movie", value: e.target.value })
+                    }
+                  >
                     <option defaultValue="">영화선택</option>
                     {movie.map((m) => (
                       <option key={m.movie_num} value={m.movie_name}>
@@ -331,7 +351,11 @@ const AdminMovieTime = ({
               <li>
                 <p>영화연령</p>
                 <div className="inputWrap">
-                  <select onChange={(e) => onSetSchedule({key:'age', value:e.target.value})}>
+                  <select
+                    onChange={(e) =>
+                      onSetSchedule({ key: "age", value: e.target.value })
+                    }
+                  >
                     <option defaultValue="">연령선택</option>
                     <option value="all">all</option>
                     <option value="12">12</option>
@@ -343,7 +367,11 @@ const AdminMovieTime = ({
               <li>
                 <p>스크린</p>
                 <div className="inputWrap">
-                  <select onChange={(e) => onSetSchedule({key:'disp',value:e.target.value})}>
+                  <select
+                    onChange={(e) =>
+                      onSetSchedule({ key: "disp", value: e.target.value })
+                    }
+                  >
                     <option defaultValue="">스크린선택</option>
                     <option value="2D">2D</option>
                   </select>
@@ -352,7 +380,11 @@ const AdminMovieTime = ({
               <li>
                 <p>언어</p>
                 <div className="inputWrap">
-                  <select onChange={(e) => onSetSchedule({key:'language',value:e.target.value})}>
+                  <select
+                    onChange={(e) =>
+                      onSetSchedule({ key: "language", value: e.target.value })
+                    }
+                  >
                     <option defaultValue="">자막유무</option>
                     <option value="">자막없음</option>
                     <option value="자막">자막</option>
@@ -365,7 +397,9 @@ const AdminMovieTime = ({
                   <input
                     type="text"
                     placeholder="ex) 00:00"
-                    onChange={(e) => onSetSchedule({key:'start',value:e.target.value})}
+                    onChange={(e) =>
+                      onSetSchedule({ key: "start", value: e.target.value })
+                    }
                   />
                 </div>
               </li>
@@ -375,7 +409,9 @@ const AdminMovieTime = ({
                   <input
                     type="text"
                     placeholder="ex) 00:00"
-                    onChange={(e) => onSetSchedule({key:'end',value:e.target.value})}
+                    onChange={(e) =>
+                      onSetSchedule({ key: "end", value: e.target.value })
+                    }
                   />
                 </div>
               </li>
@@ -387,7 +423,10 @@ const AdminMovieTime = ({
                     selected={date}
                     onChange={(selectedDate) => {
                       setDate(selectedDate);
-                      onSetSchedule({ key: 'date', value: formatDate(selectedDate) });
+                      onSetSchedule({
+                        key: "date",
+                        value: formatDate(selectedDate),
+                      });
                     }}
                     dateFormat="yyyy-MM-dd"
                   />
@@ -401,7 +440,7 @@ const AdminMovieTime = ({
           </div>
         </div>
       </AddModal>
-    </div>
+    </AdminBottomRightBlock>
   );
 };
 

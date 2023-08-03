@@ -84,25 +84,26 @@ const AdminMeetList = ({
           ) : (
             <>
               <CategoryBlock>
-                {regions.map((m) =>
-                  m === "전국" ? (
-                    <Buttons
-                      key={m}
-                      onClick={() => handleRegionClick(m)}
-                      category={region === null}
-                    >
-                      전국
-                    </Buttons>
-                  ) : (
-                    <Buttons
-                      key={m}
-                      category={region === m}
-                      onClick={() => handleRegionClick(m)}
-                    >
-                      {m}
-                    </Buttons>
-                  )
-                )}
+                {regions &&
+                  regions.map((m) =>
+                    m === "전국" ? (
+                      <Buttons
+                        key={m}
+                        onClick={() => handleRegionClick(m)}
+                        category={region === null}
+                      >
+                        전국
+                      </Buttons>
+                    ) : (
+                      <Buttons
+                        key={m}
+                        category={region === m}
+                        onClick={() => handleRegionClick(m)}
+                      >
+                        {m}
+                      </Buttons>
+                    )
+                  )}
               </CategoryBlock>
               <MeetHeaderBlock>
                 <MeetHeaderItem width="5%">번호</MeetHeaderItem>

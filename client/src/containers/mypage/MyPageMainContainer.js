@@ -5,11 +5,12 @@ import MyPageMain from "../../components/mypage/MyPageMain";
 import { viewCinema } from "../../modules/cinema";
 
 const MyPageMainContainer = () => {
-  const { user, loading, viewcinema } = useSelector(
-    ({ user, loading, cinema }) => ({
+  const { user, loading, viewcinema, reservation } = useSelector(
+    ({ user, loading, cinema, stepsecond }) => ({
       user: user.user,
       loading: loading["event/LIST_EVENTS"],
       viewcinema: cinema.viewcinema,
+      reservation: stepsecond.reservation,
     })
   );
   // console.log("viewcinema======>", viewcinema);
@@ -42,6 +43,7 @@ const MyPageMainContainer = () => {
       loading={loading}
       viewcinema={viewcinema}
       ownPost={ownPost}
+      reservation={reservation}
     />
   );
 };

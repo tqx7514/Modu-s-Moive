@@ -44,17 +44,17 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     price: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.BIGINT,
       allowNull: false
     },
     discount: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.BIGINT,
       allowNull: false
     }
   }, {
     sequelize,
     tableName: 'reservations',
-    timestamps: false,
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",

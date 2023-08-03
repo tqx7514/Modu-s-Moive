@@ -159,7 +159,9 @@ router.post("/pay", async (req, res) => {
 
 router.get("/seat", async (req, res) => {
   try{
-    const reservation = await reservations.findAll({});
+    const reservation = await reservations.findAll({
+      order: [['createdAt', 'DESC']],
+    });
     res.status(200).json(reservation);
   } catch(e){
     console.error(e);

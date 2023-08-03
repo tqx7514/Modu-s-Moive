@@ -28,7 +28,7 @@ const AdminPostChart = () => {
       <ChartBlock>
         <AdminChartTitle title="주간 게시글" />
       </ChartBlock>
-      <Box height="250px" m="-20px 0 0 0">
+      <Box height="250px">
         <LineChart data={datas} />
       </Box>
     </AdminPostChartBlock>
@@ -41,7 +41,7 @@ const AdminPostChartBlock = styled.div`
 const ChartBlock = styled.div`
   display: flex;
   justify-content: center;
-  margin: 3rem 0 0 1rem;
+  margin: 0 0 0 1rem;
 `;
 
 export default AdminPostChart;

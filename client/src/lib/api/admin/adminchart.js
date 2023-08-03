@@ -19,3 +19,8 @@ export const meetRegion = () => {
 export const postsDate = () => {
   return client.get("/admin/chart/posts/date");
 };
+
+export const mainMonth = () => {
+  console.log("Month API 왓습니다");
+  return client.get("/admin/chart/main/month");
+};

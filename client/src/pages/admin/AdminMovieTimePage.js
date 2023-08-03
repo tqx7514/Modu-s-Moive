@@ -11,6 +11,7 @@ export const AdminBody = styled.div`
   height: calc(100vh - 50px);
   overflow-y: auto;
   padding: 50px;
+  background-color: #f2f2f2;
 `;
 
 const AdminMovieTimePage = () => {

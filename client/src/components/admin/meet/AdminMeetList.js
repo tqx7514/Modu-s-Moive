@@ -177,13 +177,13 @@ const AdminMeetList = ({
 const AdminMeetListBlock = styled.div`
   > .end {
     border-top: 1px solid lightgray;
-    margin: 0.2rem 0 1rem 0;
+    margin: 0rem 0 1rem 0;
   }
 `;
 const HeaderBlock = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 3rem 2rem 1rem 2rem;
+  padding: 0rem 2rem 1rem 2rem;
   border-bottom: 2px solid black;
   align-items: center;
   > div {

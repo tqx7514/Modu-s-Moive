@@ -127,16 +127,13 @@ exports.meetlist = async (req, res) => {
         } else if (boards.length > 0) {
           item.dataValues.mostRecent = boards[0].updatedAt;
         } else {
-          item.dataValues.mostRecent = item.updatedAt;
+          item.dataValues.mostRecent = item.createdAt;
         }
       } catch (error) {
         console.error(error);
       }
     }
 
-    // sort.order이 -1이면 ASC, 1이면 DESC로 변경
-    const ascOrDesc = sort.order === -1 ? "ASC" : "DESC";
-    // sort.field에 해당하는 데이터의 속성 이름 가져오기
     const fieldAttribute = {
       createdAt: "createdAt",
       title: "title",
@@ -145,7 +142,7 @@ exports.meetlist = async (req, res) => {
       region: "region",
       mostRecent: "mostRecent",
     }[sort.field];
-    // order를 적용하여 데이터를 정렬
+
     const orderedMeet = meet.sort((a, b) => {
       const [aValue, bValue] = [
         a.dataValues[fieldAttribute],

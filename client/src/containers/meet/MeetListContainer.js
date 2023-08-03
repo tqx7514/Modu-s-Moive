@@ -34,9 +34,10 @@ const MeetListContainer = () => {
     const page = parseInt(searchParams.get("page"), 10) || 1;
     const tag = searchParams.get("tag");
     const region = searchParams.get("region");
+    const sort = { field: "createdAt", order: 1 };
     console.log("page", page);
     console.log("tag==================", tag, "region================", region);
-    dispatch(meetList({ tag, region, page }));
+    dispatch(meetList({ tag, region, page, sort }));
   }, [dispatch, searchParams]);
 
   return (

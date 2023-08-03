@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import { AdminChartTitle } from "../../common/admin/AdminTitle";
 import BarChart from "../chart/inquiryCategoryChart";
 import { inquiryDataCategory } from "../../../data/inquiryData";
@@ -44,7 +44,7 @@ const AdminInquiryChartBlock = styled.div`
 const ChartBlock = styled.div`
   display: flex;
   justify-content: center;
-  margin: 3rem 0 0 1rem;
+  margin: 0rem 0 0 1rem;
 `;
 
 export default AdminInquiryChart;

@@ -281,7 +281,7 @@ const AdminInquiryBlock = styled.div`
 const HeaderBlock = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 3rem 2rem 1rem 2rem;
+  padding: 0rem 2rem 1rem 2rem;
   border-bottom: 2px solid black;
   align-items: center;
   > div {

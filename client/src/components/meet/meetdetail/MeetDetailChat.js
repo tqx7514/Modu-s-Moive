@@ -43,9 +43,9 @@ const MeetDetailChat = ({ user, meet }) => {
         down();
       }, 100);
     }
-    const interval = setInterval(getMessages, 2000); // 0.1초마다 getMessages 호출
+    const interval = setInterval(getMessages, 2000);
     return () => {
-      clearInterval(interval); // 컴포넌트가 언마운트되면 interval을 정리(cleanup)
+      clearInterval(interval);
     };
   }, []);
 
@@ -78,7 +78,6 @@ const MeetDetailChat = ({ user, meet }) => {
     <Container>
       <div className="chat-header">
         <div className="user-details">
-          {/* <div className="avatar">{meet.meetNum}</div> */}
           <div className="meet-title">
             <h3>
               <span>

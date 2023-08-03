@@ -5,6 +5,7 @@ import { AdminChartTitle } from "../../common/admin/AdminTitle";
 import { useEffect, useState } from "react";
 import { meetDataRegion } from "../../../data/meetData";
 import PieChart from "../chart/meetRegionChart";
+import { AdminBottomRightBlock } from "../main/AdminBottomRight";
 
 const AdminMeetChart = () => {
   const [data, setData] = useState(null);
@@ -23,25 +24,15 @@ const AdminMeetChart = () => {
   const datas = meetDataRegion({ data });
 
   return (
-    <AdminMeetChartBlock>
-      <ChartBlock>
-        <AdminChartTitle title="지역별 모임" />
-      </ChartBlock>
-      <Box height="100vh">
+    <AdminBottomRightBlock>
+      <div className="title">
+        <h3>지역별 모임</h3>
+      </div>
+      <Box height="90vh" width="90%">
         <PieChart data={datas} />
       </Box>
-    </AdminMeetChartBlock>
+    </AdminBottomRightBlock>
   );
 };
-
-const AdminMeetChartBlock = styled.div`
-  flex: 1;
-`;
-
-const ChartBlock = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 0rem 0 0 1rem;
-`;
 
 export default AdminMeetChart;

@@ -1,38 +1,24 @@
 import { tokens } from "../theme";
 
-export const mainDataMonth = ({ data }) => [
-  {
-    id: "일별 게시글",
-    color: tokens("dark").greenAccent[500],
-    data: [
-      {
-        x: data && data[0].date,
-        y: data && data[0].count,
-      },
-      {
-        x: data && data[1].date,
-        y: data && data[1].count,
-      },
-      {
-        x: data && data[2].date,
-        y: data && data[2].count,
-      },
-      {
-        x: data && data[3].date,
-        y: data && data[3].count,
-      },
-      {
-        x: data && data[4].date,
-        y: data && data[4].count,
-      },
-      {
-        x: data && data[5].date,
-        y: data && data[5].count,
-      },
-      {
-        x: data && data[6].date,
-        y: data && data[6].count,
-      },
-    ],
-  },
-];
+export const mainDataMonth = (data) => {
+  return [
+    {
+      id: "매출",
+      color: tokens("dark").greenAccent[500],
+      data:
+        data &&
+        data.map((item) => ({
+          x: item.month,
+          y: item.price,
+        })),
+    },
+  ];
+};
+
+export const mainDataMovie = (data) => {
+  return data.map((item, index) => ({
+    category: item.movie,
+    매출: item.price,
+    매출Color: `hsl(${(index + 1 * 67) % 360}, 70%, 50%)`,
+  }));
+};

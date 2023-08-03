@@ -12,25 +12,17 @@ const PostPaginationBlock = styled.div`
 `;
 const PostPageNumber = styled.div``;
 
-const buildLink = ({ userId, tag, page, isAdmin }) => {
-  const query = qs.stringify({ page });
-  if (!isAdmin) {
-    return `/postlist?${query}`;
-  } else {
-    return `/admin/postlist?${query}`;
-  }
+const buildLink = ({ userId, tag, page }) => {
+  const query = qs.stringify({ userId, tag, page });
+  return `/admin/postlist?${query}`;
 };
 
-const PostPagination = ({ page, lastPage, userId, tag, isAdmin }) => {
+const AdminPostPagination = ({ page, lastPage, userId, tag }) => {
   return (
     <PostPaginationBlock>
       <Button
         disabled={page === 1}
-        to={
-          page === 1
-            ? undefined
-            : buildLink({ userId, tag, page: page - 1, isAdmin })
-        }
+        to={page === 1 ? undefined : buildLink({ userId, tag, page: page - 1 })}
       >
         이전
       </Button>
@@ -40,7 +32,7 @@ const PostPagination = ({ page, lastPage, userId, tag, isAdmin }) => {
         to={
           page === lastPage
             ? undefined
-            : buildLink({ userId, tag, page: page + 1, isAdmin })
+            : buildLink({ userId, tag, page: page + 1 })
         }
       >
         다음
@@ -49,4 +41,4 @@ const PostPagination = ({ page, lastPage, userId, tag, isAdmin }) => {
   );
 };
 
-export default PostPagination;
+export default AdminPostPagination;

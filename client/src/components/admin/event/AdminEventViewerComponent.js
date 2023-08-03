@@ -105,9 +105,7 @@ const AdminEventViewerComponent = ({
             </AdminEventInfoItem>
           </AdminEventViewerInfoWrapper>
           {actionButtons}
-          <AdminEventViewerContent
-            dangerouslySetInnerHTML={{ __html: eventContent }}
-          />
+          <img src={eventContent} alt="" />
         </AdminEventViewerHead>
       </AdminEventViewerBlock>
     </>

@@ -5,12 +5,17 @@ import Button from "../../common/Button";
 import AdminEventListTitleComponent from "./AdminEventListTitleComponent";
 import palette from "../../../lib/styles/palette";
 import { Link } from "../../../../node_modules/react-router-dom/dist/index";
+import { AdminBottomRightBlock } from "../main/AdminBottomRight";
 
-const AdminEventItemContentBlock = styled.div``;
-const AdminEventListBlock = styled(Responsive)``;
+const AdminEventItemContentBlock = styled.div`
+  /* display: flex; */
+`;
+const AdminEventListBlock = styled.div`
+  /* display: flex; */
+`;
 
 const AdminEventItemBlock = styled.div`
-  display: flex;
+  display: block;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
@@ -68,35 +73,37 @@ const AdminEventItemComponent = ({ event }) => {
   const formattedUpdateDate = formatDate(updatedAt);
 
   return (
-    <AdminEventItemContentBlock>
-      <AdminEventItemBlock>
-        <h2>{eventNum}</h2>
-      </AdminEventItemBlock>
-      <AdminEventItemBlock>
-        <h2>{categoryId}</h2>
-      </AdminEventItemBlock>
-      <AdminEventItemBlock>
-        <h2>{userId}</h2>
-      </AdminEventItemBlock>
-      <AdminEventItemBlock>
-        <h2>{eventTitle}</h2>
-      </AdminEventItemBlock>
-      <AdminEventItemBlock>
-        <h2>{startEventDate}</h2>
-      </AdminEventItemBlock>
-      <AdminEventItemBlock>
-        <h2>{endEventDate}</h2>
-      </AdminEventItemBlock>
-      <AdminEventItemBlock>
-        <h2>{formattedDate}</h2>
-      </AdminEventItemBlock>
-      <AdminEventItemBlock>
-        <h2>{formattedUpdateDate}</h2>
-      </AdminEventItemBlock>
-      <AdminEventItemBlock>
-        <h2>{view}</h2>
-      </AdminEventItemBlock>
-    </AdminEventItemContentBlock>
+    <div>
+      <AdminBottomRightBlock>
+        <AdminEventItemBlock>
+          <h2>{eventNum}</h2>
+        </AdminEventItemBlock>
+        <AdminEventItemBlock>
+          <h2>{categoryId}</h2>
+        </AdminEventItemBlock>
+        <AdminEventItemBlock>
+          <h2>{userId}</h2>
+        </AdminEventItemBlock>
+        <AdminEventItemBlock>
+          <h2>{eventTitle}</h2>
+        </AdminEventItemBlock>
+        <AdminEventItemBlock>
+          <h2>{startEventDate}</h2>
+        </AdminEventItemBlock>
+        <AdminEventItemBlock>
+          <h2>{endEventDate}</h2>
+        </AdminEventItemBlock>
+        <AdminEventItemBlock>
+          <h2>{formattedDate}</h2>
+        </AdminEventItemBlock>
+        <AdminEventItemBlock>
+          <h2>{formattedUpdateDate}</h2>
+        </AdminEventItemBlock>
+        <AdminEventItemBlock>
+          <h2>{view}</h2>
+        </AdminEventItemBlock>
+      </AdminBottomRightBlock>
+    </div>
   );
 };
 

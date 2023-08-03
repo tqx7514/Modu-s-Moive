@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import MyPageInquiryPagination from "../../mypage/MyPageInquiryPagination";
 import AdminTitle from "../../common/admin/AdminTitle";
+import { AdminBottomRightBlock } from "../main/AdminBottomRight";
 
 const Adminuser = ({
   count,
@@ -70,10 +71,10 @@ const Adminuser = ({
             <img src="/preloader_icon.gif" alt="" />
           </div>
         ) : (
-          <>
-            <HeaderBlock>
-              <AdminTitle title="유저 관리" />
-            </HeaderBlock>
+          <AdminBottomRightBlock>
+            <div className="title">
+              <h2>유저관리</h2>
+            </div>
             {detail ? (
               <>
                 <CategoryBlock>
@@ -170,7 +171,7 @@ const Adminuser = ({
                 />
               </>
             )}
-          </>
+          </AdminBottomRightBlock>
         )}
       </AdminInquiryBlock>
     </div>

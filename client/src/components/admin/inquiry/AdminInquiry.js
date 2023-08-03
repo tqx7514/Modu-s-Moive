@@ -3,6 +3,7 @@ import AdminTitle from "../../common/admin/AdminTitle";
 import MyPageInquiryPagination from "../../mypage/MyPageInquiryPagination";
 import { useState } from "react";
 import AdminInquiryDetailContainer from "../../../containers/admin/inquiry/AdminInquiryDetailContainer";
+import { AdminBottomRightBlock } from "../main/AdminBottomRight";
 
 const AdminInquiry = ({
   inquiry,
@@ -61,9 +62,9 @@ const AdminInquiry = ({
     setDetailInq(num);
     handleDetailClick();
   };
-  const filteredInquiry = classify
-    ? inquiry && inquiry.filter((m) => m.classify === classify)
-    : inquiry && inquiry;
+  // const filteredInquiry = classify
+  //   ? inquiry && inquiry.filter((m) => m.classify === classify)
+  //   : inquiry && inquiry;
 
   return (
     <AdminInquiryBlock>
@@ -72,7 +73,7 @@ const AdminInquiry = ({
           <img src="/preloader_icon.gif" alt="" />
         </div>
       ) : (
-        <>
+        <AdminBottomRightBlock>
           <HeaderBlock>
             <AdminTitle title="문의관리" />
             <div className="count">
@@ -160,7 +161,7 @@ const AdminInquiry = ({
               />
             </>
           )}
-        </>
+        </AdminBottomRightBlock>
       )}
     </AdminInquiryBlock>
   );
@@ -281,11 +282,11 @@ const AdminInquiryBlock = styled.div`
 const HeaderBlock = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0rem 2rem 1rem 2rem;
+  padding: 1rem 2rem 1rem 2rem;
   border-bottom: 2px solid black;
   align-items: center;
   > div {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: bold;
     > span {
       color: #ee1c25;

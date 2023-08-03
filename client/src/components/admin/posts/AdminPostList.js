@@ -4,6 +4,8 @@ import SubInfo from "../../common/SubInfo";
 import { Link } from "../../../../node_modules/react-router-dom/dist/index";
 import Responsive from "../../common/Responsive";
 import AdminTitle from "../../common/admin/AdminTitle";
+import { AdminBottomRightBlock } from "../main/AdminBottomRight";
+import PostPaginationContainer from "../../../containers/posts/PostPaginationContainer";
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -34,41 +36,28 @@ const AdminPostItem = ({ post }) => {
   );
 };
 
-const AdminPostList = ({ posts, loading, error }) => {
+const AdminPostList = ({ posts, loading, error, count }) => {
   return (
-    <AdminPostListContainerBlock>
-      <AdminBody>
-        <HeaderBlock>
-          <AdminTitle title="게시판관리" />
-          <div className="count">
-            게시글 총 <span>{posts.length}</span>개
+    <AdminBottomRightBlock>
+      <HeaderBlock>
+        <AdminTitle title="게시판관리" />
+        <div className="count">
+          게시글 총 <span>{count}</span>개
+        </div>
+      </HeaderBlock>
+      <AdminPostListBlock>
+        {!loading && posts && (
+          <div>
+            {posts.map((post) => (
+              <AdminPostItem post={post} key={post.postNum} />
+            ))}
           </div>
-        </HeaderBlock>
-        <AdminPostListBlock>
-          {!loading && posts && (
-            <div>
-              {posts.map((post) => (
-                <AdminPostItem post={post} key={post.postNum} />
-              ))}
-            </div>
-          )}
-        </AdminPostListBlock>
-      </AdminBody>
-    </AdminPostListContainerBlock>
+        )}
+      </AdminPostListBlock>
+      <PostPaginationContainer isAdmin={true} />
+    </AdminBottomRightBlock>
   );
 };
-
-const AdminPostListContainerBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  /* background: gray; */
-  flex: 1;
-  min-height: 130vh;
-`;
-
-const AdminBody = styled.div`
-  flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
-`;
 
 const AdminPostItemBlock = styled.div`
   padding-top: 2rem;
@@ -133,12 +122,12 @@ const Views = styled.b`
 const HeaderBlock = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0rem 2rem 1rem 2rem;
+  padding: 1rem 2rem 1rem 2rem;
   border-bottom: 2px solid black;
   align-items: center;
   width: 100%;
   > div {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: bold;
     > span {
       color: #ee1c25;

@@ -4,6 +4,7 @@ import AdminTitle from "../../common/admin/AdminTitle";
 import MyPageInquiryPagination from "../../mypage/MyPageInquiryPagination";
 import { useState } from "react";
 import AdminMeetDetailContainer from "../../../containers/admin/meet/AdminMeetDetailContainer";
+import { AdminBottomRightBlock } from "../main/AdminBottomRight";
 
 const AdminMeetList = ({
   loading,
@@ -61,7 +62,7 @@ const AdminMeetList = ({
           <img src="/preloader_icon.gif" alt="" />
         </div>
       ) : (
-        <>
+        <AdminBottomRightBlock>
           <HeaderBlock>
             <AdminTitle title="모임관리" />
             <div className="count">
@@ -169,7 +170,7 @@ const AdminMeetList = ({
               />
             </>
           )}
-        </>
+        </AdminBottomRightBlock>
       )}
     </AdminMeetListBlock>
   );
@@ -183,11 +184,11 @@ const AdminMeetListBlock = styled.div`
 const HeaderBlock = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0rem 2rem 1rem 2rem;
+  padding: 1rem 2rem 1rem 2rem;
   border-bottom: 2px solid black;
   align-items: center;
   > div {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: bold;
     > span {
       color: #ee1c25;
@@ -199,6 +200,11 @@ const CategoryBlock = styled.div`
   justify-content: center;
   margin: 1.5rem 0 0 0;
   align-items: center;
+  flex-wrap: wrap;
+
+  > button {
+    margin-bottom: 1rem;
+  }
 `;
 const CategoryBlock2 = styled.div`
   display: flex;
@@ -233,7 +239,7 @@ const Buttons = styled.button`
 `;
 
 const MeetHeaderBlock = styled.div`
-  margin: 2rem 0 0 0;
+  /* margin: rem 0 0 0; */
   padding: 1rem 0 1rem 0;
   border-top: 1px solid lightgray;
   border-bottom: 1px solid lightgray;

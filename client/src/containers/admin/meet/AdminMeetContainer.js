@@ -106,7 +106,7 @@ const AdminBlock = styled.div`
 `;
 const AdminBlock2 = styled.div`
   padding-left: 10px;
-  width: 30%;
+  width: 40%;
 `;
 
 export default AdminMeetContainer;

@@ -23,6 +23,7 @@ const initialSate = {
   posts: null,
   error: null,
   lastPage: 1,
+  count: 0,
 };
 
 const posts = handleActions(
@@ -32,6 +33,7 @@ const posts = handleActions(
       posts: posts.postlists,
       lastPage: posts.totalPages,
       error: null,
+      count: posts.totalCount,
     }),
     [LIST_POSTS_FAILURE]: (state, { payload: error }) => ({
       ...state,

@@ -80,10 +80,10 @@ const PieChart = ({ data }) => {
       legends={[
         {
           anchor: "bottom",
-          direction: "row",
+          direction: "column",
           justify: false,
-          translateX: 0,
-          translateY: 56,
+          translateX: 270,
+          translateY: 0,
           itemsSpacing: 0,
           itemWidth: 100,
           itemHeight: 18,

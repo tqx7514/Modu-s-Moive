@@ -6,6 +6,61 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+const AdminSales = ({ income, audience, theater }) => {
+  return (
+    <AdminSalesBlock>
+      <div className="title">모두의무비 매출추이</div>
+      <StatisticBlock>
+        <div>
+          <div className="icon" style={{ background: "goldenrod" }}>
+            <FontAwesomeIcon
+              icon={faWonSign}
+              style={{ color: "#fff", height: "35px", width: "35px" }}
+            />
+          </div>
+          <div>
+            <div className="detailtitle">이달의 총 매출</div>
+            <div className="number">{income && income.toLocaleString()} 원</div>
+          </div>
+        </div>
+        <div>
+          <div className="icon">
+            <FontAwesomeIcon
+              icon={faPeopleGroup}
+              style={{ color: "#fff", height: "35px", width: "35px" }}
+            />
+          </div>
+          <div>
+            <div className="detailtitle">이달의 총 관객</div>
+            <div className="number">
+              {audience && audience.toLocaleString()} 명
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="icon" style={{ background: "mediumseagreen" }}>
+            <FontAwesomeIcon
+              icon={faClapperboard}
+              style={{ color: "#fff", height: "35px", width: "35px" }}
+            />
+          </div>
+          <div>
+            <div className="detailtitle">이달의 매출Top 영화관</div>
+            <div className="number">{theater && theater.cinema} 지점</div>
+            <div style={{ fontWeight: "bold" }}>
+              {theater && theater.totalIncome.toLocaleString()}원 ({" "}
+              {theater && theater.totalAudience.toLocaleString()}명 )
+            </div>
+          </div>
+        </div>
+      </StatisticBlock>
+      <div className="buttonarea">
+        <button>자세히 보기(구현중)</button>
+      </div>
+    </AdminSalesBlock>
+  );
+};
+
 const AdminSalesBlock = styled.div`
   /* border: 1px solid blue; */
   /* display: flex; */
@@ -50,10 +105,10 @@ const StatisticBlock = styled.div`
 
   > div {
     /* border: 1px solid red; */
-    margin: 2rem 0 2rem 0;
+    margin: 2rem 2rem 2rem 0;
     width: 33%;
     display: flex;
-    /* justify-content: center; */
+    justify-content: center;
     align-items: center;
 
     > div {
@@ -76,54 +131,5 @@ const StatisticBlock = styled.div`
     }
   }
 `;
-
-const AdminSales = () => {
-  return (
-    <AdminSalesBlock>
-      <div className="title">모두의무비 매출추이</div>
-      <StatisticBlock>
-        <div>
-          <div className="icon" style={{ background: "goldenrod" }}>
-            <FontAwesomeIcon
-              icon={faWonSign}
-              style={{ color: "#fff", height: "35px", width: "35px" }}
-            />
-          </div>
-          <div>
-            <div className="detailtitle">이달의 총 매출</div>
-            <div className="number">매출 num</div>
-          </div>
-        </div>
-        <div>
-          <div className="icon">
-            <FontAwesomeIcon
-              icon={faPeopleGroup}
-              style={{ color: "#fff", height: "35px", width: "35px" }}
-            />
-          </div>
-          <div>
-            <div className="detailtitle">이달의 총 관객</div>
-            <div className="number">관객수 num</div>
-          </div>
-        </div>
-        <div>
-          <div className="icon" style={{ background: "mediumseagreen" }}>
-            <FontAwesomeIcon
-              icon={faClapperboard}
-              style={{ color: "#fff", height: "35px", width: "35px" }}
-            />
-          </div>
-          <div>
-            <div className="detailtitle">매출Top 영화관</div>
-            <div className="number">영화관 매출(관객수)</div>
-          </div>
-        </div>
-      </StatisticBlock>
-      <div className="buttonarea">
-        <button>자세히 보기(구현중)</button>
-      </div>
-    </AdminSalesBlock>
-  );
-};
 
 export default AdminSales;

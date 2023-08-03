@@ -18,13 +18,16 @@ const AdminMonthChart = () => {
         console.error(error);
       }
     };
+    func();
   }, []);
 
   return (
     <AdminMonthChartBlock>
-      {/* <Box height="40px">
-        <LineChart data={data} />
-      </Box> */}
+      {data && (
+        <Box height="40vh" width="250%">
+          <LineChart data={data} />
+        </Box>
+      )}
     </AdminMonthChartBlock>
   );
 };

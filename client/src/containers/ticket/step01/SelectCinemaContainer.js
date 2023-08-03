@@ -55,10 +55,6 @@ const SelectCinemaContainer = () => {
         onSelectCinema={onSelectCinema}
         onFirstData={onFirstData}
       />
-      {/* <SelectMovie
-        movie={movie}
-        onSecondData={onSecondData}
-      /> */}
     </>
   );
 };

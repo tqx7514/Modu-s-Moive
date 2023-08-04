@@ -380,44 +380,31 @@ const AdminMovie = ({
           {currentType === "upcoming" &&
             Array.isArray(movielist) &&
             movielist.map((item) => (
-              <div className="movie-poster" key={item.id}>
-                <MovieBlock>
-                  <img src={IMG_BASE_URL + item.poster_path} alt="영화포스터" />
-                  {true && (
-                    <Movieimg className="movieImg">
-                      <div>
-                        <Link to={"/ticket"}>
-                          <Button>예매하기</Button>
-                        </Link>
-                        <Link to={`/currentmovie/detail/${item.id}`}>
-                          <Button>상세정보</Button>
-                        </Link>
-                      </div>
-                    </Movieimg>
-                  )}
-                  <MovieInfo>
-                    <h4>{item.title}</h4>
-                    <MdStarRate />
-                    <span>{item.vote_average}</span>
-                    <div>
-                      <button
-                        onClick={() =>
-                          onEdit({
-                            title: item.title,
-                            vote_count: item.vote_count,
-                            vote_average: item.vote_average,
-                            popularity: item.popularity,
-                            id: item.id,
-                            poster_path: item.poster_path,
-                          })
-                        }
-                      >
-                        추가하기
-                      </button>
-                    </div>
-                  </MovieInfo>
-                </MovieBlock>
-              </div>
+              <InquiryBlock>
+                <InquiryContent>
+                  <InquiryHeaderItem width="20%">
+                    <img src={IMG_BASE_URL + item.poster_path} />
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="20%">
+                    {item.id}
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="35%">
+                    {item.title}
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="10%">
+                    {item.popularity}
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="10%">
+                    {item.vote_average}
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="10%">
+                    {item.vote_count}
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="10%">
+                    <button>등록</button>
+                  </InquiryHeaderItem>
+                </InquiryContent>
+              </InquiryBlock>
             ))}
       </AppContainer>
     </AdminMovieInfo>

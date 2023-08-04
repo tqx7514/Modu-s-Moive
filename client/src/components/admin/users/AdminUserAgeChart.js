@@ -5,6 +5,7 @@ import PieChart from "../chart/userGenderChart";
 import { userDataAge } from "../../../data/userData";
 import { useEffect, useState } from "react";
 import { userAge } from "../../../lib/api/admin/adminchart";
+import { AdminBottomRightBlock } from "../main/AdminBottomRight";
 
 const AdminUserAgeChart = () => {
   const [ageData, setAgeData] = useState(null);
@@ -22,24 +23,15 @@ const AdminUserAgeChart = () => {
   }, []);
   const genderData = userDataAge({ ageData });
   return (
-    <AdminUserAgeChartBlock>
-      <ChartBlock>
-        <AdminChartTitle title="세대별 가입자" />
-      </ChartBlock>
+    <AdminBottomRightBlock>
+      <div className="title">
+        <h3>세대별 가입자</h3>
+      </div>
       <Box height="40vh">
         <PieChart data={genderData} />
       </Box>
-    </AdminUserAgeChartBlock>
+    </AdminBottomRightBlock>
   );
 };
-
-const AdminUserAgeChartBlock = styled.div`
-  flex: 1;
-`;
-const ChartBlock = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 3rem 0 0 1rem;
-`;
 
 export default AdminUserAgeChart;

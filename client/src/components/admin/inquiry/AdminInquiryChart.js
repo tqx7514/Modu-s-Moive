@@ -1,11 +1,12 @@
 import { styled } from "styled-components";
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import { AdminChartTitle } from "../../common/admin/AdminTitle";
 import BarChart from "../chart/inquiryCategoryChart";
 import { inquiryDataCategory } from "../../../data/inquiryData";
 import { useEffect } from "react";
 import { inquiryCategory } from "../../../lib/api/admin/adminchart";
 import { useState } from "react";
+import { AdminBottomRightBlock } from "../main/AdminBottomRight";
 
 const AdminInquiryChart = () => {
   const [data, setData] = useState(null);
@@ -27,24 +28,15 @@ const AdminInquiryChart = () => {
 
   const datas = inquiryDataCategory({ a: data });
   return (
-    <AdminInquiryChartBlock>
-      <ChartBlock>
-        <AdminChartTitle title="문의비율" />
-      </ChartBlock>
+    <AdminBottomRightBlock>
+      <div className="title">
+        <h3>문의 비율</h3>
+      </div>
       <Box height="40vh">
         <BarChart isDashboard={true} data={datas} />
       </Box>
-    </AdminInquiryChartBlock>
+    </AdminBottomRightBlock>
   );
 };
-
-const AdminInquiryChartBlock = styled.div`
-  flex: 1;
-`;
-const ChartBlock = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 3rem 0 0 1rem;
-`;
 
 export default AdminInquiryChart;

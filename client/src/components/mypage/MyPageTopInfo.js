@@ -10,13 +10,15 @@ const MyPageTopInfo = ({
   handleInfoClick,
   category,
   viewcinema,
+  reservation,
 }) => {
   const mycinemas = viewcinema && viewcinema.filter((m) => m.id === user.id);
   console.log("mycinemas=======================", mycinemas);
   const id = viewcinema && viewcinema.map((a) => a.id);
   const userId = id && id.find((a) => a === user.id);
   const [selectedAddrDetail, setSelectedAddrDetail] = useState("");
-
+  const findUser =
+    reservation && reservation.filter((r) => r.user_id === user.id);
   if (!user || eventlist.length === 0) {
     return <div>로딩중</div>;
   }
@@ -38,7 +40,9 @@ const MyPageTopInfo = ({
           </RightTopFirst>
           <RightTopSecond>
             <div className="username">{user.name}님 반가워요</div>
-            <div className="totalmovie">지금까지 본 영화는 총 ?편 입니다</div>
+            <div className="totalmovie">
+              지금까지 본 영화는 총 {findUser && findUser.length}편 입니다
+            </div>
             <div className="button">
               <button>내 영화 기록보기</button>
             </div>

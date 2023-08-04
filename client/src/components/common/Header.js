@@ -159,6 +159,7 @@ const Wrapper = styled(Responsive)`
 `;
 
 const LogoWrapper = styled(Responsive)`
+  position: relative;
   height: 6rem;
   display: flex;
   align-items: center;
@@ -173,10 +174,23 @@ const LogoWrapper = styled(Responsive)`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    button, a{
+      background: none;
+      color: #000;
+      padding: 0;
+      font-size: 12px;
+      font-weight: 400;
+      color: #666;
+    }
   }
 `;
 
 const Logo = styled.img`
+position: absolute;
+left: 50%;
+top: 40%;
+transform: translate(-50%, -50%);
   height: 5rem;
   margin-top: 0.6rem;
 `;

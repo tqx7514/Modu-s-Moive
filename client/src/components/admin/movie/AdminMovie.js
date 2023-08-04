@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import Button from "../../common/Button";
 import { MdStarRate } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { AdminBottomRightBlock } from "../main/AdminBottomRight";
 
 const AdminMovieInfo = styled.div``;
 
@@ -248,7 +249,10 @@ const AdminMovie = ({
   };
 
   return (
-    <AdminMovieInfo>
+    <AdminBottomRightBlock>
+      <div className="title">
+        <h2>영화 관리</h2>
+      </div>
       <ChangePost>
         <Changebutton>
           <button
@@ -272,112 +276,71 @@ const AdminMovie = ({
         </Changebutton>
       </ChangePost>
       <AppContainer>
-          <div>
+        <div>
           {currentType === "currentmovielist" ? (
             <InquiryHeaderBlock>
-            <InquiryHeaderItem width="15%">무비번호</InquiryHeaderItem>
-            <InquiryHeaderItem width="20%">이미지</InquiryHeaderItem>
-            <InquiryHeaderItem width="20%">무비아이디</InquiryHeaderItem>
-            <InquiryHeaderItem width="35%">무비이름</InquiryHeaderItem>
-            <InquiryHeaderItem width="10%">예매</InquiryHeaderItem>
-            <InquiryHeaderItem width="10%">별점</InquiryHeaderItem>
-            <InquiryHeaderItem width="10%">인기</InquiryHeaderItem>
-            <InquiryHeaderItem width="10%">연령</InquiryHeaderItem>
-            <InquiryHeaderItem width="10%">삭제</InquiryHeaderItem>
-          </InquiryHeaderBlock>
+              <InquiryHeaderItem width="15%">무비번호</InquiryHeaderItem>
+              <InquiryHeaderItem width="20%">이미지</InquiryHeaderItem>
+              <InquiryHeaderItem width="20%">무비아이디</InquiryHeaderItem>
+              <InquiryHeaderItem width="35%">무비이름</InquiryHeaderItem>
+              <InquiryHeaderItem width="10%">예매</InquiryHeaderItem>
+              <InquiryHeaderItem width="10%">별점</InquiryHeaderItem>
+              <InquiryHeaderItem width="10%">인기</InquiryHeaderItem>
+              <InquiryHeaderItem width="10%">연령</InquiryHeaderItem>
+              <InquiryHeaderItem width="10%">삭제</InquiryHeaderItem>
+            </InquiryHeaderBlock>
           ) : (
             <InquiryHeaderBlock>
-            <InquiryHeaderItem width="20%">이미지</InquiryHeaderItem>
-            <InquiryHeaderItem width="20%">무비아이디</InquiryHeaderItem>
-            <InquiryHeaderItem width="35%">무비이름</InquiryHeaderItem>
-            <InquiryHeaderItem width="10%">예매</InquiryHeaderItem>
-            <InquiryHeaderItem width="10%">별점</InquiryHeaderItem>
-            <InquiryHeaderItem width="10%">인기</InquiryHeaderItem>
-            <InquiryHeaderItem width="10%">추가</InquiryHeaderItem>
-          </InquiryHeaderBlock>
+              <InquiryHeaderItem width="20%">이미지</InquiryHeaderItem>
+              <InquiryHeaderItem width="20%">무비아이디</InquiryHeaderItem>
+              <InquiryHeaderItem width="35%">무비이름</InquiryHeaderItem>
+              <InquiryHeaderItem width="10%">예매</InquiryHeaderItem>
+              <InquiryHeaderItem width="10%">별점</InquiryHeaderItem>
+              <InquiryHeaderItem width="10%">인기</InquiryHeaderItem>
+              <InquiryHeaderItem width="10%">추가</InquiryHeaderItem>
+            </InquiryHeaderBlock>
           )}
-            {currentType === "currentmovielist" &&
-              Array.isArray(movielist) &&
-              movielist.map((item) => (
-                <InquiryBlock>
-                  <InquiryContent>
-                    <InquiryHeaderItem width="15%">
-                      {item.movie_num}
-                    </InquiryHeaderItem>
-                    <InquiryHeaderItem width="20%">
-                      <img src={IMG_BASE_URL + item.img} />
-                    </InquiryHeaderItem>
-                    <InquiryHeaderItem width="20%">
-                      {item.movie_id}
-                    </InquiryHeaderItem>
-                    <InquiryHeaderItem width="35%">
-                      {item.movie_name}
-                    </InquiryHeaderItem>
-                    <InquiryHeaderItem width="10%">
-                      {item.tiketing}
-                    </InquiryHeaderItem>
-                    <InquiryHeaderItem width="10%">
-                      {item.star}
-                    </InquiryHeaderItem>
-                    <InquiryHeaderItem width="10%">
-                      {item.popularity}
-                    </InquiryHeaderItem>
-                    <InquiryHeaderItem width="10%">
-                      {item.age}
-                    </InquiryHeaderItem>
-                    <InquiryHeaderItem width="10%">
-                      <button>삭제</button>
-                    </InquiryHeaderItem>
-                  </InquiryContent>
-                </InquiryBlock>
-              ))}
-          </div>
-          <div className="end"></div>
-          {/* <MyPageInquiryPagination
+          {currentType === "currentmovielist" &&
+            Array.isArray(movielist) &&
+            movielist.map((item) => (
+              <InquiryBlock>
+                <InquiryContent>
+                  <InquiryHeaderItem width="15%">
+                    {item.movie_num}
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="20%">
+                    <img src={IMG_BASE_URL + item.img} />
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="20%">
+                    {item.movie_id}
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="35%">
+                    {item.movie_name}
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="10%">
+                    {item.tiketing}
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="10%">{item.star}</InquiryHeaderItem>
+                  <InquiryHeaderItem width="10%">
+                    {item.popularity}
+                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="10%">{item.age}</InquiryHeaderItem>
+                  <InquiryHeaderItem width="10%">
+                    <button onClick={() => onRemove(item.movie_num)}>삭제</button>
+                  </InquiryHeaderItem>
+                </InquiryContent>
+              </InquiryBlock>
+            ))}
+        </div>
+        <div className="end"></div>
+        {/* <MyPageInquiryPagination
                   lastPage={lastPage}
                   currentPage={currentPage}
                   handleNextPage={handleNextPage}
                   handlePreviousPage={handlePreviousPage}
                 /> */}
-          <div>
-            {currentType === "movielist" &&
-              Array.isArray(movielist) &&
-              movielist.map((item) => (
-                <InquiryBlock>
-                <InquiryContent>
-                  <InquiryHeaderItem width="20%">
-                    <img src={IMG_BASE_URL + item.poster_path} />
-                  </InquiryHeaderItem>
-                  <InquiryHeaderItem width="20%">
-                    {item.id}
-                  </InquiryHeaderItem>
-                  <InquiryHeaderItem width="35%">
-                    {item.title}
-                  </InquiryHeaderItem>
-                  <InquiryHeaderItem width="10%">
-                    {item.popularity}
-                  </InquiryHeaderItem>
-                  <InquiryHeaderItem width="10%">
-                    {item.vote_average}
-                  </InquiryHeaderItem>
-                  <InquiryHeaderItem width="10%">
-                    {item.vote_count}
-                  </InquiryHeaderItem>
-                  <InquiryHeaderItem width="10%">
-                    <button>등록</button>
-                  </InquiryHeaderItem>
-                </InquiryContent>
-              </InquiryBlock>
-              ))}
-          </div>
-          <div className="end"></div>
-          {/* <MyPageInquiryPagination
-              lastPage={lastPage}
-              currentPage={currentPage}
-              handleNextPage={handleNextPage}
-              handlePreviousPage={handlePreviousPage}
-            /> */}
-          {currentType === "upcoming" &&
+        <div>
+          {currentType === "movielist" &&
             Array.isArray(movielist) &&
             movielist.map((item) => (
               <InquiryBlock>
@@ -385,9 +348,7 @@ const AdminMovie = ({
                   <InquiryHeaderItem width="20%">
                     <img src={IMG_BASE_URL + item.poster_path} />
                   </InquiryHeaderItem>
-                  <InquiryHeaderItem width="20%">
-                    {item.id}
-                  </InquiryHeaderItem>
+                  <InquiryHeaderItem width="20%">{item.id}</InquiryHeaderItem>
                   <InquiryHeaderItem width="35%">
                     {item.title}
                   </InquiryHeaderItem>
@@ -401,13 +362,72 @@ const AdminMovie = ({
                     {item.vote_count}
                   </InquiryHeaderItem>
                   <InquiryHeaderItem width="10%">
-                    <button>등록</button>
+                    <button
+                      onClick={() =>
+                        onEdit(
+                          item.title,
+                          item.vote_count,
+                          item.vote_average,
+                          item.popularity,
+                          item.id,
+                          item.poster_path,
+                        )
+                      }
+                    >
+                      등록
+                    </button>
                   </InquiryHeaderItem>
                 </InquiryContent>
               </InquiryBlock>
             ))}
+        </div>
+        <div className="end"></div>
+        {/* <MyPageInquiryPagination
+              lastPage={lastPage}
+              currentPage={currentPage}
+              handleNextPage={handleNextPage}
+              handlePreviousPage={handlePreviousPage}
+            /> */}
+        {currentType === "upcoming" &&
+          Array.isArray(movielist) &&
+          movielist.map((item) => (
+            <InquiryBlock>
+              <InquiryContent>
+                <InquiryHeaderItem width="20%">
+                  <img src={IMG_BASE_URL + item.poster_path} />
+                </InquiryHeaderItem>
+                <InquiryHeaderItem width="20%">{item.id}</InquiryHeaderItem>
+                <InquiryHeaderItem width="35%">{item.title}</InquiryHeaderItem>
+                <InquiryHeaderItem width="10%">
+                  {item.popularity}
+                </InquiryHeaderItem>
+                <InquiryHeaderItem width="10%">
+                  {item.vote_average}
+                </InquiryHeaderItem>
+                <InquiryHeaderItem width="10%">
+                  {item.vote_count}
+                </InquiryHeaderItem>
+                <InquiryHeaderItem width="10%">
+                <button
+                      onClick={() =>
+                        onEdit(
+                          item.title,
+                          item.vote_count,
+                          item.vote_average,
+                          item.popularity,
+                          item.id,
+                          item.poster_path,
+                        )
+                      }
+                    >
+                      등록
+                    </button>
+                </InquiryHeaderItem>
+              </InquiryContent>
+            </InquiryBlock>
+          ))}
       </AppContainer>
-    </AdminMovieInfo>
+    </AdminBottomRightBlock>
   );
 };
 

@@ -128,7 +128,7 @@ exports.CommentUpdate = async (req, res) => {
 
 exports.AdminMovielist = async (req, res) => {
   try {
-    const { title, vote_count, vote_average, popularity, id, poster_path } =
+    const { title, vote_count, vote_average, popularity, id, poster_path, selectedValue } =
       req.body;
 
     // 데이터베이스에 영화 정보 삽입
@@ -139,6 +139,7 @@ exports.AdminMovielist = async (req, res) => {
       popularity: popularity,
       movie_id: id,
       img: poster_path,
+      age: selectedValue,
     });
 
     res

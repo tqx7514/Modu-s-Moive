@@ -5,6 +5,7 @@ import { userGender } from "../../../lib/api/admin/adminchart";
 import { userDataGender } from "../../../data/userData";
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import PieChart from "../chart/userGenderChart";
+import { AdminBottomRightBlock } from "../main/AdminBottomRight";
 
 const AdminUserGenderChart = () => {
   const [Mcount, setMcount] = useState(0);
@@ -27,25 +28,15 @@ const AdminUserGenderChart = () => {
   const genderData = userDataGender({ a: Mcount, b: Wcount });
 
   return (
-    <AdminUserChartBlock>
-      <ChartBlock>
-        <AdminChartTitle title="유저 성비" />
-      </ChartBlock>
+    <AdminBottomRightBlock>
+      <div className="title">
+        <h3>가입자 성비</h3>
+      </div>
       <Box height="40vh">
         <PieChart data={genderData} />
       </Box>
-    </AdminUserChartBlock>
+    </AdminBottomRightBlock>
   );
 };
-
-const AdminUserChartBlock = styled.div`
-  flex: 1;
-`;
-
-const ChartBlock = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 3rem 0 0 1rem;
-`;
 
 export default AdminUserGenderChart;

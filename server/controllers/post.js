@@ -17,6 +17,7 @@ exports.write = async (req, res, next) => {
       body,
       tags: tagsString,
       userId,
+      createdAt: new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" }), // 한국 시간대로 저장
     });
     res.status(200).json(newPost);
   } catch (error) {
@@ -55,7 +56,7 @@ exports.postlist = async (req, res, next) => {
     console.log("totalCount:", totalCount);
     const totalPages = totalCount ? Math.ceil(totalCount / limit) : 1;
     console.log("totalPages:", totalPages);
-    res.json({ postlists, totalPages });
+    res.json({ postlists, totalPages, totalCount });
   } catch (error) {
     res.status(500).json(error);
     next(error);

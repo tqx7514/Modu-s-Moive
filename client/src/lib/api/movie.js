@@ -44,10 +44,10 @@ export const createlike = ({mc_num, userid}) => {
   });
 };
 
-export const updateMovielist = ({title, vote_count, vote_average, popularity, id, poster_path}) => {
-  console.log("updateMovielist==============++>", title, vote_count, vote_average, popularity, id, poster_path)
+export const updateMovielist = ({title, vote_count, vote_average, popularity, id, poster_path, selectedValue}) => {
+  console.log("updateMovielist==============++>", title, vote_count, vote_average, popularity, id, poster_path, selectedValue)
   return client.post('currentmovie/AdminMovielist', {
-    title, vote_count, vote_average, popularity, id, poster_path
+    title, vote_count, vote_average, popularity, id, poster_path, selectedValue
   })
 };
 

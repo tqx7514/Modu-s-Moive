@@ -6,10 +6,10 @@ export const writeMeet = ({ title, body, tags, userId, region }) => {
 export const readMeet = (meetNum) => {
   return client.get(`/meet/detail/${meetNum}`);
 };
-export const Meetlist = ({ tag, region, page }) => {
-  console.log("dsdfasfsadf", tag, region, page);
+export const Meetlist = ({ tag, region, page, sort }) => {
+  console.log("dsdfasfsadf", tag, region, page, sort);
   return client.get(`/meet/list`, {
-    params: { tag, region, page },
+    params: { tag, region, page, sort },
   });
 };
 export const joinMeet = ({ user, meetNum }) => {

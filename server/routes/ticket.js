@@ -97,7 +97,9 @@ cron.schedule("1 * * * *", () => {
 // 영화 스케줄 데이터 가져오기
 router.get("/times", async (req, res) => {
   try {
-    const time = await movietimes.findAll({});
+    const time = await movietimes.findAll({
+      order: [['movietimes_num', 'DESC']],
+    });
     res.status(200).json(time);
   } catch (e) {
     console.error(e);
@@ -157,7 +159,9 @@ router.post("/pay", async (req, res) => {
 
 router.get("/seat", async (req, res) => {
   try{
-    const reservation = await reservations.findAll({});
+    const reservation = await reservations.findAll({
+      order: [['createdAt', 'DESC']],
+    });
     res.status(200).json(reservation);
   } catch(e){
     console.error(e);

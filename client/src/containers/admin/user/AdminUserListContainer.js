@@ -119,22 +119,28 @@ const AdminUserListContainer = () => {
           handleGradeDownClick={handleGradeDownClick}
         />
       </AdminBlock>
-      <AdminBlock>
+      <AdminBlock2>
         <AdminUserGenderChart />
         <AdminUserAgeChart />
-      </AdminBlock>
+      </AdminBlock2>
     </AdminInquiryContainerBlock>
   );
 };
 
 const AdminInquiryContainerBlock = styled.div`
   display: flex;
+  justify-content: space-between;
   /* background-color: gray; */
   height: 130vh;
 `;
 const AdminBlock = styled.div`
   padding-left: 10px;
-  width: 50%;
+  width: 60%;
+  height: 100vh;
+`;
+const AdminBlock2 = styled.div`
+  padding-left: 10px;
+  width: 40%;
   height: 100vh;
 `;
 

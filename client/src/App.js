@@ -33,6 +33,7 @@ import AdminUserPage from "./pages/admin/AdminUserPage";
 import AdminEventViewPage from "./pages/admin/AdminEventViewPage";
 import AdminInquiryPage from "./pages/admin/AdminInquiryPage";
 import AdminMovieTimePage from "./pages/admin/AdminMovieTimePage";
+import AdminCinemaPage from "./pages/admin/AdminCinemaPage";
 
 const App = () => {
   return (
@@ -79,6 +80,7 @@ const App = () => {
       <Route path="/admin/inquiry" element={<AdminInquiryPage />} />
       <Route path="/admin/meet" element={<AdminMeetPage />} />
       <Route path="/admin/movietime" element={<AdminMovieTimePage />} />
+      <Route path="/admin/cinema" element={<AdminCinemaPage />} />
     </Routes>
   );
 };

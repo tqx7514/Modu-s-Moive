@@ -1,5 +1,13 @@
 const { Op } = require("sequelize");
-const { users, inquirys, meets, regions, posts } = require("../../models");
+const {
+  users,
+  inquirys,
+  meets,
+  regions,
+  posts,
+  reservations,
+  movies,
+} = require("../../models");
 
 exports.genderData = async (req, res) => {
   try {
@@ -227,16 +235,22 @@ exports.dateData = async (req, res) => {
     const dateData = [];
     let cumulativeCount = 0;
 
+    // Iterate through each day from oneWeekAgo to today
     for (
       let date = oneWeekAgo;
       date <= today;
       date.setDate(date.getDate() + 1)
     ) {
-      const endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
+      const startOfDay = new Date(date); // Clone the date object
+      startOfDay.setHours(0, 0, 0, 0); // Set time to 00:00:00
+
+      const endOfDay = new Date(date); // Clone the date object
+      endOfDay.setHours(23, 59, 59, 999); // Set time to 23:59:59.999
+
       const count = await posts.count({
         where: {
           createdAt: {
-            [Op.between]: [date, endDate],
+            [Op.between]: [startOfDay, endOfDay],
           },
         },
       });
@@ -250,12 +264,164 @@ exports.dateData = async (req, res) => {
     }
 
     if (dateData.length > 7) {
-      // 만약 dateData.length가 7보다 크다면, dateData[0]을 제외한 1~7번째 요소만 유지
+      // If dateData.length is greater than 7, keep only the last 7 days
       dateData.splice(0, dateData.length - 7);
     }
 
     console.log("ssssssssssssssssssss", dateData);
     res.json(dateData);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+exports.incomeData = async (req, res) => {
+  // console.log("income 백왓습니다");
+  try {
+    const today = new Date();
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+    const incomes = await reservations.findAll({
+      attributes: ["price", "person", "cinema"], // cinema 칼럼도 가져옵니다.
+      where: {
+        date: {
+          [Op.between]: [startOfMonth, endOfMonth],
+        },
+      },
+    });
+
+    let totalIncome = 0;
+    let totalAudience = 0;
+
+    const cinemaData = {};
+
+    incomes.forEach((item) => {
+      totalIncome += parseInt(item.price);
+
+      const personString = item.person;
+      const personMatches = personString.match(/\d+/g);
+
+      if (personMatches) {
+        const personCounts = personMatches.map((match) => parseInt(match));
+        totalAudience += personCounts.reduce((sum, count) => sum + count, 0);
+
+        if (!cinemaData[item.cinema]) {
+          cinemaData[item.cinema] = {
+            totalIncome: 0,
+            totalAudience: 0,
+          };
+        }
+        cinemaData[item.cinema].totalIncome += parseInt(item.price);
+        cinemaData[item.cinema].totalAudience += personCounts.reduce(
+          (sum, count) => sum + count,
+          0
+        );
+      }
+    });
+
+    let highestIncomeCinema = null;
+    let highestIncome = 0;
+
+    for (const cinema in cinemaData) {
+      if (cinemaData[cinema].totalIncome > highestIncome) {
+        highestIncome = cinemaData[cinema].totalIncome;
+        highestIncomeCinema = cinema;
+      }
+    }
+
+    const result = {
+      cinema: highestIncomeCinema,
+      totalIncome: highestIncome,
+      totalAudience: cinemaData[highestIncomeCinema].totalAudience,
+    };
+
+    // console.log("result==============", totalIncome, totalAudience, result);
+    res.json({ totalIncome, totalAudience, result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+exports.monthData = async (req, res) => {
+  console.log("월별데이터 백");
+  try {
+    const monthlyData = await reservations.findAll({
+      attributes: ["date", "price"],
+      raw: true,
+    });
+
+    const monthLabels = [
+      "1월",
+      "2월",
+      "3월",
+      "4월",
+      "5월",
+      "6월",
+      "7월",
+      "8월",
+      "9월",
+      "10월",
+      "11월",
+      "12월",
+    ];
+
+    const monthlyIncome = Array.from({ length: 12 }, () => 0);
+
+    monthlyData.forEach((data) => {
+      const month = new Date(data.date).getMonth();
+      monthlyIncome[month] += parseFloat(data.price);
+    });
+
+    const result = monthLabels.map((label, index) => ({
+      month: label,
+      price: monthlyIncome[index],
+    }));
+
+    console.log("결과============", result);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+exports.movieData = async (req, res) => {
+  try {
+    // movies 테이블에서 영화명만 가져오기
+    const movieNames = await movies.findAll({
+      attributes: ["movie_name"],
+      raw: true,
+    });
+
+    // 가져온 영화명으로 reservations 테이블에서 매출 데이터 조회하고 계산하기
+    const movieMap = new Map();
+
+    await Promise.all(
+      movieNames.map(async (movieData) => {
+        const { movie_name } = movieData;
+        const moviePriceData = await reservations.findAll({
+          attributes: ["price"],
+          where: {
+            movie_name: movie_name,
+          },
+          raw: true,
+        });
+
+        const totalMoviePrice = moviePriceData.reduce(
+          (acc, { price }) => acc + parseFloat(price),
+          0
+        );
+
+        movieMap.set(movie_name, totalMoviePrice);
+      })
+    );
+
+    // 결과 가공하여 프론트엔드로 보내기
+    const result = Array.from(movieMap, ([movie, price]) => ({ movie, price }));
+
+    console.log("영화 차트 백왓습니다", result);
+    res.json(result);
   } catch (error) {
     res.status(500).json(error);
   }

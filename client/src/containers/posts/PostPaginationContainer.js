@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import PostPagination from "../../components/posts/PostPagination";
 
-const PostPaginationContainer = () => {
+const PostPaginationContainer = ({ isAdmin }) => {
   const [searchParams] = useSearchParams();
 
   const userId = searchParams.get("userId");
@@ -24,6 +24,7 @@ const PostPaginationContainer = () => {
       userId={userId}
       page={parseInt(page, 10)}
       lastPage={lastPage}
+      isAdmin={isAdmin}
     />
   );
 };

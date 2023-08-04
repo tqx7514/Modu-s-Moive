@@ -19,6 +19,8 @@ const adminPostRouter = require("./routes/admin/adminpost");
 const adminInquiryRouter = require("./routes/admin/admininquiry");
 const adminUserRouter = require("./routes/admin/adminuser");
 const adminChartRouter = require("./routes/admin/adminchart");
+const adminScheduleRouter = require("./routes/admin/adminschedule");
+const adminCinemaRouter = require("./routes/admin/admincinema");
 
 const axios = require("axios");
 const mysql = require("mysql2");
@@ -70,6 +72,8 @@ app.use("/admin/event", adminEventRouter);
 app.use("/admin/inquiry", adminInquiryRouter);
 app.use("/admin/user", adminUserRouter);
 app.use("/admin/chart", adminChartRouter);
+app.use("/admin/schedule", adminScheduleRouter);
+app.use("/admin/cinema", adminCinemaRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

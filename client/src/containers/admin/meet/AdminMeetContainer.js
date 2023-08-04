@@ -25,18 +25,19 @@ const AdminMeetContainer = () => {
   const [tag, setTag] = useState(null);
   const [region, setRegion] = useState(null);
   const [detail, setDetail] = useState(false);
+  const [sort, setSort] = useState({ field: "createdAt", order: 1 });
 
-  useEffect(() => {
-    if (user) {
-      console.log("유저잇음 컨테이너", user);
-      dispatch(tempSetUser(user));
-      dispatch(check());
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (user) {
+  //     console.log("유저잇음 컨테이너", user);
+  //     dispatch(tempSetUser(user));
+  //     dispatch(check());
+  //   }
+  // }, []);
   useEffect(() => {
     dispatch(initialize());
-    dispatch(meetList({ tag, region, page }));
-  }, [dispatch, tag, region, page]);
+    dispatch(meetList({ tag, region, page, sort }));
+  }, [dispatch, tag, region, page, sort]);
 
   const handleRegionClick = (region) => {
     console.log("region===", region);
@@ -55,6 +56,14 @@ const AdminMeetContainer = () => {
   const handleDetailClick = () => {
     setDetail(!detail);
   };
+  const changeSort = (field) => {
+    if (sort.field === field) {
+      setSort({ ...sort, order: sort.order * -1 });
+    } else {
+      setSort({ field: field, order: 1 });
+    }
+  };
+  console.log("sort==========", sort);
   return (
     <AdminMeetContainerBlock>
       <AdminBlock>
@@ -74,6 +83,8 @@ const AdminMeetContainer = () => {
           handleDetailClick={handleDetailClick}
           detail={detail}
           lastPage={lastPage}
+          sort={sort}
+          changeSort={changeSort}
         />
       </AdminBlock>
       <AdminBlock2>
@@ -95,7 +106,7 @@ const AdminBlock = styled.div`
 `;
 const AdminBlock2 = styled.div`
   padding-left: 10px;
-  width: 30%;
+  width: 40%;
 `;
 
 export default AdminMeetContainer;

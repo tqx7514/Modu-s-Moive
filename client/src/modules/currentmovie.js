@@ -29,8 +29,8 @@ const [
 
 export const listMovie = createAction(LIST_MOVIE);
 export const listPosts = createAction(LIST_POSTS);
-export const updateList = createAction(UPDATE_LIST, ({title, vote_count, vote_average, popularity, id, poster_path}) => ({
-  title, vote_count, vote_average, popularity, id, poster_path
+export const updateList = createAction(UPDATE_LIST, ({title, vote_count, vote_average, popularity, id, poster_path, selectedValue}) => ({
+  title, vote_count, vote_average, popularity, id, poster_path, selectedValue
 }));
 export const deleteList = createAction(DELETE_LIST, (movie_num) => ({movie_num}));
 

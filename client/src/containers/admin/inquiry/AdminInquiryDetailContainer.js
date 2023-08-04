@@ -16,6 +16,8 @@ const AdminInquiryDetailContainer = ({ num, handleDetailClick }) => {
   const detail = inquiry.filter((m) => m.inquiryNum === num);
   const [answer, setAnswer] = useState(detail[0].answer);
   const [isEdit, setIsEdit] = useState(false);
+  const [sort, setSort] = useState({ field: "createdAt", order: 1 });
+  const [classify, setClassify] = useState(null);
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8080,
@@ -49,7 +51,9 @@ const AdminInquiryDetailContainer = ({ num, handleDetailClick }) => {
         preConfirm: () => {
           dispatch(answerUpdate({ inquiryNum: detail[0].inquiryNum, answer }));
           setTimeout(() => {
-            dispatch(adminInquiryList({ page: 1, category: 1 }));
+            dispatch(
+              adminInquiryList({ page: 1, category: 1, sort, classify })
+            );
             handleDetailClick();
           }, 100);
         },

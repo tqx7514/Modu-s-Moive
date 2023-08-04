@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import LineChart from "../chart/postDateChart";
 import { postsDate } from "../../../lib/api/admin/adminchart";
 import { postDataDate } from "../../../data/postData";
+import { AdminBottomRightBlock } from "../main/AdminBottomRight";
 
 const AdminPostChart = () => {
   const [data, setData] = useState(null);
@@ -14,34 +15,26 @@ const AdminPostChart = () => {
       try {
         const result = await postsDate();
         console.log("게시글결과", result.data);
-        setData(result.data);
+        setData(postDataDate(result.data));
       } catch (error) {
         console.error(error);
       }
     };
     func();
   }, []);
-  const datas = postDataDate({ data });
 
   return (
-    <AdminPostChartBlock>
-      <ChartBlock>
-        <AdminChartTitle title="주간 게시글" />
-      </ChartBlock>
-      <Box height="250px" m="-20px 0 0 0">
-        <LineChart data={datas} />
-      </Box>
-    </AdminPostChartBlock>
+    <AdminBottomRightBlock>
+      <div className="title">
+        <h3>주간 게시글</h3>
+      </div>
+      {data && (
+        <Box height="250px">
+          <LineChart data={data} />
+        </Box>
+      )}
+    </AdminBottomRightBlock>
   );
 };
-
-const AdminPostChartBlock = styled.div`
-  flex: 1;
-`;
-const ChartBlock = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 3rem 0 0 1rem;
-`;
 
 export default AdminPostChart;

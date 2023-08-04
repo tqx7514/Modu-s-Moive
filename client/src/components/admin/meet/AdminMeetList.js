@@ -4,6 +4,7 @@ import AdminTitle from "../../common/admin/AdminTitle";
 import MyPageInquiryPagination from "../../mypage/MyPageInquiryPagination";
 import { useState } from "react";
 import AdminMeetDetailContainer from "../../../containers/admin/meet/AdminMeetDetailContainer";
+import { AdminBottomRightBlock } from "../main/AdminBottomRight";
 
 const AdminMeetList = ({
   loading,
@@ -21,6 +22,8 @@ const AdminMeetList = ({
   handleDetailClick,
   detail,
   lastPage,
+  sort,
+  changeSort,
 }) => {
   const [meetNum, setMeetNum] = useState(null);
 
@@ -59,7 +62,7 @@ const AdminMeetList = ({
           <img src="/preloader_icon.gif" alt="" />
         </div>
       ) : (
-        <>
+        <AdminBottomRightBlock>
           <HeaderBlock>
             <AdminTitle title="모임관리" />
             <div className="count">
@@ -81,34 +84,49 @@ const AdminMeetList = ({
           ) : (
             <>
               <CategoryBlock>
-                {regions.map((m) =>
-                  m === "전국" ? (
-                    <Buttons
-                      key={m}
-                      onClick={() => handleRegionClick(m)}
-                      category={region === null}
-                    >
-                      전국
-                    </Buttons>
-                  ) : (
-                    <Buttons
-                      key={m}
-                      category={region === m}
-                      onClick={() => handleRegionClick(m)}
-                    >
-                      {m}
-                    </Buttons>
-                  )
-                )}
+                {regions &&
+                  regions.map((m) =>
+                    m === "전국" ? (
+                      <Buttons
+                        key={m}
+                        onClick={() => handleRegionClick(m)}
+                        category={region === null}
+                      >
+                        전국
+                      </Buttons>
+                    ) : (
+                      <Buttons
+                        key={m}
+                        category={region === m}
+                        onClick={() => handleRegionClick(m)}
+                      >
+                        {m}
+                      </Buttons>
+                    )
+                  )}
               </CategoryBlock>
               <MeetHeaderBlock>
                 <MeetHeaderItem width="5%">번호</MeetHeaderItem>
-                <MeetHeaderItem width="20%">모임명</MeetHeaderItem>
-                <MeetHeaderItem width="15%">모임장</MeetHeaderItem>
-                <MeetHeaderItem width="10%">가입자수</MeetHeaderItem>
-                <MeetHeaderItem width="10%">지역</MeetHeaderItem>
-                <MeetHeaderItem width="20%">생성일</MeetHeaderItem>
-                <MeetHeaderItem width="20%">최근활동일</MeetHeaderItem>
+                <MeetHeaderItem width="25%">
+                  <div onClick={() => changeSort("title")}>모임명</div>
+                </MeetHeaderItem>
+                <MeetHeaderItem width="15%">
+                  <div onClick={() => changeSort("userId")}>모임장</div>
+                </MeetHeaderItem>
+                <MeetHeaderItem width="10%">
+                  <div onClick={() => changeSort("count")}>가입자 수</div>
+                </MeetHeaderItem>
+                <MeetHeaderItem width="20%">
+                  <div onClick={() => changeSort("region")}>지역</div>
+                </MeetHeaderItem>
+                <MeetHeaderItem width="12.5%">
+                  <div onClick={() => changeSort("createdAt")}>생성일</div>
+                </MeetHeaderItem>
+                <MeetHeaderItem width="12.5%">
+                  <div onClick={() => changeSort("mostRecent")}>
+                    최근 활동일
+                  </div>
+                </MeetHeaderItem>
               </MeetHeaderBlock>
               <div>
                 {meets &&
@@ -122,7 +140,7 @@ const AdminMeetList = ({
                         <MeetHeaderItem width="5%">
                           {meet.meetNum}
                         </MeetHeaderItem>
-                        <MeetHeaderItem width="20%">
+                        <MeetHeaderItem width="25%">
                           {meet.title}
                         </MeetHeaderItem>
                         <MeetHeaderItem width="15%">
@@ -131,13 +149,13 @@ const AdminMeetList = ({
                         <MeetHeaderItem width="10%">
                           {meet.count}
                         </MeetHeaderItem>
-                        <MeetHeaderItem width="10%">
+                        <MeetHeaderItem width="20%">
                           {meet.region}
                         </MeetHeaderItem>
-                        <MeetHeaderItem width="20%">
+                        <MeetHeaderItem width="12.5%">
                           {formatCreatedAt(meet.createdAt)}
                         </MeetHeaderItem>
-                        <MeetHeaderItem width="20%">
+                        <MeetHeaderItem width="12.5%">
                           {formatCreatedAt(meet.mostRecent)}
                         </MeetHeaderItem>
                       </MeetContent>
@@ -153,7 +171,7 @@ const AdminMeetList = ({
               />
             </>
           )}
-        </>
+        </AdminBottomRightBlock>
       )}
     </AdminMeetListBlock>
   );
@@ -161,17 +179,17 @@ const AdminMeetList = ({
 const AdminMeetListBlock = styled.div`
   > .end {
     border-top: 1px solid lightgray;
-    margin: 0.2rem 0 1rem 0;
+    margin: 0rem 0 1rem 0;
   }
 `;
 const HeaderBlock = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 3rem 2rem 1rem 2rem;
+  padding: 1rem 2rem 1rem 2rem;
   border-bottom: 2px solid black;
   align-items: center;
   > div {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: bold;
     > span {
       color: #ee1c25;
@@ -183,6 +201,11 @@ const CategoryBlock = styled.div`
   justify-content: center;
   margin: 1.5rem 0 0 0;
   align-items: center;
+  flex-wrap: wrap;
+
+  > button {
+    margin-bottom: 1rem;
+  }
 `;
 const CategoryBlock2 = styled.div`
   display: flex;
@@ -217,7 +240,7 @@ const Buttons = styled.button`
 `;
 
 const MeetHeaderBlock = styled.div`
-  margin: 2rem 0 0 0;
+  /* margin: rem 0 0 0; */
   padding: 1rem 0 1rem 0;
   border-top: 1px solid lightgray;
   border-bottom: 1px solid lightgray;
@@ -228,6 +251,13 @@ const MeetHeaderItem = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+  > div {
+    cursor: pointer;
+    &:hover {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+  }
   ${({ width }) => width && `flex-basis: ${width};`}
 
   > h4 {
@@ -281,7 +311,8 @@ const MeetContent = styled.div`
   padding: 0.5rem 0 0.5rem 0;
 
   &:hover {
-    color: white;
+    /* color: white; */
+    font-weight: bold;
   }
 `;
 

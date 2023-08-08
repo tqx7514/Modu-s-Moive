@@ -90,7 +90,6 @@ const CinemaContainer = () => {
   const ownPost = (id) => {
     return user && user === id;
   };
-
   return (
     <Cinema
       cinema={cinema}

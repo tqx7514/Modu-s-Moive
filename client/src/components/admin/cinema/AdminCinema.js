@@ -1,7 +1,7 @@
-import { Diversity1 } from "../../../../node_modules/@mui/icons-material/index"
+import { Diversity1 } from "../../../../node_modules/@mui/icons-material/index";
 import MyPageInquiryPagination from "../../mypage/MyPageInquiryPagination";
 import { AdminBottomRightBlock } from "../main/AdminBottomRight";
-import styled, {css} from "styled-components"
+import styled, { css } from "styled-components";
 
 const InquiryHeaderBlock = styled.div`
   margin: 2rem 0 0 0;
@@ -126,90 +126,91 @@ const InquiryContent = styled.div`
 `;
 
 const AdminCinema = ({
-    count,
-    category,
-    loading,
-    onAllClick,
-    onUndoneClick,
-    onDoneClick,
-    lastPage,
-    currentPage,
-    handleNextPage,
-    handlePreviousPage,
-    detail,
-    handleDetailClick,
-    cinema,
-    handleGradeUpClick,
-    handleGradeDownClick,}) => {
+  count,
+  category,
+  loading,
+  onAllClick,
+  onUndoneClick,
+  onDoneClick,
+  lastPage,
+  currentPage,
+  handleNextPage,
+  handlePreviousPage,
+  detail,
+  handleDetailClick,
+  cinema,
+  handleGradeUpClick,
+  handleGradeDownClick,
+}) => {
+  console.log("detail==============", cinema);
 
-    return(
-        <div>
-            <AdminInquiryBlock>
-        
-          <AdminBottomRightBlock>
-            <div className="title">
-              <h2>영화관 관리</h2>
-            </div>
-            {detail ? (
-              <>
-                <CategoryBlock>
-                  <Buttons onClick={handleDetailClick}>목록으로</Buttons>
-                </CategoryBlock>
-              </>
-            ) : (
-              <>
-                <InquiryHeaderBlock>
-                  <InquiryHeaderItem width="5%">번호</InquiryHeaderItem>
-                  <InquiryHeaderItem width="20%">지역</InquiryHeaderItem>
-                  <InquiryHeaderItem width="40%">주소</InquiryHeaderItem>
-                  <InquiryHeaderItem width="20%">영화관</InquiryHeaderItem>
-                  <InquiryHeaderItem width="10%">지역번호</InquiryHeaderItem>
-                  <InquiryHeaderItem width="10%">추가</InquiryHeaderItem>
-                  <InquiryHeaderItem width="10%">삭제</InquiryHeaderItem>
-                </InquiryHeaderBlock>
-                <div>
-                  {cinema &&
-                    cinema.map((item) => (
-                      <InquiryBlock>
-                        <InquiryContent>
-                          <InquiryHeaderItem width="5%">
-                            {item.cinema_num}
-                          </InquiryHeaderItem>
-                          <InquiryHeaderItem width="20%">
-                            {item.addr}
-                          </InquiryHeaderItem>
-                          <InquiryHeaderItem width="40%">
-                            {item.addr_detail}
-                          </InquiryHeaderItem>
-                          <InquiryHeaderItem width="20%">
-                            {item.cinema}
-                          </InquiryHeaderItem>
-                          <InquiryHeaderItem width="10%">
-                            {item.grade}
-                          </InquiryHeaderItem>
-                          <InquiryHeaderItem width="10%">
-                            <button>추가</button>
-                          </InquiryHeaderItem>
-                          <InquiryHeaderItem width="10%">
-                            <button>삭제</button>
-                          </InquiryHeaderItem>
-                        </InquiryContent>
-                      </InquiryBlock>
-                    ))}
-                </div>
-                <div className="end"></div>
-                <MyPageInquiryPagination
-                  lastPage={lastPage}
-                  currentPage={currentPage}
-                  handleNextPage={handleNextPage}
-                  handlePreviousPage={handlePreviousPage}
-                />
-              </>
-            )}
-          </AdminBottomRightBlock>
+  return (
+    <div>
+      <AdminInquiryBlock>
+        <AdminBottomRightBlock>
+          <div className="title">
+            <h2>영화관 관리</h2>
+          </div>
+          {detail ? (
+            <>
+              <CategoryBlock>
+                <Buttons onClick={handleDetailClick}>목록으로</Buttons>
+              </CategoryBlock>
+            </>
+          ) : (
+            <>
+              <InquiryHeaderBlock>
+                <InquiryHeaderItem width="5%">번호</InquiryHeaderItem>
+                <InquiryHeaderItem width="20%">지역</InquiryHeaderItem>
+                <InquiryHeaderItem width="40%">주소</InquiryHeaderItem>
+                <InquiryHeaderItem width="20%">영화관</InquiryHeaderItem>
+                <InquiryHeaderItem width="10%">지역번호</InquiryHeaderItem>
+                <InquiryHeaderItem width="10%">추가</InquiryHeaderItem>
+                <InquiryHeaderItem width="10%">삭제</InquiryHeaderItem>
+              </InquiryHeaderBlock>
+              <div>
+                {cinema &&
+                  cinema.map((item) => (
+                    <InquiryBlock>
+                      <InquiryContent>
+                        <InquiryHeaderItem width="5%">
+                          {item.cinema_num}
+                        </InquiryHeaderItem>
+                        <InquiryHeaderItem width="20%">
+                          {item.addr}
+                        </InquiryHeaderItem>
+                        <InquiryHeaderItem width="40%">
+                          {item.addr_detail}
+                        </InquiryHeaderItem>
+                        <InquiryHeaderItem width="20%">
+                          {item.cinema}
+                        </InquiryHeaderItem>
+                        <InquiryHeaderItem width="10%">
+                          {item.grade}
+                        </InquiryHeaderItem>
+                        <InquiryHeaderItem width="10%">
+                          <button>추가</button>
+                        </InquiryHeaderItem>
+                        <InquiryHeaderItem width="10%">
+                          <button>삭제</button>
+                        </InquiryHeaderItem>
+                      </InquiryContent>
+                    </InquiryBlock>
+                  ))}
+              </div>
+              <div className="end"></div>
+              <MyPageInquiryPagination
+                lastPage={lastPage}
+                currentPage={currentPage}
+                handleNextPage={handleNextPage}
+                handlePreviousPage={handlePreviousPage}
+              />
+            </>
+          )}
+        </AdminBottomRightBlock>
       </AdminInquiryBlock>
-        </div>
-    )
-}
+    </div>
+  );
+};
 
-export default AdminCinema
+export default AdminCinema;

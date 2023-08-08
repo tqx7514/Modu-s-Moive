@@ -10,7 +10,7 @@ const AdminCinemaContainer = () => {
     ({ admincinema, loading }) => ({
       cinema: admincinema.cinema,
       count: admincinema.count,
-      loading: loading["/admincinema/VIEW_CINEMA"],
+      loading: loading["admincinema/VIEW_CINEMA"],
       lastPage: admincinema.lastPage,
     })
   );
@@ -47,20 +47,22 @@ const AdminCinemaContainer = () => {
     setDetail(!detail);
   };
 
-  return <AdminCinema 
-  cinema={cinema}
-  count={count}
-  loading={loading}
-  category={category}
-  onAllClick={handleAllClick}
-  onUndoneClick={handleUndoneClick}
-  onDoneClick={handleDoneClick}
-  lastPage={lastPage}
-  currentPage={page}
-  handleNextPage={handleNextPage}
-  handlePreviousPage={handlePreviousPage}
-  detail={detail}
-  handleDetailClick={handleDetailClick}
-  />;
+  return (
+    <AdminCinema
+      cinema={cinema}
+      count={count}
+      loading={loading}
+      category={category}
+      onAllClick={handleAllClick}
+      onUndoneClick={handleUndoneClick}
+      onDoneClick={handleDoneClick}
+      lastPage={lastPage}
+      currentPage={page}
+      handleNextPage={handleNextPage}
+      handlePreviousPage={handlePreviousPage}
+      detail={detail}
+      handleDetailClick={handleDetailClick}
+    />
+  );
 };
 export default AdminCinemaContainer;

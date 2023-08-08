@@ -1,14 +1,14 @@
 const {Op} = require("sequelize");
 const {cinemas} = require("../../models");
 
-exports.ViewCinema = async(req, res) => {
+exports.AdminCinema = async(req, res) => {
     const category = req.query.category;
     const page = req.params.page;
     if (page < 1) {
         res.status(400);
         return;
     }
-    const limit = 10;
+    const limit = 30;
     const offset = (page - 1) * limit;
     const where = {};
 
@@ -26,7 +26,7 @@ exports.ViewCinema = async(req, res) => {
             where,
             limit,
             offset,
-            order: [["cinema_num", "DESC"]],
+            order: [["cinema_num", "ASC"]],
         });
 
         const {rows: cinema, count} = cinemalist;

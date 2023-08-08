@@ -2,6 +2,7 @@ import { Diversity1 } from "../../../../node_modules/@mui/icons-material/index";
 import MyPageInquiryPagination from "../../mypage/MyPageInquiryPagination";
 import { AdminBottomRightBlock } from "../main/AdminBottomRight";
 import styled, { css } from "styled-components";
+import React, { useState, useEffect } from "react";
 
 const InquiryHeaderBlock = styled.div`
   margin: 2rem 0 0 0;
@@ -125,6 +126,45 @@ const InquiryContent = styled.div`
   padding: 0.5rem 0 0.5rem 0;
 `;
 
+export const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  overflow: hidden;
+`;
+
+export const ModalContent = styled.div`
+  background-color: white;
+  padding: 25px;
+  div {
+    display: block;
+  }
+`;
+
+const Close = styled.div`
+  position: relative;
+  text-align: center;
+  button{
+    position: absolute;
+    bottom: 1px;
+    right: -10px;
+    width: 19px;
+    height: 19px;
+    border: none;
+    text-indent: -9999em;
+    background: transparent url("/close_19.png") no-repeat 0 0;
+    cursor: pointer;
+  }
+`;
+
+
 const AdminCinema = ({
   count,
   category,
@@ -141,8 +181,44 @@ const AdminCinema = ({
   cinema,
   handleGradeUpClick,
   handleGradeDownClick,
+  onChangeregion,
+  onChangeaddr,
+  onChangecinema,
+  onChangeregionNum,
+  onCreate
 }) => {
   console.log("detail==============", cinema);
+  const [isOpen, setIsOpen] = useState(false);
+  
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const oncloseModal = () => {
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.keyCode === 27) {
+        oncloseModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [oncloseModal]);
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+        document.body.style.overflow = 'auto';
+    };
+}, []);
 
   return (
     <div>
@@ -189,7 +265,7 @@ const AdminCinema = ({
                           {item.grade}
                         </InquiryHeaderItem>
                         <InquiryHeaderItem width="10%">
-                          <button>추가</button>
+                          <button onClick={openModal}>추가</button>
                         </InquiryHeaderItem>
                         <InquiryHeaderItem width="10%">
                           <button>삭제</button>
@@ -207,6 +283,30 @@ const AdminCinema = ({
               />
             </>
           )}
+          {isOpen &&
+           <Modal>
+      <ModalContent>
+        <Close>
+        <button onClick={oncloseModal}>닫기</button>
+        </Close>
+          <div>
+            지역: <input onChange={onChangeregion}/>
+            주소: <input onChange={onChangeaddr}/>
+            영화관: <input onChange={onChangecinema}/>
+            지역번호: <select onChange={onChangeregionNum}>
+              <option>1: 서울</option>
+              <option>2: 경기/인천</option>
+              <option>3: 충청/대전</option>
+              <option>4: 전라/광주</option>
+              <option>5: 경북/대구</option>
+              <option>6: 경남/부산/울산</option>
+              <option>7: 강원</option>
+              <option>8: 제주</option>
+            </select>
+          </div>
+      </ModalContent>
+    </Modal>
+    }
         </AdminBottomRightBlock>
       </AdminInquiryBlock>
     </div>

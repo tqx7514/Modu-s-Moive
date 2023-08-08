@@ -618,7 +618,6 @@ const MovieDetail = ({
                     <div className="review-write-box">
                       <textarea
                         onChange={onChangecontent}
-                        sdfsdfsdfdfsdfsdf
                         value={content}
                         maxLength={220}
                         placeholder="평점 및 영화 관람평을 작성해 주세요. (최소 10글자 이상)"

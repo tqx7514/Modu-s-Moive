@@ -6,13 +6,14 @@ import createRequestSaga, {
 import * as cinemaAPI from "../../lib/api/admin/admincinema";
 
 const INITIALIZE = "admincinema/INITIALIZE";
-const [VIEW_CINEMA, VIEW_CINEMA_SUCCESS, VIEW_CINEMA_FAILURE] = createRequestActionTypes("/admincinema/VIEW_CINEMA");
+const CHANGE_FIELD = "admincinema/CHANGE_FIELD";
+const [VIEW_CINEMA, VIEW_CINEMA_SUCCESS, VIEW_CINEMA_FAILURE] = createRequestActionTypes("admincinema/VIEW_CINEMA");
 
 export const initialize = createAction(INITIALIZE);
+export const changeField = createAction(CHANGE_FIELD, ({key, value}) => ({ key, value}));
 export const viewCinema = createAction(VIEW_CINEMA, ({page, category}) => ({
     page, category
 }));
-
 
 const viewCinemaSaga = createRequestSaga(VIEW_CINEMA, cinemaAPI.AdminCinema);
 
@@ -29,6 +30,11 @@ const initialState = {
 
 const admincinema = handleActions(
     {
+        [INITIALIZE]: () => initialState,
+        [CHANGE_FIELD]: (state, {payload: {key, value}}) => ({
+            ...state,
+            [key]: value,
+        }),
         [VIEW_CINEMA_SUCCESS]: (state, {payload: {cinema, count, lastPage}}) => ({
             ...state,
             cinema,

@@ -1,7 +1,7 @@
 const express = require("express");
-const {ViewCinema} = require("../../controllers/admin/admincinema");
+const {AdminCinema} = require("../../controllers/admin/admincinema");
 const router = express.Router();
 
-router.get("/", ViewCinema);
+router.get("/:page", AdminCinema);
 
 module.exports = router;

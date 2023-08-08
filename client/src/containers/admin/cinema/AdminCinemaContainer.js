@@ -3,12 +3,13 @@ import React, { useState, useEffect } from "react";
 import AdminCinema from "../../../components/admin/cinema/AdminCinema";
 import { viewCinema, initialize } from "../../../modules/admin/admincinema";
 import Swal from "sweetalert2";
+import { readCinema } from "../../../modules/cinema";
 
 const AdminCinemaContainer = () => {
   const dispatch = useDispatch();
   const { cinema, count, loading, lastPage } = useSelector(
-    ({ admincinema, loading }) => ({
-      cinema: admincinema.cinema,
+    ({ cinema,admincinema, loading }) => ({
+      cinema: cinema.cinema,
       count: admincinema.count,
       loading: loading["admincinema/VIEW_CINEMA"],
       lastPage: admincinema.lastPage,
@@ -19,11 +20,11 @@ const AdminCinemaContainer = () => {
   const [category, setCategory] = useState(1);
   const [detail, setDetail] = useState(false);
   useEffect(() => {
-    dispatch(viewCinema({ page, category }));
+    dispatch(readCinema());
     return () => {
       dispatch(initialize());
     };
-  }, [page, category]);
+  }, []);
 
   const handleAllClick = () => {
     setCategory(1);
